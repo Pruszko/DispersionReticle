@@ -19,7 +19,7 @@ from gui.battle_control.controllers.crosshair_proxy import GunMarkersSetInfo
 from gui.battle_control.controllers.crosshair_proxy import CrosshairDataProxy
 
 
-# Utility method to override function in certain class/module
+# Utility decorator to override function in certain class/module
 def overrideMethod(cls, methodName):
     def _overrideMethod(func):
         old = getattr(cls, methodName)
@@ -32,7 +32,7 @@ def overrideMethod(cls, methodName):
     return _overrideMethod
 
 
-# Utility method to add new function in certain class/module
+# Utility decorator to add new function in certain class/module
 def addMethod(cls, methodName):
     def _overrideMethod(func):
         setattr(cls, methodName, func)
@@ -48,6 +48,18 @@ GUN_MARKER_TYPE_SERVER_FOCUS = GUN_MARKER_TYPE.SERVER + FOCUS_MARKER_TYPE_OFFSET
 
 ###########################################################
 # AvatarInputHandler hooks
+# Needed to invoke update method on gun markers of new markerType
+#
+# Basically, AvatarInputHandler invokes updateGunMarker
+# method on currently selected control mode (control_modes.py)
+# which then invokes update on gun marker decorator (gun_marker_ctrl.py)
+# that manages individual markers.
+#
+# Without this override, client and server focus gun markers
+# wouldn't be updated.
+#
+# Notes:
+# - Every control mode (there are 7 of them) has their own gun marker decorator.
 ###########################################################
 
 @overrideMethod(AvatarInputHandler.AvatarInputHandler, "updateGunMarker")
@@ -68,6 +80,12 @@ def updateGunMarker2(func, self, pos, direction, size, relaxTime, collData):
 
 ###########################################################
 # CrosshairDataProxy hooks
+# Responsible for changing penetration indicator (that mark on the
+# middle of the reticle) to proper color (red, orange, green) on new markerType.
+#
+# Without this override, client and server focus gun markers would
+# always be red and since focus markers are displayed in front of vanilla reticles, color of
+# vanilla reticle penetration indicator wouldn't be visible.
 ###########################################################
 
 # crosshair_proxy
@@ -80,6 +98,21 @@ def __setGunMarkerState(func, self, markerType, value):
 
 ###########################################################
 # Adds linkage for new reticles so they'll use default reticle
+# This is needed due to components having unique name restriction.
+#
+# Linkages to certain gun markers (to their properties like color)
+# can be reused, so it is only needed to make new unique names
+# for new marker types for certain aiming mode (arcade, sniper, SPG,
+# arcade dual, sniper dual)
+#
+# Linkages are selected same like vanilla markers (arcade focus -> arcade linkage etc).
+#
+# Without adding unique names, factories in gm_factory.py would mess up
+# in providing proper data provider for certain markerType.
+#
+# Also, GunMarkerComponents (gm_components.py) would raise exception due to
+# components not having unique names (it would mess up some of its methods
+# without this restrictions since components are stored in dictionary by name).
 ###########################################################
 
 ARCADE_FOCUS_GUN_MARKER_NAME = 'arcadeFocusGunMarker'
@@ -100,6 +133,14 @@ _GUN_MARKER_LINKAGES.update({
 
 ###########################################################
 # Use new marker factory to create 2x Client marker or 2x Server marker
+#
+# Standard _ControlMarkersFactory (gm_factory) either instantiates or overrides
+# crosshair flash component for each vehicle types (for ex. normal tanks needs
+# only arcade and sniper reticle).
+#
+# So, for new gun markers, it is needed to instantiate crosshair flash component as well.
+# Creation of markers internally uses linkages retrieved
+# from _GUN_MARKER_LINKAGES (gm_factory) by marker name.
 ###########################################################
 
 # gm_factory
@@ -130,11 +171,42 @@ class _NewControlMarkersFactory(_ControlMarkersFactory):
          self._createSniperMarker(markerType + FOCUS_MARKER_TYPE_OFFSET, DUAL_FOCUS_GUN_SNIPER_MARKER_NAME))
 
 
+# It is needed to be overridden manually.
+# Especially, first one in tuple is responsible for marker's instantiation.
 gm_factory._FACTORIES_COLLECTION = (_NewControlMarkersFactory, _OptionalMarkersFactory, _EquipmentMarkersFactory)
 
 
 ###########################################################
 # Adds data providers for each reticle type
+#
+# Each reticle MUST have their own data provider.
+# Otherwise, GUI.WGCrosshairFlash will complain with failing
+# to assign data provider by raising an exception.
+#
+# Basically, gun marker controllers and factories communicates
+# via them.
+#
+# Controllers provides data (positionMatrix, startSize, maybe something more)
+# and factories assigns providers of them to GUI.GUI.WGCrosshairFlash object
+# that uses them to update it's position and size.
+#
+# Can't tell exactly why crosshair flash components can't share
+# certain data provider (exception message isn't precise
+# and code of GUI modules isn't accessible), however
+# an easy workaround is just providing unique data provider
+# for each reticle type and just mimic data of vanilla data providers
+# to the new ones.
+#
+# To do this:
+# - it is needed to register IDs of new data providers
+#   in global AvatarInputHandler bindings and provide same default values
+#   for them as vanilla data providers,
+# - in _GunMarkersDPFactory (gun_marker_ctrl), add read-write access to
+#   new providers that will be used to write data by controllers,
+# - also, add singleton getters for each new data provider like for
+#   vanilla ones,
+# - in GunMarkersSetInfo (crosshair_proxy), add read-only access to
+#   new providers that will be used by crosshair flash objects.
 ###########################################################
 
 CLIENT_GUN_MARKER_FOCUS_DATA_PROVIDER = 13
@@ -205,6 +277,10 @@ def getServerSPGFocusProvider(self):
 
 ###########################################################
 # Make getters of providers return proper data provider for new marker types
+#
+# It is needed, so an internal getter won't return None for new marker types.
+# By this override, those methods can be reused without changing other methods
+# that relies on it.
 ###########################################################
 
 # gm_factory
@@ -239,6 +315,20 @@ def _getSPGDataProvider(func, self, markerType):
 
 ###########################################################
 # Return new decorator that includes new reticle controllers
+#
+# Basically, creates controllers of each markerType and provides them with proper
+# data provider to communicate with factories.
+#
+# Gun marker decorator manages all created controllers and forwards properly all methods
+# related with them. Because decorator accepts only 2 controllers (vanilla client
+# and server controllers), it is needed to provide custom decorator that handles
+# new additional 2 controllers of dispersion reticles.
+#
+# In default controller (for normal tanks), it is needed to override
+# size and idealSize in update method to represent focused dispersion of a gun.
+#
+# In SPG controller, it is only needed to provide focused dispersion angle
+# in _updateDispersionData method.
 ###########################################################
 
 # gun_marker_ctrl
@@ -259,6 +349,17 @@ def createGunMarker(func, isStrategic):
 
 
 # Helper method to calculate diameter of fully aimed reticle
+#
+# Reads dispersion angle from vehicle descriptor and multiplies
+# it with aim dispersion multiplier from PlayerAvatar (Avatar.py).
+# Aim dispersion multiplier accounts things like crew, food, etc.
+#
+# Because reticle size is an 2D object on a 3D map, it needs
+# to account a distance between a camera and reticle position.
+# Otherwise, it would appear WAY smaller (or bigger in close distance) than it should be.
+#
+# Dispersion angle is an multiplier per 1m unit, so it is
+# an easy multiplication with distance that is also in meters.
 def getFocusedSize(positionMatrix):
     cameraPos = BigWorld.camera().position
     shotDir = positionMatrix.applyToOrigin() - cameraPos
@@ -311,6 +412,9 @@ class _FocusGunMarkerController(_DefaultGunMarkerController):
 
 
 # Helper method to calculate dispersion angle of fully aimed SPG reticle
+#
+# Just reads dispersion angle from vehicle descriptor and multiplies
+# it with dispersion multiplier from PlayerAvatar (Avatar.py)
 def getFocusedDispersionAngle():
     playerAvatar = BigWorld.player()
     vehicleDesc = playerAvatar._PlayerAvatar__getDetailedVehicleDescriptor()
