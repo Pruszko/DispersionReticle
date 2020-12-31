@@ -14,3 +14,8 @@ Original idea by **StranikS_Scan**, completely reworked by me.
 
 ## Installation
 Download "DispersionReticle.wotmod" file and place it into "[WoT game directory]/mods/1.11.0.0/" directory
+
+## Compatibility
+Mod should be compatible with any crosshair mods that changes how crosshair or reticle looks like, however **it is not compatible with mod displaying both client and server reticles.**
+
+In the future, I'll add an additional version (or functionality) that will cooperate with dispersion reticle.
