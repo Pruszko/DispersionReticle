@@ -5,8 +5,8 @@ Original idea by **StranikS_Scan**, completely reworked by me.
 
 ## Features
 - shows additional reticle displaying fully focused dispersion of a gun
-- instead of reusing debug server marker, it creates new additional client/server marker
-- doesn't break "Use server reticle" option from game settings
+- works well with "Use server reticle" option from game settings
+- works well in replays
 
 ## Resource
 - WGmods - in review

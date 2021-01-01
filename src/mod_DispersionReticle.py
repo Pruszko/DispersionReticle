@@ -187,7 +187,7 @@ gm_factory._FACTORIES_COLLECTION = (_NewControlMarkersFactory, _OptionalMarkersF
 # via them.
 #
 # Controllers provides data (positionMatrix, startSize, maybe something more)
-# and factories assigns providers of them to GUI.GUI.WGCrosshairFlash object
+# and factories assigns providers of them to GUI.WGCrosshairFlash object
 # that uses them to update it's position and size.
 #
 # Can't tell exactly why crosshair flash components can't share
@@ -388,16 +388,25 @@ class _FocusGunMarkerController(_DefaultGunMarkerController):
         size = getFocusedSize(positionMatrix)
         idealSize = size
 
-        replayCtrl = BattleReplay.g_replayCtrl
-        if replayCtrl.isPlaying and replayCtrl.isClientReady:
-            s = replayCtrl.getArcadeGunMarkerSize()
-            if s != -1.0:
-                size = s
-        elif replayCtrl.isRecording:
-            if replayCtrl.isServerAim and self._gunMarkerType == GUN_MARKER_TYPE_SERVER_FOCUS:
-                replayCtrl.setArcadeGunMarkerSize(size)
-            elif self._gunMarkerType == GUN_MARKER_TYPE_CLIENT_FOCUS:
-                replayCtrl.setArcadeGunMarkerSize(size)
+        # Those below lines of code have to be commented for dispersion gun markers.
+        # Otherwise, this controller would:
+        # - read current dispersion from replay controller, by this, it
+        #   would override calculated focused dispersion in replays
+        # - it would override gun dispersion of vanilla gun marker in
+        #   replay file (undefined behavior, in replays it probably would
+        #   display zero-size dispersion).
+        #
+        # replayCtrl = BattleReplay.g_replayCtrl
+        # if replayCtrl.isPlaying and replayCtrl.isClientReady:
+        #     s = replayCtrl.getArcadeGunMarkerSize()
+        #     if s != -1.0:
+        #         size = s
+        # elif replayCtrl.isRecording:
+        #     if replayCtrl.isServerAim and self._gunMarkerType == GUN_MARKER_TYPE_SERVER_FOCUS:
+        #         replayCtrl.setArcadeGunMarkerSize(size)
+        #     elif self._gunMarkerType == GUN_MARKER_TYPE_CLIENT_FOCUS:
+        #         replayCtrl.setArcadeGunMarkerSize(size)
+
         positionMatrixForScale = self._DefaultGunMarkerController__checkAndRecalculateIfPositionInExtremeProjection(positionMatrix)
         worldMatrix = _makeWorldMatrix(positionMatrixForScale)
         currentSize = _calcScale(worldMatrix, size) * self._DefaultGunMarkerController__screenRatio
@@ -429,17 +438,27 @@ class _FocusSPGGunMarkerController(_SPGGunMarkerController):
     def _updateDispersionData(self):
         # dispersionAngle = self._gunRotator.dispersionAngle
         dispersionAngle = getFocusedDispersionAngle()
-        isServerAim = self._gunMarkerType == GUN_MARKER_TYPE_SERVER_FOCUS
-        replayCtrl = BattleReplay.g_replayCtrl
-        if replayCtrl.isPlaying and replayCtrl.isClientReady:
-            d, s = replayCtrl.getSPGGunMarkerParams()
-            if d != -1.0 and s != -1.0:
-                dispersionAngle = d
-        elif replayCtrl.isRecording:
-            if replayCtrl.isServerAim and isServerAim:
-                replayCtrl.setSPGGunMarkerParams(dispersionAngle, 0.0)
-            elif not isServerAim:
-                replayCtrl.setSPGGunMarkerParams(dispersionAngle, 0.0)
+
+        # Those below lines of code have to be commented for dispersion gun markers.
+        # Otherwise, this controller would:
+        # - read current dispersion from replay controller, by this, it
+        #   would override calculated focused dispersion in replays
+        # - it would override gun dispersion of vanilla gun marker in
+        #   replay file (undefined behavior, in replays it probably would
+        #   display zero-size dispersion).
+        #
+        # isServerAim = self._gunMarkerType == GUN_MARKER_TYPE_SERVER_FOCUS
+        # replayCtrl = BattleReplay.g_replayCtrl
+        # if replayCtrl.isPlaying and replayCtrl.isClientReady:
+        #     d, s = replayCtrl.getSPGGunMarkerParams()
+        #     if d != -1.0 and s != -1.0:
+        #         dispersionAngle = d
+        # elif replayCtrl.isRecording:
+        #     if replayCtrl.isServerAim and isServerAim:
+        #         replayCtrl.setSPGGunMarkerParams(dispersionAngle, 0.0)
+        #     elif not isServerAim:
+        #         replayCtrl.setSPGGunMarkerParams(dispersionAngle, 0.0)
+
         self._dataProvider.setupConicDispersion(dispersionAngle)
 
 
