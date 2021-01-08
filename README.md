@@ -9,8 +9,9 @@ Original idea by **StranikS_Scan**, completely reworked by me.
 - works well in replays
 
 ## Resource
-- WGmods - in review
-- CurseForge - in review
+- [WGMods](https://wgmods.net/5251/)
+- [CurseForge](https://www.curseforge.com/worldoftanks/wot-mods/dispersionreticle-reworked)
+- [Github Releases Page](https://github.com/Pruszko/DispersionReticle/releases)
 
 ## Installation
 Download "DispersionReticle.wotmod" file and place it into "[WoT game directory]/mods/1.11.0.0/" directory
