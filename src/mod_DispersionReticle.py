@@ -17,6 +17,7 @@ from gui.Scaleform.daapi.view.battle.shared.crosshair.gm_factory import _GUN_MAR
 from gui.Scaleform.genConsts.GUN_MARKER_VIEW_CONSTANTS import GUN_MARKER_VIEW_CONSTANTS as _CONSTANTS
 from gui.battle_control.controllers.crosshair_proxy import GunMarkersSetInfo
 from gui.battle_control.controllers.crosshair_proxy import CrosshairDataProxy
+from gui.battle_control.controllers.crosshair_proxy import _GUN_MARKERS_SET_IDS
 
 
 # Utility decorator to override function in certain class/module
@@ -44,6 +45,21 @@ def addMethod(cls, methodName):
 FOCUS_MARKER_TYPE_OFFSET = 2
 GUN_MARKER_TYPE_CLIENT_FOCUS = GUN_MARKER_TYPE.CLIENT + FOCUS_MARKER_TYPE_OFFSET
 GUN_MARKER_TYPE_SERVER_FOCUS = GUN_MARKER_TYPE.SERVER + FOCUS_MARKER_TYPE_OFFSET
+
+
+###########################################################
+# Helper method for some parts of code where markerType might be UNDEFINED.
+#
+# If standard gun marker is UNDEFINED, focus gun marker should also be UNDEFINED.
+# This, for example, happens during countdown at the start of a match.
+#
+# Without this fix, a reticle would be displayed during countdown and we don't want that.
+###########################################################
+def toFocusGunMarkerType(markerType):
+    if markerType != GUN_MARKER_TYPE.UNDEFINED:
+        return markerType + FOCUS_MARKER_TYPE_OFFSET
+    else:
+        return GUN_MARKER_TYPE.UNDEFINED
 
 
 ###########################################################
@@ -148,27 +164,30 @@ class _NewControlMarkersFactory(_ControlMarkersFactory):
 
     def _createDefaultMarkers(self):
         markerType = self._getMarkerType()
+        focusMarkerType = toFocusGunMarkerType(markerType)
         return (
          self._createArcadeMarker(markerType, _CONSTANTS.ARCADE_GUN_MARKER_NAME),
-         self._createArcadeMarker(markerType + FOCUS_MARKER_TYPE_OFFSET, ARCADE_FOCUS_GUN_MARKER_NAME),
+         self._createArcadeMarker(focusMarkerType, ARCADE_FOCUS_GUN_MARKER_NAME),
          self._createSniperMarker(markerType, _CONSTANTS.SNIPER_GUN_MARKER_NAME),
-         self._createSniperMarker(markerType + FOCUS_MARKER_TYPE_OFFSET, SNIPER_FOCUS_GUN_MARKER_NAME))
+         self._createSniperMarker(focusMarkerType, SNIPER_FOCUS_GUN_MARKER_NAME))
 
     def _createSPGMarkers(self):
         markerType = self._getMarkerType()
+        focusMarkerType = toFocusGunMarkerType(markerType)
         return (
          self._createArcadeMarker(markerType, _CONSTANTS.ARCADE_GUN_MARKER_NAME),
-         self._createArcadeMarker(markerType + FOCUS_MARKER_TYPE_OFFSET, ARCADE_FOCUS_GUN_MARKER_NAME),
+         self._createArcadeMarker(focusMarkerType, ARCADE_FOCUS_GUN_MARKER_NAME),
          self._createSPGMarker(markerType, _CONSTANTS.SPG_GUN_MARKER_NAME),
-         self._createSPGMarker(markerType + FOCUS_MARKER_TYPE_OFFSET, SPG_FOCUS_GUN_MARKER_NAME))
+         self._createSPGMarker(focusMarkerType, SPG_FOCUS_GUN_MARKER_NAME))
 
     def _createDualGunMarkers(self):
         markerType = self._getMarkerType()
+        focusMarkerType = toFocusGunMarkerType(markerType)
         return (
          self._createArcadeMarker(markerType, _CONSTANTS.DUAL_GUN_ARCADE_MARKER_NAME),
-         self._createArcadeMarker(markerType + FOCUS_MARKER_TYPE_OFFSET, DUAL_FOCUS_GUN_ARCADE_MARKER_NAME),
+         self._createArcadeMarker(focusMarkerType, DUAL_FOCUS_GUN_ARCADE_MARKER_NAME),
          self._createSniperMarker(markerType, _CONSTANTS.DUAL_GUN_SNIPER_MARKER_NAME),
-         self._createSniperMarker(markerType + FOCUS_MARKER_TYPE_OFFSET, DUAL_FOCUS_GUN_SNIPER_MARKER_NAME))
+         self._createSniperMarker(focusMarkerType, DUAL_FOCUS_GUN_SNIPER_MARKER_NAME))
 
 
 # It is needed to be overridden manually.
@@ -229,6 +248,14 @@ _DEFAULT_VALUES.update({
     SERVER_GUN_MARKER_FOCUS_DATA_PROVIDER: lambda: _Observable(None),
     SERVER_SPG_GUN_MARKER_FOCUS_DATA_PROVIDER: lambda: _Observable(None)
 })
+
+# crosshair_proxy
+_GUN_MARKERS_SET_IDS += (
+    CLIENT_GUN_MARKER_FOCUS_DATA_PROVIDER,
+    CLIENT_SPG_GUN_MARKER_FOCUS_DATA_PROVIDER,
+    SERVER_GUN_MARKER_FOCUS_DATA_PROVIDER,
+    SERVER_SPG_GUN_MARKER_FOCUS_DATA_PROVIDER
+)
 
 # gun_marker_ctrl
 _GunMarkersDPFactory._clientFocusDataProvider = aih_global_binding.bindRW(CLIENT_GUN_MARKER_FOCUS_DATA_PROVIDER)
