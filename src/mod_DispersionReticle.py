@@ -75,7 +75,7 @@ def toFocusGunMarkerType(markerType):
 # wouldn't be updated.
 #
 # Notes:
-# - Every control mode (there are 7 of them) has their own gun marker decorator.
+# - Every control mode related to gun markers (there are 7 of them) has their own gun marker decorator.
 ###########################################################
 
 @overrideMethod(AvatarInputHandler.AvatarInputHandler, "updateGunMarker")
@@ -202,8 +202,7 @@ gm_factory._FACTORIES_COLLECTION = (_NewControlMarkersFactory, _OptionalMarkersF
 # Otherwise, GUI.WGCrosshairFlash will complain with failing
 # to assign data provider by raising an exception.
 #
-# Basically, gun marker controllers and factories communicates
-# via them.
+# Basically, gun marker controllers and factories uses them.
 #
 # Controllers provides data (positionMatrix, startSize, maybe something more)
 # and factories assigns providers of them to GUI.WGCrosshairFlash object
@@ -344,7 +343,7 @@ def _getSPGDataProvider(func, self, markerType):
 # Return new decorator that includes new reticle controllers
 #
 # Basically, creates controllers of each markerType and provides them with proper
-# data provider to communicate with factories.
+# data provider to communicate with crosshair flash component.
 #
 # Gun marker decorator manages all created controllers and forwards properly all methods
 # related with them. Because decorator accepts only 2 controllers (vanilla client
@@ -375,6 +374,7 @@ def createGunMarker(func, isStrategic):
     return _NewGunMarkersDecorator(clientMarker, serverMarker, clientMarkerFocus, serverMarkerFocus)
 
 
+###########################################################
 # Helper method to calculate diameter of fully aimed reticle
 #
 # Reads dispersion angle from vehicle descriptor and multiplies
@@ -387,6 +387,7 @@ def createGunMarker(func, isStrategic):
 #
 # Dispersion angle is an multiplier per 1m unit, so it is
 # an easy multiplication with distance that is also in meters.
+###########################################################
 def getFocusedSize(positionMatrix):
     cameraPos = BigWorld.camera().position
     shotDir = positionMatrix.applyToOrigin() - cameraPos
@@ -447,10 +448,12 @@ class _FocusGunMarkerController(_DefaultGunMarkerController):
             self._dataProvider.updateSize(self._DefaultGunMarkerController__curSize, relaxTime)
 
 
+###########################################################
 # Helper method to calculate dispersion angle of fully aimed SPG reticle
 #
 # Just reads dispersion angle from vehicle descriptor and multiplies
-# it with dispersion multiplier from PlayerAvatar (Avatar.py)
+# it with dispersion multiplier from PlayerAvatar (Avatar.py).
+###########################################################
 def getFocusedDispersionAngle():
     playerAvatar = BigWorld.player()
     vehicleDesc = playerAvatar._PlayerAvatar__getDetailedVehicleDescriptor()
