@@ -7,6 +7,7 @@ Original idea by **StranikS_Scan**, completely reworked by me.
 - shows additional reticle displaying fully focused dispersion of a gun
 - works well with "Use server reticle" option from game settings
 - works well in replays
+- (DispersionReticle_server_reticle) display both client and server reticles with "Use server reticle" option
 
 ## Resource
 - [WGMods](https://wgmods.net/5251/)
@@ -14,9 +15,17 @@ Original idea by **StranikS_Scan**, completely reworked by me.
 - [Github Releases Page](https://github.com/Pruszko/DispersionReticle/releases)
 
 ## Installation
-Download "DispersionReticle.wotmod" file and place it into "[WoT game directory]/mods/[version]/" directory
+For vanilla behavior with gun dispersion (adds dispersion reticle to client/server reticle):
+- Copy "DispersionReticle.wotmod" file into "[WoT game directory]/mods/[version]/" directory
+
+For both client and server crosshair with gun dispersion:
+- Copy "DispersionReticle_server_reticle.wotmod" file into "[WoT game directory]/mods/[version]/" directory
+
+Note: Choose *ONLY ONE* of them
 
 ## Compatibility
-Mod should be compatible with any crosshair mods that changes how crosshair or reticle looks like, however **it is not compatible with mod displaying both client and server reticles.**
+This mod **IS NOT** compatible with mods adding **client+server marker** at once.
 
-In the future, I'll add an additional version (or functionality) that will cooperate with dispersion reticle.
+Use "DispersionReticle_server_reticle.wotmod" for similar functionality instead.
+
+However, it should be compatible with any crosshair mods that changes how crosshair or reticle looks like.

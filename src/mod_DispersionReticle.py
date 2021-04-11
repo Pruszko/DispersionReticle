@@ -1,4 +1,4 @@
-import BigWorld, Math, BattleReplay
+import BigWorld, Math
 import AvatarInputHandler
 from aih_constants import GUN_MARKER_TYPE
 from AvatarInputHandler import gun_marker_ctrl
@@ -20,23 +20,33 @@ from gui.battle_control.controllers.crosshair_proxy import CrosshairDataProxy
 from gui.battle_control.controllers.crosshair_proxy import _GUN_MARKERS_SET_IDS
 
 
+# A switch to compile two versions of this mod.
+# One is normal, the second is with both client and server reticle.
+# Because there are no very much changes between
+# them, they're merged into one file.
+MOD_VERSION_NORMAL = 0
+MOD_VERSION_CLIENT_SERVER = 1
+
+MOD_VERSION_CURRENT = MOD_VERSION_NORMAL
+
+
 # Utility decorator to override function in certain class/module
-def overrideMethod(cls, methodName):
+def overrideIn(cls):
     def _overrideMethod(func):
-        old = getattr(cls, methodName)
+        old = getattr(cls, func.__name__)
 
         def wrapper(*args, **kwargs):
             return func(old, *args, **kwargs)
 
-        setattr(cls, methodName, wrapper)
+        setattr(cls, func.__name__, wrapper)
         return wrapper
     return _overrideMethod
 
 
 # Utility decorator to add new function in certain class/module
-def addMethod(cls, methodName):
+def addMethodTo(cls):
     def _overrideMethod(func):
-        setattr(cls, methodName, func)
+        setattr(cls, func.__name__, func)
         return func
     return _overrideMethod
 
@@ -45,21 +55,6 @@ def addMethod(cls, methodName):
 FOCUS_MARKER_TYPE_OFFSET = 2
 GUN_MARKER_TYPE_CLIENT_FOCUS = GUN_MARKER_TYPE.CLIENT + FOCUS_MARKER_TYPE_OFFSET
 GUN_MARKER_TYPE_SERVER_FOCUS = GUN_MARKER_TYPE.SERVER + FOCUS_MARKER_TYPE_OFFSET
-
-
-###########################################################
-# Helper method for some parts of code where markerType might be UNDEFINED.
-#
-# If standard gun marker is UNDEFINED, focus gun marker should also be UNDEFINED.
-# This, for example, happens during countdown at the start of a match.
-#
-# Without this fix, a reticle would be displayed during countdown and we don't want that.
-###########################################################
-def toFocusGunMarkerType(markerType):
-    if markerType != GUN_MARKER_TYPE.UNDEFINED:
-        return markerType + FOCUS_MARKER_TYPE_OFFSET
-    else:
-        return GUN_MARKER_TYPE.UNDEFINED
 
 
 ###########################################################
@@ -78,7 +73,7 @@ def toFocusGunMarkerType(markerType):
 # - Every control mode related to gun markers (there are 7 of them) has their own gun marker decorator.
 ###########################################################
 
-@overrideMethod(AvatarInputHandler.AvatarInputHandler, "updateGunMarker")
+@overrideIn(AvatarInputHandler.AvatarInputHandler)
 def updateGunMarker(func, self, pos, direction, size, relaxTime, collData):
     self._AvatarInputHandler__curCtrl.updateGunMarker(_GUN_MARKER_TYPE.CLIENT,
                                                       pos, direction, size, relaxTime, collData)
@@ -86,7 +81,7 @@ def updateGunMarker(func, self, pos, direction, size, relaxTime, collData):
                                                       pos, direction, size, relaxTime, collData)
 
 
-@overrideMethod(AvatarInputHandler.AvatarInputHandler, "updateGunMarker2")
+@overrideIn(AvatarInputHandler.AvatarInputHandler)
 def updateGunMarker2(func, self, pos, direction, size, relaxTime, collData):
     self._AvatarInputHandler__curCtrl.updateGunMarker(_GUN_MARKER_TYPE.SERVER,
                                                       pos, direction, size, relaxTime, collData)
@@ -105,8 +100,8 @@ def updateGunMarker2(func, self, pos, direction, size, relaxTime, collData):
 ###########################################################
 
 # crosshair_proxy
-@overrideMethod(CrosshairDataProxy, "_CrosshairDataProxy__setGunMarkerState")
-def __setGunMarkerState(func, self, markerType, value):
+@overrideIn(CrosshairDataProxy)
+def _CrosshairDataProxy__setGunMarkerState(func, self, markerType, value):
     position, direction, collision = value
     self.onGunMarkerStateChanged(markerType, position, direction, collision)
     self.onGunMarkerStateChanged(markerType + FOCUS_MARKER_TYPE_OFFSET, position, direction, collision)
@@ -150,6 +145,9 @@ _GUN_MARKER_LINKAGES.update({
 ###########################################################
 # Use new marker factory to create 2x Client marker or 2x Server marker
 #
+# In MOD_VERSION_CLIENT_SERVER it will create both of them
+# if "Use server reticle" is enabled.
+#
 # Standard _ControlMarkersFactory (gm_factory) either instantiates or overrides
 # crosshair flash component for each vehicle types (for ex. normal tanks needs
 # only arcade and sniper reticle).
@@ -159,11 +157,43 @@ _GUN_MARKER_LINKAGES.update({
 # from _GUN_MARKER_LINKAGES (gm_factory) by marker name.
 ###########################################################
 
+
+def selectProperType(markerType, currentType):
+    if currentType != GUN_MARKER_TYPE.UNDEFINED:
+        return markerType
+    return GUN_MARKER_TYPE.UNDEFINED
+
+
+def toFocusGunMarkerType(markerType):
+    if markerType != GUN_MARKER_TYPE.UNDEFINED:
+        return markerType + FOCUS_MARKER_TYPE_OFFSET
+    return GUN_MARKER_TYPE.UNDEFINED
+
+
 # gm_factory
 class _NewControlMarkersFactory(_ControlMarkersFactory):
 
     def _createDefaultMarkers(self):
         markerType = self._getMarkerType()
+
+        if MOD_VERSION_CURRENT == MOD_VERSION_CLIENT_SERVER:
+            clientType = selectProperType(GUN_MARKER_TYPE.CLIENT, markerType)
+            clientFocusType = selectProperType(GUN_MARKER_TYPE_CLIENT_FOCUS, markerType)
+            serverType = selectProperType(GUN_MARKER_TYPE.SERVER, markerType)
+
+            result = (
+                self._createArcadeMarker(clientType, _CONSTANTS.ARCADE_GUN_MARKER_NAME),
+                self._createArcadeMarker(clientFocusType, ARCADE_FOCUS_GUN_MARKER_NAME),
+                self._createSniperMarker(clientType, _CONSTANTS.SNIPER_GUN_MARKER_NAME),
+                self._createSniperMarker(clientFocusType, SNIPER_FOCUS_GUN_MARKER_NAME))
+
+            if markerType == GUN_MARKER_TYPE.SERVER:
+                result += (
+                    self._createArcadeMarker(serverType, _CONSTANTS.DEBUG_ARCADE_GUN_MARKER_NAME),
+                    self._createSniperMarker(serverType, _CONSTANTS.DEBUG_SNIPER_GUN_MARKER_NAME))
+
+            return result
+
         focusMarkerType = toFocusGunMarkerType(markerType)
         return (
          self._createArcadeMarker(markerType, _CONSTANTS.ARCADE_GUN_MARKER_NAME),
@@ -173,6 +203,25 @@ class _NewControlMarkersFactory(_ControlMarkersFactory):
 
     def _createSPGMarkers(self):
         markerType = self._getMarkerType()
+
+        if MOD_VERSION_CURRENT == MOD_VERSION_CLIENT_SERVER:
+            clientType = selectProperType(GUN_MARKER_TYPE.CLIENT, markerType)
+            clientFocusType = selectProperType(GUN_MARKER_TYPE_CLIENT_FOCUS, markerType)
+            serverType = selectProperType(GUN_MARKER_TYPE.SERVER, markerType)
+
+            result = (
+                self._createArcadeMarker(clientType, _CONSTANTS.ARCADE_GUN_MARKER_NAME),
+                self._createArcadeMarker(clientFocusType, ARCADE_FOCUS_GUN_MARKER_NAME),
+                self._createSPGMarker(clientType, _CONSTANTS.SPG_GUN_MARKER_NAME),
+                self._createSPGMarker(clientFocusType, SPG_FOCUS_GUN_MARKER_NAME))
+
+            if markerType == GUN_MARKER_TYPE.SERVER:
+                result += (
+                    self._createArcadeMarker(serverType, _CONSTANTS.DEBUG_ARCADE_GUN_MARKER_NAME),
+                    self._createSPGMarker(serverType, _CONSTANTS.DEBUG_SPG_GUN_MARKER_NAME))
+
+            return result
+
         focusMarkerType = toFocusGunMarkerType(markerType)
         return (
          self._createArcadeMarker(markerType, _CONSTANTS.ARCADE_GUN_MARKER_NAME),
@@ -182,6 +231,25 @@ class _NewControlMarkersFactory(_ControlMarkersFactory):
 
     def _createDualGunMarkers(self):
         markerType = self._getMarkerType()
+
+        if MOD_VERSION_CURRENT == MOD_VERSION_CLIENT_SERVER:
+            clientType = selectProperType(GUN_MARKER_TYPE.CLIENT, markerType)
+            clientFocusType = selectProperType(GUN_MARKER_TYPE_CLIENT_FOCUS, markerType)
+            serverType = selectProperType(GUN_MARKER_TYPE.SERVER, markerType)
+
+            result = (
+                self._createArcadeMarker(clientType, _CONSTANTS.DUAL_GUN_ARCADE_MARKER_NAME),
+                self._createArcadeMarker(clientFocusType, DUAL_FOCUS_GUN_ARCADE_MARKER_NAME),
+                self._createSniperMarker(clientType, _CONSTANTS.DUAL_GUN_SNIPER_MARKER_NAME),
+                self._createSniperMarker(clientFocusType, DUAL_FOCUS_GUN_SNIPER_MARKER_NAME))
+
+            if markerType == GUN_MARKER_TYPE.SERVER:
+                result += (
+                    self._createArcadeMarker(serverType, _CONSTANTS.DEBUG_DUAL_GUN_ARCADE_MARKER_NAME),
+                    self._createSniperMarker(serverType, _CONSTANTS.DEBUG_DUAL_GUN_SNIPER_MARKER_NAME))
+
+            return result
+
         focusMarkerType = toFocusGunMarkerType(markerType)
         return (
          self._createArcadeMarker(markerType, _CONSTANTS.DUAL_GUN_ARCADE_MARKER_NAME),
@@ -270,7 +338,7 @@ GunMarkersSetInfo.serverSPGMarkerFocusDataProvider = aih_global_binding.bindRO(S
 
 
 # gun_marker_ctrl
-@addMethod(_GunMarkersDPFactory, "getClientFocusProvider")
+@addMethodTo(_GunMarkersDPFactory)
 def getClientFocusProvider(self):
     if self._clientFocusDataProvider is None:
         self._clientFocusDataProvider = self._makeDefaultProvider()
@@ -278,7 +346,7 @@ def getClientFocusProvider(self):
 
 
 # gun_marker_ctrl
-@addMethod(_GunMarkersDPFactory, "getServerFocusProvider")
+@addMethodTo(_GunMarkersDPFactory)
 def getServerFocusProvider(self):
     if self._serverFocusDataProvider is None:
         self._serverFocusDataProvider = self._makeDefaultProvider()
@@ -286,7 +354,7 @@ def getServerFocusProvider(self):
 
 
 # gun_marker_ctrl
-@addMethod(_GunMarkersDPFactory, "getClientSPGFocusProvider")
+@addMethodTo(_GunMarkersDPFactory)
 def getClientSPGFocusProvider(self):
     if self._clientSPGFocusDataProvider is None:
         self._clientSPGFocusDataProvider = self._makeSPGProvider()
@@ -294,7 +362,7 @@ def getClientSPGFocusProvider(self):
 
 
 # gun_marker_ctrl
-@addMethod(_GunMarkersDPFactory, "getServerSPGFocusProvider")
+@addMethodTo(_GunMarkersDPFactory)
 def getServerSPGFocusProvider(self):
     if self._serverSPGFocusDataProvider is None:
         self._serverSPGFocusDataProvider = self._makeSPGProvider()
@@ -310,7 +378,7 @@ def getServerSPGFocusProvider(self):
 ###########################################################
 
 # gm_factory
-@overrideMethod(_GunMarkersFactory, "_getMarkerDataProvider")
+@overrideIn(_GunMarkersFactory)
 def _getMarkerDataProvider(func, self, markerType):
     if markerType is GUN_MARKER_TYPE.SERVER:
         return self._markersInfo.serverMarkerDataProvider
@@ -325,7 +393,7 @@ def _getMarkerDataProvider(func, self, markerType):
 
 
 # gm_factory
-@overrideMethod(_GunMarkersFactory, "_getSPGDataProvider")
+@overrideIn(_GunMarkersFactory)
 def _getSPGDataProvider(func, self, markerType):
     if markerType is GUN_MARKER_TYPE.SERVER:
         return self._markersInfo.serverSPGMarkerDataProvider
@@ -358,7 +426,7 @@ def _getSPGDataProvider(func, self, markerType):
 ###########################################################
 
 # gun_marker_ctrl
-@overrideMethod(gun_marker_ctrl, "createGunMarker")
+@overrideIn(gun_marker_ctrl)
 def createGunMarker(func, isStrategic):
     factory = _GunMarkersDPFactory()
     if isStrategic:
@@ -372,6 +440,20 @@ def createGunMarker(func, isStrategic):
         clientMarkerFocus = _FocusGunMarkerController(GUN_MARKER_TYPE_CLIENT_FOCUS, factory.getClientFocusProvider())
         serverMarkerFocus = _FocusGunMarkerController(GUN_MARKER_TYPE_SERVER_FOCUS, factory.getServerFocusProvider())
     return _NewGunMarkersDecorator(clientMarker, serverMarker, clientMarkerFocus, serverMarkerFocus)
+
+
+@overrideIn(gun_marker_ctrl)
+def useClientGunMarker(func):
+    if MOD_VERSION_CURRENT == MOD_VERSION_CLIENT_SERVER:
+        return True
+    return func()
+
+
+@overrideIn(gun_marker_ctrl)
+def useDefaultGunMarkers(func):
+    if MOD_VERSION_CURRENT == MOD_VERSION_CLIENT_SERVER:
+        return False
+    return func()
 
 
 ###########################################################
