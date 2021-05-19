@@ -24,10 +24,19 @@ from gui.battle_control.controllers.crosshair_proxy import _GUN_MARKERS_SET_IDS
 # One is normal, the second is with both client and server reticle.
 # Because there are no very much changes between
 # them, they're merged into one file.
-MOD_VERSION_NORMAL = 0
-MOD_VERSION_CLIENT_SERVER = 1
+MOD_VERSION_DISP = 0
+MOD_VERSION_DISP_CLIENT_SERVER = 1
+MOD_VERSION_CLIENT_SERVER = 2
 
-MOD_VERSION_CURRENT = MOD_VERSION_NORMAL
+MOD_VERSION_CURRENT = MOD_VERSION_CLIENT_SERVER
+
+
+def is_version_disp():
+    return MOD_VERSION_CURRENT == MOD_VERSION_DISP or MOD_VERSION_CURRENT == MOD_VERSION_DISP_CLIENT_SERVER
+
+
+def is_version_server():
+    return MOD_VERSION_CURRENT == MOD_VERSION_CLIENT_SERVER or MOD_VERSION_CURRENT == MOD_VERSION_DISP_CLIENT_SERVER
 
 
 # Utility decorator to override function in certain class/module
@@ -176,16 +185,21 @@ class _NewControlMarkersFactory(_ControlMarkersFactory):
     def _createDefaultMarkers(self):
         markerType = self._getMarkerType()
 
-        if MOD_VERSION_CURRENT == MOD_VERSION_CLIENT_SERVER:
+        if is_version_server():
             clientType = selectProperType(GUN_MARKER_TYPE.CLIENT, markerType)
             clientFocusType = selectProperType(GUN_MARKER_TYPE_CLIENT_FOCUS, markerType)
             serverType = selectProperType(GUN_MARKER_TYPE.SERVER, markerType)
 
-            result = (
-                self._createArcadeMarker(clientType, _CONSTANTS.ARCADE_GUN_MARKER_NAME),
-                self._createArcadeMarker(clientFocusType, ARCADE_FOCUS_GUN_MARKER_NAME),
-                self._createSniperMarker(clientType, _CONSTANTS.SNIPER_GUN_MARKER_NAME),
-                self._createSniperMarker(clientFocusType, SNIPER_FOCUS_GUN_MARKER_NAME))
+            if is_version_disp():
+                result = (
+                    self._createArcadeMarker(clientType, _CONSTANTS.ARCADE_GUN_MARKER_NAME),
+                    self._createArcadeMarker(clientFocusType, ARCADE_FOCUS_GUN_MARKER_NAME),
+                    self._createSniperMarker(clientType, _CONSTANTS.SNIPER_GUN_MARKER_NAME),
+                    self._createSniperMarker(clientFocusType, SNIPER_FOCUS_GUN_MARKER_NAME))
+            else:
+                result = (
+                    self._createArcadeMarker(clientType, _CONSTANTS.ARCADE_GUN_MARKER_NAME),
+                    self._createSniperMarker(clientType, _CONSTANTS.SNIPER_GUN_MARKER_NAME))
 
             if markerType == GUN_MARKER_TYPE.SERVER:
                 result += (
@@ -204,16 +218,21 @@ class _NewControlMarkersFactory(_ControlMarkersFactory):
     def _createSPGMarkers(self):
         markerType = self._getMarkerType()
 
-        if MOD_VERSION_CURRENT == MOD_VERSION_CLIENT_SERVER:
+        if is_version_server():
             clientType = selectProperType(GUN_MARKER_TYPE.CLIENT, markerType)
             clientFocusType = selectProperType(GUN_MARKER_TYPE_CLIENT_FOCUS, markerType)
             serverType = selectProperType(GUN_MARKER_TYPE.SERVER, markerType)
 
-            result = (
-                self._createArcadeMarker(clientType, _CONSTANTS.ARCADE_GUN_MARKER_NAME),
-                self._createArcadeMarker(clientFocusType, ARCADE_FOCUS_GUN_MARKER_NAME),
-                self._createSPGMarker(clientType, _CONSTANTS.SPG_GUN_MARKER_NAME),
-                self._createSPGMarker(clientFocusType, SPG_FOCUS_GUN_MARKER_NAME))
+            if is_version_disp():
+                result = (
+                    self._createArcadeMarker(clientType, _CONSTANTS.ARCADE_GUN_MARKER_NAME),
+                    self._createArcadeMarker(clientFocusType, ARCADE_FOCUS_GUN_MARKER_NAME),
+                    self._createSPGMarker(clientType, _CONSTANTS.SPG_GUN_MARKER_NAME),
+                    self._createSPGMarker(clientFocusType, SPG_FOCUS_GUN_MARKER_NAME))
+            else:
+                result = (
+                    self._createArcadeMarker(clientType, _CONSTANTS.ARCADE_GUN_MARKER_NAME),
+                    self._createSPGMarker(clientType, _CONSTANTS.SPG_GUN_MARKER_NAME))
 
             if markerType == GUN_MARKER_TYPE.SERVER:
                 result += (
@@ -232,16 +251,21 @@ class _NewControlMarkersFactory(_ControlMarkersFactory):
     def _createDualGunMarkers(self):
         markerType = self._getMarkerType()
 
-        if MOD_VERSION_CURRENT == MOD_VERSION_CLIENT_SERVER:
+        if is_version_server():
             clientType = selectProperType(GUN_MARKER_TYPE.CLIENT, markerType)
             clientFocusType = selectProperType(GUN_MARKER_TYPE_CLIENT_FOCUS, markerType)
             serverType = selectProperType(GUN_MARKER_TYPE.SERVER, markerType)
 
-            result = (
-                self._createArcadeMarker(clientType, _CONSTANTS.DUAL_GUN_ARCADE_MARKER_NAME),
-                self._createArcadeMarker(clientFocusType, DUAL_FOCUS_GUN_ARCADE_MARKER_NAME),
-                self._createSniperMarker(clientType, _CONSTANTS.DUAL_GUN_SNIPER_MARKER_NAME),
-                self._createSniperMarker(clientFocusType, DUAL_FOCUS_GUN_SNIPER_MARKER_NAME))
+            if is_version_disp():
+                result = (
+                    self._createArcadeMarker(clientType, _CONSTANTS.DUAL_GUN_ARCADE_MARKER_NAME),
+                    self._createArcadeMarker(clientFocusType, DUAL_FOCUS_GUN_ARCADE_MARKER_NAME),
+                    self._createSniperMarker(clientType, _CONSTANTS.DUAL_GUN_SNIPER_MARKER_NAME),
+                    self._createSniperMarker(clientFocusType, DUAL_FOCUS_GUN_SNIPER_MARKER_NAME))
+            else:
+                result = (
+                    self._createArcadeMarker(clientType, _CONSTANTS.DUAL_GUN_ARCADE_MARKER_NAME),
+                    self._createSniperMarker(clientType, _CONSTANTS.DUAL_GUN_SNIPER_MARKER_NAME))
 
             if markerType == GUN_MARKER_TYPE.SERVER:
                 result += (
@@ -444,14 +468,14 @@ def createGunMarker(func, isStrategic):
 
 @overrideIn(gun_marker_ctrl)
 def useClientGunMarker(func):
-    if MOD_VERSION_CURRENT == MOD_VERSION_CLIENT_SERVER:
+    if is_version_server():
         return True
     return func()
 
 
 @overrideIn(gun_marker_ctrl)
 def useDefaultGunMarkers(func):
-    if MOD_VERSION_CURRENT == MOD_VERSION_CLIENT_SERVER:
+    if is_version_server():
         return False
     return func()
 
