@@ -7,7 +7,7 @@ from AvatarInputHandler import _GUN_MARKER_TYPE
 from AvatarInputHandler.aih_global_binding import BINDING_ID, _DEFAULT_VALUES, _Observable
 from AvatarInputHandler.gun_marker_ctrl import IGunMarkerController
 from AvatarInputHandler.gun_marker_ctrl import _DefaultGunMarkerController, _SPGGunMarkerController
-from AvatarInputHandler.gun_marker_ctrl import _GunMarkersDPFactory, _makeWorldMatrix, _calcScale
+from AvatarInputHandler.gun_marker_ctrl import _GunMarkersDPFactory, _makeWorldMatrix
 from AvatarInputHandler.gun_marker_ctrl import _BINDING_ID, _MARKER_TYPE, _MARKER_FLAG
 from gui.Scaleform.daapi.view.battle.shared.crosshair import gm_factory
 from gui.Scaleform.daapi.view.battle.shared.crosshair.gm_factory import _GunMarkersFactory
@@ -42,12 +42,17 @@ def is_version_server():
 # Utility decorator to override function in certain class/module
 def overrideIn(cls):
     def _overrideMethod(func):
-        old = getattr(cls, func.__name__)
+        funcName = func.__name__
+
+        if funcName.startswith("__"):
+            funcName = "_" + cls.__name__ + funcName
+
+        old = getattr(cls, funcName)
 
         def wrapper(*args, **kwargs):
             return func(old, *args, **kwargs)
 
-        setattr(cls, func.__name__, wrapper)
+        setattr(cls, funcName, wrapper)
         return wrapper
     return _overrideMethod
 
@@ -110,7 +115,7 @@ def updateGunMarker2(func, self, pos, direction, size, relaxTime, collData):
 
 # crosshair_proxy
 @overrideIn(CrosshairDataProxy)
-def _CrosshairDataProxy__setGunMarkerState(func, self, markerType, value):
+def __setGunMarkerState(func, self, markerType, value):
     position, direction, collision = value
     self.onGunMarkerStateChanged(markerType, position, direction, collision)
     self.onGunMarkerStateChanged(markerType + FOCUS_MARKER_TYPE_OFFSET, position, direction, collision)
@@ -319,10 +324,10 @@ gm_factory._FACTORIES_COLLECTION = (_NewControlMarkersFactory, _OptionalMarkersF
 #   new providers that will be used by crosshair flash objects.
 ###########################################################
 
-CLIENT_GUN_MARKER_FOCUS_DATA_PROVIDER = 14
-CLIENT_SPG_GUN_MARKER_FOCUS_DATA_PROVIDER = 15
-SERVER_GUN_MARKER_FOCUS_DATA_PROVIDER = 16
-SERVER_SPG_GUN_MARKER_FOCUS_DATA_PROVIDER = 17
+CLIENT_GUN_MARKER_FOCUS_DATA_PROVIDER = 6114
+CLIENT_SPG_GUN_MARKER_FOCUS_DATA_PROVIDER = 6115
+SERVER_GUN_MARKER_FOCUS_DATA_PROVIDER = 6116
+SERVER_SPG_GUN_MARKER_FOCUS_DATA_PROVIDER = 6117
 
 # aih_global_binding
 BINDING_ID.RANGE += (
@@ -541,10 +546,10 @@ class _FocusGunMarkerController(_DefaultGunMarkerController):
         #     elif self._gunMarkerType == GUN_MARKER_TYPE_CLIENT_FOCUS:
         #         replayCtrl.setArcadeGunMarkerSize(size)
 
-        positionMatrixForScale = self._DefaultGunMarkerController__checkAndRecalculateIfPositionInExtremeProjection(positionMatrix)
+        positionMatrixForScale = BigWorld.checkAndRecalculateIfPositionInExtremeProjection(positionMatrix)
         worldMatrix = _makeWorldMatrix(positionMatrixForScale)
-        currentSize = _calcScale(worldMatrix, size) * self._DefaultGunMarkerController__screenRatio
-        idealSize = _calcScale(worldMatrix, idealSize) * self._DefaultGunMarkerController__screenRatio
+        currentSize = BigWorld.markerHelperScale(worldMatrix, size) * self._DefaultGunMarkerController__screenRatio
+        idealSize = BigWorld.markerHelperScale(worldMatrix, idealSize) * self._DefaultGunMarkerController__screenRatio
         self._DefaultGunMarkerController__sizeFilter.update(currentSize, idealSize)
         self._DefaultGunMarkerController__curSize = self._DefaultGunMarkerController__sizeFilter.getSize()
         if self._DefaultGunMarkerController__replSwitchTime > 0.0:
