@@ -27,17 +27,17 @@ Original idea by **StranikS_Scan**, completely reworked by me.
 
 ## Installation
 For vanilla behavior with gun dispersion (adds dispersion reticle to client/server reticle):
-- Copy "DispersionReticle.wotmod" file into "[WoT game directory]/mods/[version]/" directory
+- Copy "DispersionReticle.wotmod" file into "[WoT game directory]/mods/[version]/" directory  
 For the same behavior but with fixed reticle size (by x0.6 multiplication):
 - Copy "DispersionReticle_x0_6.wotmod" file into "[WoT game directory]/mods/[version]/" directory
 
 For both client and server crosshair only:
-- Copy "ClientServerReticle.wotmod" file into "[WoT game directory]/mods/[version]/" directory
+- Copy "ClientServerReticle.wotmod" file into "[WoT game directory]/mods/[version]/" directory  
 For the same behavior but with fixed reticle size (by x0.6 multiplication):
 - Copy "ClientServerReticle_x0_6.wotmod" file into "[WoT game directory]/mods/[version]/" directory
 
 For both client and server crosshair with gun dispersion:
-- Copy "DispersionReticle_all.wotmod" file into "[WoT game directory]/mods/[version]/" directory
+- Copy "DispersionReticle_all.wotmod" file into "[WoT game directory]/mods/[version]/" directory  
 For the same behavior but with fixed reticle size (by x0.6 multiplication):
 - Copy "DispersionReticle_all_x0_6.wotmod" file into "[WoT game directory]/mods/[version]/" directory
 
