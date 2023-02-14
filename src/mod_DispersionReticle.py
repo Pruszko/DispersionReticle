@@ -1,4 +1,4 @@
-import BigWorld, Math
+import BigWorld, Math, GUI, BattleReplay
 import AvatarInputHandler
 from aih_constants import GUN_MARKER_TYPE
 from AvatarInputHandler import gun_marker_ctrl
@@ -28,15 +28,19 @@ MOD_VERSION_DISP = 0
 MOD_VERSION_DISP_CLIENT_SERVER = 1
 MOD_VERSION_CLIENT_SERVER = 2
 
+MOD_VERSION_IS_X0_6 = True
+
 MOD_VERSION_CURRENT = MOD_VERSION_DISP
 
 
 def is_version_disp():
-    return MOD_VERSION_CURRENT == MOD_VERSION_DISP or MOD_VERSION_CURRENT == MOD_VERSION_DISP_CLIENT_SERVER
+    return MOD_VERSION_CURRENT == MOD_VERSION_DISP or \
+           MOD_VERSION_CURRENT == MOD_VERSION_DISP_CLIENT_SERVER
 
 
 def is_version_server():
-    return MOD_VERSION_CURRENT == MOD_VERSION_CLIENT_SERVER or MOD_VERSION_CURRENT == MOD_VERSION_DISP_CLIENT_SERVER
+    return MOD_VERSION_CURRENT == MOD_VERSION_CLIENT_SERVER or \
+           MOD_VERSION_CURRENT == MOD_VERSION_DISP_CLIENT_SERVER
 
 
 # Utility decorator to override function in certain class/module
@@ -459,13 +463,13 @@ def _getSPGDataProvider(func, self, markerType):
 def createGunMarker(func, isStrategic):
     factory = _GunMarkersDPFactory()
     if isStrategic:
-        clientMarker = _SPGGunMarkerController(_MARKER_TYPE.CLIENT, factory.getClientSPGProvider())
-        serverMarker = _SPGGunMarkerController(_MARKER_TYPE.SERVER, factory.getServerSPGProvider())
+        clientMarker = _NewSPGGunMarkerController(_MARKER_TYPE.CLIENT, factory.getClientSPGProvider())
+        serverMarker = _NewSPGGunMarkerController(_MARKER_TYPE.SERVER, factory.getServerSPGProvider())
         clientMarkerFocus = _FocusSPGGunMarkerController(GUN_MARKER_TYPE_CLIENT_FOCUS, factory.getClientSPGFocusProvider())
         serverMarkerFocus = _FocusSPGGunMarkerController(GUN_MARKER_TYPE_SERVER_FOCUS, factory.getServerSPGFocusProvider())
     else:
-        clientMarker = _DefaultGunMarkerController(_MARKER_TYPE.CLIENT, factory.getClientProvider())
-        serverMarker = _DefaultGunMarkerController(_MARKER_TYPE.SERVER, factory.getServerProvider())
+        clientMarker = _NewDefaultGunMarkerController(_MARKER_TYPE.CLIENT, factory.getClientProvider())
+        serverMarker = _NewDefaultGunMarkerController(_MARKER_TYPE.SERVER, factory.getServerProvider())
         clientMarkerFocus = _FocusGunMarkerController(GUN_MARKER_TYPE_CLIENT_FOCUS, factory.getClientFocusProvider())
         serverMarkerFocus = _FocusGunMarkerController(GUN_MARKER_TYPE_SERVER_FOCUS, factory.getServerFocusProvider())
     return _NewGunMarkersDecorator(clientMarker, serverMarker, clientMarkerFocus, serverMarkerFocus)
@@ -514,6 +518,47 @@ def getFocusedSize(positionMatrix):
 
 
 # gun_marker_ctrl
+class _NewDefaultGunMarkerController(_DefaultGunMarkerController):
+
+    def update(self, markerType, pos, direction, sizeVector, relaxTime, collData):
+        super(_DefaultGunMarkerController, self).update(markerType, pos, direction, sizeVector, relaxTime, collData)
+        positionMatrix = Math.Matrix()
+        positionMatrix.setTranslate(pos)
+        self._updateMatrixProvider(positionMatrix, relaxTime)
+
+        size = sizeVector[0]
+        idealSize = sizeVector[1]
+
+        replayCtrl = BattleReplay.g_replayCtrl
+        if replayCtrl.isPlaying and replayCtrl.isClientReady:
+            s = replayCtrl.getArcadeGunMarkerSize()
+            if s != -1.0:
+                size = s
+        elif replayCtrl.isRecording:
+            if replayCtrl.isServerAim and self._gunMarkerType == GUN_MARKER_TYPE_SERVER_FOCUS:
+                replayCtrl.setArcadeGunMarkerSize(size)
+            elif self._gunMarkerType == GUN_MARKER_TYPE_CLIENT_FOCUS:
+                replayCtrl.setArcadeGunMarkerSize(size)
+
+        # this have to be here, we don't want to corrupt replays
+        if MOD_VERSION_IS_X0_6:
+            size *= 0.6
+            idealSize *= 0.6
+
+        positionMatrixForScale = BigWorld.checkAndRecalculateIfPositionInExtremeProjection(positionMatrix)
+        worldMatrix = _makeWorldMatrix(positionMatrixForScale)
+        currentSize = BigWorld.markerHelperScale(worldMatrix, size) * self._DefaultGunMarkerController__screenRatio
+        idealSize = BigWorld.markerHelperScale(worldMatrix, idealSize) * self._DefaultGunMarkerController__screenRatio
+        self._DefaultGunMarkerController__sizeFilter.update(currentSize, idealSize)
+        self._DefaultGunMarkerController__curSize = self._DefaultGunMarkerController__sizeFilter.getSize()
+        if self._DefaultGunMarkerController__replSwitchTime > 0.0:
+            self._DefaultGunMarkerController__replSwitchTime -= relaxTime
+            self._dataProvider.updateSize(self._DefaultGunMarkerController__curSize, 0.0)
+        else:
+            self._dataProvider.updateSize(self._DefaultGunMarkerController__curSize, relaxTime)
+
+
+# gun_marker_ctrl
 class _FocusGunMarkerController(_DefaultGunMarkerController):
 
     def update(self, markerType, pos, direction, sizeVector, relaxTime, collData):
@@ -527,13 +572,16 @@ class _FocusGunMarkerController(_DefaultGunMarkerController):
         size = getFocusedSize(positionMatrix)
         idealSize = size
 
+        if MOD_VERSION_IS_X0_6:
+            size *= 0.6
+            idealSize *= 0.6
+
         # Those below lines of code have to be commented for dispersion gun markers.
         # Otherwise, this controller would:
         # - read current dispersion from replay controller, by this, it
         #   would override calculated focused dispersion in replays
         # - it would override gun dispersion of vanilla gun marker in
-        #   replay file (undefined behavior, in replays it probably would
-        #   display zero-size dispersion).
+        #   replay file (undefined behavior, in replays it displays as zero-size dispersion).
         #
         # replayCtrl = BattleReplay.g_replayCtrl
         # if replayCtrl.isPlaying and replayCtrl.isClientReady:
@@ -575,6 +623,23 @@ def getFocusedDispersionAngle():
 
 
 # gun_marker_ctrl
+class _NewSPGGunMarkerController(_SPGGunMarkerController):
+
+    def _update(self):
+        pos3d, vel3d, gravity3d = self._getCurrentShotInfo()
+        replayCtrl = BattleReplay.g_replayCtrl
+        if replayCtrl.isPlaying and replayCtrl.isClientReady:
+            self._SPGGunMarkerController__updateRelaxTime()
+        self._updateDispersionData()
+
+        newSize = self._size
+        if MOD_VERSION_IS_X0_6:
+            newSize *= 0.6
+
+        self._dataProvider.update(pos3d, vel3d, gravity3d, newSize)
+
+
+# gun_marker_ctrl
 class _FocusSPGGunMarkerController(_SPGGunMarkerController):
     def _updateDispersionData(self):
         # dispersionAngle = self._gunRotator.dispersionAngle
@@ -585,8 +650,7 @@ class _FocusSPGGunMarkerController(_SPGGunMarkerController):
         # - read current dispersion from replay controller, by this, it
         #   would override calculated focused dispersion in replays
         # - it would override gun dispersion of vanilla gun marker in
-        #   replay file (undefined behavior, in replays it probably would
-        #   display zero-size dispersion).
+        #   replay file (undefined behavior, in replays it displays as zero-size dispersion).
         #
         # isServerAim = self._gunMarkerType == GUN_MARKER_TYPE_SERVER_FOCUS
         # replayCtrl = BattleReplay.g_replayCtrl
