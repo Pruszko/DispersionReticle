@@ -18,7 +18,7 @@ Original idea by **StranikS_Scan**, completely reworked by me.
 - **"Use server reticle"** option additionally shows server reticle
 
 **DispersionReticle_all**:
-- combines features of **DispersionReticle** and **DispersionReticle_server**
+- combines features of **DispersionReticle** and **ClientServerReticle**
 
 ## Resource
 - [WGMods](https://wgmods.net/5251/)
@@ -47,8 +47,8 @@ Note: Choose **ONLY ONE** of them
 This mod **IS NOT** compatible with mods adding **client+server marker** at once.
 Also, this mod **IS NOT** compatible with mods changing reticle size.
 
-Use "ClientServerReticle.wotmod" or "DispersionReticle_all.wotmod"
-with also their x0.6 fixed reticle size variants for similar functionality instead.
+Use client server reticle versions of this mod 
+or pick "fixed reticle size" variant for similar functionality instead.
 
 However, it should be compatible with any crosshair mods that changes
 how crosshair or reticle looks like.

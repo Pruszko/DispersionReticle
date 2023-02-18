@@ -535,9 +535,9 @@ class _NewDefaultGunMarkerController(_DefaultGunMarkerController):
             if s != -1.0:
                 size = s
         elif replayCtrl.isRecording:
-            if replayCtrl.isServerAim and self._gunMarkerType == GUN_MARKER_TYPE_SERVER_FOCUS:
+            if replayCtrl.isServerAim and self._gunMarkerType == GUN_MARKER_TYPE.SERVER:
                 replayCtrl.setArcadeGunMarkerSize(size)
-            elif self._gunMarkerType == GUN_MARKER_TYPE_CLIENT_FOCUS:
+            elif self._gunMarkerType == GUN_MARKER_TYPE.CLIENT:
                 replayCtrl.setArcadeGunMarkerSize(size)
 
         # this have to be here, we don't want to corrupt replays
