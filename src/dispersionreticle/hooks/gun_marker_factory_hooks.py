@@ -1,11 +1,14 @@
 from gui.Scaleform.daapi.view.battle.shared.crosshair import gm_factory
-from gui.Scaleform.daapi.view.battle.shared.crosshair.gm_factory import _ControlMarkersFactory,\
-    _OptionalMarkersFactory, _EquipmentMarkersFactory
+from gui.Scaleform.daapi.view.battle.shared.crosshair.gm_factory import \
+    _ControlMarkersFactory,\
+    _OptionalMarkersFactory,\
+    _EquipmentMarkersFactory
 from gui.Scaleform.daapi.view.battle.shared.crosshair.gm_factory import _GUN_MARKER_LINKAGES
 from gui.Scaleform.genConsts.GUN_MARKER_VIEW_CONSTANTS import GUN_MARKER_VIEW_CONSTANTS as _CONSTANTS
 
-from dispersionreticle.utils import version
+from dispersionreticle.config import g_config
 from dispersionreticle.utils.gun_marker_type import *
+
 
 ###########################################################
 # Adds linkage for new reticles so they'll use default reticle
@@ -55,30 +58,18 @@ _GUN_MARKER_LINKAGES.update({
 ###########################################################
 
 
-def selectProperType(markerType, currentType):
-    if currentType != GUN_MARKER_TYPE.UNDEFINED:
-        return markerType
-    return GUN_MARKER_TYPE.UNDEFINED
-
-
-def toFocusGunMarkerType(markerType):
-    if markerType != GUN_MARKER_TYPE.UNDEFINED:
-        return markerType + FOCUS_MARKER_TYPE_OFFSET
-    return GUN_MARKER_TYPE.UNDEFINED
-
-
 # gm_factory
 class _NewControlMarkersFactory(_ControlMarkersFactory):
 
     def _createDefaultMarkers(self):
         markerType = self._getMarkerType()
 
-        if version.isWithServerReticle():
+        if g_config.isServerReticleEnabled():
             clientType = selectProperType(GUN_MARKER_TYPE.CLIENT, markerType)
             clientFocusType = selectProperType(GUN_MARKER_TYPE_CLIENT_FOCUS, markerType)
             serverType = selectProperType(GUN_MARKER_TYPE.SERVER, markerType)
 
-            if version.isWithDispersionReticle():
+            if g_config.isDispersionReticleEnabled():
                 result = (
                     self._createArcadeMarker(clientType, _CONSTANTS.ARCADE_GUN_MARKER_NAME),
                     self._createArcadeMarker(clientFocusType, ARCADE_FOCUS_GUN_MARKER_NAME),
@@ -96,22 +87,27 @@ class _NewControlMarkersFactory(_ControlMarkersFactory):
 
             return result
 
-        focusMarkerType = toFocusGunMarkerType(markerType)
+        if g_config.isDispersionReticleEnabled():
+            focusMarkerType = toFocusGunMarkerType(markerType)
+            return (
+                self._createArcadeMarker(markerType, _CONSTANTS.ARCADE_GUN_MARKER_NAME),
+                self._createArcadeMarker(focusMarkerType, ARCADE_FOCUS_GUN_MARKER_NAME),
+                self._createSniperMarker(markerType, _CONSTANTS.SNIPER_GUN_MARKER_NAME),
+                self._createSniperMarker(focusMarkerType, SNIPER_FOCUS_GUN_MARKER_NAME))
+
         return (
-         self._createArcadeMarker(markerType, _CONSTANTS.ARCADE_GUN_MARKER_NAME),
-         self._createArcadeMarker(focusMarkerType, ARCADE_FOCUS_GUN_MARKER_NAME),
-         self._createSniperMarker(markerType, _CONSTANTS.SNIPER_GUN_MARKER_NAME),
-         self._createSniperMarker(focusMarkerType, SNIPER_FOCUS_GUN_MARKER_NAME))
+            self._createArcadeMarker(markerType, _CONSTANTS.ARCADE_GUN_MARKER_NAME),
+            self._createSniperMarker(markerType, _CONSTANTS.SNIPER_GUN_MARKER_NAME))
 
     def _createSPGMarkers(self):
         markerType = self._getMarkerType()
 
-        if version.isWithServerReticle():
+        if g_config.isServerReticleEnabled():
             clientType = selectProperType(GUN_MARKER_TYPE.CLIENT, markerType)
             clientFocusType = selectProperType(GUN_MARKER_TYPE_CLIENT_FOCUS, markerType)
             serverType = selectProperType(GUN_MARKER_TYPE.SERVER, markerType)
 
-            if version.isWithDispersionReticle():
+            if g_config.isDispersionReticleEnabled():
                 result = (
                     self._createArcadeMarker(clientType, _CONSTANTS.ARCADE_GUN_MARKER_NAME),
                     self._createArcadeMarker(clientFocusType, ARCADE_FOCUS_GUN_MARKER_NAME),
@@ -129,22 +125,27 @@ class _NewControlMarkersFactory(_ControlMarkersFactory):
 
             return result
 
-        focusMarkerType = toFocusGunMarkerType(markerType)
+        if g_config.isDispersionReticleEnabled():
+            focusMarkerType = toFocusGunMarkerType(markerType)
+            return (
+                self._createArcadeMarker(markerType, _CONSTANTS.ARCADE_GUN_MARKER_NAME),
+                self._createArcadeMarker(focusMarkerType, ARCADE_FOCUS_GUN_MARKER_NAME),
+                self._createSPGMarker(markerType, _CONSTANTS.SPG_GUN_MARKER_NAME),
+                self._createSPGMarker(focusMarkerType, SPG_FOCUS_GUN_MARKER_NAME))
+
         return (
-         self._createArcadeMarker(markerType, _CONSTANTS.ARCADE_GUN_MARKER_NAME),
-         self._createArcadeMarker(focusMarkerType, ARCADE_FOCUS_GUN_MARKER_NAME),
-         self._createSPGMarker(markerType, _CONSTANTS.SPG_GUN_MARKER_NAME),
-         self._createSPGMarker(focusMarkerType, SPG_FOCUS_GUN_MARKER_NAME))
+            self._createArcadeMarker(markerType, _CONSTANTS.ARCADE_GUN_MARKER_NAME),
+            self._createSPGMarker(markerType, _CONSTANTS.SPG_GUN_MARKER_NAME))
 
     def _createDualGunMarkers(self):
         markerType = self._getMarkerType()
 
-        if version.isWithServerReticle():
+        if g_config.isServerReticleEnabled():
             clientType = selectProperType(GUN_MARKER_TYPE.CLIENT, markerType)
             clientFocusType = selectProperType(GUN_MARKER_TYPE_CLIENT_FOCUS, markerType)
             serverType = selectProperType(GUN_MARKER_TYPE.SERVER, markerType)
 
-            if version.isWithDispersionReticle():
+            if g_config.isDispersionReticleEnabled():
                 result = (
                     self._createArcadeMarker(clientType, _CONSTANTS.DUAL_GUN_ARCADE_MARKER_NAME),
                     self._createArcadeMarker(clientFocusType, DUAL_FOCUS_GUN_ARCADE_MARKER_NAME),
@@ -162,12 +163,29 @@ class _NewControlMarkersFactory(_ControlMarkersFactory):
 
             return result
 
-        focusMarkerType = toFocusGunMarkerType(markerType)
+        if g_config.isDispersionReticleEnabled():
+            focusMarkerType = toFocusGunMarkerType(markerType)
+            return (
+                self._createArcadeMarker(markerType, _CONSTANTS.DUAL_GUN_ARCADE_MARKER_NAME),
+                self._createArcadeMarker(focusMarkerType, DUAL_FOCUS_GUN_ARCADE_MARKER_NAME),
+                self._createSniperMarker(markerType, _CONSTANTS.DUAL_GUN_SNIPER_MARKER_NAME),
+                self._createSniperMarker(focusMarkerType, DUAL_FOCUS_GUN_SNIPER_MARKER_NAME))
+
         return (
-         self._createArcadeMarker(markerType, _CONSTANTS.DUAL_GUN_ARCADE_MARKER_NAME),
-         self._createArcadeMarker(focusMarkerType, DUAL_FOCUS_GUN_ARCADE_MARKER_NAME),
-         self._createSniperMarker(markerType, _CONSTANTS.DUAL_GUN_SNIPER_MARKER_NAME),
-         self._createSniperMarker(focusMarkerType, DUAL_FOCUS_GUN_SNIPER_MARKER_NAME))
+            self._createArcadeMarker(markerType, _CONSTANTS.DUAL_GUN_ARCADE_MARKER_NAME),
+            self._createSniperMarker(markerType, _CONSTANTS.DUAL_GUN_SNIPER_MARKER_NAME))
+
+
+def selectProperType(markerType, currentType):
+    if currentType != GUN_MARKER_TYPE.UNDEFINED:
+        return markerType
+    return GUN_MARKER_TYPE.UNDEFINED
+
+
+def toFocusGunMarkerType(markerType):
+    if markerType != GUN_MARKER_TYPE.UNDEFINED:
+        return markerType + FOCUS_MARKER_TYPE_OFFSET
+    return GUN_MARKER_TYPE.UNDEFINED
 
 
 # It is needed to be overridden manually.

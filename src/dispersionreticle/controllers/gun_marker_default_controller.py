@@ -2,7 +2,7 @@ import BigWorld, Math, BattleReplay
 from AvatarInputHandler.gun_marker_ctrl import _DefaultGunMarkerController, _makeWorldMatrix
 from aih_constants import GUN_MARKER_TYPE
 
-from dispersionreticle.utils import version
+from dispersionreticle.config import g_config
 
 
 # gun_marker_ctrl
@@ -29,9 +29,10 @@ class NewDefaultGunMarkerController(_DefaultGunMarkerController):
                 replayCtrl.setArcadeGunMarkerSize(size)
 
         # this have to be here, we don't want to corrupt replays
-        if version.IS_X0_6:
-            size *= 0.6
-            idealSize *= 0.6
+        sizeMultiplier = g_config.getReticleSizeMultiplier()
+
+        size *= sizeMultiplier
+        idealSize *= sizeMultiplier
 
         positionMatrixForScale = BigWorld.checkAndRecalculateIfPositionInExtremeProjection(positionMatrix)
         worldMatrix = _makeWorldMatrix(positionMatrixForScale)
@@ -62,9 +63,10 @@ class FocusGunMarkerController(_DefaultGunMarkerController):
 
         # here we avoid replay-specific code, it is handled by vanilla controllers
 
-        if version.IS_X0_6:
-            size *= 0.6
-            idealSize *= 0.6
+        sizeMultiplier = g_config.getReticleSizeMultiplier()
+
+        size *= sizeMultiplier
+        idealSize *= sizeMultiplier
 
         positionMatrixForScale = BigWorld.checkAndRecalculateIfPositionInExtremeProjection(positionMatrix)
         worldMatrix = _makeWorldMatrix(positionMatrixForScale)

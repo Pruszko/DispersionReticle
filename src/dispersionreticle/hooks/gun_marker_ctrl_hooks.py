@@ -1,6 +1,7 @@
 from AvatarInputHandler import gun_marker_ctrl
 from AvatarInputHandler.gun_marker_ctrl import _GunMarkersDPFactory, _MARKER_TYPE
 
+from dispersionreticle.config import g_config
 from dispersionreticle.controllers.gun_marker_decorator import \
     NewGunMarkersDecorator, \
     GUN_MARKER_TYPE_CLIENT_FOCUS, \
@@ -12,7 +13,6 @@ from dispersionreticle.controllers.gun_marker_spg_controller import \
     NewSPGGunMarkerController, \
     FocusSPGGunMarkerController
 from dispersionreticle.utils import *
-from dispersionreticle.utils import version
 
 
 ###########################################################
@@ -46,13 +46,13 @@ def createGunMarker(func, isStrategic):
 
 @overrideIn(gun_marker_ctrl)
 def useClientGunMarker(func):
-    if version.isWithServerReticle():
+    if g_config.isServerReticleEnabled():
         return True
     return func()
 
 
 @overrideIn(gun_marker_ctrl)
 def useDefaultGunMarkers(func):
-    if version.isWithServerReticle():
+    if g_config.isServerReticleEnabled():
         return False
     return func()
