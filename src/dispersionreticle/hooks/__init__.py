@@ -1,0 +1,6 @@
+# make sure all hooks are invoked
+import dispersionreticle.hooks.aih_hooks
+import dispersionreticle.hooks.crosshair_proxy_hooks
+import dispersionreticle.hooks.gun_marker_factory_hooks
+import dispersionreticle.hooks.data_provider_hooks
+import dispersionreticle.hooks.gun_marker_ctrl_hooks
