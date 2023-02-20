@@ -27,6 +27,8 @@ def updateGunMarker(func, self, pos, direction, size, relaxTime, collData):
                                                       pos, direction, size, relaxTime, collData)
     self._AvatarInputHandler__curCtrl.updateGunMarker(GUN_MARKER_TYPE_CLIENT_FOCUS,
                                                       pos, direction, size, relaxTime, collData)
+    self._AvatarInputHandler__curCtrl.updateGunMarker(GUN_MARKER_TYPE_CLIENT_LATENCY,
+                                                      pos, direction, size, relaxTime, collData)
 
 
 @overrideIn(AvatarInputHandler.AvatarInputHandler)

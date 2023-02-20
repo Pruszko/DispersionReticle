@@ -1,11 +1,15 @@
 import BigWorld, BattleReplay
-from AvatarInputHandler.gun_marker_ctrl import _SPGGunMarkerController
+from AvatarInputHandler.gun_marker_ctrl import _SPGGunMarkerController, _MARKER_FLAG, _MARKER_TYPE
 
 from dispersionreticle.config import g_config
 
 
 # gun_marker_ctrl
 class NewSPGGunMarkerController(_SPGGunMarkerController):
+    def __init__(self, gunMakerType, dataProvider, enabledFlag=_MARKER_FLAG.UNDEFINED, isMainReticle=True):
+        super(NewSPGGunMarkerController, self).__init__(gunMakerType, dataProvider, enabledFlag=enabledFlag)
+        self.__isMainReticle = isMainReticle
+
     def _update(self):
         pos3d, vel3d, gravity3d = self._getCurrentShotInfo()
         replayCtrl = BattleReplay.g_replayCtrl
@@ -16,6 +20,25 @@ class NewSPGGunMarkerController(_SPGGunMarkerController):
         newSize = self._size * g_config.getReticleSizeMultiplier()
 
         self._dataProvider.update(pos3d, vel3d, gravity3d, newSize)
+
+    def _updateDispersionData(self):
+        dispersionAngle = self._gunRotator.dispersionAngle
+
+        # avoid replay recording if not main reticle
+        if self.__isMainReticle:
+            isServerAim = self._gunMarkerType == _MARKER_TYPE.SERVER
+            replayCtrl = BattleReplay.g_replayCtrl
+            if replayCtrl.isPlaying and replayCtrl.isClientReady:
+                d, s = replayCtrl.getSPGGunMarkerParams()
+                if d != -1.0 and s != -1.0:
+                    dispersionAngle = d
+            elif replayCtrl.isRecording:
+                if replayCtrl.isServerAim and isServerAim:
+                    replayCtrl.setSPGGunMarkerParams(dispersionAngle, 0.0)
+                elif not isServerAim:
+                    replayCtrl.setSPGGunMarkerParams(dispersionAngle, 0.0)
+
+        self._dataProvider.setupConicDispersion(dispersionAngle)
 
 
 # gun_marker_ctrl

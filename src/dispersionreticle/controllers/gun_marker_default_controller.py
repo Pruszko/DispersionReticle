@@ -1,5 +1,5 @@
 import BigWorld, Math, BattleReplay
-from AvatarInputHandler.gun_marker_ctrl import _DefaultGunMarkerController, _makeWorldMatrix
+from AvatarInputHandler.gun_marker_ctrl import _DefaultGunMarkerController, _makeWorldMatrix, _MARKER_FLAG
 from aih_constants import GUN_MARKER_TYPE
 
 from dispersionreticle.config import g_config
@@ -7,6 +7,10 @@ from dispersionreticle.config import g_config
 
 # gun_marker_ctrl
 class NewDefaultGunMarkerController(_DefaultGunMarkerController):
+
+    def __init__(self, gunMakerType, dataProvider, enabledFlag=_MARKER_FLAG.UNDEFINED, isMainReticle=True):
+        super(NewDefaultGunMarkerController, self).__init__(gunMakerType, dataProvider, enabledFlag=enabledFlag)
+        self.__isMainReticle = isMainReticle
 
     def update(self, markerType, pos, direction, sizeVector, relaxTime, collData):
         super(_DefaultGunMarkerController, self).update(markerType, pos, direction, sizeVector, relaxTime, collData)
@@ -17,16 +21,18 @@ class NewDefaultGunMarkerController(_DefaultGunMarkerController):
         size = sizeVector[0]
         idealSize = sizeVector[1]
 
-        replayCtrl = BattleReplay.g_replayCtrl
-        if replayCtrl.isPlaying and replayCtrl.isClientReady:
-            s = replayCtrl.getArcadeGunMarkerSize()
-            if s != -1.0:
-                size = s
-        elif replayCtrl.isRecording:
-            if replayCtrl.isServerAim and self._gunMarkerType == GUN_MARKER_TYPE.SERVER:
-                replayCtrl.setArcadeGunMarkerSize(size)
-            elif self._gunMarkerType == GUN_MARKER_TYPE.CLIENT:
-                replayCtrl.setArcadeGunMarkerSize(size)
+        # avoid replay recording if not main reticle
+        if self.__isMainReticle:
+            replayCtrl = BattleReplay.g_replayCtrl
+            if replayCtrl.isPlaying and replayCtrl.isClientReady:
+                s = replayCtrl.getArcadeGunMarkerSize()
+                if s != -1.0:
+                    size = s
+            elif replayCtrl.isRecording:
+                if replayCtrl.isServerAim and self._gunMarkerType == GUN_MARKER_TYPE.SERVER:
+                    replayCtrl.setArcadeGunMarkerSize(size)
+                elif self._gunMarkerType == GUN_MARKER_TYPE.CLIENT:
+                    replayCtrl.setArcadeGunMarkerSize(size)
 
         # this have to be here, we don't want to corrupt replays
         sizeMultiplier = g_config.getReticleSizeMultiplier()

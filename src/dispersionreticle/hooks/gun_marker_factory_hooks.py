@@ -35,13 +35,25 @@ DUAL_FOCUS_GUN_ARCADE_MARKER_NAME = 'arcadeDualFocusGunMarker'
 DUAL_FOCUS_GUN_SNIPER_MARKER_NAME = 'sniperDualFocusGunMarker'
 SPG_FOCUS_GUN_MARKER_NAME = 'spgFocusGunMarker'
 
+ARCADE_LATENCY_GUN_MARKER_NAME = 'arcadeLatencyGunMarker'
+SNIPER_LATENCY_GUN_MARKER_NAME = 'sniperLatencyGunMarker'
+DUAL_LATENCY_GUN_ARCADE_MARKER_NAME = 'arcadeDualLatencyGunMarker'
+DUAL_LATENCY_GUN_SNIPER_MARKER_NAME = 'sniperDualLatencyGunMarker'
+SPG_LATENCY_GUN_MARKER_NAME = 'spgLatencyGunMarker'
+
 # gm_factory
 _GUN_MARKER_LINKAGES.update({
     ARCADE_FOCUS_GUN_MARKER_NAME: _CONSTANTS.GUN_MARKER_LINKAGE,
     SNIPER_FOCUS_GUN_MARKER_NAME: _CONSTANTS.GUN_MARKER_LINKAGE,
     DUAL_FOCUS_GUN_ARCADE_MARKER_NAME: _CONSTANTS.DUAL_GUN_ARCADE_MARKER_LINKAGE,
     DUAL_FOCUS_GUN_SNIPER_MARKER_NAME: _CONSTANTS.DUAL_GUN_SNIPER_MARKER_LINKAGE,
-    SPG_FOCUS_GUN_MARKER_NAME: _CONSTANTS.GUN_MARKER_SPG_LINKAGE
+    SPG_FOCUS_GUN_MARKER_NAME: _CONSTANTS.GUN_MARKER_SPG_LINKAGE,
+
+    ARCADE_LATENCY_GUN_MARKER_NAME: _CONSTANTS.GUN_MARKER_LINKAGE,
+    SNIPER_LATENCY_GUN_MARKER_NAME: _CONSTANTS.GUN_MARKER_LINKAGE,
+    DUAL_LATENCY_GUN_ARCADE_MARKER_NAME: _CONSTANTS.DUAL_GUN_ARCADE_MARKER_LINKAGE,
+    DUAL_LATENCY_GUN_SNIPER_MARKER_NAME: _CONSTANTS.DUAL_GUN_SNIPER_MARKER_LINKAGE,
+    SPG_LATENCY_GUN_MARKER_NAME: _CONSTANTS.GUN_MARKER_SPG_LINKAGE
 })
 
 
@@ -64,10 +76,11 @@ class _NewControlMarkersFactory(_ControlMarkersFactory):
     def _createDefaultMarkers(self):
         markerType = self._getMarkerType()
 
-        if g_config.isServerReticleEnabled():
+        if g_config.isServerReticleEnabled() or g_config.isLatencyReticleEnabled():
             clientType = selectProperType(GUN_MARKER_TYPE.CLIENT, markerType)
-            clientFocusType = selectProperType(GUN_MARKER_TYPE_CLIENT_FOCUS, markerType)
             serverType = selectProperType(GUN_MARKER_TYPE.SERVER, markerType)
+            clientFocusType = selectProperType(GUN_MARKER_TYPE_CLIENT_FOCUS, markerType)
+            clientLatencyType = selectProperType(GUN_MARKER_TYPE_CLIENT_LATENCY, markerType)
 
             if g_config.isDispersionReticleEnabled():
                 result = (
@@ -81,9 +94,14 @@ class _NewControlMarkersFactory(_ControlMarkersFactory):
                     self._createSniperMarker(clientType, _CONSTANTS.SNIPER_GUN_MARKER_NAME))
 
             if markerType == GUN_MARKER_TYPE.SERVER:
-                result += (
-                    self._createArcadeMarker(serverType, _CONSTANTS.DEBUG_ARCADE_GUN_MARKER_NAME),
-                    self._createSniperMarker(serverType, _CONSTANTS.DEBUG_SNIPER_GUN_MARKER_NAME))
+                if g_config.isServerReticleEnabled():
+                    result += (
+                        self._createArcadeMarker(serverType, _CONSTANTS.DEBUG_ARCADE_GUN_MARKER_NAME),
+                        self._createSniperMarker(serverType, _CONSTANTS.DEBUG_SNIPER_GUN_MARKER_NAME))
+                if g_config.isLatencyReticleEnabled():
+                    result += (
+                        self._createArcadeMarker(clientLatencyType, ARCADE_LATENCY_GUN_MARKER_NAME),
+                        self._createSniperMarker(clientLatencyType, SNIPER_LATENCY_GUN_MARKER_NAME))
 
             return result
 
@@ -102,10 +120,11 @@ class _NewControlMarkersFactory(_ControlMarkersFactory):
     def _createSPGMarkers(self):
         markerType = self._getMarkerType()
 
-        if g_config.isServerReticleEnabled():
+        if g_config.isServerReticleEnabled() or g_config.isLatencyReticleEnabled():
             clientType = selectProperType(GUN_MARKER_TYPE.CLIENT, markerType)
-            clientFocusType = selectProperType(GUN_MARKER_TYPE_CLIENT_FOCUS, markerType)
             serverType = selectProperType(GUN_MARKER_TYPE.SERVER, markerType)
+            clientFocusType = selectProperType(GUN_MARKER_TYPE_CLIENT_FOCUS, markerType)
+            clientLatencyType = selectProperType(GUN_MARKER_TYPE_CLIENT_LATENCY, markerType)
 
             if g_config.isDispersionReticleEnabled():
                 result = (
@@ -119,9 +138,14 @@ class _NewControlMarkersFactory(_ControlMarkersFactory):
                     self._createSPGMarker(clientType, _CONSTANTS.SPG_GUN_MARKER_NAME))
 
             if markerType == GUN_MARKER_TYPE.SERVER:
-                result += (
-                    self._createArcadeMarker(serverType, _CONSTANTS.DEBUG_ARCADE_GUN_MARKER_NAME),
-                    self._createSPGMarker(serverType, _CONSTANTS.DEBUG_SPG_GUN_MARKER_NAME))
+                if g_config.isServerReticleEnabled():
+                    result += (
+                        self._createArcadeMarker(serverType, _CONSTANTS.DEBUG_ARCADE_GUN_MARKER_NAME),
+                        self._createSPGMarker(serverType, _CONSTANTS.DEBUG_SPG_GUN_MARKER_NAME))
+                if g_config.isLatencyReticleEnabled():
+                    result += (
+                        self._createArcadeMarker(clientLatencyType, ARCADE_LATENCY_GUN_MARKER_NAME),
+                        self._createSPGMarker(clientLatencyType, SPG_LATENCY_GUN_MARKER_NAME))
 
             return result
 
@@ -140,10 +164,11 @@ class _NewControlMarkersFactory(_ControlMarkersFactory):
     def _createDualGunMarkers(self):
         markerType = self._getMarkerType()
 
-        if g_config.isServerReticleEnabled():
+        if g_config.isServerReticleEnabled() or g_config.isLatencyReticleEnabled():
             clientType = selectProperType(GUN_MARKER_TYPE.CLIENT, markerType)
-            clientFocusType = selectProperType(GUN_MARKER_TYPE_CLIENT_FOCUS, markerType)
             serverType = selectProperType(GUN_MARKER_TYPE.SERVER, markerType)
+            clientFocusType = selectProperType(GUN_MARKER_TYPE_CLIENT_FOCUS, markerType)
+            clientLatencyType = selectProperType(GUN_MARKER_TYPE_CLIENT_LATENCY, markerType)
 
             if g_config.isDispersionReticleEnabled():
                 result = (
@@ -157,9 +182,14 @@ class _NewControlMarkersFactory(_ControlMarkersFactory):
                     self._createSniperMarker(clientType, _CONSTANTS.DUAL_GUN_SNIPER_MARKER_NAME))
 
             if markerType == GUN_MARKER_TYPE.SERVER:
-                result += (
-                    self._createArcadeMarker(serverType, _CONSTANTS.DEBUG_DUAL_GUN_ARCADE_MARKER_NAME),
-                    self._createSniperMarker(serverType, _CONSTANTS.DEBUG_DUAL_GUN_SNIPER_MARKER_NAME))
+                if g_config.isServerReticleEnabled():
+                    result += (
+                        self._createArcadeMarker(serverType, _CONSTANTS.DEBUG_DUAL_GUN_ARCADE_MARKER_NAME),
+                        self._createSniperMarker(serverType, _CONSTANTS.DEBUG_DUAL_GUN_SNIPER_MARKER_NAME))
+                if g_config.isLatencyReticleEnabled():
+                    result += (
+                        self._createArcadeMarker(clientLatencyType, DUAL_LATENCY_GUN_ARCADE_MARKER_NAME),
+                        self._createSniperMarker(clientLatencyType, DUAL_LATENCY_GUN_SNIPER_MARKER_NAME))
 
             return result
 

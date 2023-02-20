@@ -44,12 +44,17 @@ CLIENT_SPG_GUN_MARKER_FOCUS_DATA_PROVIDER = 6115
 SERVER_GUN_MARKER_FOCUS_DATA_PROVIDER = 6116
 SERVER_SPG_GUN_MARKER_FOCUS_DATA_PROVIDER = 6117
 
+CLIENT_GUN_MARKER_LATENCY_DATA_PROVIDER = 6118
+CLIENT_SPG_GUN_MARKER_LATENCY_DATA_PROVIDER = 6119
+
 # aih_global_binding
 BINDING_ID.RANGE += (
     CLIENT_GUN_MARKER_FOCUS_DATA_PROVIDER,
     CLIENT_SPG_GUN_MARKER_FOCUS_DATA_PROVIDER,
     SERVER_GUN_MARKER_FOCUS_DATA_PROVIDER,
-    SERVER_SPG_GUN_MARKER_FOCUS_DATA_PROVIDER
+    SERVER_SPG_GUN_MARKER_FOCUS_DATA_PROVIDER,
+    CLIENT_GUN_MARKER_LATENCY_DATA_PROVIDER,
+    CLIENT_SPG_GUN_MARKER_LATENCY_DATA_PROVIDER
 )
 
 # aih_global_binding
@@ -57,7 +62,9 @@ _DEFAULT_VALUES.update({
     CLIENT_GUN_MARKER_FOCUS_DATA_PROVIDER: lambda: _Observable(None),
     CLIENT_SPG_GUN_MARKER_FOCUS_DATA_PROVIDER: lambda: _Observable(None),
     SERVER_GUN_MARKER_FOCUS_DATA_PROVIDER: lambda: _Observable(None),
-    SERVER_SPG_GUN_MARKER_FOCUS_DATA_PROVIDER: lambda: _Observable(None)
+    SERVER_SPG_GUN_MARKER_FOCUS_DATA_PROVIDER: lambda: _Observable(None),
+    CLIENT_GUN_MARKER_LATENCY_DATA_PROVIDER: lambda: _Observable(None),
+    CLIENT_SPG_GUN_MARKER_LATENCY_DATA_PROVIDER: lambda: _Observable(None),
 })
 
 # crosshair_proxy
@@ -65,7 +72,9 @@ _GUN_MARKERS_SET_IDS += (
     CLIENT_GUN_MARKER_FOCUS_DATA_PROVIDER,
     CLIENT_SPG_GUN_MARKER_FOCUS_DATA_PROVIDER,
     SERVER_GUN_MARKER_FOCUS_DATA_PROVIDER,
-    SERVER_SPG_GUN_MARKER_FOCUS_DATA_PROVIDER
+    SERVER_SPG_GUN_MARKER_FOCUS_DATA_PROVIDER,
+    CLIENT_GUN_MARKER_LATENCY_DATA_PROVIDER,
+    CLIENT_SPG_GUN_MARKER_LATENCY_DATA_PROVIDER
 )
 
 # gun_marker_ctrl
@@ -74,11 +83,18 @@ _GunMarkersDPFactory._serverFocusDataProvider = aih_global_binding.bindRW(SERVER
 _GunMarkersDPFactory._clientSPGFocusDataProvider = aih_global_binding.bindRW(CLIENT_SPG_GUN_MARKER_FOCUS_DATA_PROVIDER)
 _GunMarkersDPFactory._serverSPGFocusDataProvider = aih_global_binding.bindRW(SERVER_SPG_GUN_MARKER_FOCUS_DATA_PROVIDER)
 
+_GunMarkersDPFactory._clientLatencyDataProvider = aih_global_binding.bindRW(CLIENT_GUN_MARKER_LATENCY_DATA_PROVIDER)
+_GunMarkersDPFactory._clientSPGLatencyDataProvider = aih_global_binding.bindRW(CLIENT_SPG_GUN_MARKER_LATENCY_DATA_PROVIDER)
+
+
 # crosshair_proxy
 GunMarkersSetInfo.clientMarkerFocusDataProvider = aih_global_binding.bindRO(CLIENT_GUN_MARKER_FOCUS_DATA_PROVIDER)
-GunMarkersSetInfo.clientSPGMarkerFocusDataProvider = aih_global_binding.bindRO(CLIENT_SPG_GUN_MARKER_FOCUS_DATA_PROVIDER)
 GunMarkersSetInfo.serverMarkerFocusDataProvider = aih_global_binding.bindRO(SERVER_GUN_MARKER_FOCUS_DATA_PROVIDER)
+GunMarkersSetInfo.clientSPGMarkerFocusDataProvider = aih_global_binding.bindRO(CLIENT_SPG_GUN_MARKER_FOCUS_DATA_PROVIDER)
 GunMarkersSetInfo.serverSPGMarkerFocusDataProvider = aih_global_binding.bindRO(SERVER_SPG_GUN_MARKER_FOCUS_DATA_PROVIDER)
+
+GunMarkersSetInfo.clientMarkerLatencyDataProvider = aih_global_binding.bindRO(CLIENT_GUN_MARKER_LATENCY_DATA_PROVIDER)
+GunMarkersSetInfo.clientSPGMarkerLatencyDataProvider = aih_global_binding.bindRO(CLIENT_SPG_GUN_MARKER_LATENCY_DATA_PROVIDER)
 
 
 # gun_marker_ctrl
@@ -99,6 +115,14 @@ def getServerFocusProvider(self):
 
 # gun_marker_ctrl
 @addMethodTo(_GunMarkersDPFactory)
+def getClientLatencyProvider(self):
+    if self._clientLatencyDataProvider is None:
+        self._clientLatencyDataProvider = self._makeDefaultProvider()
+    return self._clientLatencyDataProvider
+
+
+# gun_marker_ctrl
+@addMethodTo(_GunMarkersDPFactory)
 def getClientSPGFocusProvider(self):
     if self._clientSPGFocusDataProvider is None:
         self._clientSPGFocusDataProvider = self._makeSPGProvider()
@@ -111,6 +135,14 @@ def getServerSPGFocusProvider(self):
     if self._serverSPGFocusDataProvider is None:
         self._serverSPGFocusDataProvider = self._makeSPGProvider()
     return self._serverSPGFocusDataProvider
+
+
+# gun_marker_ctrl
+@addMethodTo(_GunMarkersDPFactory)
+def getClientSPGLatencyProvider(self):
+    if self._clientSPGLatencyDataProvider is None:
+        self._clientSPGLatencyDataProvider = self._makeSPGProvider()
+    return self._clientSPGLatencyDataProvider
 
 
 ###########################################################
@@ -133,6 +165,8 @@ def _getMarkerDataProvider(func, self, markerType):
             return self._markersInfo.clientMarkerDataProvider
         if markerType is GUN_MARKER_TYPE_CLIENT_FOCUS:
             return self._markersInfo.clientMarkerFocusDataProvider
+        if markerType is GUN_MARKER_TYPE_CLIENT_LATENCY:
+            return self._markersInfo.clientMarkerLatencyDataProvider
         return
 
 
@@ -148,4 +182,6 @@ def _getSPGDataProvider(func, self, markerType):
             return self._markersInfo.clientSPGMarkerDataProvider
         if markerType is GUN_MARKER_TYPE_CLIENT_FOCUS:
             return self._markersInfo.clientSPGMarkerFocusDataProvider
+        if markerType is GUN_MARKER_TYPE_CLIENT_LATENCY:
+            return self._markersInfo.clientSPGMarkerLatencyDataProvider
         return

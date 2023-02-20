@@ -13,18 +13,28 @@ from dispersionreticle.utils import *
 DEFAULT_CONFIG_CONTENT = """{
     // Config can be reloaded in game using hotkeys: CTRL + P
     
-    // Valid values: true/false
+    // Valid values: true/false (default: true)
     // 
-    // Adds fully-focused dispersion reticle to vanilla reticle.
+    // Adds green fully-focused dispersion reticle to vanilla reticle.
     // 
-    // When used together with "server-reticle-enabled", it
+    // When used together with "server-reticle-enabled" or "latency-reticle-enabled", it
     // attaches dispersion reticle to client reticle
     "dispersion-reticle-enabled": true,
     
-    // Valid values: true/false
+    // Valid values: true/false (default: false)
+    // 
+    // Adds green latency reticle to client reticle.
+    // Basically, attaches additional green server reticle to client reticle position.
+    // By this, client-side and server-side dispersion desynchronization is clearly visible.
+    // 
+    // IMPORTANT:
+    // To enable latency reticle, you MUST also check "Use server aim" in game settings.
+    "latency-reticle-enabled": false,
+    
+    // Valid values: true/false (default: false)
     // 
     // Separates client reticle and server reticle from vanilla reticle.
-    // By this, client reticle is always displayed and additional server reticle
+    // By this, client reticle is always displayed and additional purple server reticle
     // can be displayed with checked "Use server aim" in game settings.
     // 
     // IMPORTANT:
@@ -54,6 +64,7 @@ class Config:
         self.__configFilePath = os.path.join("mods", "config", "DispersionReticle", "config.json")
 
         self.__dispersionReticleEnabled = True
+        self.__latencyReticleEnabled = False
         self.__serverReticleEnabled = False
         self.__reticleSizeMultiplier = 1.0
 
@@ -72,14 +83,17 @@ class Config:
             data = json.loads(jsonData, encoding="UTF-8")
 
             dispersionReticleEnabled = toBool(data["dispersion-reticle-enabled"])
+            latencyReticleEnabled = toBool(data["latency-reticle-enabled"])
             serverReticleEnabled = toBool(data["server-reticle-enabled"])
             reticleSizeMultiplier = toPositiveFloat(data["reticle-size-multiplier"])
 
             self.__dispersionReticleEnabled = dispersionReticleEnabled
+            self.__latencyReticleEnabled = latencyReticleEnabled
             self.__serverReticleEnabled = serverReticleEnabled
             self.__reticleSizeMultiplier = reticleSizeMultiplier
 
             logger.log(INFO, "Loaded dispersion-reticle-enabled: %s", dispersionReticleEnabled)
+            logger.log(INFO, "Loaded    latency-reticle-enabled: %s", latencyReticleEnabled)
             logger.log(INFO, "Loaded     server-reticle-enabled: %s", serverReticleEnabled)
             logger.log(INFO, "Loaded    reticle-size-multiplier: %s", reticleSizeMultiplier)
             logger.log(INFO, "Finished config loading.")
@@ -104,6 +118,9 @@ class Config:
 
     def isDispersionReticleEnabled(self):
         return self.__dispersionReticleEnabled
+
+    def isLatencyReticleEnabled(self):
+        return self.__latencyReticleEnabled
 
     def isServerReticleEnabled(self):
         return self.__serverReticleEnabled
