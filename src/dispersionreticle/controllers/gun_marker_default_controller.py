@@ -21,7 +21,7 @@ class NewDefaultGunMarkerController(_DefaultGunMarkerController):
         size = sizeVector[0]
         idealSize = sizeVector[1]
 
-        # avoid replay recording if not main reticle
+        # avoid replay if not main reticle
         if self.__isMainReticle:
             replayCtrl = BattleReplay.g_replayCtrl
             if replayCtrl.isPlaying and replayCtrl.isClientReady:
@@ -51,6 +51,9 @@ class NewDefaultGunMarkerController(_DefaultGunMarkerController):
             self._dataProvider.updateSize(self._DefaultGunMarkerController__curSize, 0.0)
         else:
             self._dataProvider.updateSize(self._DefaultGunMarkerController__curSize, relaxTime)
+
+    def setServerDispersionAngle(self, serverDispersionAngle):
+        pass
 
 
 # gun_marker_ctrl

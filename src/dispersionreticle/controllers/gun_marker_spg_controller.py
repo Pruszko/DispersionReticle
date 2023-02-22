@@ -9,6 +9,7 @@ class NewSPGGunMarkerController(_SPGGunMarkerController):
     def __init__(self, gunMakerType, dataProvider, enabledFlag=_MARKER_FLAG.UNDEFINED, isMainReticle=True):
         super(NewSPGGunMarkerController, self).__init__(gunMakerType, dataProvider, enabledFlag=enabledFlag)
         self.__isMainReticle = isMainReticle
+        self.__serverDispersionAngle = None
 
     def _update(self):
         pos3d, vel3d, gravity3d = self._getCurrentShotInfo()
@@ -23,8 +24,10 @@ class NewSPGGunMarkerController(_SPGGunMarkerController):
 
     def _updateDispersionData(self):
         dispersionAngle = self._gunRotator.dispersionAngle
+        if self.__serverDispersionAngle is not None:
+            dispersionAngle = self.__serverDispersionAngle
 
-        # avoid replay recording if not main reticle
+        # avoid replays if not main reticle
         if self.__isMainReticle:
             isServerAim = self._gunMarkerType == _MARKER_TYPE.SERVER
             replayCtrl = BattleReplay.g_replayCtrl
@@ -39,6 +42,9 @@ class NewSPGGunMarkerController(_SPGGunMarkerController):
                     replayCtrl.setSPGGunMarkerParams(dispersionAngle, 0.0)
 
         self._dataProvider.setupConicDispersion(dispersionAngle)
+
+    def setServerDispersionAngle(self, serverDispersionAngle):
+        self.__serverDispersionAngle = serverDispersionAngle
 
 
 # gun_marker_ctrl

@@ -1,5 +1,4 @@
 import logging
-from logging import INFO
 
 from gui.Scaleform.daapi.view.battle.shared.crosshair.plugins import GunMarkersInvalidatePlugin
 
@@ -21,7 +20,7 @@ def invalidateGunMarkers(self):
         markersInfo = ctrl.getGunMarkersSetInfo()
         vehicleInfo = self._GunMarkersInvalidatePlugin__getVehicleInfo()
 
-        logger.log(INFO, "Invalidating gun markers")
+        logger.info("Invalidating gun markers plugin")
         self._parentObj.invalidateGunMarkers(markersInfo, vehicleInfo)
     return
 

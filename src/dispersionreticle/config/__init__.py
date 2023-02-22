@@ -1,6 +1,5 @@
 import json
 import logging
-from logging import INFO, ERROR
 import os
 import re
 
@@ -73,7 +72,7 @@ class Config:
 
     def loadConfigSafely(self):
         try:
-            logger.log(INFO, "Starting config loading ...")
+            logger.info("Starting config loading ...")
             self.createConfigIfNotExists()
 
             with open(self.__configFilePath, "r") as configFile:
@@ -92,29 +91,29 @@ class Config:
             self.__serverReticleEnabled = serverReticleEnabled
             self.__reticleSizeMultiplier = reticleSizeMultiplier
 
-            logger.log(INFO, "Loaded dispersion-reticle-enabled: %s", dispersionReticleEnabled)
-            logger.log(INFO, "Loaded    latency-reticle-enabled: %s", latencyReticleEnabled)
-            logger.log(INFO, "Loaded     server-reticle-enabled: %s", serverReticleEnabled)
-            logger.log(INFO, "Loaded    reticle-size-multiplier: %s", reticleSizeMultiplier)
-            logger.log(INFO, "Finished config loading.")
+            logger.info("Loaded dispersion-reticle-enabled: %s", dispersionReticleEnabled)
+            logger.info("Loaded    latency-reticle-enabled: %s", latencyReticleEnabled)
+            logger.info("Loaded     server-reticle-enabled: %s", serverReticleEnabled)
+            logger.info("Loaded    reticle-size-multiplier: %s", reticleSizeMultiplier)
+            logger.info("Finished config loading.")
         except Exception as e:
-            logger.log(ERROR, "Failed to load config", exc_info=e)
+            logger.error("Failed to load config", exc_info=e)
 
     def createConfigIfNotExists(self):
         try:
-            logger.log(INFO, "Checking config existence ...")
+            logger.info("Checking config existence ...")
             if os.path.isfile(self.__configFilePath):
-                logger.log(INFO, "Config already exists.")
+                logger.info("Config already exists.")
                 return
 
-            logger.log(INFO, "Creating config directory ...")
+            logger.info("Creating config directory ...")
             os.makedirs(self.__configFileDir)
 
-            logger.log(INFO, "Creating config file ...")
+            logger.info("Creating config file ...")
             with open(self.__configFilePath, "w") as configFile:
                 configFile.write(DEFAULT_CONFIG_CONTENT)
         except Exception as e:
-            logger.log(ERROR, "Failed to save default config", exc_info=e)
+            logger.error("Failed to save default config", exc_info=e)
 
     def isDispersionReticleEnabled(self):
         return self.__dispersionReticleEnabled
@@ -141,7 +140,7 @@ def toPositiveFloat(value):
         floatValue = float(value)
         return floatValue if floatValue > 0.0 else 0.0
     except ValueError as e:
-        logger.log(ERROR, "Failed to convert value %s to float", value, exc_info=e)
+        logger.error("Failed to convert value %s to float", value, exc_info=e)
         return 1.0
 
 

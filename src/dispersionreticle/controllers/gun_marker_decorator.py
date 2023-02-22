@@ -2,7 +2,8 @@
 import BigWorld, Math
 from AvatarInputHandler import gun_marker_ctrl, aih_global_binding
 from AvatarInputHandler.gun_marker_ctrl import IGunMarkerController, _BINDING_ID, _MARKER_TYPE, _MARKER_FLAG
-from dispersionreticle.utils.gun_marker_type import *
+
+from dispersionreticle.utils.reticle_registry import ReticleRegistry
 
 
 # gun_marker_ctrl
@@ -19,7 +20,8 @@ class NewGunMarkersDecorator(IGunMarkerController):
         self.__serverMarkerFocus = serverMarkerFocus
 
         self.__clientMarkerLatency = clientMarkerLatency
-        self.__serverSizeDispersion = ()
+        self.__serverSizeDispersion = None
+        self.__serverDispersionAngle = None
 
     def create(self):
         self.__clientMarker.create()
@@ -71,13 +73,13 @@ class NewGunMarkersDecorator(IGunMarkerController):
     def getPosition(self, markerType=_MARKER_TYPE.CLIENT):
         if markerType == _MARKER_TYPE.CLIENT:
             return self.__clientMarker.getPosition()
-        if markerType == GUN_MARKER_TYPE_CLIENT_FOCUS:
+        if markerType == ReticleRegistry.CLIENT_FOCUS.gunMarkerType:
             return self.__clientMarkerFocus.getPosition()
         if markerType == _MARKER_TYPE.SERVER:
             return self.__serverMarker.getPosition()
-        if markerType == GUN_MARKER_TYPE_SERVER_FOCUS:
+        if markerType == ReticleRegistry.SERVER_FOCUS.gunMarkerType:
             return self.__serverMarkerFocus.getPosition()
-        if markerType == GUN_MARKER_TYPE_CLIENT_LATENCY:
+        if markerType == ReticleRegistry.CLIENT_LATENCY.gunMarkerType:
             return self.__clientMarkerLatency.getPosition()
         gun_marker_ctrl._logger.warning('Gun maker control is not found by type: %d', markerType)
         return Math.Vector3()
@@ -85,13 +87,13 @@ class NewGunMarkersDecorator(IGunMarkerController):
     def setPosition(self, position, markerType=_MARKER_TYPE.CLIENT):
         if markerType == _MARKER_TYPE.CLIENT:
             self.__clientMarker.setPosition(position)
-        elif markerType == GUN_MARKER_TYPE_CLIENT_FOCUS:
+        elif markerType == ReticleRegistry.CLIENT_FOCUS.gunMarkerType:
             self.__clientMarkerFocus.setPosition(position)
         elif markerType == _MARKER_TYPE.SERVER:
             self.__serverMarker.setPosition(position)
-        elif markerType == GUN_MARKER_TYPE_SERVER_FOCUS:
+        elif markerType == ReticleRegistry.SERVER_FOCUS.gunMarkerType:
             self.__serverMarkerFocus.setPosition(position)
-        elif markerType == GUN_MARKER_TYPE_CLIENT_LATENCY:
+        elif markerType == ReticleRegistry.CLIENT_LATENCY.gunMarkerType:
             self.__clientMarkerLatency.setPosition(position)
         else:
             gun_marker_ctrl._logger.warning('Gun maker control is not found by type: %d', markerType)
@@ -115,25 +117,14 @@ class NewGunMarkersDecorator(IGunMarkerController):
              position, direction, collData)
             if self.__gunMarkersFlags & _MARKER_FLAG.CLIENT_MODE_ENABLED:
                 self.__clientMarker.update(markerType, position, direction, size, relaxTime, collData)
-
-                # this has to be done outside controllers because we have to collect server reticle size
-                # also, we will have delayed access to server size, so we need to wait
-                # until GunMarkerComponent will provide server data
-                if self.__gunMarkersFlags & _MARKER_FLAG.SERVER_MODE_ENABLED:
-                    if len(self.__serverSizeDispersion) > 0:
-                        # scale server size dispersion by distance for latency reticle
-                        distance = getDistanceFromCamera(position)
-                        serverSize = tuple(i * distance for i in self.__serverSizeDispersion)
-
-                        self.__clientMarkerLatency.update(GUN_MARKER_TYPE_CLIENT_LATENCY, position, direction, serverSize, relaxTime, collData)
-                    else:
-                        self.__clientMarkerLatency.update(GUN_MARKER_TYPE_CLIENT_LATENCY, position, direction, size, relaxTime, collData)
         elif markerType == _MARKER_TYPE.SERVER:
             self.__serverState = (
              position, direction, collData)
             if self.__gunMarkersFlags & _MARKER_FLAG.SERVER_MODE_ENABLED:
                 # collect server size dispersion for latency reticle
                 self.__serverSizeDispersion = size
+                if BigWorld.player() and BigWorld.player().gunRotator:
+                    self.__serverDispersionAngle = BigWorld.player().gunRotator.dispersionAngle
 
                 # scale it down to dispersion per 1m unit
                 distance = getDistanceFromCamera(position)
@@ -141,14 +132,30 @@ class NewGunMarkersDecorator(IGunMarkerController):
                     self.__serverSizeDispersion = tuple(i / distance for i in size)
 
                 self.__serverMarker.update(markerType, position, direction, size, relaxTime, collData)
-        elif markerType == GUN_MARKER_TYPE_CLIENT_FOCUS:
+        elif markerType == ReticleRegistry.CLIENT_FOCUS.gunMarkerType:
             if self.__gunMarkersFlags & _MARKER_FLAG.CLIENT_MODE_ENABLED:
                 self.__clientMarkerFocus.update(markerType, position, direction, size, relaxTime, collData)
-        elif markerType == GUN_MARKER_TYPE_SERVER_FOCUS:
+        elif markerType == ReticleRegistry.SERVER_FOCUS.gunMarkerType:
             if self.__gunMarkersFlags & _MARKER_FLAG.SERVER_MODE_ENABLED:
                 self.__serverMarkerFocus.update(markerType, position, direction, size, relaxTime, collData)
-        elif markerType == GUN_MARKER_TYPE_CLIENT_LATENCY:
-            pass
+        elif markerType == ReticleRegistry.CLIENT_LATENCY.gunMarkerType:
+            # this has to be done outside controllers because we have to collect server reticle size
+            # also, we will have delayed access to server size, so we need to wait
+            # until GunMarkerComponent will provide server data
+            if self.__gunMarkersFlags & _MARKER_FLAG.SERVER_MODE_ENABLED:
+                # first calls won't have ready server data yet
+                # just display client size whenever it is not known
+                # it also works well when rendering in replays because there server marker is not called
+                if self.__serverSizeDispersion is not None and self.__serverDispersionAngle is not None:
+                    # scale server size dispersion by distance for latency reticle
+                    distance = getDistanceFromCamera(position)
+                    serverSize = tuple(i * distance for i in self.__serverSizeDispersion)
+
+                    self.__clientMarkerLatency.setServerDispersionAngle(self.__serverDispersionAngle)
+                    self.__clientMarkerLatency.update(markerType, position, direction, serverSize, relaxTime, collData)
+                else:
+                    self.__clientMarkerLatency.setServerDispersionAngle(None)
+                    self.__clientMarkerLatency.update(markerType, position, direction, size, relaxTime, collData)
         else:
             gun_marker_ctrl._logger.warning('Gun maker control is not found by type: %d', markerType)
 
