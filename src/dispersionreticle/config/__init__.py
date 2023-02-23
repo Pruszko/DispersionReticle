@@ -30,6 +30,8 @@ DEFAULT_CONFIG_CONTENT = """{
     // 
     // Adds green reticle displaying current server-side dispersion to client-side reticle.
     // By this, client-side and server-side dispersion desynchronization is clearly visible.
+    //
+    // Useful if you want to know server-side dispersion, but still want client-side responsiveness.
     
     "latency-reticle-enabled": false,
     

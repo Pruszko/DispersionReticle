@@ -1,3 +1,4 @@
+import BattleReplay
 from AvatarInputHandler import gun_marker_ctrl
 from aih_constants import GUN_MARKER_TYPE
 from gui.Scaleform.daapi.view.battle.shared.crosshair import gm_factory
@@ -108,7 +109,7 @@ class _NewControlMarkersFactory(_ControlMarkersFactory):
     def _getBaseMarkerType(self):
         markerType = GUN_MARKER_TYPE.CLIENT
 
-        if g_config.isServerAimEnabled():
+        if g_config.isServerAimEnabled() and not BattleReplay.isPlaying():
             markerType = GUN_MARKER_TYPE.SERVER
 
         return selectProperType(markerType, self._getMarkerType())

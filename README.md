@@ -9,6 +9,8 @@ Also, over time, this mod now contains **following mutually compatible mods**:
 - Latency reticle (**NEW**)
 - Fix Reticle Size (adjustment in config file)
 
+![All presented reticles](images/all.png)
+
 ## Config file
 All features from config file **are reloadable on-the-fly** using **CTRL + P** hotkey in the game **anywhere**.
 
@@ -28,6 +30,7 @@ They are also compatible with "Use server aim" from in-game option.
 - enabled by "latency-reticle-enabled" option
 - adds green reticle displaying **current server-side dispersion** to **client-side reticle**
 - by this, client-side and server-side dispersion desynchronization is clearly visible
+- useful if you want to know server-side dispersion, but still want client-side responsiveness
 
 **Server reticle**
 - enabled by "server-reticle-enabled" option
