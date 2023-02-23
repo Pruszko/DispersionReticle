@@ -1,5 +1,8 @@
+import BattleReplay
 from AvatarInputHandler import gun_marker_ctrl
 from AvatarInputHandler.gun_marker_ctrl import _GunMarkersDPFactory, _MARKER_TYPE
+from helpers import dependency
+from skeletons.account_helpers.settings_core import ISettingsCore
 
 from dispersionreticle.config import g_config
 from dispersionreticle.controllers.gun_marker_decorator import NewGunMarkersDecorator
@@ -67,14 +70,33 @@ def createGunMarker(func, isStrategic):
 
 
 @overrideIn(gun_marker_ctrl)
-def useClientGunMarker(func):
-    if g_config.isServerReticleEnabled() or g_config.isLatencyReticleEnabled():
+def useServerGunMarker(func):
+    replayCtrl = BattleReplay.g_replayCtrl
+    if replayCtrl.isPlaying:
+        return False
+
+    settingsCore = dependency.instance(ISettingsCore)
+
+    if g_config.isServerAimRequired():
         return True
-    return func()
+
+    return settingsCore.getSetting('useServerAim')
+
+
+@overrideIn(gun_marker_ctrl)
+def useClientGunMarker(func):
+    replayCtrl = BattleReplay.g_replayCtrl
+    if replayCtrl.isPlaying:
+        return True
+
+    settingsCore = dependency.instance(ISettingsCore)
+
+    return not settingsCore.getSetting('useServerAim')
 
 
 @overrideIn(gun_marker_ctrl)
 def useDefaultGunMarkers(func):
-    if g_config.isServerReticleEnabled() or g_config.isLatencyReticleEnabled():
-        return False
-    return func()
+    if not g_config.isServerAimRequired():
+        return func()
+
+    return False

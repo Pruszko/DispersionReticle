@@ -75,34 +75,28 @@ class Reticle:
         return self.spgDataProviderRW.__get__(self)
 
     # gm_factory
-    def createArcadeMarker(self, gunMarkerFactory, markerType):
+    def createDefaultMarkers(self, gunMarkerFactory, markerType):
         if markerType != GUN_MARKER_TYPE.UNDEFINED:
-            return gunMarkerFactory._createArcadeMarker(self.gunMarkerType, self.arcadeGunMarkerName)
-        return gunMarkerFactory._createArcadeMarker(GUN_MARKER_TYPE.UNDEFINED, self.arcadeGunMarkerName)
+            return (gunMarkerFactory._createArcadeMarker(self.gunMarkerType, self.arcadeGunMarkerName),
+                    gunMarkerFactory._createSniperMarker(self.gunMarkerType, self.sniperGunMarkerName))
+        return (gunMarkerFactory._createArcadeMarker(GUN_MARKER_TYPE.UNDEFINED, self.arcadeGunMarkerName),
+                gunMarkerFactory._createSniperMarker(GUN_MARKER_TYPE.UNDEFINED, self.sniperGunMarkerName))
 
     # gm_factory
-    def createSniperMarker(self, gunMarkerFactory, markerType):
+    def createSPGMarkers(self, gunMarkerFactory, markerType):
         if markerType != GUN_MARKER_TYPE.UNDEFINED:
-            return gunMarkerFactory._createSniperMarker(self.gunMarkerType, self.sniperGunMarkerName)
-        return gunMarkerFactory._createSniperMarker(GUN_MARKER_TYPE.UNDEFINED, self.sniperGunMarkerName)
+            return (gunMarkerFactory._createArcadeMarker(self.gunMarkerType, self.arcadeGunMarkerName),
+                    gunMarkerFactory._createSPGMarker(self.gunMarkerType, self.spgGunMarkerName))
+        return (gunMarkerFactory._createArcadeMarker(GUN_MARKER_TYPE.UNDEFINED, self.arcadeGunMarkerName),
+                gunMarkerFactory._createSPGMarker(GUN_MARKER_TYPE.UNDEFINED, self.spgGunMarkerName))
 
     # gm_factory
-    def createSpgMarker(self, gunMarkerFactory, markerType):
+    def createDualGunMarkers(self, gunMarkerFactory, markerType):
         if markerType != GUN_MARKER_TYPE.UNDEFINED:
-            return gunMarkerFactory._createSPGMarker(self.gunMarkerType, self.spgGunMarkerName)
-        return gunMarkerFactory._createSPGMarker(GUN_MARKER_TYPE.UNDEFINED, self.spgGunMarkerName)
-
-    # gm_factory
-    def createDualGunArcadeMarker(self, gunMarkerFactory, markerType):
-        if markerType != GUN_MARKER_TYPE.UNDEFINED:
-            return gunMarkerFactory._createArcadeMarker(self.gunMarkerType, self.dualGunArcadeGunMarkerName)
-        return gunMarkerFactory._createArcadeMarker(GUN_MARKER_TYPE.UNDEFINED, self.dualGunArcadeGunMarkerName)
-
-    # gm_factory
-    def createDualGunSniperMarker(self, gunMarkerFactory, markerType):
-        if markerType != GUN_MARKER_TYPE.UNDEFINED:
-            return gunMarkerFactory._createSniperMarker(self.gunMarkerType, self.dualGunSniperGunMarkerName)
-        return gunMarkerFactory._createSniperMarker(GUN_MARKER_TYPE.UNDEFINED, self.dualGunSniperGunMarkerName)
+            return (gunMarkerFactory._createArcadeMarker(self.gunMarkerType, self.dualGunArcadeGunMarkerName),
+                    gunMarkerFactory._createSniperMarker(self.gunMarkerType, self.dualGunSniperGunMarkerName))
+        return (gunMarkerFactory._createArcadeMarker(GUN_MARKER_TYPE.UNDEFINED, self.dualGunArcadeGunMarkerName),
+                gunMarkerFactory._createSniperMarker(GUN_MARKER_TYPE.UNDEFINED, self.dualGunSniperGunMarkerName))
 
 
 class ReticleType(int):

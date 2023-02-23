@@ -6,50 +6,53 @@ import re
 import Event
 import Keys
 import game
+from helpers import dependency
+from skeletons.account_helpers.settings_core import ISettingsCore
 
 from dispersionreticle.utils import *
 
 DEFAULT_CONFIG_CONTENT = """{
     // Config can be reloaded in game using hotkeys: CTRL + P
+    // To generate default config, delete this file and:
+    // - either reload it with above hotkey
+    // - or launch a game again
     
+    // Dispersion reticle (enabled by default)
     // Valid values: true/false (default: true)
-    // 
-    // Adds green fully-focused dispersion reticle to vanilla reticle.
-    // 
-    // When used together with "server-reticle-enabled" or "latency-reticle-enabled", it
-    // attaches dispersion reticle to client reticle
+    //
+    // Adds green reticle displaying fully-focused dispersion to vanilla reticle.
+    // When both client-side and server-side reticle is on, it attaches to client-side reticle.
+    
     "dispersion-reticle-enabled": true,
     
+    // Latency reticle
     // Valid values: true/false (default: false)
     // 
-    // Adds green latency reticle to client reticle.
-    // Basically, attaches additional green server reticle to client reticle position.
+    // Adds green reticle displaying current server-side dispersion to client-side reticle.
     // By this, client-side and server-side dispersion desynchronization is clearly visible.
-    // 
-    // IMPORTANT:
-    // To enable latency reticle, you MUST also check "Use server aim" in game settings.
+    
     "latency-reticle-enabled": false,
     
+    // Server reticle
     // Valid values: true/false (default: false)
     // 
-    // Separates client reticle and server reticle from vanilla reticle.
-    // By this, client reticle is always displayed and additional purple server reticle
-    // can be displayed with checked "Use server aim" in game settings.
-    // 
-    // IMPORTANT:
-    // To enable server reticle, you MUST also check "Use server aim" in game settings.
+    // Adds purple server-side reticle alongside with client-side reticle.
+    
     "server-reticle-enabled": false,
     
+    // Fix reticle size
     // Valid values: any number > 0.0 (for default vanilla behavior: 1.0)
     //
-    // Scales all reticles size by below factor.
-    // WG's displayed reticle dispersion is noticeably bigger than actual gun dispersion, so
-    // by this setting you can scale it to actual displayed dispersion.
+    // Scales all reticles size by factor, except SPG top-view reticle.
+    //
+    // WG's displayed reticle dispersion is noticeably bigger than actual gun dispersion.
+    // By this setting you can scale it to actual displayed dispersion.
     //
     // Good known values:
     // - 1.0    (default "wrong" WG dispersion)
     // - 0.6    (factor determined by me)
     // - 0.5848 (factor determined by Jak_Attackka, StranikS_Scan and others)
+    
     "reticle-size-multiplier": 1.0
 }"""
 
@@ -57,6 +60,8 @@ logger = logging.getLogger(__name__)
 
 
 class Config:
+
+    settingsCore = dependency.descriptor(ISettingsCore)
 
     def __init__(self):
         self.__configFileDir = os.path.join("mods", "config", "DispersionReticle")
@@ -126,6 +131,12 @@ class Config:
 
     def getReticleSizeMultiplier(self):
         return self.__reticleSizeMultiplier
+
+    def isServerAimRequired(self):
+        return self.__latencyReticleEnabled or self.__serverReticleEnabled
+
+    def isServerAimEnabled(self):
+        return self.settingsCore.getSetting('useServerAim')
 
 
 g_config = Config()
