@@ -96,7 +96,7 @@ def useClientGunMarker(func):
 
 @overrideIn(gun_marker_ctrl)
 def useDefaultGunMarkers(func):
-    if not g_config.isServerAimRequired():
-        return func()
-
-    return False
+    # make VehicleGunRotator not hide client reticle when both reticle types are enabled
+    if gun_marker_ctrl.useClientGunMarker() and gun_marker_ctrl.useServerGunMarker():
+        return False
+    return func()
