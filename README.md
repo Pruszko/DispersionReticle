@@ -59,7 +59,7 @@ They are also compatible with "Use server aim" from in-game option.
 A default config file will be automatically created when you launch a game
 with my mod installed or when it is not present on config reload.
 
-Full config file location: **"[WoT game directory]/mods/config/DispersionReticle/config.json"**
+Full config file location: **"[WoT game directory]/mods/configs/DispersionReticle/config.json"**
 
 To control which features are enabled, navigate to an above mentioned file
 and open it using text editor (preferably **Notepad++**).
