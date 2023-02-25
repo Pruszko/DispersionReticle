@@ -66,8 +66,8 @@ class Config:
     settingsCore = dependency.descriptor(ISettingsCore)
 
     def __init__(self):
-        self.__configFileDir = os.path.join("mods", "config", "DispersionReticle")
-        self.__configFilePath = os.path.join("mods", "config", "DispersionReticle", "config.json")
+        self.__configFileDir = os.path.join("mods", "configs", "DispersionReticle")
+        self.__configFilePath = os.path.join("mods", "configs", "DispersionReticle", "config.json")
 
         self.__dispersionReticleEnabled = True
         self.__latencyReticleEnabled = False
@@ -81,6 +81,7 @@ class Config:
         try:
             logger.info("Starting config loading ...")
             self.createConfigIfNotExists()
+            self.handleBadFolderName_v_2_0_2()
 
             with open(self.__configFilePath, "r") as configFile:
                 jsonRawData = configFile.read()
@@ -122,6 +123,33 @@ class Config:
         except Exception as e:
             logger.error("Failed to save default config", exc_info=e)
 
+    def handleBadFolderName_v_2_0_2(self):
+        legacyConfigDir = os.path.join("mods", "config")
+        legacyConfigFileDir = os.path.join("mods", "config", "DispersionReticle")
+        legacyConfigFilePath = os.path.join("mods", "config", "DispersionReticle", "config.json")
+
+        try:
+            # handle config folder name that differs from other mod configs folder
+            if os.path.isfile(legacyConfigFilePath):
+                logger.info("Legacy config location detected, moving file to new location ...")
+
+                # move copy config to new location
+                with open(legacyConfigFilePath, "r") as legacyConfigFile:
+                    legacyJsonRawData = legacyConfigFile.read()
+                    with open(self.__configFilePath, "w") as configFile:
+                        configFile.write(legacyJsonRawData)
+
+                # remove previous config
+                os.remove(legacyConfigFilePath)
+
+                # remove previous folders if they are empty
+                deleteEmptyFolderSafely(legacyConfigFileDir)
+                deleteEmptyFolderSafely(legacyConfigDir)
+
+                logger.info("Finished moving config file to new location.")
+        except Exception as e:
+            logger.error("Failed to migrate config file to new location", exc_info=e)
+
     def isDispersionReticleEnabled(self):
         return self.__dispersionReticleEnabled
 
@@ -155,6 +183,13 @@ def toPositiveFloat(value):
     except ValueError as e:
         logger.error("Failed to convert value %s to float", value, exc_info=e)
         return 1.0
+
+
+def deleteEmptyFolderSafely(path):
+    try:
+        os.rmdir(path)
+    except OSError:
+        pass
 
 
 @overrideIn(game)
