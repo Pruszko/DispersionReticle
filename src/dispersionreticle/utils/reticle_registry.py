@@ -57,6 +57,15 @@ class Reticle:
             self.spgGunMarkerName: reticleLinkages['spgLinkage']
         })
 
+    def getMarkerNames(self):
+        return (
+            self.arcadeGunMarkerName,
+            self.sniperGunMarkerName,
+            self.dualGunArcadeGunMarkerName,
+            self.dualGunSniperGunMarkerName,
+            self.spgGunMarkerName
+        )
+
     def isServerReticle(self):
         return self.reticleType == ReticleType.SERVER
 
