@@ -1,7 +1,7 @@
 import BigWorld, BattleReplay
 from AvatarInputHandler.gun_marker_ctrl import _SPGGunMarkerController, _MARKER_FLAG, _MARKER_TYPE
 
-from dispersionreticle.config import g_config
+from dispersionreticle.settings.config import g_config
 
 
 # gun_marker_ctrl

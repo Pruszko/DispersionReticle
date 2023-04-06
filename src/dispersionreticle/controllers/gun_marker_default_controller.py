@@ -2,7 +2,7 @@ import BigWorld, Math, BattleReplay
 from AvatarInputHandler.gun_marker_ctrl import _DefaultGunMarkerController, _makeWorldMatrix, _MARKER_FLAG
 from aih_constants import GUN_MARKER_TYPE
 
-from dispersionreticle.config import g_config
+from dispersionreticle.settings.config import g_config
 
 
 # gun_marker_ctrl

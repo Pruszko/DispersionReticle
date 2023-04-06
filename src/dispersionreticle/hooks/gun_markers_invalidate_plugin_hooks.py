@@ -2,7 +2,7 @@ import logging
 
 from gui.Scaleform.daapi.view.battle.shared.crosshair.plugins import GunMarkersInvalidatePlugin
 
-from dispersionreticle.config import g_config
+from dispersionreticle.settings.config import g_config
 from dispersionreticle.utils import *
 
 logger = logging.getLogger(__name__)

@@ -4,7 +4,7 @@ from AvatarInputHandler.gun_marker_ctrl import _GunMarkersDPFactory, _MARKER_TYP
 from helpers import dependency
 from skeletons.account_helpers.settings_core import ISettingsCore
 
-from dispersionreticle.config import g_config
+from dispersionreticle.settings.config import g_config
 from dispersionreticle.controllers.gun_marker_decorator import NewGunMarkersDecorator
 from dispersionreticle.controllers.gun_marker_default_controller import \
     NewDefaultGunMarkerController, \

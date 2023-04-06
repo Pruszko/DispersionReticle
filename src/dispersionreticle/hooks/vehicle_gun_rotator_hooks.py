@@ -3,7 +3,7 @@ import logging
 from AvatarInputHandler import gun_marker_ctrl
 from VehicleGunRotator import VehicleGunRotator
 
-from dispersionreticle.config import g_config
+from dispersionreticle.settings.config import g_config
 from dispersionreticle.utils import *
 
 logger = logging.getLogger(__name__)

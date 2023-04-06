@@ -1,7 +1,7 @@
 # make sure to invoke all hooks
 import dispersionreticle.hooks
 
-from dispersionreticle.config import g_config
+from dispersionreticle.settings.config import g_config
 
 
 class DispersionReticleMod:
