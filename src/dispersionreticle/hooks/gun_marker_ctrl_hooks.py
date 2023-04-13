@@ -4,14 +4,15 @@ from AvatarInputHandler.gun_marker_ctrl import _GunMarkersDPFactory, _MARKER_TYP
 from helpers import dependency
 from skeletons.account_helpers.settings_core import ISettingsCore
 
-from dispersionreticle.settings.config import g_config
 from dispersionreticle.controllers.gun_marker_decorator import NewGunMarkersDecorator
-from dispersionreticle.controllers.gun_marker_default_controller import \
-    NewDefaultGunMarkerController, \
-    FocusGunMarkerController
-from dispersionreticle.controllers.gun_marker_spg_controller import \
-    NewSPGGunMarkerController, \
-    FocusSPGGunMarkerController
+from dispersionreticle.controllers.standard.standard_default_controller import OverriddenDefaultGunMarkerController
+from dispersionreticle.controllers.standard.standard_spg_controller import OverriddenSPGGunMarkerController
+from dispersionreticle.controllers.dispersion.dispersion_default_controller import DispersionDefaultGunMarkerController
+from dispersionreticle.controllers.dispersion.dispersion_spg_controller import DispersionSPGGunMarkerController
+from dispersionreticle.controllers.latency.latency_default_controller import LatencyDefaultGunMarkerController
+from dispersionreticle.controllers.latency.latency_spg_controller import LatencySPGGunMarkerController
+
+from dispersionreticle.settings.config import g_config
 from dispersionreticle.utils import *
 from dispersionreticle.utils.reticle_registry import ReticleRegistry
 
@@ -33,40 +34,30 @@ from dispersionreticle.utils.reticle_registry import ReticleRegistry
 def createGunMarker(func, isStrategic):
     factory = _GunMarkersDPFactory()
 
-    clientFocusReticle = ReticleRegistry.CLIENT_FOCUS
-    serverFocusReticle = ReticleRegistry.SERVER_FOCUS
-    clientLatencyReticle = ReticleRegistry.CLIENT_LATENCY
+    dispersionClientReticle = ReticleRegistry.CLIENT_FOCUS
+    dispersionServerReticle = ReticleRegistry.SERVER_FOCUS
+    latencyClientReticle = ReticleRegistry.CLIENT_LATENCY
 
     if isStrategic:
-        clientMarker = NewSPGGunMarkerController(_MARKER_TYPE.CLIENT, factory.getClientSPGProvider(),
-                                                 isMainReticle=True)
-        serverMarker = NewSPGGunMarkerController(_MARKER_TYPE.SERVER, factory.getServerSPGProvider(),
-                                                 isMainReticle=True)
+        clientMarker = OverriddenSPGGunMarkerController(_MARKER_TYPE.CLIENT, factory.getClientSPGProvider())
+        serverMarker = OverriddenSPGGunMarkerController(_MARKER_TYPE.SERVER, factory.getServerSPGProvider())
 
-        clientMarkerFocus = FocusSPGGunMarkerController(clientFocusReticle.gunMarkerType,
-                                                        clientFocusReticle.getSpgDataProvider())
-        serverMarkerFocus = FocusSPGGunMarkerController(serverFocusReticle.gunMarkerType,
-                                                        serverFocusReticle.getSpgDataProvider())
+        dispersionClientMarker = DispersionSPGGunMarkerController(dispersionClientReticle)
+        dispersionServerMarker = DispersionSPGGunMarkerController(dispersionServerReticle)
 
-        clientMarkerLatency = NewSPGGunMarkerController(clientLatencyReticle.gunMarkerType,
-                                                        clientLatencyReticle.getSpgDataProvider(),
-                                                        isMainReticle=False)
+        latencyClientMarker = LatencySPGGunMarkerController(latencyClientReticle)
     else:
-        clientMarker = NewDefaultGunMarkerController(_MARKER_TYPE.CLIENT, factory.getClientProvider(),
-                                                     isMainReticle=True)
-        serverMarker = NewDefaultGunMarkerController(_MARKER_TYPE.SERVER, factory.getServerProvider(),
-                                                     isMainReticle=True)
+        clientMarker = OverriddenDefaultGunMarkerController(_MARKER_TYPE.CLIENT, factory.getClientProvider())
+        serverMarker = OverriddenDefaultGunMarkerController(_MARKER_TYPE.SERVER, factory.getServerProvider())
 
-        clientMarkerFocus = FocusGunMarkerController(clientFocusReticle.gunMarkerType,
-                                                     clientFocusReticle.getStandardDataProvider())
-        serverMarkerFocus = FocusGunMarkerController(serverFocusReticle.gunMarkerType,
-                                                     serverFocusReticle.getStandardDataProvider())
+        dispersionClientMarker = DispersionDefaultGunMarkerController(dispersionClientReticle)
+        dispersionServerMarker = DispersionDefaultGunMarkerController(dispersionServerReticle)
 
-        clientMarkerLatency = NewDefaultGunMarkerController(clientLatencyReticle.gunMarkerType,
-                                                            clientLatencyReticle.getStandardDataProvider(),
-                                                            isMainReticle=False)
+        latencyClientMarker = LatencyDefaultGunMarkerController(latencyClientReticle)
 
-    return NewGunMarkersDecorator(clientMarker, serverMarker, clientMarkerFocus, serverMarkerFocus, clientMarkerLatency)
+    return NewGunMarkersDecorator(clientMarker, serverMarker,
+                                  dispersionClientMarker, dispersionServerMarker,
+                                  latencyClientMarker)
 
 
 @overrideIn(gun_marker_ctrl)

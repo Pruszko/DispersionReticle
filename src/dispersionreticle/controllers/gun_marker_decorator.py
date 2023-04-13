@@ -12,75 +12,75 @@ class NewGunMarkersDecorator(IGunMarkerController):
     __clientState = aih_global_binding.bindRW(_BINDING_ID.CLIENT_GUN_MARKER_STATE)
     __serverState = aih_global_binding.bindRW(_BINDING_ID.SERVER_GUN_MARKER_STATE)
 
-    def __init__(self, clientMarker, serverMarker, clientMarkerFocus, serverMarkerFocus, clientMarkerLatency):
+    def __init__(self, clientMarker, serverMarker, dispersionClientMarker, dispersionServerMarker, latencyClientMarker):
         super(NewGunMarkersDecorator, self).__init__()
         self.__clientMarker = clientMarker
         self.__serverMarker = serverMarker
-        self.__clientMarkerFocus = clientMarkerFocus
-        self.__serverMarkerFocus = serverMarkerFocus
+        self.__dispersionClientMarker = dispersionClientMarker
+        self.__dispersionServerMarker = dispersionServerMarker
 
-        self.__clientMarkerLatency = clientMarkerLatency
+        self.__latencyClientMarker = latencyClientMarker
         self.__serverSizeDispersion = None
         self.__serverDispersionAngle = None
 
     def create(self):
         self.__clientMarker.create()
         self.__serverMarker.create()
-        self.__clientMarkerFocus.create()
-        self.__serverMarkerFocus.create()
-        self.__clientMarkerLatency.create()
+        self.__dispersionClientMarker.create()
+        self.__dispersionServerMarker.create()
+        self.__latencyClientMarker.create()
 
     def destroy(self):
         self.__clientMarker.destroy()
         self.__serverMarker.destroy()
-        self.__clientMarkerFocus.destroy()
-        self.__serverMarkerFocus.destroy()
-        self.__clientMarkerLatency.destroy()
+        self.__dispersionClientMarker.destroy()
+        self.__dispersionServerMarker.destroy()
+        self.__latencyClientMarker.destroy()
 
     def enable(self):
         self.__clientMarker.enable()
         self.__clientMarker.setPosition(self.__clientState[0])
         self.__serverMarker.enable()
         self.__serverMarker.setPosition(self.__serverState[0])
-        self.__clientMarkerFocus.enable()
-        self.__clientMarkerFocus.setPosition(self.__clientState[0])
-        self.__serverMarkerFocus.enable()
-        self.__serverMarkerFocus.setPosition(self.__serverState[0])
-        self.__clientMarkerLatency.enable()
-        self.__clientMarkerLatency.setPosition(self.__clientState[0])
+        self.__dispersionClientMarker.enable()
+        self.__dispersionClientMarker.setPosition(self.__clientState[0])
+        self.__dispersionServerMarker.enable()
+        self.__dispersionServerMarker.setPosition(self.__serverState[0])
+        self.__latencyClientMarker.enable()
+        self.__latencyClientMarker.setPosition(self.__clientState[0])
 
     def disable(self):
         self.__clientMarker.disable()
         self.__serverMarker.disable()
-        self.__clientMarkerFocus.disable()
-        self.__serverMarkerFocus.disable()
-        self.__clientMarkerLatency.disable()
+        self.__dispersionClientMarker.disable()
+        self.__dispersionServerMarker.disable()
+        self.__latencyClientMarker.disable()
 
     def reset(self):
         self.__clientMarker.reset()
         self.__serverMarker.reset()
-        self.__clientMarkerFocus.reset()
-        self.__serverMarkerFocus.reset()
-        self.__clientMarkerLatency.reset()
+        self.__dispersionClientMarker.reset()
+        self.__dispersionServerMarker.reset()
+        self.__latencyClientMarker.reset()
 
     def onRecreateDevice(self):
         self.__clientMarker.onRecreateDevice()
         self.__serverMarker.onRecreateDevice()
-        self.__clientMarkerFocus.onRecreateDevice()
-        self.__serverMarkerFocus.onRecreateDevice()
-        self.__clientMarkerLatency.onRecreateDevice()
+        self.__dispersionClientMarker.onRecreateDevice()
+        self.__dispersionServerMarker.onRecreateDevice()
+        self.__latencyClientMarker.onRecreateDevice()
 
     def getPosition(self, markerType=_MARKER_TYPE.CLIENT):
         if markerType == _MARKER_TYPE.CLIENT:
             return self.__clientMarker.getPosition()
         if markerType == ReticleRegistry.CLIENT_FOCUS.gunMarkerType:
-            return self.__clientMarkerFocus.getPosition()
+            return self.__dispersionClientMarker.getPosition()
         if markerType == _MARKER_TYPE.SERVER:
             return self.__serverMarker.getPosition()
         if markerType == ReticleRegistry.SERVER_FOCUS.gunMarkerType:
-            return self.__serverMarkerFocus.getPosition()
+            return self.__dispersionServerMarker.getPosition()
         if markerType == ReticleRegistry.CLIENT_LATENCY.gunMarkerType:
-            return self.__clientMarkerLatency.getPosition()
+            return self.__latencyClientMarker.getPosition()
         gun_marker_ctrl._logger.warning('Gun maker control is not found by type: %d', markerType)
         return Math.Vector3()
 
@@ -88,13 +88,13 @@ class NewGunMarkersDecorator(IGunMarkerController):
         if markerType == _MARKER_TYPE.CLIENT:
             self.__clientMarker.setPosition(position)
         elif markerType == ReticleRegistry.CLIENT_FOCUS.gunMarkerType:
-            self.__clientMarkerFocus.setPosition(position)
+            self.__dispersionClientMarker.setPosition(position)
         elif markerType == _MARKER_TYPE.SERVER:
             self.__serverMarker.setPosition(position)
         elif markerType == ReticleRegistry.SERVER_FOCUS.gunMarkerType:
-            self.__serverMarkerFocus.setPosition(position)
+            self.__dispersionServerMarker.setPosition(position)
         elif markerType == ReticleRegistry.CLIENT_LATENCY.gunMarkerType:
-            self.__clientMarkerLatency.setPosition(position)
+            self.__latencyClientMarker.setPosition(position)
         else:
             gun_marker_ctrl._logger.warning('Gun maker control is not found by type: %d', markerType)
 
@@ -104,10 +104,10 @@ class NewGunMarkersDecorator(IGunMarkerController):
             if bit == _MARKER_FLAG.SERVER_MODE_ENABLED:
                 self.__serverMarker.setPosition(self.__clientMarker.getPosition())
                 self.__serverMarker.setSize(self.__clientMarker.getSize())
-                self.__serverMarkerFocus.setPosition(self.__clientMarkerFocus.getPosition())
-                self.__serverMarkerFocus.setSize(self.__clientMarkerFocus.getSize())
-                self.__clientMarkerLatency.setPosition(self.__clientMarker.getPosition())
-                self.__clientMarkerLatency.setSize(self.__clientMarker.getSize())
+                self.__dispersionServerMarker.setPosition(self.__dispersionClientMarker.getPosition())
+                self.__dispersionServerMarker.setSize(self.__dispersionClientMarker.getSize())
+                self.__latencyClientMarker.setPosition(self.__clientMarker.getPosition())
+                self.__latencyClientMarker.setSize(self.__clientMarker.getSize())
         else:
             self.__gunMarkersFlags &= ~bit
 
@@ -134,10 +134,10 @@ class NewGunMarkersDecorator(IGunMarkerController):
                 self.__serverMarker.update(markerType, position, direction, size, relaxTime, collData)
         elif markerType == ReticleRegistry.CLIENT_FOCUS.gunMarkerType:
             if self.__gunMarkersFlags & _MARKER_FLAG.CLIENT_MODE_ENABLED:
-                self.__clientMarkerFocus.update(markerType, position, direction, size, relaxTime, collData)
+                self.__dispersionClientMarker.update(markerType, position, direction, size, relaxTime, collData)
         elif markerType == ReticleRegistry.SERVER_FOCUS.gunMarkerType:
             if self.__gunMarkersFlags & _MARKER_FLAG.SERVER_MODE_ENABLED:
-                self.__serverMarkerFocus.update(markerType, position, direction, size, relaxTime, collData)
+                self.__dispersionServerMarker.update(markerType, position, direction, size, relaxTime, collData)
         elif markerType == ReticleRegistry.CLIENT_LATENCY.gunMarkerType:
             # this has to be done outside controllers because we have to collect server reticle size
             # also, we will have delayed access to server size, so we need to wait
@@ -151,11 +151,11 @@ class NewGunMarkersDecorator(IGunMarkerController):
                     distance = getDistanceFromCamera(position)
                     serverSize = tuple(i * distance for i in self.__serverSizeDispersion)
 
-                    self.__clientMarkerLatency.setServerDispersionAngle(self.__serverDispersionAngle)
-                    self.__clientMarkerLatency.update(markerType, position, direction, serverSize, relaxTime, collData)
+                    self.__latencyClientMarker.setServerDispersionAngle(self.__serverDispersionAngle)
+                    self.__latencyClientMarker.update(markerType, position, direction, serverSize, relaxTime, collData)
                 else:
-                    self.__clientMarkerLatency.setServerDispersionAngle(None)
-                    self.__clientMarkerLatency.update(markerType, position, direction, size, relaxTime, collData)
+                    self.__latencyClientMarker.setServerDispersionAngle(None)
+                    self.__latencyClientMarker.update(markerType, position, direction, size, relaxTime, collData)
         else:
             gun_marker_ctrl._logger.warning('Gun maker control is not found by type: %d', markerType)
 
