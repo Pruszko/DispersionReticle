@@ -8,7 +8,7 @@ logger = logging.getLogger(__name__)
 
 def performMigrationsIfNecessary():
     v2_0_2_migrateConfigFileLocation()
-    v2_0_4_addOptionLatencyReticleHideStandardReticle()
+    v2_1_0_addOptionLatencyReticleHideStandardReticle()
 
 
 V2_0_0_CONFIG_CONTENT = """{
@@ -85,7 +85,7 @@ def v2_0_2_migrateConfigFileLocation():
     logger.info("Finished moving config file to new location.")
 
 
-V2_0_4_CONFIG_CONTENT = """{
+V2_1_0_CONFIG_CONTENT = """{
     // Config can be reloaded in game using hotkeys: CTRL + P
     // To generate default config, delete this file and:
     // - either reload it with above hotkey
@@ -159,7 +159,7 @@ V2_0_4_CONFIG_CONTENT = """{
 }"""
 
 
-def v2_0_4_addOptionLatencyReticleHideStandardReticle():
+def v2_1_0_addOptionLatencyReticleHideStandardReticle():
     configFilePath = os.path.join("mods", "configs", "DispersionReticle", "config.json")
 
     if not os.path.isfile(configFilePath):
@@ -170,14 +170,14 @@ def v2_0_4_addOptionLatencyReticleHideStandardReticle():
     if "__version__" in data:
         return
 
-    logger.info("Migrating config file to version 2.0.4 ...")
+    logger.info("Migrating config file to version 2.1.0 ...")
 
     dispersionReticleEnabled = toBool(data["dispersion-reticle-enabled"])
     latencyReticleEnabled = toBool(data["latency-reticle-enabled"])
     serverReticleEnabled = toBool(data["server-reticle-enabled"])
     reticleSizeMultiplier = toPositiveFloat(data["reticle-size-multiplier"])
 
-    newConfigFileContent = V2_0_4_CONFIG_CONTENT % {
+    newConfigFileContent = V2_1_0_CONFIG_CONTENT % {
         "dispersion-reticle-enabled": toJson(dispersionReticleEnabled),
         "latency-reticle-enabled": toJson(latencyReticleEnabled),
         "latency-reticle-hide-standard-reticle": toJson(False),

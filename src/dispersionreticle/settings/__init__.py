@@ -7,8 +7,8 @@ logger = logging.getLogger(__name__)
 
 
 def getDefaultConfigContent():
-    from dispersionreticle.settings.migrations import V2_0_4_CONFIG_CONTENT
-    return V2_0_4_CONFIG_CONTENT % {
+    from dispersionreticle.settings.migrations import V2_1_0_CONFIG_CONTENT
+    return V2_1_0_CONFIG_CONTENT % {
         "dispersion-reticle-enabled": toJson(True),
         "latency-reticle-enabled": toJson(False),
         "latency-reticle-hide-standard-reticle": toJson(False),

@@ -1,5 +1,6 @@
+import BigWorld
 import AvatarInputHandler
-from AvatarInputHandler import _GUN_MARKER_TYPE
+from AvatarInputHandler import _GUN_MARKER_TYPE, gun_marker_ctrl
 
 from dispersionreticle.utils import *
 from dispersionreticle.utils.reticle_registry import ReticleRegistry
@@ -40,3 +41,19 @@ def updateGunMarker2(func, self, pos, direction, size, relaxTime, collData):
         if reticle.isServerReticle():
             self._AvatarInputHandler__curCtrl.updateGunMarker(reticle.gunMarkerType,
                                                               pos, direction, size, relaxTime, collData)
+
+
+@overrideIn(AvatarInputHandler.AvatarInputHandler)
+def __onArenaStarted(func, self, period, *args):
+    func(self, period, *args)
+
+    # this is stupid, but in Onslaught game mode something weird
+    # happens to server gun markers
+    # when selecting different than initial vehicle before countdown finishes
+    #
+    # by this, we will invalidate BigWorld internal state to reboot GunMarkerComponent
+    # as soon as the game starts
+    gunRotator = BigWorld.player().gunRotator
+    if gunRotator:
+        gunRotator.showServerMarker = not gun_marker_ctrl.useServerGunMarker()
+        gunRotator.showServerMarker = gun_marker_ctrl.useServerGunMarker()
