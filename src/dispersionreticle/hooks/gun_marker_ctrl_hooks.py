@@ -5,6 +5,8 @@ from helpers import dependency
 from skeletons.account_helpers.settings_core import ISettingsCore
 
 from dispersionreticle.controllers.gun_marker_decorator import NewGunMarkersDecorator
+from dispersionreticle.controllers.pentagon.as3_default_controller import AS3DefaultGunMarkerController
+from dispersionreticle.controllers.pentagon.as3_spg_controller import AS3SPGGunMarkerController
 from dispersionreticle.controllers.standard.standard_default_controller import OverriddenDefaultGunMarkerController
 from dispersionreticle.controllers.standard.standard_spg_controller import OverriddenSPGGunMarkerController
 from dispersionreticle.controllers.dispersion.dispersion_default_controller import DispersionDefaultGunMarkerController
@@ -34,9 +36,10 @@ from dispersionreticle.utils.reticle_registry import ReticleRegistry
 def createGunMarker(func, isStrategic):
     factory = _GunMarkersDPFactory()
 
-    dispersionClientReticle = ReticleRegistry.CLIENT_FOCUS
-    dispersionServerReticle = ReticleRegistry.SERVER_FOCUS
+    dispersionClientReticle = ReticleRegistry.CLIENT_DISPERSION
+    dispersionServerReticle = ReticleRegistry.SERVER_DISPERSION
     latencyClientReticle = ReticleRegistry.CLIENT_LATENCY
+    pentagonServerReticle = ReticleRegistry.SERVER_SIMPLE
 
     if isStrategic:
         clientMarker = OverriddenSPGGunMarkerController(_MARKER_TYPE.CLIENT, factory.getClientSPGProvider())
@@ -46,6 +49,8 @@ def createGunMarker(func, isStrategic):
         dispersionServerMarker = DispersionSPGGunMarkerController(dispersionServerReticle)
 
         latencyClientMarker = LatencySPGGunMarkerController(latencyClientReticle)
+
+        pentagonServerMarker = AS3SPGGunMarkerController(pentagonServerReticle)
     else:
         clientMarker = OverriddenDefaultGunMarkerController(_MARKER_TYPE.CLIENT, factory.getClientProvider())
         serverMarker = OverriddenDefaultGunMarkerController(_MARKER_TYPE.SERVER, factory.getServerProvider())
@@ -55,9 +60,12 @@ def createGunMarker(func, isStrategic):
 
         latencyClientMarker = LatencyDefaultGunMarkerController(latencyClientReticle)
 
+        pentagonServerMarker = AS3DefaultGunMarkerController(pentagonServerReticle)
+
     return NewGunMarkersDecorator(clientMarker, serverMarker,
                                   dispersionClientMarker, dispersionServerMarker,
-                                  latencyClientMarker)
+                                  latencyClientMarker,
+                                  pentagonServerMarker)
 
 
 @overrideIn(gun_marker_ctrl)

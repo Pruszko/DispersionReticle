@@ -6,7 +6,8 @@ Original idea by **StranikS_Scan**, completely reworked by me.
 Also, over time, this mod now contains **following mutually compatible mods**:
 - Dispersion reticle
 - Server reticle
-- Latency reticle (**NEW**)
+- Simple server reticle with old-style pentagons (**NEW**)
+- Latency reticle
 - Fix Reticle Size (adjustment in config file)
 
 ![All presented reticles](images/all.png)
@@ -22,19 +23,22 @@ All of those features can be enabled/adjusted **independently**.
 They are also compatible with "Use server aim" from in-game option.
 
 **Dispersion reticle** (enabled by default):
-- enabled by "dispersion-reticle-enabled" option
 - adds green reticle displaying **fully focused dispersion** to **vanilla reticle**
 - when both client-side and server-side reticle is on, it attaches to client-side reticle
 
 **Latency reticle**:
-- enabled by "latency-reticle-enabled" option
 - adds green reticle displaying **current server-side dispersion** to **client-side reticle**
+- basically, client-side position, but server-side dispersion
 - by this, client-side and server-side dispersion desynchronization is clearly visible
 - useful if you want to know server-side dispersion, but still want client-side responsiveness
 
 **Server reticle**
-- enabled by "server-reticle-enabled" option
 - adds purple **server-side reticle** alongside with **client-side reticle**
+
+**Simple server reticle**
+- adds **server-side reticle made of pentagons** alongside with **client-side reticle**
+- has configurable coloring and transparency
+- original idea by **AwfulTanker's Server Marker**, but **implemented from scratch** by me
 
 **Fix reticle size**
 - controlled by "reticle-size-multiplier" option

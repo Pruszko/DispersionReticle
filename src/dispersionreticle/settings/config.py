@@ -6,7 +6,7 @@ import Keys
 import game
 
 from dispersionreticle.settings import getDefaultConfigContent, loadConfigDict, toBool, toPositiveFloat, \
-    createFolderSafely
+    createFolderSafely, toColorTuple, clamp
 from dispersionreticle.settings.migrations import performMigrationsIfNecessary
 from dispersionreticle.utils import *
 
@@ -27,6 +27,14 @@ class _LatencyReticleConfig(_ReticleConfig):
         self.hideStandardReticle = toBool(section["hide-standard-reticle"])
 
 
+class _SimpleServerReticleConfig(_ReticleConfig):
+
+    def __init__(self, section):
+        super(_SimpleServerReticleConfig, self).__init__(section)
+        self.color = toColorTuple(section["color"])
+        self.alpha = clamp(0.0, toPositiveFloat(section["alpha"]), 1.0)
+
+
 class Config:
 
     def __init__(self):
@@ -42,6 +50,11 @@ class Config:
         })
         self.serverReticle = _ReticleConfig({
             "enabled": False,
+        })
+        self.simpleServerReticle = _SimpleServerReticleConfig({
+            "enabled": False,
+            "color": (0, 0, 255),
+            "alpha": 1.0
         })
         self.__reticleSizeMultiplier = 1.0
 
@@ -60,12 +73,14 @@ class Config:
             dispersionReticle = _ReticleConfig(data["dispersion-reticle"])
             latencyReticle = _LatencyReticleConfig(data["latency-reticle"])
             serverReticle = _ReticleConfig(data["server-reticle"])
+            simpleServerReticle = _SimpleServerReticleConfig(data["simple-server-reticle"])
 
             reticleSizeMultiplier = toPositiveFloat(data["reticle-size-multiplier"])
 
             self.dispersionReticle = dispersionReticle
             self.latencyReticle = latencyReticle
             self.serverReticle = serverReticle
+            self.simpleServerReticle = simpleServerReticle
 
             self.__reticleSizeMultiplier = reticleSizeMultiplier
 
@@ -92,7 +107,9 @@ class Config:
         return self.__reticleSizeMultiplier
 
     def isServerAimRequired(self):
-        return self.latencyReticle.enabled or self.serverReticle.enabled
+        return self.latencyReticle.enabled or \
+               self.serverReticle.enabled or \
+               self.simpleServerReticle.enabled
 
     def shouldHideStandardReticle(self):
         return self.latencyReticle.enabled and self.latencyReticle.hideStandardReticle

@@ -32,8 +32,7 @@ from dispersionreticle.utils.reticle_registry import ReticleRegistry
 #   in global AvatarInputHandler bindings and provide same default values
 #   for them as vanilla data providers,
 # - prepare data providers (and their singleton getters) that will be used to write data by controllers,
-# - in GunMarkersSetInfo (crosshair_proxy), add read-only access to
-#   new providers that will be used by crosshair flash objects.
+# - in ReticleRegistry, add descriptor getters of data providers for each registered reticle
 #
 # Also, make getters of providers return proper data provider for new marker types
 #

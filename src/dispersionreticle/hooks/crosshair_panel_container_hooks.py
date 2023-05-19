@@ -1,7 +1,10 @@
 from gui.Scaleform.daapi.view.battle.shared.crosshair import CrosshairPanelContainer, gm_factory
 from debug_utils import LOG_WARNING
+from gui.Scaleform.daapi.view.meta.CrosshairPanelContainerMeta import CrosshairPanelContainerMeta
 
+from dispersionreticle.flash.dispersion_reticle_flash import DispersionReticleFlash
 from dispersionreticle.utils import overrideIn
+from dispersionreticle.utils.reticle_registry import ReticleRegistry
 
 
 ###########################################################
@@ -26,3 +29,30 @@ def invalidateGunMarkers(func, self, markersInfo, vehicleInfo):
 
         newSet = gm_factory.createComponents(markersInfo, vehicleInfo)
         self._CrosshairPanelContainer__setGunMarkers(newSet)
+
+
+###########################################################
+# This is needed to redirect marker instantiation to our swf app instead
+# of CrosshairPanelContainer when spawning simple markers.
+#
+# For more explanation, check gun_marker_components_hooks.py
+###########################################################
+
+@overrideIn(CrosshairPanelContainerMeta)
+def as_createGunMarkerS(func, self, viewID, linkage, name):
+    if name in ReticleRegistry.SERVER_SIMPLE.getMarkerNames() and \
+            name != ReticleRegistry.SERVER_SIMPLE.spgGunMarkerName:
+        DispersionReticleFlash.onMarkerCreate(name)
+        return True
+
+    return func(self, viewID, linkage, name)
+
+
+@overrideIn(CrosshairPanelContainerMeta)
+def as_destroyGunMarkerS(func, self, name):
+    if name in ReticleRegistry.SERVER_SIMPLE.getMarkerNames() and \
+            name != ReticleRegistry.SERVER_SIMPLE.spgGunMarkerName:
+        DispersionReticleFlash.onMarkerDestroy(name)
+        return True
+
+    return func(self, name)
