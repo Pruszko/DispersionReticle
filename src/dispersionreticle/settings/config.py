@@ -9,6 +9,7 @@ from dispersionreticle.settings import getDefaultConfigContent, loadConfigDict, 
     createFolderSafely, toColorTuple, clamp
 from dispersionreticle.settings.migrations import performMigrationsIfNecessary
 from dispersionreticle.utils import *
+from dispersionreticle.utils.debug_state import g_debugStateCollector
 
 logger = logging.getLogger(__name__)
 
@@ -124,5 +125,8 @@ def handleKeyEvent(func, event):
         if event.key == Keys.KEY_P:
             g_config.loadConfigSafely()
             g_config.onConfigReload()
+
+            if debug_state.IS_DEBUGGING:
+                g_debugStateCollector.collectStateAfterConfigReload()
 
     return func(event)

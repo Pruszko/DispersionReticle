@@ -1,6 +1,12 @@
 # Utility decorator to override function in certain class/module
-def overrideIn(cls):
+from dispersionreticle.utils import debug_state
+
+
+def overrideIn(cls, onlyWhenDebugging=False):
     def _overrideMethod(func):
+        if onlyWhenDebugging and not debug_state.IS_DEBUGGING:
+            return func
+
         funcName = func.__name__
 
         if funcName.startswith("__"):
@@ -17,8 +23,11 @@ def overrideIn(cls):
 
 
 # Utility decorator to add new function in certain class/module
-def addMethodTo(cls):
+def addMethodTo(cls, onlyWhenDebugging=False):
     def _overrideMethod(func):
+        if onlyWhenDebugging and not debug_state.IS_DEBUGGING:
+            return func
+
         setattr(cls, func.__name__, func)
         return func
     return _overrideMethod

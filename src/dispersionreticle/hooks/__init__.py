@@ -1,5 +1,7 @@
 # make sure all hooks are invoked
+import dispersionreticle.hooks.aih_global_binding_hooks
 import dispersionreticle.hooks.aih_hooks
+import dispersionreticle.hooks.avatar_hooks
 import dispersionreticle.hooks.crosshair_panel_container_hooks
 import dispersionreticle.hooks.crosshair_proxy_hooks
 import dispersionreticle.hooks.data_provider_hooks

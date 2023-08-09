@@ -1,9 +1,18 @@
+import logging
+
 import BigWorld
 import AvatarInputHandler
 from AvatarInputHandler import _GUN_MARKER_TYPE, gun_marker_ctrl
+from constants import ARENA_PERIOD
 
 from dispersionreticle.utils import *
 from dispersionreticle.utils.reticle_registry import ReticleRegistry
+
+
+logger = logging.getLogger(__name__)
+
+if debug_state.IS_DEBUGGING:
+    logger.setLevel(logging.DEBUG)
 
 
 ###########################################################
@@ -47,13 +56,68 @@ def updateGunMarker2(func, self, pos, direction, size, relaxTime, collData):
 def __onArenaStarted(func, self, period, *args):
     func(self, period, *args)
 
-    # this is stupid, but in Onslaught game mode something weird
-    # happens to server gun markers
+    # this event handler is called multiple times
+    # we only want to react to it when battle start finishes countdown
+    if period != ARENA_PERIOD.BATTLE:
+        return
+
+    # TODO fix it in a more sophisticated way than "this"
+    #
+    # in Onslaught game mode something weird happens to server gun markers
     # when selecting different than initial vehicle before countdown finishes
     #
-    # by this, we will invalidate BigWorld internal state to reboot GunMarkerComponent
+    # by this code, we will invalidate BigWorld internal state to reboot GunMarkerComponent
     # as soon as the game starts
-    gunRotator = BigWorld.player().gunRotator
-    if gunRotator:
-        gunRotator.showServerMarker = not gun_marker_ctrl.useServerGunMarker()
-        gunRotator.showServerMarker = gun_marker_ctrl.useServerGunMarker()
+    #
+    # generally I want to analyze server marker state more precisely with DebugStateCollector
+    # however, when I got some free time, Onslaught event has already finished
+    # so I cannot find real root cause now
+    #
+    # previously I've fixed it with blind guess quickly restarting showServerMarker flag and it worked
+    # but rebooting is not the finest way to workaround bugs
+    #
+    # not only that, but after first version of this fix was implemented, it fixed
+    # upper mentioned DETERMINISTIC bug in Onslaught
+    # HOWEVER, new NON-DETERMINISTIC bug has appeared when certain conditions were met in ANY MATCH:
+    # - user was using enabled "Use server aim" from in-game menu
+    # - user were not using any server-related reticles from this mod config
+    #
+    # this bug happens quite rarely and randomly (around 5%-10% chance to appear), but often enough to bother users
+    # after roughly 30 matches (I have bad luck as you see) I've managed to reproduce it
+    # and introspect all server reticle related variables when it occurred
+    # everything was fine with all of them
+    # most importantly, Avatar#enableServerAim was eventually called with True when it needed to be True
+    #
+    # my guess is that
+    # changing "server_marker" developer feature flag too fast may cause
+    # some consecutive calls to be completely ignored, in result, we may end up with DISABLED server aim
+    # despite calling it with True
+    #
+    # in other words, it looks like setting developer feature flags on Avatar base
+    # may be NON-BLOCKING ASYNCHRONOUS operation (or something really is messed up that I haven't noticed yet)
+    #
+    # or it might be related to __onArenaStarted being called by BigWorld
+    # and bug is some race condition that messes up "server_marker" flag
+    #
+    # either way, to workaround this, we will delay calls a little bit to be (most likely) sure BigWorld caught up
+    # to accept consecutive call (probably 1 ms would be fine, but let's throw 40 ms to be sure, why the heck not)
+    #
+    # this is overall bad, but for now it is what it is
+
+    logger.debug("Onslaught server marker fix start")
+
+    def negateGunMarkerComponentState():
+        logger.debug("Onslaught server marker fix negate begin")
+        BigWorld.player().gunRotator.showServerMarker = not gun_marker_ctrl.useServerGunMarker()
+        logger.debug("Onslaught server marker fix negate finished")
+
+        # 2: schedule restore
+        BigWorld.callback(0.04, restoreGunMarkerComponentState)
+
+    def restoreGunMarkerComponentState():
+        logger.debug("Onslaught server marker fix restore begin")
+        BigWorld.player().gunRotator.showServerMarker = gun_marker_ctrl.useServerGunMarker()
+        logger.debug("Onslaught server marker fix restore finished")
+
+    # 1: schedule negation
+    BigWorld.callback(0.04, negateGunMarkerComponentState)

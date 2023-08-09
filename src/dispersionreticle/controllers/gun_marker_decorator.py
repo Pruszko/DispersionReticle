@@ -3,6 +3,8 @@ import BigWorld, Math
 from AvatarInputHandler import gun_marker_ctrl, aih_global_binding, AimingSystems
 from AvatarInputHandler.gun_marker_ctrl import IGunMarkerController, _BINDING_ID, _MARKER_TYPE, _MARKER_FLAG
 
+from dispersionreticle.utils import debug_state
+from dispersionreticle.utils.debug_state import g_debugStateCollector
 from dispersionreticle.utils.reticle_registry import ReticleRegistry
 
 
@@ -101,6 +103,9 @@ class NewGunMarkersDecorator(IGunMarkerController):
             self.__gunMarkersFlags &= ~bit
 
     def update(self, markerType, position, direction, size, relaxTime, collData):
+        if debug_state.IS_DEBUGGING:
+            g_debugStateCollector.collectStateBeforeGunMarkersUpdate()
+
         if markerType == _MARKER_TYPE.CLIENT:
             self.__clientState = (
              position, direction, collData)
