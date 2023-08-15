@@ -13,6 +13,8 @@ from dispersionreticle.utils.debug_state import g_debugStateCollector
 
 logger = logging.getLogger(__name__)
 
+VALID_SIMPLE_SERVER_RETICLE_SHAPES = ["pentagon", "t-shape", "circle", "dashed"]
+
 
 class _ReticleConfig(object):
 
@@ -32,7 +34,15 @@ class _SimpleServerReticleConfig(_ReticleConfig):
 
     def __init__(self, section):
         super(_SimpleServerReticleConfig, self).__init__(section)
+
+        rawShape = str(section["shape"]).lower()
+        if rawShape not in VALID_SIMPLE_SERVER_RETICLE_SHAPES:
+            raise Exception("Shape %s is not a valid value for simple server reticle" % rawShape)
+
+        self.shape = rawShape
         self.color = toColorTuple(section["color"])
+        self.drawOutline = toBool(section["draw-outline"])
+        self.blend = clamp(0.0, toPositiveFloat(section["blend"]), 1.0)
         self.alpha = clamp(0.0, toPositiveFloat(section["alpha"]), 1.0)
 
 
@@ -54,7 +64,10 @@ class Config:
         })
         self.simpleServerReticle = _SimpleServerReticleConfig({
             "enabled": False,
-            "color": (0, 0, 255),
+            "shape": "pentagon",
+            "color": (255, 0, 255),
+            "draw-outline": False,
+            "blend": 0.5,
             "alpha": 1.0
         })
         self.__reticleSizeMultiplier = 1.0
@@ -87,7 +100,6 @@ class Config:
 
             logger.info("Finished config loading.")
         except Exception as e:
-            print(e)
             logger.error("Failed to load (or create) config", exc_info=e)
 
     def createConfigIfNotExists(self):

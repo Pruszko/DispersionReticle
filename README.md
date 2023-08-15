@@ -6,11 +6,12 @@ Original idea by **StranikS_Scan**, completely reworked by me.
 Also, over time, this mod now contains **following mutually compatible mods**:
 - Dispersion reticle
 - Server reticle
-- Simple server reticle with old-style pentagons (**NEW**)
+- Simple server reticle with customizable shape, color, blending, outline presence and transparency
 - Latency reticle
-- Fix Reticle Size (adjustment in config file)
+- Reticle Size (adjustment in config file)
 
 ![All presented reticles](images/all.png)
+![Simple server reticle features](images/simple_server.png)
 
 ## Config file
 All features from config file **are reloadable on-the-fly** using **CTRL + P** hotkey in the game **anywhere**.
@@ -36,18 +37,19 @@ They are also compatible with "Use server aim" from in-game option.
 - adds purple **server-side reticle** alongside with **client-side reticle**
 
 **Simple server reticle**
-- adds **server-side reticle made of pentagons** alongside with **client-side reticle**
-- has configurable coloring and transparency
+- adds **server-side reticle with customizable shape** alongside with **client-side reticle**
+- has configurable shape, coloring, blending, outline presence and transparency
 - original idea by **AwfulTanker's Server Marker**, but **implemented from scratch** by me
 
-**Fix reticle size**
+**Reticle size**
 - controlled by "reticle-size-multiplier" option
 - WG's displayed reticle dispersion is noticeably bigger than actual gun dispersion
+- it was discovered by **Jak_Attackka**, **StranikS_Scan** and others
 - by this setting you can scale it to actual displayed dispersion
 - good known values:
-- 1.0 (default "wrong" WG dispersion)
-- 0.6 (factor determined by me)
-- 0.5848 (factor determined by **Jak_Attackk**a, **StranikS_Scan** and others)
+    - 1.0 (default "wrong" WG dispersion)
+    - 0.6 (factor determined by me)
+    - 0.5848 (factor determined by **Jak_Attackk**a, **StranikS_Scan** and others)
 
 ## Resource
 - [WGMods](https://wgmods.net/5251/)

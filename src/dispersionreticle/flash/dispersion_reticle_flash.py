@@ -18,33 +18,25 @@ logger = logging.getLogger(__name__)
 
 class DispersionReticleFlashMeta(BaseDAAPIModule):
 
-    def as_tick(self):
+    def as_createMarker(self, gunMarkerType, markerName, isServerReticle):
         if self._isDAAPIInited():
-            self.flashObject.as_tick()
+            self.flashObject.as_createMarker(gunMarkerType, markerName, isServerReticle)
 
-    def as_createMarker(self, markerName):
+    def as_updateReticle(self, gunMarkerType, reticleSize):
         if self._isDAAPIInited():
-            self.flashObject.as_createMarker(markerName)
+            self.flashObject.as_updateReticle(gunMarkerType, reticleSize)
 
     def as_destroyMarker(self, markerName):
         if self._isDAAPIInited():
             self.flashObject.as_destroyMarker(markerName)
 
-    def as_setMarkerVisibility(self, markerName, visible):
+    def as_setMarkerDataProviderPresence(self, markerName, visible):
         if self._isDAAPIInited():
-            self.flashObject.as_setMarkerVisibility(markerName, visible)
+            self.flashObject.as_setMarkerDataProviderPresence(markerName, visible)
 
-    def as_setReticleSize(self, reticleSize):
+    def as_onConfigReload(self, serializedConfig):
         if self._isDAAPIInited():
-            self.flashObject.as_setReticleSize(reticleSize)
-
-    def as_setFillColor(self, color):
-        if self._isDAAPIInited():
-            self.flashObject.as_setFillColor(color)
-
-    def as_setAlpha(self, alpha):
-        if self._isDAAPIInited():
-            self.flashObject.as_setAlpha(alpha)
+            self.flashObject.as_onConfigReload(serializedConfig)
 
 
 class DispersionReticleFlash(ExternalFlashComponent, DispersionReticleFlashMeta):
@@ -131,37 +123,52 @@ class DispersionReticleFlash(ExternalFlashComponent, DispersionReticleFlashMeta)
         #
         # self.component.size = (1, 1)
 
-    def __onReticleUpdate(self, reticleSize):
-        self.as_tick()
-        self.as_setReticleSize(reticleSize)
+    def __onReticleUpdate(self, reticle, reticleSize):
+        self.as_updateReticle(reticle.gunMarkerType, reticleSize)
 
-    def __onMarkerCreate(self, markerName):
-        self.as_createMarker(markerName)
+    def __onMarkerCreate(self, markerName, reticle):
+        self.as_createMarker(reticle.gunMarkerType, markerName, reticle.isServerReticle())
 
-    def __onMarkerDestroy(self, markerName):
+    def __onMarkerDestroy(self, markerName, reticle):
         self.as_destroyMarker(markerName)
 
     def __onMarkerDataProviderAttach(self, markerName, dataProvider):
         self._markerDataProviders[markerName] = dataProvider
 
-        self.as_setMarkerVisibility(markerName, True)
+        self.as_setMarkerDataProviderPresence(markerName, True)
 
     def __onMarkerDataProviderDetach(self, markerName):
-        self.as_setMarkerVisibility(markerName, False)
+        self.as_setMarkerDataProviderPresence(markerName, False)
 
         if markerName in self._markerDataProviders:
             del self._markerDataProviders[markerName]
 
     def __onConfigReload(self):
-        red, green, blue = g_config.simpleServerReticle.color
+        serializedConfig = {
+            "simple-server-reticle": self.__serializeSimpleServerReticleSection()
+        }
+
+        self.as_onConfigReload(serializedConfig)
+
+    def __serializeSimpleServerReticleSection(self):
+        return {
+            "color": self.__serializeColorTuple(g_config.simpleServerReticle.color),
+            "shape": g_config.simpleServerReticle.shape,
+            "draw-outline": g_config.simpleServerReticle.drawOutline,
+            "blend": g_config.simpleServerReticle.blend,
+            "alpha": g_config.simpleServerReticle.alpha
+        }
+
+    @staticmethod
+    def __serializeColorTuple(colorTuple):
+        red, green, blue = colorTuple
 
         color = 0
         color |= red << 16
         color |= green << 8
         color |= blue
 
-        self.as_setFillColor(color)
-        self.as_setAlpha(g_config.simpleServerReticle.alpha)
+        return color
 
     # IMPORTANT
     # those methods are called by an swf app every frame in-between game logic
@@ -183,7 +190,7 @@ class DispersionReticleFlash(ExternalFlashComponent, DispersionReticleFlashMeta)
 
     def py_getNormalizedMarkerPosition(self, markerName):
         # this method should be called by an swf app only, if there is created marker
-        # in its display list and is visible
+        # in its display list and has marker data provider presence
         #
         # by this we assume, that its data provider MUST be present prior to it being called
         dataProvider = self._markerDataProviders[markerName]

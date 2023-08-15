@@ -5,8 +5,8 @@ from helpers import dependency
 from skeletons.account_helpers.settings_core import ISettingsCore
 
 from dispersionreticle.controllers.gun_marker_decorator import NewGunMarkersDecorator
-from dispersionreticle.controllers.pentagon.as3_default_controller import AS3DefaultGunMarkerController
-from dispersionreticle.controllers.pentagon.as3_spg_controller import AS3SPGGunMarkerController
+from dispersionreticle.controllers.simple.as3_default_controller import AS3DefaultGunMarkerController
+from dispersionreticle.controllers.simple.as3_spg_controller import AS3SPGGunMarkerController
 from dispersionreticle.controllers.standard.standard_default_controller import OverriddenDefaultGunMarkerController
 from dispersionreticle.controllers.standard.standard_spg_controller import OverriddenSPGGunMarkerController
 from dispersionreticle.controllers.dispersion.dispersion_default_controller import DispersionDefaultGunMarkerController
@@ -38,34 +38,36 @@ def createGunMarker(func, isStrategic):
 
     dispersionClientReticle = ReticleRegistry.CLIENT_DISPERSION
     dispersionServerReticle = ReticleRegistry.SERVER_DISPERSION
+
     latencyClientReticle = ReticleRegistry.CLIENT_LATENCY
-    pentagonServerReticle = ReticleRegistry.SERVER_SIMPLE
+
+    simpleServerReticle = ReticleRegistry.SERVER_SIMPLE
 
     if isStrategic:
-        clientMarker = OverriddenSPGGunMarkerController(_MARKER_TYPE.CLIENT, factory.getClientSPGProvider())
-        serverMarker = OverriddenSPGGunMarkerController(_MARKER_TYPE.SERVER, factory.getServerSPGProvider())
+        clientController = OverriddenSPGGunMarkerController(_MARKER_TYPE.CLIENT, factory.getClientSPGProvider())
+        serverController = OverriddenSPGGunMarkerController(_MARKER_TYPE.SERVER, factory.getServerSPGProvider())
 
-        dispersionClientMarker = DispersionSPGGunMarkerController(dispersionClientReticle)
-        dispersionServerMarker = DispersionSPGGunMarkerController(dispersionServerReticle)
+        dispersionClientController = DispersionSPGGunMarkerController(dispersionClientReticle)
+        dispersionServerController = DispersionSPGGunMarkerController(dispersionServerReticle)
 
-        latencyClientMarker = LatencySPGGunMarkerController(latencyClientReticle)
+        latencyClientController = LatencySPGGunMarkerController(latencyClientReticle)
 
-        pentagonServerMarker = AS3SPGGunMarkerController(pentagonServerReticle)
+        simpleServerController = AS3SPGGunMarkerController(simpleServerReticle)
     else:
-        clientMarker = OverriddenDefaultGunMarkerController(_MARKER_TYPE.CLIENT, factory.getClientProvider())
-        serverMarker = OverriddenDefaultGunMarkerController(_MARKER_TYPE.SERVER, factory.getServerProvider())
+        clientController = OverriddenDefaultGunMarkerController(_MARKER_TYPE.CLIENT, factory.getClientProvider())
+        serverController = OverriddenDefaultGunMarkerController(_MARKER_TYPE.SERVER, factory.getServerProvider())
 
-        dispersionClientMarker = DispersionDefaultGunMarkerController(dispersionClientReticle)
-        dispersionServerMarker = DispersionDefaultGunMarkerController(dispersionServerReticle)
+        dispersionClientController = DispersionDefaultGunMarkerController(dispersionClientReticle)
+        dispersionServerController = DispersionDefaultGunMarkerController(dispersionServerReticle)
 
-        latencyClientMarker = LatencyDefaultGunMarkerController(latencyClientReticle)
+        latencyClientController = LatencyDefaultGunMarkerController(latencyClientReticle)
 
-        pentagonServerMarker = AS3DefaultGunMarkerController(pentagonServerReticle)
+        simpleServerController = AS3DefaultGunMarkerController(simpleServerReticle)
 
-    return NewGunMarkersDecorator(clientMarker, serverMarker,
-                                  dispersionClientMarker, dispersionServerMarker,
-                                  latencyClientMarker,
-                                  pentagonServerMarker)
+    return NewGunMarkersDecorator(clientController, serverController,
+                                  dispersionClientController, dispersionServerController,
+                                  latencyClientController,
+                                  simpleServerController)
 
 
 @overrideIn(gun_marker_ctrl)

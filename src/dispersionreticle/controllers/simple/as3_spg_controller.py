@@ -13,7 +13,7 @@ class AS3SPGGunMarkerController(_SPGGunMarkerController):
         super(AS3SPGGunMarkerController, self).__init__(reticle.gunMarkerType,
                                                         reticle.getSpgDataProvider(),
                                                         enabledFlag=enabledFlag)
-        self.__serverDispersionAngle = None
+        self.__reticle = reticle
 
     def _update(self):
         pos3d, vel3d, gravity3d = self._getCurrentShotInfo()
@@ -26,7 +26,7 @@ class AS3SPGGunMarkerController(_SPGGunMarkerController):
 
         self._dataProvider.update(pos3d, vel3d, gravity3d, newSize)
 
-        DispersionReticleFlash.onReticleUpdate(newSize)
+        DispersionReticleFlash.onReticleUpdate(self.__reticle, newSize)
 
     def _updateDispersionData(self):
         dispersionAngle = self._gunRotator.dispersionAngle

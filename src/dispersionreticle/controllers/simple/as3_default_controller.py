@@ -12,6 +12,7 @@ class AS3DefaultGunMarkerController(_DefaultGunMarkerController):
         super(AS3DefaultGunMarkerController, self).__init__(reticle.gunMarkerType,
                                                             reticle.getStandardDataProvider(),
                                                             enabledFlag=enabledFlag)
+        self.__reticle = reticle
 
     def update(self, markerType, pos, direction, sizeVector, relaxTime, collData):
         super(_DefaultGunMarkerController, self).update(markerType, pos, direction, sizeVector, relaxTime, collData)
@@ -42,4 +43,4 @@ class AS3DefaultGunMarkerController(_DefaultGunMarkerController):
         else:
             self._dataProvider.updateSize(self._DefaultGunMarkerController__curSize, relaxTime)
 
-        DispersionReticleFlash.onReticleUpdate(self._DefaultGunMarkerController__curSize)
+        DispersionReticleFlash.onReticleUpdate(self.__reticle, self._DefaultGunMarkerController__curSize)

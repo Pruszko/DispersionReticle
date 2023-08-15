@@ -67,6 +67,9 @@ class VanillaReticle(object):
             self.spgGunMarkerName
         )
 
+    def getFlashMarkerNames(self):
+        return ()
+
     def isServerReticle(self):
         return self.reticleType == ReticleType.SERVER
 

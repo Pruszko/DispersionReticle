@@ -21,4 +21,15 @@ class ReticleRegistry(object):
                                reticleType=ReticleType.SERVER,
                                reticleLinkages=ReticleLinkages.PURPLE)
 
-    RETICLES = [CLIENT_DISPERSION, SERVER_DISPERSION, CLIENT_LATENCY, SERVER_SIMPLE]
+    RETICLES = [CLIENT_DISPERSION, SERVER_DISPERSION, CLIENT_LATENCY,
+                SERVER_SIMPLE]
+
+    FLASH_RETICLES = [SERVER_SIMPLE]
+
+    @staticmethod
+    def getReticleByFlashMarkerName(markerName):
+        for reticle in ReticleRegistry.FLASH_RETICLES:
+            if markerName in reticle.getFlashMarkerNames():
+                return reticle
+
+        return None

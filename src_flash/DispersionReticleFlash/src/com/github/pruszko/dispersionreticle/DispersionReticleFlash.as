@@ -1,15 +1,10 @@
 package com.github.pruszko.dispersionreticle
 {
-	import com.github.pruszko.dispersionreticle.marker.PentagonMarker;
-	import com.github.pruszko.dispersionreticle.utils.Partial;
-	import com.github.pruszko.dispersionreticle.utils.PartialValue;
-	import flash.display.DisplayObject;
-	import flash.display.Shape;
+	import com.github.pruszko.dispersionreticle.config.DisposableConfig;
+	import com.github.pruszko.dispersionreticle.marker.StatefulMarker;
+	import com.github.pruszko.dispersionreticle.marker.SimpleStatefulMarker;
 	import flash.display.Sprite;
 	import flash.events.Event;
-	import flash.external.ExternalInterface;
-	import flash.geom.Point;
-	import flash.utils.getTimer;
 	
 	public class DispersionReticleFlash extends Sprite 
 	{
@@ -17,11 +12,14 @@ package com.github.pruszko.dispersionreticle
 		private static const SWF_HALF_WIDTH:Number = 400;
 		private static const SWF_HALF_HEIGHT:Number = 300;
 		
-		// For some reason reticle is slightly bigger than it should be
-		// and it isn't caused by anything (scale, screen resolution etc)
+		// For some reason reticle is smaller than it should be
+		// and it isn't caused by anything (scale, screen resolution, etc.)
 		//
 		// Just scaling it by this factor is precise enough, lmao
-		private static const RETICLE_SIZE_FIX_MULTIPLIER:Number = 0.85;
+		private static const RETICLE_SIZE_FIX_MULTIPLIER:Number = 1.7;
+		
+		// Scale used for rendering screen-size-dependent shapes
+		private static const UNIT_SIZE_SCALE:Number = 0.001;
 		
 		// Python-side methods required for in-between game state updates
 		public var py_warn:Function;
@@ -30,16 +28,9 @@ package com.github.pruszko.dispersionreticle
 		
 		private var _appWidth:Number = 0.0;
 		private var _appHeight:Number = 0.0;
-		private var _fillColor:int = 0x0000FF;
+		private var _unitSize:Number = 0.0;
 		
-		// Reticle position is being accessed from python-side
-		// because it is needed to be read from data providers
-		// 
-		// However, reticle size is being updated in controllers every 100 ms
-		// so we have to interpolate reticle size to render smoothly
-		// between controller updates
-		private var partial:Partial = new Partial(100.0);
-		private var reticleSize:PartialValue = new PartialValue(partial, 32.0);
+		private var _config:DisposableConfig = new DisposableConfig();
 						
 		public function DispersionReticleFlash() 
 		{
@@ -55,42 +46,82 @@ package com.github.pruszko.dispersionreticle
 		{
 			removeEventListener(Event.ENTER_FRAME, this.onEnterFrame);
 			
+			for (var i:int = 0; i < numChildren; ++i) {
+				var marker:StatefulMarker = getMarkerAt(i);
+				marker.disposeState();
+			}
+			
 			removeChildren();
 			
-			partial = null;
-			reticleSize = null;
+			_config.disposeState();
+			_config = null;
 		}
 		
-		public function as_createMarker(markerName:String) : void
+		public function as_createMarker(gunMarkerType:int, markerName:String, isServerReticle:Boolean) : void
 		{
-			var foundMarker:DisplayObject = getChildByName(markerName);
+			var foundMarker:StatefulMarker = getMarkerByName(markerName);
 			if (foundMarker != null) {
 				warn("Present marker " + markerName + " were attempted to be spawned more than once");
 				return;
 			}
 			
-			var pentagonMarker:PentagonMarker = new PentagonMarker(this);
-			pentagonMarker.name = markerName;
-			pentagonMarker.visible = false
+			var newMarker:StatefulMarker = null;
 			
-			addChild(pentagonMarker);
+			// Gun marker types are present in python-side ReticleRegistry
+			if (gunMarkerType == SimpleStatefulMarker.GUN_MARKER_TYPE)
+			{
+				newMarker = new SimpleStatefulMarker(this, gunMarkerType, isServerReticle);
+			}
+			else
+			{
+				warn("Unknown gun marker type received in as_createMarker: " +  + gunMarkerType);
+				return;
+			}
+			
+			newMarker.name = markerName;
+			
+			addChild(newMarker);
+		}
+		
+		public function as_updateReticle(gunMarkerType:int, reticleSize:Number) : void
+		{
+			var markers:Vector.<StatefulMarker> = getMarkersByGunMarkerType(gunMarkerType);
+			
+			for (var i:int = 0; i < markers.length; ++i)
+			{
+				var marker:StatefulMarker = markers[i];
+				
+				if (marker.gunMarkerType != gunMarkerType)
+				{
+					continue;
+				}
+				
+				marker.resetPartial();
+				marker.reticleRadius = reticleSize * RETICLE_SIZE_FIX_MULTIPLIER / 2.0;
+			}
+			
+			markers.splice(0, markers.length);
 		}
 		
 		public function as_destroyMarker(markerName:String) : void
 		{
-			var foundMarker:DisplayObject = getChildByName(markerName);
-			if (foundMarker == null) {
+			var foundMarker:StatefulMarker = getMarkerByName(markerName);
+			if (foundMarker == null)
+			{
 				warn("Absent marker " + markerName + " were attempted to be removed");
 				return;
 			}
 			
 			removeChild(foundMarker);
+			
+			foundMarker.disposeState();
 		}
 		
-		public function as_setMarkerVisibility(markerName:String, visible:Boolean) : void
+		public function as_setMarkerDataProviderPresence(markerName:String, dataProviderPresence:Boolean) : void
 		{
-			var foundMarker:DisplayObject = getChildByName(markerName);
-			if (foundMarker == null) {
+			var foundMarker:StatefulMarker = getMarkerByName(markerName);
+			if (foundMarker == null)
+			{
 				// clearDataProvider() on our proxy can also be called when marker
 				// is already destroyed
 				// 
@@ -98,84 +129,36 @@ package com.github.pruszko.dispersionreticle
 				return;
 			}
 			
-			foundMarker.visible = visible;
+			foundMarker.hasDataProvider = dataProviderPresence;
 		}
 		
-		// Called every controller updates to reset interpolation starting value
-		public function as_tick() : void
+		public function as_onConfigReload(serializedConfig:Object) : void
 		{
-			partial.reset();
-		}
-		
-		public function as_setReticleSize(reticleSize:Number) : void
-		{
-			this.reticleSize.value = reticleSize * RETICLE_SIZE_FIX_MULTIPLIER;
-		}
-		
-		public function as_setFillColor(fillColor:int) : void
-		{
-			this._fillColor = fillColor;
-		}
-		
-		public function as_setAlpha(alpha:Number) : void
-		{
-			this.alpha = alpha;
+			_config.deserialize(serializedConfig);
 		}
 		
 		private function onEnterFrame() : void
 		{
-			// Update flash app position to exactly top-left corner
-			if (this.py_getScreenResolution != null)
-			{
-				var screenResolution:Array = this.py_getScreenResolution();
-				this._appWidth = screenResolution[0];
-				this._appHeight = screenResolution[1];
-				updatePosition();
-			}
+			updateAppPositionAndState();
 			
-			// Update all markers to proper 2d position starting from left-corner
-			if (this.py_getNormalizedMarkerPosition != null)
-			{
-				forEachPentagonMarker(updateMarkerPosition);
-			}
-			
-			// Update partial for further interpolation
-			partial.tick();
-			
-			// Rerender all pentagon markers
-			forEachPentagonMarker(drawMarker);
+			updateMarkersPositionAndVisibility();
+			updateMarkers();
+			renderMarkers();
 		}
 		
-		private function forEachPentagonMarker(consumer:Function) : void
+		private function updateAppPositionAndState() : void
 		{
-			for (var i:int = 0; i < numChildren; ++i) {
-				consumer(PentagonMarker(getChildAt(i)));
-			}
-		}
-		
-		private function updateMarkerPosition(pentagonMarker:PentagonMarker) : void
-		{
-			// General contract between this app and its python-side bridge is that
-			// marker position access should occur only when marker is visible
-			if (!pentagonMarker.visible) {
+			if (this.py_getScreenResolution == null)
+			{
 				return;
 			}
 			
-			var normalizedPosWithProjectionResult:Array = this.py_getNormalizedMarkerPosition(pentagonMarker.name);
-			var isPointOnScreen:Boolean = normalizedPosWithProjectionResult[2]
+			// Update flash app position to exactly top-left corner
+			// also update screen resolution dependent variables
+			var screenResolution:Array = this.py_getScreenResolution();
+			this._appWidth = screenResolution[0];
+			this._appHeight = screenResolution[1];
 			
-			pentagonMarker.x = normalizedPosWithProjectionResult[0] * this.appWidth;
-			pentagonMarker.y = normalizedPosWithProjectionResult[1] * this.appHeight;
-			pentagonMarker.isOnScreen = isPointOnScreen;
-		}
-		
-		private function drawMarker(pentagonMarker:PentagonMarker) : void
-		{
-			pentagonMarker.draw(this.reticleSize.partial);
-		}
-		
-		private function updatePosition() : void
-		{
 			// This is based on updatePosition() from battleDamageIndicatorApp.swf
 			// because it is the only source of "something is working" stuff 
 			// and "visible in code" stuff when it comes to GUI.Flash
@@ -192,6 +175,118 @@ package com.github.pruszko.dispersionreticle
 			// Those changes MUST be done on flash object itself, not on GUI.Flash component
 			this.x = SWF_HALF_WIDTH - (this.appWidth / 2.0);
 			this.y = SWF_HALF_HEIGHT - (this.appHeight / 2.0);
+			
+			this._unitSize = 0.001 * appHeight;
+			if (appWidth < appHeight)
+			{
+				this._unitSize = 0.001 * appWidth;
+			}
+		}
+		
+		private function updateMarkersPositionAndVisibility() : void
+		{
+			if (this.py_getNormalizedMarkerPosition == null)
+			{
+				return;
+			}
+			
+			// Update all markers to proper 2d position starting from left-corner
+			// also update their visibility in screen
+			for (var i:int = 0; i < numChildren; ++i)
+			{
+				var marker:StatefulMarker = getMarkerAt(i);
+				
+				// General contract between this app and its python-side bridge is that
+				// marker position access should occur only when marker has attached data provider
+				if (!marker.hasDataProvider)
+				{
+					// Also, general contract between data providers and its display object is that
+					// object is rendered only when data provider is attached
+					marker.visible = false;
+					continue;
+				}
+				
+				var normalizedPosWithProjectionResult:Array = this.py_getNormalizedMarkerPosition(marker.name);
+				var isPointOnScreen:Boolean = normalizedPosWithProjectionResult[2]
+				
+				marker.x = normalizedPosWithProjectionResult[0] * this.appWidth;
+				marker.y = normalizedPosWithProjectionResult[1] * this.appHeight;
+				marker.visible = isPointOnScreen;
+			}
+		}
+		
+		private function updateMarkers() : void
+		{
+			var i:Number;
+			var marker:StatefulMarker;
+			
+			// used for in-between reticle updates variables interpolation
+			for (i = 0; i < numChildren; ++i)
+			{
+				marker = getMarkerAt(i);
+				marker.tickPartial();
+			}
+			
+			for (i = 0; i < numChildren; ++i)
+			{
+				marker = getMarkerAt(i);
+				
+				if (!marker.hasDataProvider)
+				{
+					continue;
+				}
+				
+				marker.updateState();
+			}
+		}
+		
+		private function renderMarkers() : void
+		{
+			for (var i:int = 0; i < numChildren; ++i)
+			{
+				var marker:StatefulMarker = getMarkerAt(i);
+				
+				if (!marker.hasDataProvider)
+				{
+					continue;
+				}
+				
+				marker.renderState();
+			}
+		}
+		
+		public function getMarkerAt(index:int) : StatefulMarker
+		{
+			return getChildAt(index) as StatefulMarker;
+		}
+		
+		public function getMarkerByName(markerName:String) : StatefulMarker
+		{
+			return getChildByName(markerName) as StatefulMarker;
+		}
+		
+		public function getMarkersByGunMarkerType(gunMarkerType:int) : Vector.<StatefulMarker>
+		{
+			var markers:Vector.<StatefulMarker> = new Vector.<StatefulMarker>();
+			for (var i:int = 0; i < numChildren; ++i)
+			{
+				var marker:StatefulMarker = getMarkerAt(i);
+				
+				if (marker.gunMarkerType == gunMarkerType)
+				{
+					markers.push(marker);
+				}
+			}
+			
+			return markers;
+		}
+		
+		public function warn(message:String) : void
+		{
+			if (py_warn != null)
+			{
+				py_warn(message);
+			}
 		}
 		
 		public function get appWidth() : Number
@@ -204,16 +299,20 @@ package com.github.pruszko.dispersionreticle
 			return _appHeight;
 		}
 		
-		public function get fillColor() : int
+		public function get unitSize() : Number
 		{
-			return _fillColor;
+			return _unitSize;
 		}
 		
-		private function warn(message:String) : void
+		public function scaled(value:Number) : Number
 		{
-			if (py_warn != null) {
-				py_warn(message);
-			}
+			var scaledValue:Number = value * _unitSize;
+			return scaledValue > 1.0 ? scaledValue : 1.0;
+		}
+		
+		public function get config() : DisposableConfig
+		{
+			return _config;
 		}
 		
 	}

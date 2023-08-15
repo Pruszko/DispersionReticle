@@ -40,9 +40,9 @@ def invalidateGunMarkers(func, self, markersInfo, vehicleInfo):
 
 @overrideIn(CrosshairPanelContainerMeta)
 def as_createGunMarkerS(func, self, viewID, linkage, name):
-    if name in ReticleRegistry.SERVER_SIMPLE.getMarkerNames() and \
-            name != ReticleRegistry.SERVER_SIMPLE.spgGunMarkerName:
-        DispersionReticleFlash.onMarkerCreate(name)
+    flashReticle = ReticleRegistry.getReticleByFlashMarkerName(name)
+    if flashReticle:
+        DispersionReticleFlash.onMarkerCreate(name, flashReticle)
         return True
 
     return func(self, viewID, linkage, name)
@@ -50,9 +50,9 @@ def as_createGunMarkerS(func, self, viewID, linkage, name):
 
 @overrideIn(CrosshairPanelContainerMeta)
 def as_destroyGunMarkerS(func, self, name):
-    if name in ReticleRegistry.SERVER_SIMPLE.getMarkerNames() and \
-            name != ReticleRegistry.SERVER_SIMPLE.spgGunMarkerName:
-        DispersionReticleFlash.onMarkerDestroy(name)
+    flashReticle = ReticleRegistry.getReticleByFlashMarkerName(name)
+    if flashReticle:
+        DispersionReticleFlash.onMarkerDestroy(name, flashReticle)
         return True
 
     return func(self, name)

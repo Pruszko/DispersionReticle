@@ -5,6 +5,14 @@ from dispersionreticle.utils.reticle_types.vanilla_reticle import VanillaReticle
 
 class AS3Reticle(VanillaReticle):
 
+    def getFlashMarkerNames(self):
+        return (
+            self.arcadeGunMarkerName,
+            self.sniperGunMarkerName,
+            self.dualGunArcadeGunMarkerName,
+            self.dualGunSniperGunMarkerName
+        )
+
     # gm_factory
     def createDefaultMarkers(self, gunMarkerFactory, markerType):
         if markerType != GUN_MARKER_TYPE.UNDEFINED:

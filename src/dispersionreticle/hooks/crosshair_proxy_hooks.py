@@ -18,12 +18,10 @@ from dispersionreticle.utils.reticle_registry import ReticleRegistry
 # crosshair_proxy
 @overrideIn(CrosshairDataProxy)
 def __setGunMarkerState(func, self, markerType, value):
-    position, direction, collision = value
-    self.onGunMarkerStateChanged(markerType, position, direction, collision)
+    func(self, markerType, value)
 
     isServerMarkerStateUpdate = markerType == GUN_MARKER_TYPE.SERVER
 
     for reticle in ReticleRegistry.RETICLES:
         if reticle.isServerReticle() == isServerMarkerStateUpdate:
-            self.onGunMarkerStateChanged(reticle.gunMarkerType, position, direction, collision)
-
+            self.onGunMarkerStateChanged(reticle.gunMarkerType, *value)
