@@ -33,7 +33,7 @@ class OverriddenDefaultGunMarkerController(_DefaultGunMarkerController):
                 replayCtrl.setArcadeGunMarkerSize(size)
 
         # this have to be here, we don't want to corrupt replays
-        sizeMultiplier = g_config.getReticleSizeMultiplier()
+        sizeMultiplier = g_config.reticleSizeMultiplier
 
         size *= sizeMultiplier
         idealSize *= sizeMultiplier

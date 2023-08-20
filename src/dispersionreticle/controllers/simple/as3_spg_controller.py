@@ -22,7 +22,7 @@ class AS3SPGGunMarkerController(_SPGGunMarkerController):
             self._SPGGunMarkerController__updateRelaxTime()
         self._updateDispersionData()
 
-        newSize = self._size * g_config.getReticleSizeMultiplier()
+        newSize = self._size * g_config.reticleSizeMultiplier
 
         self._dataProvider.update(pos3d, vel3d, gravity3d, newSize)
 

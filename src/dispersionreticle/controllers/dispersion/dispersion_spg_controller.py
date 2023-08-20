@@ -1,9 +1,11 @@
 import BigWorld
-from AvatarInputHandler.gun_marker_ctrl import _SPGGunMarkerController, _MARKER_FLAG
+from AvatarInputHandler.gun_marker_ctrl import _MARKER_FLAG
+
+from dispersionreticle.controllers.standard.standard_spg_controller import OverriddenSPGGunMarkerController
 
 
 # gun_marker_ctrl
-class DispersionSPGGunMarkerController(_SPGGunMarkerController):
+class DispersionSPGGunMarkerController(OverriddenSPGGunMarkerController):
 
     def __init__(self, reticle, enabledFlag=_MARKER_FLAG.UNDEFINED):
         super(DispersionSPGGunMarkerController, self).__init__(reticle.gunMarkerType,

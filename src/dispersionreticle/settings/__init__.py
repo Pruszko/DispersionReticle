@@ -12,6 +12,13 @@ CONFIG_TEMPLATE = """{
     // - either reload it with above hotkey
     // - or launch a game again
 
+    // Global features toggle
+    // Valid values: true/false (default: true)
+    //
+    // When set to false, it globally disables all features of this mod
+    // however it does not remove mod presence itself. 
+    "enabled": %(enabled)s,
+
     // Dispersion reticle (enabled by default)
     //
     // Adds reticle displaying fully-focused dispersion to standard reticle.
@@ -61,7 +68,7 @@ CONFIG_TEMPLATE = """{
 
     // Simple server reticle
     // 
-    // Adds server-side reticle made of pentagons alongside with client-side reticle.
+    // Adds server-side reticle with customizable shape alongside with client-side reticle.
     // For SPG artillery view, it will implicitly enable "server-reticle" above instead of this reticle.
 
     "simple-server-reticle": {
@@ -121,6 +128,7 @@ CONFIG_TEMPLATE = """{
     // Scales all reticles size by factor, except SPG top-view reticle.
     //
     // WG's displayed reticle dispersion is noticeably bigger than actual gun dispersion.
+    // It was discovered by Jak_Attackka, StranikS_Scan and others.
     // By this setting you can scale it to actual displayed dispersion.
     //
     // Good known values:
@@ -132,23 +140,15 @@ CONFIG_TEMPLATE = """{
 
     // DO NOT touch "__version__" field
     // It is used by me to seamlessly update config file :)
-    "__version__": 3
+    "__version__": 4
 }"""
 
 
 def getDefaultConfigReplaceTokens():
+    from dispersionreticle.settings.config_param import g_configParams
+
     return {
-        "dispersion-reticle-enabled": toJson(True),
-        "latency-reticle-enabled": toJson(False),
-        "latency-reticle-hide-standard-reticle": toJson(False),
-        "server-reticle-enabled": toJson(False),
-        "simple-server-reticle-enabled": toJson(False),
-        "simple-server-reticle-shape": toJson("pentagon"),
-        "simple-server-reticle-color": toJson([255, 0, 255]),
-        "simple-server-reticle-draw-outline": toJson(False),
-        "simple-server-reticle-blend": toJson(0.5),
-        "simple-server-reticle-alpha": toJson(1.0),
-        "reticle-size-multiplier": toJson(1.0),
+        tokenName: param.defaultJsonValue for tokenName, param in g_configParams.items()
     }
 
 
@@ -157,11 +157,19 @@ def getDefaultConfigContent():
 
 
 def loadConfigDict(configPath):
-    with open(configPath, "r") as configFile:
-        jsonRawData = configFile.read()
+    try:
+        with open(configPath, "r") as configFile:
+            jsonRawData = configFile.read()
 
-    jsonData = re.sub(r"^\s*//.*$", "", jsonRawData, flags=re.MULTILINE)
-    return json.loads(jsonData, encoding="UTF-8")
+        jsonData = re.sub(r"^\s*//.*$", "", jsonRawData, flags=re.MULTILINE)
+        return json.loads(jsonData, encoding="UTF-8")
+    except ValueError:
+        logger.warn("Could not read config file because it is not a valid JSON object. "
+                    "Check config file content for any typos.")
+        return None
+    except Exception as e:
+        logger.warn("Error occurred while loading config dict.", exc_info=e)
+        return None
 
 
 def toJson(obj):
@@ -178,7 +186,11 @@ def toPositiveFloat(value):
 
 
 def clamp(minValue, value, maxValue):
-    return min(max(minValue, value), maxValue)
+    if minValue is not None:
+        value = max(minValue, value)
+    if maxValue is not None:
+        value = min(value, maxValue)
+    return value
 
 
 def toColorTuple(value):

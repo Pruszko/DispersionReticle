@@ -5,45 +5,84 @@ import Event
 import Keys
 import game
 
-from dispersionreticle.settings import getDefaultConfigContent, loadConfigDict, toBool, toPositiveFloat, \
-    createFolderSafely, toColorTuple, clamp
+from dispersionreticle.settings import getDefaultConfigContent, loadConfigDict, \
+    createFolderSafely, getDefaultConfigReplaceTokens, CONFIG_TEMPLATE
+from dispersionreticle.settings.config_param import g_configParams
 from dispersionreticle.settings.migrations import performMigrationsIfNecessary
 from dispersionreticle.utils import *
 from dispersionreticle.utils.debug_state import g_debugStateCollector
 
 logger = logging.getLogger(__name__)
 
-VALID_SIMPLE_SERVER_RETICLE_SHAPES = ["pentagon", "t-shape", "circle", "dashed"]
+
+class _DispersionReticleConfig(object):
+
+    @property
+    def enabled(self):
+        return enabledAware(g_configParams.dispersionReticleEnabled)
+
+    def writeJsonValuesSafely(self, configDict):
+        writeJsonValueSafely(configDict, g_configParams.dispersionReticleEnabled)
 
 
-class _ReticleConfig(object):
+class _ServerReticleConfig(object):
 
-    def __init__(self, section):
-        self.enabled = toBool(section["enabled"])
-        pass
+    @property
+    def enabled(self):
+        return enabledAware(g_configParams.serverReticleEnabled)
 
-
-class _LatencyReticleConfig(_ReticleConfig):
-    
-    def __init__(self, section):
-        super(_LatencyReticleConfig, self).__init__(section)
-        self.hideStandardReticle = toBool(section["hide-standard-reticle"])
+    def writeJsonValuesSafely(self, configDict):
+        writeJsonValueSafely(configDict, g_configParams.serverReticleEnabled)
 
 
-class _SimpleServerReticleConfig(_ReticleConfig):
+class _LatencyReticleConfig(object):
 
-    def __init__(self, section):
-        super(_SimpleServerReticleConfig, self).__init__(section)
+    @property
+    def enabled(self):
+        return enabledAware(g_configParams.latencyReticleEnabled)
 
-        rawShape = str(section["shape"]).lower()
-        if rawShape not in VALID_SIMPLE_SERVER_RETICLE_SHAPES:
-            raise Exception("Shape %s is not a valid value for simple server reticle" % rawShape)
+    @property
+    def hideStandardReticle(self):
+        return enabledAware(g_configParams.latencyReticleHideStandardReticle)
 
-        self.shape = rawShape
-        self.color = toColorTuple(section["color"])
-        self.drawOutline = toBool(section["draw-outline"])
-        self.blend = clamp(0.0, toPositiveFloat(section["blend"]), 1.0)
-        self.alpha = clamp(0.0, toPositiveFloat(section["alpha"]), 1.0)
+    def writeJsonValuesSafely(self, configDict):
+        writeJsonValueSafely(configDict, g_configParams.latencyReticleEnabled)
+        writeJsonValueSafely(configDict, g_configParams.latencyReticleHideStandardReticle)
+
+
+class _SimpleServerReticleConfig(object):
+
+    @property
+    def enabled(self):
+        return enabledAware(g_configParams.latencyReticleEnabled)
+
+    @property
+    def shape(self):
+        return enabledAware(g_configParams.simpleServerReticleShape)
+
+    @property
+    def color(self):
+        return enabledAware(g_configParams.simpleServerReticleColor)
+
+    @property
+    def drawOutline(self):
+        return enabledAware(g_configParams.simpleServerReticleDrawOutline)
+
+    @property
+    def blend(self):
+        return enabledAware(g_configParams.simpleServerReticleBlend)
+
+    @property
+    def alpha(self):
+        return enabledAware(g_configParams.simpleServerReticleAlpha)
+
+    def writeJsonValuesSafely(self, configDict):
+        writeJsonValueSafely(configDict, g_configParams.simpleServerReticleEnabled)
+        writeJsonValueSafely(configDict, g_configParams.simpleServerReticleShape)
+        writeJsonValueSafely(configDict, g_configParams.simpleServerReticleColor)
+        writeJsonValueSafely(configDict, g_configParams.simpleServerReticleDrawOutline)
+        writeJsonValueSafely(configDict, g_configParams.simpleServerReticleBlend)
+        writeJsonValueSafely(configDict, g_configParams.simpleServerReticleAlpha)
 
 
 class Config:
@@ -52,25 +91,14 @@ class Config:
         self.__configFileDir = os.path.join("mods", "configs", "DispersionReticle")
         self.__configFilePath = os.path.join("mods", "configs", "DispersionReticle", "config.json")
 
-        self.dispersionReticle = _ReticleConfig({
-            "enabled": True,
-        })
-        self.latencyReticle = _LatencyReticleConfig({
-            "enabled": False,
-            "hide-standard-reticle": False,
-        })
-        self.serverReticle = _ReticleConfig({
-            "enabled": False,
-        })
-        self.simpleServerReticle = _SimpleServerReticleConfig({
-            "enabled": False,
-            "shape": "pentagon",
-            "color": (255, 0, 255),
-            "draw-outline": False,
-            "blend": 0.5,
-            "alpha": 1.0
-        })
-        self.__reticleSizeMultiplier = 1.0
+        self.enabled = g_configParams.enabled.value
+
+        self.dispersionReticle = _DispersionReticleConfig()
+        self.latencyReticle = _LatencyReticleConfig()
+        self.serverReticle = _ServerReticleConfig()
+        self.simpleServerReticle = _SimpleServerReticleConfig()
+
+        self.reticleSizeMultiplier = g_configParams.reticleSizeMultiplier.value
 
         self.__eventManager = Event.EventManager()
         self.onConfigReload = Event.Event(self.__eventManager)
@@ -84,23 +112,47 @@ class Config:
 
             data = loadConfigDict(self.__configFilePath)
 
-            dispersionReticle = _ReticleConfig(data["dispersion-reticle"])
-            latencyReticle = _LatencyReticleConfig(data["latency-reticle"])
-            serverReticle = _ReticleConfig(data["server-reticle"])
-            simpleServerReticle = _SimpleServerReticleConfig(data["simple-server-reticle"])
+            if data is None:
+                return
 
-            reticleSizeMultiplier = toPositiveFloat(data["reticle-size-multiplier"])
+            self.enabled = writeJsonValueSafely(data, g_configParams.enabled)
 
-            self.dispersionReticle = dispersionReticle
-            self.latencyReticle = latencyReticle
-            self.serverReticle = serverReticle
-            self.simpleServerReticle = simpleServerReticle
+            self.dispersionReticle.writeJsonValuesSafely(data)
+            self.latencyReticle.writeJsonValuesSafely(data)
+            self.serverReticle.writeJsonValuesSafely(data)
+            self.simpleServerReticle.writeJsonValuesSafely(data)
 
-            self.__reticleSizeMultiplier = reticleSizeMultiplier
+            self.reticleSizeMultiplier = writeJsonValueSafely(data, g_configParams.reticleSizeMultiplier)
 
             logger.info("Finished config loading.")
         except Exception as e:
             logger.error("Failed to load (or create) config", exc_info=e)
+
+    def updateConfigSafely(self, serializedSettings):
+        # reload config prior to saving
+        # to make sure everything is created
+        # and potentially migrated
+        self.loadConfigSafely()
+
+        try:
+            logger.info("Starting config saving ...")
+
+            tokens = getDefaultConfigReplaceTokens()
+            tokens.update(serializedSettings)
+
+            newConfigFileContent = CONFIG_TEMPLATE % tokens
+
+            with open(self.__configFilePath, "w") as configFile:
+                configFile.write(newConfigFileContent)
+
+            logger.info("Finished config saving.")
+        except Exception as e:
+            logger.error("Failed to save config", exc_info=e)
+
+        # reload config again to update our mod internal config state
+        # with changes written to config file
+        self.loadConfigSafely()
+        self.onConfigReload()
 
     def createConfigIfNotExists(self):
         logger.info("Checking config existence ...")
@@ -116,9 +168,6 @@ class Config:
             defaultConfigContent = getDefaultConfigContent()
             configFile.write(defaultConfigContent)
 
-    def getReticleSizeMultiplier(self):
-        return self.__reticleSizeMultiplier
-
     def isServerAimRequired(self):
         return self.latencyReticle.enabled or \
                self.serverReticle.enabled or \
@@ -126,6 +175,18 @@ class Config:
 
     def shouldHideStandardReticle(self):
         return self.latencyReticle.enabled and self.latencyReticle.hideStandardReticle
+
+
+def writeJsonValueSafely(configDict, param):
+    jsonValue = param.readJsonValueFromConfigDictSafely(configDict)
+    param.jsonValue = jsonValue
+    return param.value
+
+
+def enabledAware(param):
+    if not g_config.enabled:
+        return param.disabledValue
+    return param.value
 
 
 g_config = Config()

@@ -1,17 +1,39 @@
-# make sure to invoke all hooks
-import dispersionreticle.hooks
+import logging
 
-from dispersionreticle.settings.config import g_config
+logger = logging.getLogger(__name__)
 
 
 class DispersionReticleMod:
 
+    @property
+    def isModsSettingsApiPresent(self):
+        return self.__isModsSettingsApiPresent
+
     def __init__(self):
-        pass
+        self.__isModsSettingsApiPresent = False
 
     def init(self):
+        # make sure to invoke all hooks
+        import dispersionreticle.hooks
+        from dispersionreticle.settings.config import g_config
+
         g_config.loadConfigSafely()
-        pass
+
+        self.__resolveSoftDependencies()
+        if self.isModsSettingsApiPresent:
+            from dispersionreticle.support import mods_settings_api_support
+
+            mods_settings_api_support.registerSoftDependencySupport()
+
+    def __resolveSoftDependencies(self):
+        try:
+            from gui.modsSettingsApi import g_modsSettingsApi
+            self.__isModsSettingsApiPresent = True
+        except ImportError:
+            self.__isModsSettingsApiPresent = False
+        except Exception as e:
+            logger.warn("Error occurred in ModsSettingsAPI, ignore its presence.", exc_info=e)
+            self.__isModsSettingsApiPresent = False
 
     def fini(self):
         pass

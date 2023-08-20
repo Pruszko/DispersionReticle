@@ -16,7 +16,12 @@ Also, over time, this mod now contains **following mutually compatible mods**:
 ## Config file
 All features from config file **are reloadable on-the-fly** using **CTRL + P** hotkey in the game **anywhere**.
 
-Check [Installation](#installation) section for more info about config file.
+This mod also supports **Mod Configurator by IzeBerg** allowing for configuring
+this mod using its GUI.
+It's also implicitly present in some modpacks. 
+
+Check [Installation](#installation) section for more info
+about config file and **Mod Configurator**.
 
 ## Features
 All of those features can be enabled/adjusted **independently**.
@@ -57,7 +62,13 @@ They are also compatible with "Use server aim" from in-game option.
 - [Github Releases Page](https://github.com/Pruszko/DispersionReticle/releases)
 
 ## Installation
-1. Copy "DispersionReticle.wotmod" file into "[WoT game directory]/mods/[version]/" directory
+With Mod Configurator:
+1. Copy "DispersionReticle.wotmod" file and all other *.wotmod files extracted from zip into "[WoT game directory]/mods/[version]/" directory
+2. Open button with "<>" icon in garage and find **DispersionReticle section**.
+3. Adjust mod to your liking
+
+Without Mod Configurator:
+1. Copy "DispersionReticle.wotmod" file extracted from zip into "[WoT game directory]/mods/[version]/" directory
 2. Run a game with mod installed to generate default config file
 3. Adjust config file to your liking
 4. Reload it in-game whenever you want using **CTRL + P** hotkey
@@ -67,12 +78,19 @@ with my mod installed or when it is not present on config reload.
 
 Full config file location: **"[WoT game directory]/mods/configs/DispersionReticle/config.json"**
 
-To control which features are enabled, navigate to an above mentioned file
+To control which features are enabled, either change it in Mod Configurator 
+or navigate to an above mentioned file
 and open it using text editor (preferably **Notepad++**).
 
 If config gets invalid format while editing, reload attempt will just be ignored.
 
 All config options **are reloadable on-the-fly** using **CTRL + P** hotkey in the game **anywhere**.
+
+
+## Optional dependencies
+* **Mod Configurator by IzeBerg** - allows configuring my mod using its in-game interface;
+  thanks to **IzeBerg** for cool GUI configuration API
+* **ModsList by POLIROID** - allows for displaying button for Mod Configurator; thanks to **POLIROID**
 
 ## Compatibility
 This mod **IS NOT** compatible with other mods with similar features as mine.

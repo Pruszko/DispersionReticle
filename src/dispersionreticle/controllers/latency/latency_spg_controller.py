@@ -1,4 +1,3 @@
-import BigWorld, BattleReplay
 from AvatarInputHandler.gun_marker_ctrl import _MARKER_FLAG
 
 from dispersionreticle.controllers.standard.standard_spg_controller import OverriddenSPGGunMarkerController

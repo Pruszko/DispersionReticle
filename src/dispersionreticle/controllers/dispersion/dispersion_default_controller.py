@@ -27,7 +27,7 @@ class DispersionDefaultGunMarkerController(_DefaultGunMarkerController):
         # here we avoid replay-specific code, it is handled by vanilla controllers
         # even if their markers may not be present
 
-        sizeMultiplier = g_config.getReticleSizeMultiplier()
+        sizeMultiplier = g_config.reticleSizeMultiplier
 
         size *= sizeMultiplier
         idealSize *= sizeMultiplier
