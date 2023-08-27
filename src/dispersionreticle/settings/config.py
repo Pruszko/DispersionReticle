@@ -54,7 +54,7 @@ class _SimpleServerReticleConfig(object):
 
     @property
     def enabled(self):
-        return enabledAware(g_configParams.latencyReticleEnabled)
+        return enabledAware(g_configParams.simpleServerReticleEnabled)
 
     @property
     def shape(self):
