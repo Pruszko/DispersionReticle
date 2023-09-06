@@ -25,7 +25,7 @@ def refreshGunRotatorState(self):
     # when in auto-aim, don't change client reticles presence
     # it will be properly internally done by AvatarInputHandler using gun_marker_ctrl.useDefaultGunMarkers()
     if self.clientMode:
-        self._avatar.inputHandler.showGunMarker(gun_marker_ctrl.useClientGunMarker())
+        self._avatar.inputHandler.showClientGunMarkers(gun_marker_ctrl.useClientGunMarker())
 
 
 @overrideIn(VehicleGunRotator)
@@ -71,8 +71,6 @@ def stop(func, self):
     if not debug_state.IS_DEBUGGING:
         return
 
-    if self._VehicleGunRotator__timerID is not None:
-        return
     if not self._VehicleGunRotator__isStarted:
         return
     else:

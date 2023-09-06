@@ -23,14 +23,14 @@ class OverriddenDefaultGunMarkerController(_DefaultGunMarkerController):
 
         replayCtrl = BattleReplay.g_replayCtrl
         if replayCtrl.isPlaying and replayCtrl.isClientReady:
-            s = replayCtrl.getArcadeGunMarkerSize()
+            s = self._replayReader(replayCtrl)()
             if s != -1.0:
                 size = s
         elif replayCtrl.isRecording:
             if replayCtrl.isServerAim and self._gunMarkerType == GUN_MARKER_TYPE.SERVER:
-                replayCtrl.setArcadeGunMarkerSize(size)
-            elif self._gunMarkerType == GUN_MARKER_TYPE.CLIENT:
-                replayCtrl.setArcadeGunMarkerSize(size)
+                self._replayWriter(replayCtrl)(size)
+            elif self._gunMarkerType in (GUN_MARKER_TYPE.CLIENT, GUN_MARKER_TYPE.DUAL_ACC):
+                self._replayWriter(replayCtrl)(size)
 
         # this have to be here, we don't want to corrupt replays
         sizeMultiplier = g_config.reticleSizeMultiplier

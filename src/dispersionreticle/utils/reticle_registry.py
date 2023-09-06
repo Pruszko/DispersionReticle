@@ -5,19 +5,19 @@ from dispersionreticle.utils.reticle_types.vanilla_reticle import VanillaReticle
 
 class ReticleRegistry(object):
 
-    CLIENT_DISPERSION = VanillaReticle(name="ClientDispersion", gunMarkerType=3,
+    CLIENT_DISPERSION = VanillaReticle(name="ClientDispersion", gunMarkerType=4,
                                        reticleType=ReticleType.CLIENT,
                                        reticleLinkages=ReticleLinkages.GREEN)
 
-    SERVER_DISPERSION = VanillaReticle(name="ServerDispersion", gunMarkerType=4,
+    SERVER_DISPERSION = VanillaReticle(name="ServerDispersion", gunMarkerType=5,
                                        reticleType=ReticleType.SERVER,
                                        reticleLinkages=ReticleLinkages.GREEN)
 
-    CLIENT_LATENCY = VanillaReticle(name="ClientLatency", gunMarkerType=5,
+    CLIENT_LATENCY = VanillaReticle(name="ClientLatency", gunMarkerType=6,
                                     reticleType=ReticleType.CLIENT,
                                     reticleLinkages=ReticleLinkages.GREEN)
 
-    SERVER_SIMPLE = AS3Reticle(name="ServerSimple", gunMarkerType=6,
+    SERVER_SIMPLE = AS3Reticle(name="ServerSimple", gunMarkerType=7,
                                reticleType=ReticleType.SERVER,
                                reticleLinkages=ReticleLinkages.PURPLE)
 

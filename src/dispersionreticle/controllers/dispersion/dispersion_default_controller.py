@@ -66,14 +66,13 @@ def getFocusedSize(positionMatrix):
 
     # multiplier that accounts crew, food, etc.
     # PlayerAvatar -> getOwnVehicleShotDispersionAngle
-    #   aimingInfo[0] = aimingStartTime
-    #   aimingInfo[1] = aimingStartFactor
-    #   aimingInfo[2] = multFactor
-    #   aimingInfo[3] = gunShotDispersionFactorsTurretRotation
-    #   aimingInfo[4] = chassisShotDispersionFactorsMovement
-    #   aimingInfo[5] = chassisShotDispersionFactorsRotation
-    #   aimingInfo[6] = aimingTime
-    shotDispMultiplierFactor = playerAvatar._PlayerAvatar__aimingInfo[2]
+    # PlayerAvatar -> updateTargetingInfo
+    # dispersionInfo[0] = shotDispMultiplierFactor
+    # dispersionInfo[1] = gunShotDispersionFactorsTurretRotation
+    # dispersionInfo[2] = chassisShotDispersionFactorsMovement
+    # dispersionInfo[3] = chassisShotDispersionFactorsRotation
+    # dispersionInfo[4] = aimingTime
+    shotDispMultiplierFactor = playerAvatar._PlayerAvatar__dispersionInfo[0]
 
     # actual dispersion per 1m unit
     dispersionAngle = gunDispersionAngle * shotDispMultiplierFactor

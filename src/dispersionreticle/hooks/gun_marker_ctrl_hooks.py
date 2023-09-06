@@ -1,6 +1,6 @@
 import BattleReplay
 from AvatarInputHandler import gun_marker_ctrl
-from AvatarInputHandler.gun_marker_ctrl import _GunMarkersDPFactory, _MARKER_TYPE
+from AvatarInputHandler.gun_marker_ctrl import _GunMarkersDPFactory, _MARKER_TYPE, _EmptyGunMarkerController
 from helpers import dependency
 from skeletons.account_helpers.settings_core import ISettingsCore
 
@@ -8,6 +8,7 @@ from dispersionreticle.controllers.gun_marker_decorator import NewGunMarkersDeco
 from dispersionreticle.controllers.simple.as3_default_controller import AS3DefaultGunMarkerController
 from dispersionreticle.controllers.simple.as3_spg_controller import AS3SPGGunMarkerController
 from dispersionreticle.controllers.standard.standard_default_controller import OverriddenDefaultGunMarkerController
+from dispersionreticle.controllers.standard.standard_dual_acc_controller import OverriddenDualAccGunMarkerController
 from dispersionreticle.controllers.standard.standard_spg_controller import OverriddenSPGGunMarkerController
 from dispersionreticle.controllers.dispersion.dispersion_default_controller import DispersionDefaultGunMarkerController
 from dispersionreticle.controllers.dispersion.dispersion_spg_controller import DispersionSPGGunMarkerController
@@ -46,6 +47,9 @@ def createGunMarker(func, isStrategic):
     if isStrategic:
         clientController = OverriddenSPGGunMarkerController(_MARKER_TYPE.CLIENT, factory.getClientSPGProvider())
         serverController = OverriddenSPGGunMarkerController(_MARKER_TYPE.SERVER, factory.getServerSPGProvider())
+        # this is what WG wrote
+        # I hope it won't collapse universe or something
+        dualAccController = _EmptyGunMarkerController(_MARKER_TYPE.UNDEFINED, None)
 
         dispersionClientController = DispersionSPGGunMarkerController(dispersionClientReticle)
         dispersionServerController = DispersionSPGGunMarkerController(dispersionServerReticle)
@@ -56,6 +60,7 @@ def createGunMarker(func, isStrategic):
     else:
         clientController = OverriddenDefaultGunMarkerController(_MARKER_TYPE.CLIENT, factory.getClientProvider())
         serverController = OverriddenDefaultGunMarkerController(_MARKER_TYPE.SERVER, factory.getServerProvider())
+        dualAccController = OverriddenDualAccGunMarkerController(_MARKER_TYPE.DUAL_ACC, factory.getDualAccuracyProvider())
 
         dispersionClientController = DispersionDefaultGunMarkerController(dispersionClientReticle)
         dispersionServerController = DispersionDefaultGunMarkerController(dispersionServerReticle)
@@ -64,7 +69,7 @@ def createGunMarker(func, isStrategic):
 
         simpleServerController = AS3DefaultGunMarkerController(simpleServerReticle)
 
-    return NewGunMarkersDecorator(clientController, serverController,
+    return NewGunMarkersDecorator(clientController, serverController, dualAccController,
                                   dispersionClientController, dispersionServerController,
                                   latencyClientController,
                                   simpleServerController)

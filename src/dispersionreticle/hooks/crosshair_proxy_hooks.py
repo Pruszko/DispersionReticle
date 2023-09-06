@@ -20,6 +20,13 @@ from dispersionreticle.utils.reticle_registry import ReticleRegistry
 def __setGunMarkerState(func, self, markerType, value):
     func(self, markerType, value)
 
+    # I don't really know how to react here to DUAL_ACC
+    #
+    # let's just stay with client/server behavior
+    # not to update client reticles too often
+    if markerType == GUN_MARKER_TYPE.DUAL_ACC:
+        return
+
     isServerMarkerStateUpdate = markerType == GUN_MARKER_TYPE.SERVER
 
     for reticle in ReticleRegistry.RETICLES:

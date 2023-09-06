@@ -33,7 +33,7 @@ if debug_state.IS_DEBUGGING:
 
 
 @overrideIn(AvatarInputHandler.AvatarInputHandler)
-def updateGunMarker(func, self, pos, direction, size, relaxTime, collData):
+def updateClientGunMarker(func, self, pos, direction, size, relaxTime, collData):
     self._AvatarInputHandler__curCtrl.updateGunMarker(AvatarInputHandler._GUN_MARKER_TYPE.CLIENT,
                                                       pos, direction, size, relaxTime, collData)
     for reticle in ReticleRegistry.RETICLES:
@@ -43,13 +43,17 @@ def updateGunMarker(func, self, pos, direction, size, relaxTime, collData):
 
 
 @overrideIn(AvatarInputHandler.AvatarInputHandler)
-def updateGunMarker2(func, self, pos, direction, size, relaxTime, collData):
+def updateServerGunMarker(func, self, pos, direction, size, relaxTime, collData):
     self._AvatarInputHandler__curCtrl.updateGunMarker(_GUN_MARKER_TYPE.SERVER,
                                                       pos, direction, size, relaxTime, collData)
     for reticle in ReticleRegistry.RETICLES:
         if reticle.isServerReticle():
             self._AvatarInputHandler__curCtrl.updateGunMarker(reticle.gunMarkerType,
                                                               pos, direction, size, relaxTime, collData)
+
+
+# I think we don't have to bother with DUAL_ACC overrides yet
+# I don't even know how it will be used
 
 
 @overrideIn(AvatarInputHandler.AvatarInputHandler)

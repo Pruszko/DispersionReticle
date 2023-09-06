@@ -14,7 +14,7 @@ package com.github.pruszko.dispersionreticle.marker
 	public class SimpleStatefulMarker extends StatefulMarker
 	{
 		
-		public static const GUN_MARKER_TYPE:int = 6;
+		public static const GUN_MARKER_TYPE:int = 7;
 		
 		private var _shape:DisposableCustomShape;
 		private var _outlineShape:DisposableCustomShape;

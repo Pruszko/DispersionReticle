@@ -49,6 +49,8 @@ def _getMarkerDataProvider(func, self, markerType):
     else:
         if markerType is GUN_MARKER_TYPE.CLIENT:
             return self._markersInfo.clientMarkerDataProvider
+        if markerType is GUN_MARKER_TYPE.DUAL_ACC:
+            return self._markersInfo.dualAccMarkerDataProvider
 
     for reticle in ReticleRegistry.RETICLES:
         if markerType == reticle.gunMarkerType:

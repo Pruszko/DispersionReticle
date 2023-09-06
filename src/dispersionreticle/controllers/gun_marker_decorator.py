@@ -13,15 +13,17 @@ class NewGunMarkersDecorator(IGunMarkerController):
     __gunMarkersFlags = aih_global_binding.bindRW(_BINDING_ID.GUN_MARKERS_FLAGS)
     __clientState = aih_global_binding.bindRW(_BINDING_ID.CLIENT_GUN_MARKER_STATE)
     __serverState = aih_global_binding.bindRW(_BINDING_ID.SERVER_GUN_MARKER_STATE)
+    __dualAccState = aih_global_binding.bindRW(_BINDING_ID.DUAL_ACC_GUN_MARKER_STATE)
 
     def __init__(self,
-                 clientController, serverController,
+                 clientController, serverController, dualAccController,
                  dispersionClientController, dispersionServerController,
                  latencyClientController,
                  simpleServerController):
         super(NewGunMarkersDecorator, self).__init__()
         self.__clientController = clientController
         self.__serverController = serverController
+        self.__dualAccController = dualAccController
         self.__dispersionClientController = dispersionClientController
         self.__dispersionServerController = dispersionServerController
 
@@ -30,7 +32,7 @@ class NewGunMarkersDecorator(IGunMarkerController):
         self.__simpleServerController = simpleServerController
 
         self._allControllers = [
-            clientController, serverController,
+            clientController, serverController, dualAccController,
             dispersionClientController, dispersionServerController,
             latencyClientController,
             simpleServerController
@@ -52,6 +54,8 @@ class NewGunMarkersDecorator(IGunMarkerController):
         self.__clientController.setPosition(self.__clientState[0])
         self.__serverController.enable()
         self.__serverController.setPosition(self.__serverState[0])
+        self.__dualAccController.enable()
+        self.__dualAccController.setPosition(self.__dualAccState[0])
 
         self.__dispersionClientController.enable()
         self.__dispersionClientController.setPosition(self.__clientState[0])
@@ -129,6 +133,11 @@ class NewGunMarkersDecorator(IGunMarkerController):
                     self.__serverSizeDispersion = tuple(i / distance for i in size)
 
                 self.__serverController.update(markerType, position, direction, size, relaxTime, collData)
+        elif markerType == _MARKER_TYPE.DUAL_ACC:
+            self.__dualAccState = (
+                position, direction, collData)
+            if self.__gunMarkersFlags & _MARKER_FLAG.CLIENT_MODE_ENABLED:
+                self.__dualAccController.update(markerType, position, direction, size, relaxTime, collData)
         elif markerType == ReticleRegistry.CLIENT_DISPERSION.gunMarkerType:
             if self.__gunMarkersFlags & _MARKER_FLAG.CLIENT_MODE_ENABLED:
                 self.__dispersionClientController.update(markerType, position, direction, size, relaxTime, collData)
