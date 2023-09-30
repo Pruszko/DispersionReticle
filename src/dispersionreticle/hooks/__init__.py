@@ -8,5 +8,6 @@ import dispersionreticle.hooks.data_provider_hooks
 import dispersionreticle.hooks.gun_marker_ctrl_hooks
 import dispersionreticle.hooks.gun_marker_factory_hooks
 import dispersionreticle.hooks.gun_markers_invalidate_plugin_hooks
+import dispersionreticle.hooks.gun_markers_shot_result_indicator_hooks
 import dispersionreticle.hooks.gun_marker_components_hooks
 import dispersionreticle.hooks.vehicle_gun_rotator_hooks

@@ -31,10 +31,7 @@ def refreshGunRotatorState(self):
 @overrideIn(VehicleGunRotator)
 def applySettings(func, self, diff):
     if 'useServerAim' in diff:
-        g_config.onConfigReload()
-
-        if debug_state.IS_DEBUGGING:
-            g_debugStateCollector.collectStateAfterConfigReload()
+        g_config.refreshGameState()
 
 
 # code like this from Avatar makes me wonder, how am I supposed to react to this?

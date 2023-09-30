@@ -103,6 +103,12 @@ class Config:
         self.__eventManager = Event.EventManager()
         self.onConfigReload = Event.Event(self.__eventManager)
 
+    def refreshGameState(self):
+        self.onConfigReload()
+
+        if debug_state.IS_DEBUGGING:
+            g_debugStateCollector.collectStateAfterConfigReload()
+
     def loadConfigSafely(self):
         try:
             logger.info("Starting config loading ...")
@@ -197,9 +203,6 @@ def handleKeyEvent(func, event):
     if event.isKeyDown() and event.isCtrlDown():
         if event.key == Keys.KEY_P:
             g_config.loadConfigSafely()
-            g_config.onConfigReload()
-
-            if debug_state.IS_DEBUGGING:
-                g_debugStateCollector.collectStateAfterConfigReload()
+            g_config.refreshGameState()
 
     return func(event)
