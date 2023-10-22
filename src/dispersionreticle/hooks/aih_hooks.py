@@ -34,8 +34,8 @@ if debug_state.IS_DEBUGGING:
 
 @overrideIn(AvatarInputHandler.AvatarInputHandler)
 def updateClientGunMarker(func, self, pos, direction, size, relaxTime, collData):
-    self._AvatarInputHandler__curCtrl.updateGunMarker(AvatarInputHandler._GUN_MARKER_TYPE.CLIENT,
-                                                      pos, direction, size, relaxTime, collData)
+    func(self, pos, direction, size, relaxTime, collData)
+
     for reticle in ReticleRegistry.RETICLES:
         if not reticle.isServerReticle():
             self._AvatarInputHandler__curCtrl.updateGunMarker(reticle.gunMarkerType,
@@ -44,8 +44,8 @@ def updateClientGunMarker(func, self, pos, direction, size, relaxTime, collData)
 
 @overrideIn(AvatarInputHandler.AvatarInputHandler)
 def updateServerGunMarker(func, self, pos, direction, size, relaxTime, collData):
-    self._AvatarInputHandler__curCtrl.updateGunMarker(_GUN_MARKER_TYPE.SERVER,
-                                                      pos, direction, size, relaxTime, collData)
+    func(self, pos, direction, size, relaxTime, collData)
+
     for reticle in ReticleRegistry.RETICLES:
         if reticle.isServerReticle():
             self._AvatarInputHandler__curCtrl.updateGunMarker(reticle.gunMarkerType,
@@ -56,8 +56,19 @@ def updateServerGunMarker(func, self, pos, direction, size, relaxTime, collData)
 # I don't even know how it will be used
 
 
-@overrideIn(AvatarInputHandler.AvatarInputHandler)
+@overrideIn(AvatarInputHandler.AvatarInputHandler, clientType=ClientType.WG)
 def __onArenaStarted(func, self, period, *args):
+    common_onArenaStarted(func, self, period, *args)
+
+
+# Lesta specific
+# changed method name
+@overrideIn(AvatarInputHandler.AvatarInputHandler, clientType=ClientType.LESTA)
+def _onArenaStarted(func, self, period, *args):
+    common_onArenaStarted(func, self, period, *args)
+
+
+def common_onArenaStarted(func, self, period, *args):
     func(self, period, *args)
 
     # this event handler is called multiple times
