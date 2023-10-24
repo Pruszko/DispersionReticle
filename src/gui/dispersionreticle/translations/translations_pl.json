@@ -1,0 +1,129 @@
+{
+  "checked": "zaznaczone",
+  "unchecked": "odznaczone",
+  "defaultValue": "domyślnie",
+  "introPart.label": "Informacje o pliku konfiguracyjnym",
+  "introPart.header": "Plik konfiguracyjny",
+  "introPart.body": [
+    "Konfiguracja może także zostać zmieniona poprzez manualną modyfikację pliku konfiguracyjnego.\n",
+    "By zmiany były widoczne, przeładuj go w grze z użyciem skrótu klawiszowego:\n",
+    "- CTRL + P\n\n",
+    "Lokalizacja pliku konfiguracyjnego:\n",
+    "- [WoT game directory]/mods/configs/DispersionReticle/config.json"
+  ],
+  "introPart.note": [
+    "Jeżeli chcesz wygenerować domyślny plik konfiguracyjny, usuń jego plik a następnie:\n",
+    "- albo przełąduj go z użyciem powyższego skrótu klawiszowego\n",
+    "- lub uruchom grę ponownie"
+  ],
+  "introPart.attention": [
+    "Nie używaj skrótu klawiszowego CTRL + P z otwartym oknem konfiguratora moda.\n",
+    "Ten interfejs nie uwidoczni zmian dopóki nie zostanie otwarty ponownie."
+  ],
+  "dispersionReticlePart.label": "Kółko skupienia (Dispersion reticle)",
+  "dispersionReticlePart.header": "Kółko skupienia (Dispersion reticle)",
+  "dispersionReticlePart.body": [
+    "Dodaje kółko wyświetlające w pełni skupiony rozrzut działa do standardowego kółka."
+  ],
+  "dispersionReticlePart.note": [
+    "Gdy oba rodzaje kółek - klienckie oraz serwerowe - są uruchomione, to obecne kółko dołączane jest ",
+    "do kółka klienckiego."
+  ],
+  "dispersionReticlePart.enabled.header": "Czy włączone",
+  "dispersionReticlePart.enabled.body": [
+    "Jeżeli zaznaczone, wyświetl to kółko."
+  ],
+  "latencyReticlePart.label": "Kółko opóźnienia (Latency reticle)",
+  "latencyReticlePart.header": "Kółko opóźnienia (Latency reticle)",
+  "latencyReticlePart.body": [
+    "Dodaje kółko wyświetlające obecny serwerowy rozrzut do klienckiego kółka."
+  ],
+  "latencyReticlePart.note": [
+    "Innymi słowy, pozycja po stronie klienta, ale rozrzut serwerowy.\n",
+    "Dzięki temu, desynchronizacja rozrzutu kółek klienckiego i serwerowego jest wyraźnie widoczna.\n\n",
+    "Przydatne gdy chcesz znać serwerowy rozrzut, ale nadal chcesz zachować responsywność klienckiego kółka."
+  ],
+  "latencyReticlePart.enabled.header": "Czy włączone",
+  "latencyReticlePart.enabled.body": [
+    "Jeżeli zaznaczone, wyświetl to kółko."
+  ],
+  "latencyReticlePart.hideStandardReticle.header": "Ukryj standardowe kółko",
+  "latencyReticlePart.hideStandardReticle.body": [
+    "Jeżeli zaznaczone, standardowe kółko jest ukryte gdy kółko opóźnienia jest włączone."
+  ],
+  "latencyReticlePart.hideStandardReticle.note": [
+    "Przydane gdy chcesz używać tylko kółka opóźnienia zamiast standardowego kółka."
+  ],
+  "serverReticlePart.label": "Kółko serwerowe (Server reticle)",
+  "serverReticlePart.header": "Kółko serwerowe (Server reticle)",
+  "serverReticlePart.body": [
+    "Dodaje serwerowe kółko oprócz obecnego klienckiego kółka."
+  ],
+  "serverReticlePart.enabled.header": "Czy włączone",
+  "serverReticlePart.enabled.body": [
+    "Jeżeli zaznaczone, wyświetl to kółko."
+  ],
+  "simpleServerReticlePart.label": "Proste kółko serwerowe (Simple server reticle)",
+  "simpleServerReticlePart.header": "Proste kółko serwerowe (Simple server reticle)",
+  "simpleServerReticlePart.body": [
+    "Dodaje serwerowe kółko z konfigurowalnym kształtem oprócz obecnego kółka klienckiego."
+  ],
+  "simpleServerReticlePart.attention": [
+    "Dla widoku artyleryjskiego, niejawnie włączone zostanie kółko serwerowe z lewej strony ",
+    "zamiast tego kółka."
+  ],
+  "simpleServerReticlePart.enabled.header": "Czy włączone",
+  "simpleServerReticlePart.enabled.body": [
+    "Jeżeli zaznaczone, wyświetl to kółko."
+  ],
+  "simpleServerReticlePart.shape.header": "Kształt",
+  "simpleServerReticlePart.shape.body": [
+    "Kształt jaki to kółko powinno mieć."
+  ],
+  "simpleServerReticlePart.color.header": "Kolor",
+  "simpleServerReticlePart.color.body": [
+    "Koloruje to kółko wybranym kolorem."
+  ],
+  "simpleServerReticlePart.drawOutline.header": "Czy rysować obwódkę",
+  "simpleServerReticlePart.drawOutline.body": [
+    "Jeżeli zaznaczone, kształt kółka będzie dodatkowo wyświetlany z 1 pikselową czarną obwódką."
+  ],
+  "simpleServerReticlePart.drawOutline.note": [
+    "Przydatne gdy kolor kształtu zlewa się z tłem."
+  ],
+  "simpleServerReticlePart.blend.header": "Zlewanie koloru z tłem",
+  "simpleServerReticlePart.blend.body": [
+    "Kontroluje, jak bardzo kolor kółka będzie zlewać się z kolorem tła zamiast go nadpisywać.\n",
+    "Standardowe \"kreskowe\" kółko używa tego z wartością 1.0 bez obwódki by kółko wyglądało bardziej naturalnie."
+  ],
+  "simpleServerReticlePart.blend.note": [
+    "Ustaw ją na 1.0 jeżeli chcesz, by kolor pełnił rolę dodatku do koloru tła.\n",
+    "Ustaw ją na 0.0 jeżeli chcesz, by kolor w pełni nadpisywał kolor tła.\n",
+    "Wartości między nimi kontroluję siłę danego efektu im bliżej się go znajdują."
+  ],
+  "simpleServerReticlePart.blend.attention": [
+    "Wartość 1.0 praktycznie uniemożliwia Ci uzyskanie ciemnych kolorów\n",
+    "ponieważ ... czarny kolor + kolor tła = kolor tła."
+  ],
+  "simpleServerReticlePart.alpha.header": "Przezroczystość",
+  "simpleServerReticlePart.alpha.body": [
+    "Kontroluje przezroczystość wyświetlanego kółka."
+  ],
+  "simpleServerReticlePart.alpha.note": [
+    "Wartość 1.0 oznacza pełną widoczność\n",
+    "Wartość 0.0 oznacza zerową widoczność"
+  ],
+  "reticleSizeMultiplier.header": "Mnożnik wielkości kółka",
+  "reticleSizeMultiplier.body": [
+    "Skaluje średnicę wszystkich kółek z użyciem mnożnika, z wyjątkiem kółka w widoku artyleryjskim."
+  ],
+  "reticleSizeMultiplier.note": [
+    "Rozrzut kółek wyświetlany przez WG jest wyraźnie większy niż prawdziwy rozrzut działa.\n",
+    "Zostało to odkrytę przez Jak_Attackka, StranikS_Scan oraz innych.\n",
+    "Tym ustawieniem możesz przeskalować go do prawdziwego wyświetlanego rozrzutu.\n\n",
+    "Dobre znane wartości:\n",
+    "- 1.0 (domyślny \"niepoprawny\" rozrzut od WG)\n",
+    "- 0.6 (mnożnik wyznaczony przeze mnie)\n",
+    "- 0.5848 (mnożnik wyznaczony przez Jak_Attackka, StranikS_Scan oraz innych)"
+  ]
+}

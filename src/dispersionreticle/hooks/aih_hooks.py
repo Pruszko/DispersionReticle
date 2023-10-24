@@ -2,10 +2,11 @@ import logging
 
 import BigWorld
 import AvatarInputHandler
-from AvatarInputHandler import _GUN_MARKER_TYPE, gun_marker_ctrl
+from AvatarInputHandler import gun_marker_ctrl
 from constants import ARENA_PERIOD
 
 from dispersionreticle.utils import *
+from dispersionreticle.utils import debug_state
 from dispersionreticle.utils.reticle_registry import ReticleRegistry
 
 

@@ -6,6 +6,7 @@ from VehicleGunRotator import VehicleGunRotator
 
 from dispersionreticle.settings.config import g_config
 from dispersionreticle.utils import *
+from dispersionreticle.utils import debug_state
 from dispersionreticle.utils.debug_state import g_debugStateCollector
 
 logger = logging.getLogger(__name__)

@@ -1,10 +1,11 @@
 import logging
 
+from dispersionreticle.settings import translations
+from dispersionreticle.settings.translations import Tr
 from dispersionreticle.settings.config import g_config
 from dispersionreticle.settings.config_param import g_configParams, createTooltip
 
 from gui.modsSettingsApi import g_modsSettingsApi
-
 
 logger = logging.getLogger(__name__)
 
@@ -12,6 +13,8 @@ modLinkage = "com.github.pruszko.dispersionreticle"
 
 
 def registerSoftDependencySupport():
+    translations.loadTranslations()
+
     template = {
         "modDisplayName": "DispersionReticle",
         "enabled": g_configParams.enabled.defaultMsaValue,
@@ -113,19 +116,12 @@ def _createIntroPart():
     return [
         {
             "type": "Label",
-            "text": "Config file info:",
+            "text": Tr.INTRO_PART_LABEL,
             "tooltip": createTooltip(
-                header="Config file",
-                body="Config can also be changed by manually altering config file.\n"
-                     "For changes to take effect, reload it in game using hotkeys:\n"
-                     "- CTRL + P\n\n"
-                     "Config file location:\n"
-                     "- [WoT game directory]/mods/configs/DispersionReticle/config.json\n",
-                note="If you want to generate default config file, delete its file and:\n"
-                     "- either reload it with above hotkey\n"
-                     "- or launch a game again\n",
-                attention="Don't use CTRL + P hotkey with open mod configurator.\n"
-                          "This gui won't notice it unless reopened."
+                header=Tr.INTRO_PART_HEADER,
+                body=Tr.INTRO_PART_BODY + "\n",
+                note=Tr.INTRO_PART_NOTE + "\n",
+                attention=Tr.INTRO_PART_ATTENTION
             )
         }
     ]
@@ -135,17 +131,16 @@ def _createDispersionReticlePart():
     return [
         {
             "type": "Label",
-            "text": "Dispersion reticle",
+            "text": Tr.DISPERSION_RETICLE_PART_LABEL,
             "tooltip": createTooltip(
-                header="Dispersion reticle",
-                body="Adds reticle displaying fully-focused dispersion to standard reticle.\n",
-                note="When both client-side and server-side reticle are on, it attaches to client-side reticle.\n\n" +
-                     _createImg(src="all.jpg", width=475, height=428)
+                header=Tr.DISPERSION_RETICLE_PART_HEADER,
+                body=Tr.DISPERSION_RETICLE_PART_BODY + "\n",
+                note=Tr.DISPERSION_RETICLE_PART_NOTE + "\n\n" + _createImg(src="imgs/all.jpg", width=475, height=428)
             ),
         },
         g_configParams.dispersionReticleEnabled.renderParam(
-            header="Enabled",
-            body="If checked, display this reticle."
+            header=Tr.DISPERSION_RETICLE_PART_ENABLED_HEADER,
+            body=Tr.DISPERSION_RETICLE_PART_ENABLED_BODY
         )
     ]
 
@@ -165,25 +160,21 @@ def _createLatencyReticlePart():
     return [
         {
             "type": "Label",
-            "text": "Latency reticle",
+            "text": Tr.LATENCY_RETICLE_PART_LABEL,
             "tooltip": createTooltip(
-                header="Latency reticle",
-                body="Adds reticle displaying current server-side dispersion to client-side reticle.\n",
-                note="Basically, client-side position, but server-side dispersion.\n"
-                     "By this, client-side and server-side dispersion desynchronization is clearly visible.\n\n"
-                     "Useful if you want to know server-side dispersion, but still want "
-                     "client-side responsiveness.\n\n" +
-                     _createImg(src="all.jpg", width=475, height=428)
+                header=Tr.LATENCY_RETICLE_PART_HEADER,
+                body=Tr.LATENCY_RETICLE_PART_BODY + "\n",
+                note=Tr.LATENCY_RETICLE_PART_NOTE + "\n\n" + _createImg(src="imgs/all.jpg", width=475, height=428)
             ),
         },
         g_configParams.latencyReticleEnabled.renderParam(
-            header="Enabled",
-            body="If checked, display this reticle."
+            header=Tr.LATENCY_RETICLE_PART_ENABLED_HEADER,
+            body=Tr.LATENCY_RETICLE_PART_ENABLED_BODY
         ),
         g_configParams.latencyReticleHideStandardReticle.renderParam(
-            header="Hide standard reticle",
-            body="If checked, standard client reticle is hidden while latency reticle is enabled.\n",
-            note="Useful if you want to only use latency reticle instead of standard reticle."
+            header=Tr.LATENCY_RETICLE_PART_HIDE_STANDARD_RETICLE_HEADER,
+            body=Tr.LATENCY_RETICLE_PART_HIDE_STANDARD_RETICLE_BODY + "\n",
+            note=Tr.LATENCY_RETICLE_PART_HIDE_STANDARD_RETICLE_NOTE
         )
     ]
 
@@ -192,16 +183,15 @@ def _createServerReticlePart():
     return [
         {
             "type": "Label",
-            "text": "Server reticle",
+            "text": Tr.SERVER_RETICLE_PART_LABEL,
             "tooltip": createTooltip(
-                header="Server reticle",
-                body="Adds server-side reticle alongside with client-side reticle.\n\n" +
-                     _createImg(src="all.jpg", width=475, height=428)
+                header=Tr.SERVER_RETICLE_PART_HEADER,
+                body=Tr.SERVER_RETICLE_PART_BODY + "\n\n" + _createImg(src="imgs/all.jpg", width=475, height=428)
             ),
         },
         g_configParams.serverReticleEnabled.renderParam(
-            header="Enabled",
-            body="If checked, display this reticle."
+            header=Tr.SERVER_RETICLE_PART_ENABLED_HEADER,
+            body=Tr.SERVER_RETICLE_PART_ENABLED_BODY
         )
     ]
 
@@ -210,50 +200,42 @@ def _createSimpleServerReticlePart():
     return [
         {
             "type": "Label",
-            "text": "Simple server reticle",
+            "text": Tr.SIMPLE_SERVER_RETICLE_PART_LABEL,
             "tooltip": createTooltip(
-                header="Simple server reticle",
-                body="Adds server-side reticle with customizable shape alongside with client-side reticle.\n",
-                attention="For SPG artillery view, it will implicitly enable Server reticle on the left "
-                          "instead of this reticle.\n\n" +
-                          _createImg(src="all.jpg", width=475, height=428)
+                header=Tr.SIMPLE_SERVER_RETICLE_PART_HEADER,
+                body=Tr.SIMPLE_SERVER_RETICLE_PART_BODY + "\n",
+                attention=Tr.SIMPLE_SERVER_RETICLE_PART_ATTENTION + "\n\n" +
+                          _createImg(src="imgs/all.jpg", width=475, height=428)
             )
         },
         g_configParams.simpleServerReticleEnabled.renderParam(
-            header="Enabled",
-            body="If checked, display this reticle."
+            header=Tr.SIMPLE_SERVER_RETICLE_PART_ENABLED_HEADER,
+            body=Tr.SIMPLE_SERVER_RETICLE_PART_ENABLED_BODY
         ),
         g_configParams.simpleServerReticleShape.renderParam(
-            header="Shape",
-            body="Shape which this reticle should have.\n",
-            note=_createImg(src="simple_server.jpg", width=402, height=412)
+            header=Tr.SIMPLE_SERVER_RETICLE_PART_SHAPE_HEADER,
+            body=Tr.SIMPLE_SERVER_RETICLE_PART_SHAPE_BODY + "\n",
+            note=_createImg(src="imgs/simple_server.jpg", width=402, height=412)
         ),
         g_configParams.simpleServerReticleColor.renderParam(
-            header="Color",
-            body="Colors this reticle using provided color."
+            header=Tr.SIMPLE_SERVER_RETICLE_PART_COLOR_HEADER,
+            body=Tr.SIMPLE_SERVER_RETICLE_PART_COLOR_BODY
         ),
         g_configParams.simpleServerReticleDrawOutline.renderParam(
-            header="Draw outline",
-            body="If checked, shape is additionally displayed with 1 pixel black outline.\n",
-            note="Useful if shape color blends with the background."
+            header=Tr.SIMPLE_SERVER_RETICLE_PART_DRAW_OUTLINE_HEADER,
+            body=Tr.SIMPLE_SERVER_RETICLE_PART_DRAW_OUTLINE_BODY + "\n",
+            note=Tr.SIMPLE_SERVER_RETICLE_PART_DRAW_OUTLINE_NOTE
         ),
         g_configParams.simpleServerReticleBlend.renderParam(
-            header="Blend",
-            body="Controls, how much reticle color will blend with the background color "
-                 "instead of replacing it.\n"
-                 "Vanilla \"dashed\" reticle uses this with value 1.0 without outline to make reticle "
-                 "look more natural.\n",
-            note="Set it to 1.0 if you want color to fully act as an addition to background color.\n"
-                 "Set it to 0.0 if you want color to fully replace background color.\n"
-                 "Values between them controls strength of those effects the closer it gets to them.\n",
-            attention="Value 1.0 effectively prevents you from getting dark colors\n"
-                      "because ... black color + background color = background color."
+            header=Tr.SIMPLE_SERVER_RETICLE_PART_BLEND_HEADER,
+            body=Tr.SIMPLE_SERVER_RETICLE_PART_BLEND_BODY + "\n",
+            note=Tr.SIMPLE_SERVER_RETICLE_PART_BLEND_NOTE + "\n",
+            attention=Tr.SIMPLE_SERVER_RETICLE_PART_BLEND_ATTENTION
         ),
         g_configParams.simpleServerReticleAlpha.renderParam(
-            header="Alpha",
-            body="Controls transparency of displayed reticle.\n",
-            note="Value 1.0 means full visibility\n"
-                 "Value 0.0 means zero visibility"
+            header=Tr.SIMPLE_SERVER_RETICLE_PART_ALPHA_HEADER,
+            body=Tr.SIMPLE_SERVER_RETICLE_PART_ALPHA_BODY + "\n",
+            note=Tr.SIMPLE_SERVER_RETICLE_PART_ALPHA_NOTE
         )
     ]
 
@@ -261,15 +243,9 @@ def _createSimpleServerReticlePart():
 def _createReticleSizeMultiplierPart():
     return [
         g_configParams.reticleSizeMultiplier.renderParam(
-            header="Reticle size multiplier",
-            body="Scales all reticles size by factor, except SPG top-view reticle.\n",
-            note="WG's displayed reticle dispersion is noticeably bigger than actual gun dispersion.\n"
-                 "It was discovered by Jak_Attackka, StranikS_Scan and others.\n"
-                 "By this setting you can scale it to actual displayed dispersion.\n\n"
-                 "Good known values:\n"
-                 "- 1.0 (default \"wrong\" WG dispersion)\n"
-                 "- 0.6 (factor determined by me)\n"
-                 "- 0.5848 (factor determined by Jak_Attackka, StranikS_Scan and others)"
+            header=Tr.RETICLE_SIZE_MULTIPLIER_PART_HEADER,
+            body=Tr.RETICLE_SIZE_MULTIPLIER_PART_BODY + "\n",
+            note=Tr.RETICLE_SIZE_MULTIPLIER_PART_NOTE
         )
     ]
 
