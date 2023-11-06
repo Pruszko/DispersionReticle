@@ -16,7 +16,7 @@ def registerSoftDependencySupport():
     translations.loadTranslations()
 
     template = {
-        "modDisplayName": "DispersionReticle",
+        "modDisplayName": Tr.MODNAME,
         "enabled": g_configParams.enabled.defaultMsaValue,
         "column1":
             _createIntroPart() +
