@@ -77,7 +77,7 @@ class TranslationList(TranslationBase):
 
 
 class Tr(object):
-
+    MODNAME = TranslationElement("modname")
     # common
     CHECKED = TranslationElement("checked")
     UNCHECKED = TranslationElement("unchecked")
