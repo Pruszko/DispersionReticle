@@ -154,6 +154,7 @@ class DispersionReticleFlash(ExternalFlashComponent, DispersionReticleFlashMeta)
         return {
             "color": self.__serializeColorTuple(g_config.simpleServerReticle.color),
             "shape": g_config.simpleServerReticle.shape,
+            "draw-center-dot": g_config.simpleServerReticle.drawCenterDot,
             "draw-outline": g_config.simpleServerReticle.drawOutline,
             "blend": g_config.simpleServerReticle.blend,
             "alpha": g_config.simpleServerReticle.alpha

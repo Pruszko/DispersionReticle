@@ -221,6 +221,10 @@ def _createSimpleServerReticlePart():
             header=Tr.SIMPLE_SERVER_RETICLE_PART_COLOR_HEADER,
             body=Tr.SIMPLE_SERVER_RETICLE_PART_COLOR_BODY
         ),
+        g_configParams.simpleServerReticleDrawCenterDot.renderParam(
+            header=Tr.SIMPLE_SERVER_RETICLE_PART_DRAW_CENTER_DOT_HEADER,
+            body=Tr.SIMPLE_SERVER_RETICLE_PART_DRAW_CENTER_DOT_BODY
+        ),
         g_configParams.simpleServerReticleDrawOutline.renderParam(
             header=Tr.SIMPLE_SERVER_RETICLE_PART_DRAW_OUTLINE_HEADER,
             body=Tr.SIMPLE_SERVER_RETICLE_PART_DRAW_OUTLINE_BODY + "\n",

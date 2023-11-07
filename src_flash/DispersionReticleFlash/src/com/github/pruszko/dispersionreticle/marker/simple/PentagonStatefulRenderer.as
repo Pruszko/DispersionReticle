@@ -7,6 +7,8 @@ package com.github.pruszko.dispersionreticle.marker.simple
 		
 		private var _elementScale:Number = 0.0;
 		
+		private var _circleRadius:Number = 0.0;
+		
 		public function PentagonStatefulRenderer(simpleMarker:SimpleStatefulMarker) 
 		{
 			super(simpleMarker);
@@ -17,11 +19,18 @@ package com.github.pruszko.dispersionreticle.marker.simple
 			super.updateState();
 			
 			_elementScale = scaleLogByReticleRadius(3.0);
+			
+			_circleRadius = scaleLogByReticleRadius(0.75);
 		}
 		
 		override public function renderState() : void
 		{
 			super.renderState();
+			
+			if (shouldDrawCenterDot)
+			{
+				drawCenter();
+			}
 			
 			for (var i:int = 0; i < 4; ++i)
 			{
@@ -35,6 +44,19 @@ package com.github.pruszko.dispersionreticle.marker.simple
 					drawRotatedTopPentagonOutline();
 				}
 			}
+		}
+		
+		private function drawCenter() : void
+		{
+			var centerX:Number = 0.0;
+			var centerY:Number = 0.0;
+			
+			shape.lineStyle();
+			shape.beginFill(fillColor);
+			
+			shape.drawCircle(centerX, centerY, _circleRadius);
+			
+			shape.endFill();
 		}
 		
 		private function drawRotatedTopPentagon() : void

@@ -140,6 +140,9 @@ class Tr(object):
     SIMPLE_SERVER_RETICLE_PART_COLOR_HEADER = TranslationElement("simpleServerReticlePart.color.header")
     SIMPLE_SERVER_RETICLE_PART_COLOR_BODY = TranslationList("simpleServerReticlePart.color.body")
 
+    SIMPLE_SERVER_RETICLE_PART_DRAW_CENTER_DOT_HEADER = TranslationElement("simpleServerReticlePart.drawCenterDot.header")
+    SIMPLE_SERVER_RETICLE_PART_DRAW_CENTER_DOT_BODY = TranslationList("simpleServerReticlePart.drawCenterDot.body")
+
     SIMPLE_SERVER_RETICLE_PART_DRAW_OUTLINE_HEADER = TranslationElement("simpleServerReticlePart.drawOutline.header")
     SIMPLE_SERVER_RETICLE_PART_DRAW_OUTLINE_BODY = TranslationList("simpleServerReticlePart.drawOutline.body")
     SIMPLE_SERVER_RETICLE_PART_DRAW_OUTLINE_NOTE = TranslationList("simpleServerReticlePart.drawOutline.note")

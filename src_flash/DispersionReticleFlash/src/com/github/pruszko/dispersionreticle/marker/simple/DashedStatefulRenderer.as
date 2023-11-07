@@ -11,6 +11,8 @@ package com.github.pruszko.dispersionreticle.marker.simple
 		private var _lineThickness:Number = 0.0;
 		private var _innerFillColor:int = 0x000000;
 		
+		private var _circleRadius:Number = 0.0;
+		
 		public function DashedStatefulRenderer(simpleMarker:SimpleStatefulMarker) 
 		{
 			super(simpleMarker);
@@ -26,6 +28,8 @@ package com.github.pruszko.dispersionreticle.marker.simple
 			_halfDashWidth = _halfDashHeight * 5.0 / 16.0;
 			_lineThickness = _halfDashWidth / 2.0;
 			_innerFillColor = Utils.multiplyColor(fillColor, 0.6);
+			
+			_circleRadius = scaleLogByReticleRadius(0.75);
 		}
 		
 		override public function renderState() : void
@@ -39,6 +43,11 @@ package com.github.pruszko.dispersionreticle.marker.simple
 				shape.setAngleDeg(5.0 + i * 10.0);
 				
 				drawRotatedTopDash();
+			}
+			
+			if (shouldDrawCenterDot)
+			{
+				drawCenter();
 			}
 						
 			if (shouldDrawOutline)
@@ -62,6 +71,19 @@ package com.github.pruszko.dispersionreticle.marker.simple
 			shape.lineTo(posX + _halfDashWidth, posY + _halfDashHeight);
 			shape.lineTo(posX - _halfDashWidth, posY + _halfDashHeight);
 			shape.lineTo(posX - _halfDashWidth, posY - _halfDashHeight);
+			
+			shape.endFill();
+		}
+		
+		private function drawCenter() : void
+		{
+			var centerX:Number = 0.0;
+			var centerY:Number = 0.0;
+			
+			shape.lineStyle();
+			shape.beginFill(fillColor);
+			
+			shape.drawCircle(centerX, centerY, _circleRadius);
 			
 			shape.endFill();
 		}

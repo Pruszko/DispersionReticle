@@ -84,6 +84,10 @@
   "simpleServerReticlePart.color.body": [
     "Colors this reticle using provided color."
   ],
+  "simpleServerReticlePart.drawCenterDot.header": "Draw center dot",
+  "simpleServerReticlePart.drawCenterDot.body": [
+    "If true, shape is additionally displayed with center dot."
+  ],
   "simpleServerReticlePart.drawOutline.header": "Draw outline",
   "simpleServerReticlePart.drawOutline.body": [
     "If checked, shape is additionally displayed with 1 pixel black outline."

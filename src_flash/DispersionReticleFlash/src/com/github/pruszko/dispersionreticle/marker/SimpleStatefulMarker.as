@@ -116,6 +116,11 @@ package com.github.pruszko.dispersionreticle.marker
 			return app.config.simpleServerReticle.blend;
 		}
 		
+		public function get shouldDrawCenterDot() : Boolean
+		{
+			return app.config.simpleServerReticle.drawCenterDot;
+		}
+		
 		public function get shouldDrawOutline() : Boolean
 		{
 			return app.config.simpleServerReticle.drawOutline;

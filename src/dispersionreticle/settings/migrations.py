@@ -13,6 +13,7 @@ def performMigrationsIfNecessary():
     v2_2_0_addSimpleServerReticle()
     v2_3_0_addNewSimpleServerReticleFeatures()
     v2_4_0_addSupportForModsSettingsAPI()
+    v2_6_0_addDrawCenterDotToSimpleServerReticle()
 
 
 def v2_0_2_migrateConfigFileLocation():
@@ -190,6 +191,60 @@ def v2_4_0_addSupportForModsSettingsAPI():
 
     tokens = getDefaultConfigReplaceTokens()
     tokens.update({
+        "dispersion-reticle-enabled": toJson(dispersionReticleEnabled),
+        "latency-reticle-enabled": toJson(latencyReticleEnabled),
+        "latency-reticle-hide-standard-reticle": toJson(latencyReticleHideStandardReticle),
+        "server-reticle-enabled": toJson(serverReticleEnabled),
+        "simple-server-reticle-enabled": toJson(simpleServerReticleEnabled),
+        "simple-server-reticle-color": toJson(simpleServerReticleColor),
+        "simple-server-reticle-shape": toJson(simpleServerReticleShape),
+        "simple-server-reticle-draw-outline": toJson(simpleServerReticleDrawOutline),
+        "simple-server-reticle-blend": toJson(simpleServerReticleBlend),
+        "simple-server-reticle-alpha": toJson(simpleServerReticleAlpha),
+        "reticle-size-multiplier": toJson(reticleSizeMultiplier),
+    })
+
+    newConfigFileContent = CONFIG_TEMPLATE % tokens
+
+    with open(configFilePath, "w") as configFile:
+        configFile.write(newConfigFileContent)
+
+    logger.info("Migration finished.")
+
+
+def v2_6_0_addDrawCenterDotToSimpleServerReticle():
+    configFilePath = os.path.join("mods", "configs", "DispersionReticle", "config.json")
+
+    if not os.path.isfile(configFilePath):
+        return
+
+    data = loadConfigDict(configFilePath)
+
+    if data is None or "__version__" not in data or data["__version__"] != 4:
+        return
+
+    logger.info("Migrating config file from version 2.4.x ...")
+
+    enabled = toBool(data["enabled"])
+    dispersionReticleEnabled = toBool(data["dispersion-reticle"]["enabled"])
+
+    latencyReticleEnabled = toBool(data["latency-reticle"]["enabled"])
+    latencyReticleHideStandardReticle = toBool(data["latency-reticle"]["hide-standard-reticle"])
+
+    serverReticleEnabled = toBool(data["server-reticle"]["enabled"])
+
+    simpleServerReticleEnabled = toBool(data["simple-server-reticle"]["enabled"])
+    simpleServerReticleShape = data["simple-server-reticle"]["shape"]
+    simpleServerReticleColor = toColorTuple(data["simple-server-reticle"]["color"])
+    simpleServerReticleDrawOutline = toBool(data["simple-server-reticle"]["draw-outline"])
+    simpleServerReticleBlend = toPositiveFloat(data["simple-server-reticle"]["blend"])
+    simpleServerReticleAlpha = toPositiveFloat(data["simple-server-reticle"]["alpha"])
+
+    reticleSizeMultiplier = toPositiveFloat(data["reticle-size-multiplier"])
+
+    tokens = getDefaultConfigReplaceTokens()
+    tokens.update({
+        "enabled": toJson(enabled),
         "dispersion-reticle-enabled": toJson(dispersionReticleEnabled),
         "latency-reticle-enabled": toJson(latencyReticleEnabled),
         "latency-reticle-hide-standard-reticle": toJson(latencyReticleHideStandardReticle),

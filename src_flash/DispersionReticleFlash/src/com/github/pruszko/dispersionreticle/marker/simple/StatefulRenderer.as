@@ -71,6 +71,11 @@ package com.github.pruszko.dispersionreticle.marker.simple
 			return simpleMarker.selectedShape;
 		}
 		
+		public function get shouldDrawCenterDot() : Boolean
+		{
+			return simpleMarker.shouldDrawCenterDot;
+		}
+		
 		public function get shouldDrawOutline() : Boolean
 		{
 			return simpleMarker.shouldDrawOutline;

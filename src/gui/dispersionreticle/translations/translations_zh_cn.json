@@ -19,8 +19,8 @@
   "introPart.attention": [
     "不要在设置界面打开的时候使用上面的快捷键。\n"
   ],
-  "dispersionReticlePart.label": "最小落弹环",
-  "dispersionReticlePart.header": "最小落弹环",
+  "dispersionReticlePart.label": "最小落弹环 (Dispersion reticle)",
+  "dispersionReticlePart.header": "最小落弹环 (Dispersion reticle)",
   "dispersionReticlePart.body": [
     "在显示标准瞄准环的同时，显示出最小的缩圈大小。\n"
   ],
@@ -31,8 +31,8 @@
   "dispersionReticlePart.enabled.body": [
     "如果启用则显示这个瞄准环。"
   ],
-  "latencyReticlePart.label": "延迟瞄准环",
-  "latencyReticlePart.header": "延迟瞄准环",
+  "latencyReticlePart.label": "延迟瞄准环 (Latency reticle)",
+  "latencyReticlePart.header": "延迟瞄准环 (Latency reticle)",
   "latencyReticlePart.body": [
     "在客户端瞄准环的基础上同时显示服务端瞄准环。\n"
   ],
@@ -51,8 +51,8 @@
   "latencyReticlePart.hideStandardReticle.note": [
     "在您仅想使用服务端准星时有用。"
   ],
-  "serverReticlePart.label": "服务端瞄准环",
-  "serverReticlePart.header": "服务端瞄准环",
+  "serverReticlePart.label": "服务端瞄准环 (Server reticle)",
+  "serverReticlePart.header": "服务端瞄准环 (Server reticle)",
   "serverReticlePart.body": [
     "在客户端准星显示的同时显示服务端瞄准环。\n\n"
   ],
@@ -60,8 +60,8 @@
   "serverReticlePart.enabled.body": [
     "如果启用则显示这个瞄准环。"
   ],
-  "simpleServerReticlePart.label": "简单服务端瞄准环",
-  "simpleServerReticlePart.header": "简单服务端瞄准环",
+  "simpleServerReticlePart.label": "简单服务端瞄准环 (Simple server reticle)",
+  "simpleServerReticlePart.header": "简单服务端瞄准环 (Simple server reticle)",
   "simpleServerReticlePart.body": [
     "添加可自定义形状的服务端准星。\n"
   ],

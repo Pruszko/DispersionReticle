@@ -7,8 +7,9 @@ package com.github.pruszko.dispersionreticle.config.marker
 		
 		private var _shape:String = "pentagon";
 		private var _color:int = 0xFF00FF;
-		private var _drawOutline:Boolean= false;
-		private var _blend:Number= 0.8;
+		private var _drawCenterDot:Boolean = false;
+		private var _drawOutline:Boolean = false;
+		private var _blend:Number = 0.8;
 		private var _alpha:Number = 1.0;
 		
 		public function DisposableSimpleMarkerConfig() 
@@ -25,6 +26,7 @@ package com.github.pruszko.dispersionreticle.config.marker
 		{
 			this._shape = serializedSection["shape"];
 			this._color = serializedSection["color"];
+			this._drawCenterDot = serializedSection["draw-center-dot"];
 			this._drawOutline = serializedSection["draw-outline"];
 			this._blend = serializedSection["blend"];
 			this._alpha = serializedSection["alpha"];
@@ -38,6 +40,11 @@ package com.github.pruszko.dispersionreticle.config.marker
 		public function get color() : int
 		{
 			return _color;
+		}
+		
+		public function get drawCenterDot() : Boolean
+		{
+			return _drawCenterDot;
 		}
 		
 		public function get drawOutline() : Boolean

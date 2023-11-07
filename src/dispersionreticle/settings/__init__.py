@@ -97,6 +97,11 @@ CONFIG_TEMPLATE = """{
 
         // Valid values: true/false (default: false)
         //
+        // If true, shape is additionally displayed with center dot.
+        "draw-center-dot": %(simple-server-reticle-draw-center-dot)s,
+
+        // Valid values: true/false (default: false)
+        //
         // If true, shape is additionally displayed with 1 pixel black outline.
         // Useful if shape color blends with the background.
         "draw-outline": %(simple-server-reticle-draw-outline)s,
@@ -140,7 +145,7 @@ CONFIG_TEMPLATE = """{
 
     // DO NOT touch "__version__" field
     // It is used by me to seamlessly update config file :)
-    "__version__": 4
+    "__version__": 5
 }"""
 
 

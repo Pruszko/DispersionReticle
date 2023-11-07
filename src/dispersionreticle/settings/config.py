@@ -66,6 +66,10 @@ class _SimpleServerReticleConfig(object):
         return enabledAware(g_configParams.simpleServerReticleColor)
 
     @property
+    def drawCenterDot(self):
+        return enabledAware(g_configParams.simpleServerReticleDrawCenterDot)
+
+    @property
     def drawOutline(self):
         return enabledAware(g_configParams.simpleServerReticleDrawOutline)
 
@@ -81,6 +85,7 @@ class _SimpleServerReticleConfig(object):
         writeJsonValueSafely(configDict, g_configParams.simpleServerReticleEnabled)
         writeJsonValueSafely(configDict, g_configParams.simpleServerReticleShape)
         writeJsonValueSafely(configDict, g_configParams.simpleServerReticleColor)
+        writeJsonValueSafely(configDict, g_configParams.simpleServerReticleDrawCenterDot)
         writeJsonValueSafely(configDict, g_configParams.simpleServerReticleDrawOutline)
         writeJsonValueSafely(configDict, g_configParams.simpleServerReticleBlend)
         writeJsonValueSafely(configDict, g_configParams.simpleServerReticleAlpha)

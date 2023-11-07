@@ -47,6 +47,10 @@ class ConfigParams(object):
             ["simple-server-reticle", "color"],
             defaultValue=(255, 0, 255)
         )
+        self.simpleServerReticleDrawCenterDot = BooleanParam(
+            ["simple-server-reticle", "draw-center-dot"],
+            defaultValue=False
+        )
         self.simpleServerReticleDrawOutline = BooleanParam(
             ["simple-server-reticle", "draw-outline"],
             defaultValue=False

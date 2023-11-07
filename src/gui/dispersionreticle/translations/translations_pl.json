@@ -85,6 +85,10 @@
   "simpleServerReticlePart.color.body": [
     "Koloruje to kółko wybranym kolorem."
   ],
+  "simpleServerReticlePart.drawCenterDot.header": "Czy rysować środkową kropkę",
+  "simpleServerReticlePart.drawCenterDot.body": [
+    "Jeżeli zaznaczone, kształt kółka będzie dodatkowo wyświetlany ze środkową kropką."
+  ],
   "simpleServerReticlePart.drawOutline.header": "Czy rysować obwódkę",
   "simpleServerReticlePart.drawOutline.body": [
     "Jeżeli zaznaczone, kształt kółka będzie dodatkowo wyświetlany z 1 pikselową czarną obwódką."

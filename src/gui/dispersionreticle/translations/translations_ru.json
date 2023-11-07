@@ -20,8 +20,8 @@
     "Не используйте сочетание клавиш CTRL + P с открытым интерфейсом 'Настройка модификаций'.\n",
     "Интерфейс 'Настройка модификаций' не заметит изменений, если его не открыть заново."
   ],
-  "dispersionReticlePart.label": "Dispersion reticle / Круг разброса",
-  "dispersionReticlePart.header": "Dispersion reticle / Круг разброса",
+  "dispersionReticlePart.label": "Круг разброса (Dispersion reticle)",
+  "dispersionReticlePart.header": "Круг разброса (Dispersion reticle)",
   "dispersionReticlePart.body": [
     "Добавляет полностью сведенный 'Круг разброса' к прицелу."
   ],
@@ -32,8 +32,8 @@
   "dispersionReticlePart.enabled.body": [
     "Если галочка отмечена, то отображается 'Круг разброса'."
   ],
-  "latencyReticlePart.label": "Latency reticle / Гибридный прицел",
-  "latencyReticlePart.header": "Latency reticle / Гибридный прицел",
+  "latencyReticlePart.label": "Гибридный прицел (Latency reticle)",
+  "latencyReticlePart.header": "Гибридный прицел (Latency reticle)",
   "latencyReticlePart.body": [
     "Альтернативный режим 'Cерверному прицелу' в настройках игры."
   ],
@@ -53,8 +53,8 @@
   "latencyReticlePart.hideStandardReticle.note": [
     "Полезно, если вы хотите использовать 'Гибридный прицел' как основной круг."
   ],
-  "serverReticlePart.label": "Server reticle / Серверный прицел",
-  "serverReticlePart.header": "Server reticle / Серверный прицел",
+  "serverReticlePart.label": "Серверный прицел (Server reticle)",
+  "serverReticlePart.header": "Серверный прицел (Server reticle)",
   "serverReticlePart.body": [
     "Добавляет дополнительный круг 'Серверный прицел'."
   ],
@@ -62,8 +62,8 @@
   "serverReticlePart.enabled.body": [
     "Если галочка отмечена, то отображается 'Серверный прицел'."
   ],
-  "simpleServerReticlePart.label": "Simple server reticle / Настраиваемый серверный прицел",
-  "simpleServerReticlePart.header": "Simple server reticle / Настраиваемый серверный прицел",
+  "simpleServerReticlePart.label": "Настраиваемый серверный прицел (Simple server reticle)",
+  "simpleServerReticlePart.header": "Настраиваемый серверный прицел (Simple server reticle)",
   "simpleServerReticlePart.body": [
     "Добавляет дополнительный круг 'Настраиваемый серверный прицел', который можно настроить ниже."
   ],
