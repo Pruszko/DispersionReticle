@@ -1,0 +1,128 @@
+{
+  "checked": "включен",
+  "unchecked": "выключен",
+  "defaultValue": "по умолчанию",
+  "introPart.label": "Информация о файле конфигурации",
+  "introPart.header": "Файл конфигурации",
+  "introPart.body": [
+    "Файл конфигурации также может быть изменен вручную, путем внесения изменений в файл.\n",
+    "Чтобы изменения вступили в силу, перезагрузите его в игре, используя сочетание клавиш:\n",
+    "- CTRL + P\n\n",
+    "Расположение файла конфигурации:\n",
+    "- [Расположение файлов игры WoT]/mods/configs/DispersionReticle/config.json"
+  ],
+  "introPart.note": [
+    "Если вы хотите сгенерировать файл конфигурации по умолчанию, удалите файл конфигурации и:\n",
+    "- также перезагрузите его с помощью указанным выше сочетанием клавиш\n",
+    "- или снова запустите игру"
+  ],
+  "introPart.attention": [
+    "Не используйте сочетание клавиш CTRL + P с открытым интерфейсом 'Настройка модификаций'.\n",
+    "Интерфейс 'Настройка модификаций' не заметит изменений, если его не открыть заново."
+  ],
+  "dispersionReticlePart.label": "Dispersion reticle / Круг разброса",
+  "dispersionReticlePart.header": "Dispersion reticle / Круг разброса",
+  "dispersionReticlePart.body": [
+    "Добавляет полностью сведенный 'Круг разброса' к прицелу."
+  ],
+  "dispersionReticlePart.note": [
+    "Может работать с включенным 'Cерверным прицелом' в настройках игры."
+  ],
+  "dispersionReticlePart.enabled.header": "Включить",
+  "dispersionReticlePart.enabled.body": [
+    "Если галочка отмечена, то отображается 'Круг разброса'."
+  ],
+  "latencyReticlePart.label": "Latency reticle / Гибридный прицел",
+  "latencyReticlePart.header": "Latency reticle / Гибридный прицел",
+  "latencyReticlePart.body": [
+    "Альтернативный режим 'Cерверному прицелу' в настройках игры."
+  ],
+  "latencyReticlePart.note": [
+    "Принцип, позиция на стороне клиента, а разброс на стороне сервера.\n",
+    "Таким образом, видна десинхронизация разброса на стороне клиента и на стороне сервера.\n\n",
+    "Полезно, если вы хотите видеть десинхронизацию разброса на стороне сервера, но при этом иметь отзывчивость на стороне клиента."
+  ],
+  "latencyReticlePart.enabled.header": "Включить",
+  "latencyReticlePart.enabled.body": [
+    "Если галочка отмечена, то отображается 'Гибридный прицел'."
+  ],
+  "latencyReticlePart.hideStandardReticle.header": "Hide standard reticle / Скрыть стандартный прицел",
+  "latencyReticlePart.hideStandardReticle.body": [
+    "Если галочка отмечена, то при включенной функции 'Гибридный прицел', стандартный круг будет скрыт."
+  ],
+  "latencyReticlePart.hideStandardReticle.note": [
+    "Полезно, если вы хотите использовать 'Гибридный прицел' как основной круг."
+  ],
+  "serverReticlePart.label": "Server reticle / Серверный прицел",
+  "serverReticlePart.header": "Server reticle / Серверный прицел",
+  "serverReticlePart.body": [
+    "Добавляет дополнительный круг 'Серверный прицел'."
+  ],
+  "serverReticlePart.enabled.header": "Включить",
+  "serverReticlePart.enabled.body": [
+    "Если галочка отмечена, то отображается 'Серверный прицел'."
+  ],
+  "simpleServerReticlePart.label": "Simple server reticle / Настраиваемый серверный прицел",
+  "simpleServerReticlePart.header": "Simple server reticle / Настраиваемый серверный прицел",
+  "simpleServerReticlePart.body": [
+    "Добавляет дополнительный круг 'Настраиваемый серверный прицел', который можно настроить ниже."
+  ],
+  "simpleServerReticlePart.attention": [
+    "Для артиллерии будет включен 'Серверный прицел',",
+    "вместо этого."
+  ],
+  "simpleServerReticlePart.enabled.header": "Включить",
+  "simpleServerReticlePart.enabled.body": [
+    "Если галочка отмечена, то отображается 'Настраиваемый серверный прицел'."
+  ],
+  "simpleServerReticlePart.shape.header": "Фигура",
+  "simpleServerReticlePart.shape.body": [
+    "Фигура, которую будет отображать 'Настраиваемый серверный прицел'."
+  ],
+  "simpleServerReticlePart.color.header": "Цвет",
+  "simpleServerReticlePart.color.body": [
+    "Назначает цвет для фигуры в 'Настраиваемый серверный прицел'."
+  ],
+  "simpleServerReticlePart.drawOutline.header": "Включить контур",
+  "simpleServerReticlePart.drawOutline.body": [
+    "Если галочка отмечена, то у фигуры будет дополнительно отображаться черный контур с размером в 1 пиксель."
+  ],
+  "simpleServerReticlePart.drawOutline.note": [
+    "Полезно, если цвет фигуры сливается с фоном."
+  ],
+  "simpleServerReticlePart.blend.header": "Смешивание",
+  "simpleServerReticlePart.blend.body": [
+    "Регулирует, насколько цвет фигуры будет сливаться с цветом фона, а не заменять его.\n",
+    "Стандартная \"dashed / пунктир\" фигура использует этот параметр со значением 1.0 без контура, чтобы фигура выглядела более органично."
+  ],
+  "simpleServerReticlePart.blend.note": [
+    "При значении 1.0, цвет полностью дополняет цвет фона.\n",
+    "При значении 0.0, цвет полностью заменяет цвет фона.\n",
+    "Значения между ними настраивают силу этих эффектов между друг другом."
+  ],
+  "simpleServerReticlePart.blend.attention": [
+    "Значение 1.0 эффективно предотвращает получение темных цветов.\n",
+    "Потому что ... черный цвет + цвет фона = цвет фона."
+  ],
+  "simpleServerReticlePart.alpha.header": "Прозрачность",
+  "simpleServerReticlePart.alpha.body": [
+    "Настройка прозрачности для 'Обычный серверный прицел'."
+  ],
+  "simpleServerReticlePart.alpha.note": [
+    "Значение 1.0 соответствует полной видимости.\n",
+    "Значение 0.0 соответствует нулевой видимости."
+  ],
+  "reticleSizeMultiplier.header": "Reticle size multiplier / Множитель размера круга",
+  "reticleSizeMultiplier.body": [
+    "Масштабирует размеры всех 'Кругов разброса', кроме артиллерии."
+  ],
+  "reticleSizeMultiplier.note": [
+    "Отображаемая WG рассеивание - 'Круг разброса', заметно больше реального рассеивания.\n",
+    "Это было обнаружено людьми Jak_Attackka, StranikS_Scan и другими.\n",
+    "С помощью этой настройки, вы можете масштабировать до реального отображаемого рассеивания.\n\n",
+    "Известные значения:\n",
+    "- 1.0 (по умолчанию \"неправильная\" WG рассеивание)\n",
+    "- 0.6 (коэффициент, определённый мной)\n",
+    "- 0.5848 (коэффициент, определённый Jak_Attackka, StranikS_Scan и другими)"
+  ]
+}

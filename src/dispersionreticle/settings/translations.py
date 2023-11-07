@@ -5,6 +5,11 @@ import ResMgr
 from helpers import getClientLanguage
 
 
+# Thanks to:
+# - shuxue - for Russian translations
+# - yinx2002 - for Chinese translations
+
+
 logger = logging.getLogger(__name__)
 
 
@@ -77,8 +82,8 @@ class TranslationList(TranslationBase):
 
 
 class Tr(object):
-    MODNAME = TranslationElement("modname")
     # common
+    MODNAME = TranslationElement("modname")
     CHECKED = TranslationElement("checked")
     UNCHECKED = TranslationElement("unchecked")
     DEFAULT_VALUE = TranslationElement("defaultValue")
