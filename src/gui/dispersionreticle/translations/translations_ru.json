@@ -46,7 +46,7 @@
   "latencyReticlePart.enabled.body": [
     "Если галочка отмечена, то отображается 'Гибридный прицел'."
   ],
-  "latencyReticlePart.hideStandardReticle.header": "Hide standard reticle / Скрыть стандартный прицел",
+  "latencyReticlePart.hideStandardReticle.header": "Скрыть стандартный прицел",
   "latencyReticlePart.hideStandardReticle.body": [
     "Если галочка отмечена, то при включенной функции 'Гибридный прицел', стандартный круг будет скрыт."
   ],
@@ -83,6 +83,10 @@
   "simpleServerReticlePart.color.body": [
     "Назначает цвет для фигуры в 'Настраиваемый серверный прицел'."
   ],
+  "simpleServerReticlePart.drawCenterDot.header": "Включить центральную точку",
+  "simpleServerReticlePart.drawCenterDot.body": [
+    "Если галочка отмечена, то у фигуры будет дополнительно отображаться точка в центре."
+  ],
   "simpleServerReticlePart.drawOutline.header": "Включить контур",
   "simpleServerReticlePart.drawOutline.body": [
     "Если галочка отмечена, то у фигуры будет дополнительно отображаться черный контур с размером в 1 пиксель."
@@ -112,7 +116,7 @@
     "Значение 1.0 соответствует полной видимости.\n",
     "Значение 0.0 соответствует нулевой видимости."
   ],
-  "reticleSizeMultiplier.header": "Reticle size multiplier / Множитель размера круга",
+  "reticleSizeMultiplier.header": "Множитель размера круга (Reticle size multiplier)",
   "reticleSizeMultiplier.body": [
     "Масштабирует размеры всех 'Кругов разброса', кроме артиллерии."
   ],

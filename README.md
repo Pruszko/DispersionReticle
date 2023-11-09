@@ -59,7 +59,7 @@ They are also compatible with "Use server aim" from in-game option.
 ## Resource
 - [WGMods](https://wgmods.net/5251/)
 - [CurseForge](https://www.curseforge.com/worldoftanks/wot-mods/dispersionreticle-reworked)
-- [Github Releases Page](https://github.com/Pruszko/DispersionReticle/releases)
+- [GitHub Releases Page](https://github.com/Pruszko/DispersionReticle/releases)
 
 ## Installation
 With Mod Configurator:
@@ -92,12 +92,17 @@ All config options **are reloadable on-the-fly** using **CTRL + P** hotkey in th
   thanks to **IzeBerg** for cool GUI configuration API
 * **ModsList by POLIROID** - allows for displaying button for Mod Configurator; thanks to **POLIROID**
 
+## Contributions
+Thanks to:
+* **shuxue** - for Russian translations
+* **yinx2002** - for Chinese translations
+
 ## Compatibility
 This mod **IS NOT** compatible with other mods with similar features as mine.
 
 Current known incompatible mods:
 - AwfulTanker's Server Marker (and other similar)
-- Jak_Atackka's Fix Reticle Size (and other similar)
+- Jak_Atackka's Better Reticle Size (and other similar)
 
 Use preferred options from above features for similar functionality instead.
 

@@ -12,6 +12,17 @@ from helpers import getClientLanguage
 
 logger = logging.getLogger(__name__)
 
+# if this is set to some language code, then below code will treat game language at that
+# used only for debugging
+#
+# TODO
+# On EU clients, using "zh_cn" language code crashes on glyph lookup in AS3
+# resulting in "squares" instead of glyph.
+#
+# Most likely because EU client doesn't have font with Chinese glyphs
+# CN clients probably have them, I hope it works there, lol
+DEBUG_LANGUAGE = None
+
 
 DEFAULT_TRANSLATIONS_MAP = {}
 TRANSLATIONS_MAP = {}
@@ -23,8 +34,13 @@ def loadTranslations():
     global DEFAULT_TRANSLATIONS_MAP
     DEFAULT_TRANSLATIONS_MAP = defaultTranslationsMap if defaultTranslationsMap is not None else {}
 
-    language = getClientLanguage()
-    logger.info("Client language: %s", language)
+    if DEBUG_LANGUAGE is not None:
+        language = DEBUG_LANGUAGE
+        logger.info("Client language (debug): %s", language)
+    else:
+        language = getClientLanguage()
+        logger.info("Client language: %s", language)
+
     translationsMap = _loadLanguage(language)
 
     if translationsMap is not None:

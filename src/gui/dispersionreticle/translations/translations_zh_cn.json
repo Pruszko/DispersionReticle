@@ -66,7 +66,7 @@
     "添加可自定义形状的服务端准星。\n"
   ],
   "simpleServerReticlePart.attention": [
-    "在火炮视角中，会在左侧默认添加服务端瞄准环而不会显示这个准星。\n\n."
+    "在火炮视角中，会在左侧默认添加服务端瞄准环而不会显示这个准星。\n\n"
   ],
   "simpleServerReticlePart.enabled.header": "启用",
   "simpleServerReticlePart.enabled.body": [
