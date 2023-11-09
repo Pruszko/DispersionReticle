@@ -80,6 +80,10 @@
   "simpleServerReticlePart.color.body": [
     "这个准星的颜色。"
   ],
+  "simpleServerReticlePart.drawCenterDot.header": "绘制中心点",
+  "simpleServerReticlePart.drawCenterDot.body": [
+    "如果选中则绘制中心点"
+  ],
   "simpleServerReticlePart.drawOutline.header": "绘制边框",
   "simpleServerReticlePart.drawOutline.body": [
     "如果选中，选定的形状之外会显示1像素的黑色边框。\n"
