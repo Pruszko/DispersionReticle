@@ -13,20 +13,35 @@ class DispersionReticleMod:
         self.__isModsSettingsApiPresent = False
 
     def init(self):
+        # try-except with logged exception here is more than important, because
+        # when mod is initialized and some incompatibility occurs, it may break this (or other) mods
+        # mainly because:
+        # - AttributeError is silently ignored by mod loading code
+        #   what can lead to very weird "lack of errors" where game state is corrupted
+        #   due to unexpected module loading errors
+        # - other exceptions may basically break loading of other mods
+        #
+        # by this, at least we will see what is broken
         try:
             logger.info("Initializing DispersionReticle mod ...")
 
-            # it is good to know from the logs which client may have problems
+            # it is good to know from the logs which client may have compatibility problems
             # it's not obviously logged anywhere by any client, or I am just blind
             from dispersionreticle.utils import getClientType
             logger.info("Client type: %s", getClientType())
 
+            # load translations as early as possible
+            from dispersionreticle.settings import translations
+            translations.loadTranslations()
+
             # make sure to invoke all hooks
             import dispersionreticle.hooks
-            from dispersionreticle.settings.config import g_config
 
+            # load config
+            from dispersionreticle.settings.config import g_config
             g_config.loadConfigSafely()
 
+            # handle all soft dependencies
             self.__resolveSoftDependencies()
             if self.isModsSettingsApiPresent:
                 from dispersionreticle.support import mods_settings_api_support

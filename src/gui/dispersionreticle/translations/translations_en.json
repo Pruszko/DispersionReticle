@@ -80,6 +80,10 @@
   "simpleServerReticlePart.shape.body": [
     "Shape which this reticle should have."
   ],
+  "simpleServerReticlePart.shape.option.pentagon": "Pentagon",
+  "simpleServerReticlePart.shape.option.t-shape": "T-shape",
+  "simpleServerReticlePart.shape.option.circle": "Circle",
+  "simpleServerReticlePart.shape.option.dashed": "Dashed",
   "simpleServerReticlePart.color.header": "Color",
   "simpleServerReticlePart.color.body": [
     "Colors this reticle using provided color."

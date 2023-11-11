@@ -12,7 +12,7 @@ from helpers import getClientLanguage
 
 logger = logging.getLogger(__name__)
 
-# if this is set to some language code, then below code will treat game language at that
+# if this is set to some language code, then below code will treat game language as that
 # used only for debugging
 #
 # TODO
@@ -153,6 +153,11 @@ class Tr(object):
     SIMPLE_SERVER_RETICLE_PART_SHAPE_HEADER = TranslationElement("simpleServerReticlePart.shape.header")
     SIMPLE_SERVER_RETICLE_PART_SHAPE_BODY = TranslationList("simpleServerReticlePart.shape.body")
 
+    SIMPLE_SERVER_RETICLE_PART_SHAPE_OPTION_PENTAGON = TranslationElement("simpleServerReticlePart.shape.option.pentagon")
+    SIMPLE_SERVER_RETICLE_PART_SHAPE_OPTION_T_SHAPE = TranslationElement("simpleServerReticlePart.shape.option.t-shape")
+    SIMPLE_SERVER_RETICLE_PART_SHAPE_OPTION_CIRCLE = TranslationElement("simpleServerReticlePart.shape.option.circle")
+    SIMPLE_SERVER_RETICLE_PART_SHAPE_OPTION_DASHED = TranslationElement("simpleServerReticlePart.shape.option.dashed")
+
     SIMPLE_SERVER_RETICLE_PART_COLOR_HEADER = TranslationElement("simpleServerReticlePart.color.header")
     SIMPLE_SERVER_RETICLE_PART_COLOR_BODY = TranslationList("simpleServerReticlePart.color.body")
 
@@ -176,4 +181,3 @@ class Tr(object):
     RETICLE_SIZE_MULTIPLIER_PART_HEADER = TranslationElement("reticleSizeMultiplier.header")
     RETICLE_SIZE_MULTIPLIER_PART_BODY = TranslationList("reticleSizeMultiplier.body")
     RETICLE_SIZE_MULTIPLIER_PART_NOTE = TranslationList("reticleSizeMultiplier.note")
-

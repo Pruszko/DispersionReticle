@@ -1,4 +1,5 @@
 from dispersionreticle.settings.config_param_types import *
+from dispersionreticle.settings.translations import Tr
 
 
 class ConfigParams(object):
@@ -36,10 +37,10 @@ class ConfigParams(object):
         self.simpleServerReticleShape = OptionsParam(
             ["simple-server-reticle", "shape"],
             [
-                Option("pentagon", 0, "Pentagon"),
-                Option("t-shape", 1, "T-shape"),
-                Option("circle", 2, "Circle"),
-                Option("dashed", 3, "Dashed")
+                Option("pentagon", 0, Tr.SIMPLE_SERVER_RETICLE_PART_SHAPE_OPTION_PENTAGON),
+                Option("t-shape", 1, Tr.SIMPLE_SERVER_RETICLE_PART_SHAPE_OPTION_T_SHAPE),
+                Option("circle", 2, Tr.SIMPLE_SERVER_RETICLE_PART_SHAPE_OPTION_CIRCLE),
+                Option("dashed", 3, Tr.SIMPLE_SERVER_RETICLE_PART_SHAPE_OPTION_DASHED)
             ],
             defaultValue="pentagon"
         )

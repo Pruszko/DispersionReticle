@@ -1,6 +1,5 @@
 import logging
 
-from dispersionreticle.settings import translations
 from dispersionreticle.settings.translations import Tr
 from dispersionreticle.settings.config import g_config
 from dispersionreticle.settings.config_param import g_configParams, createTooltip
@@ -13,8 +12,6 @@ modLinkage = "com.github.pruszko.dispersionreticle"
 
 
 def registerSoftDependencySupport():
-    translations.loadTranslations()
-
     template = {
         "modDisplayName": Tr.MODNAME,
         "enabled": g_configParams.enabled.defaultMsaValue,

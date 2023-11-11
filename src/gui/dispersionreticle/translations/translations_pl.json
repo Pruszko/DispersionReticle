@@ -81,6 +81,10 @@
   "simpleServerReticlePart.shape.body": [
     "Kształt jaki to kółko powinno mieć."
   ],
+  "simpleServerReticlePart.shape.option.pentagon": "Pięciokąt (pentagon)",
+  "simpleServerReticlePart.shape.option.t-shape": "Kształt T (t-shape)",
+  "simpleServerReticlePart.shape.option.circle": "Okrąg (circle)",
+  "simpleServerReticlePart.shape.option.dashed": "Kreskowany (dashed)",
   "simpleServerReticlePart.color.header": "Kolor",
   "simpleServerReticlePart.color.body": [
     "Koloruje to kółko wybranym kolorem."
