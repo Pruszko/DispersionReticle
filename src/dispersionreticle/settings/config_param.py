@@ -37,10 +37,10 @@ class ConfigParams(object):
         self.simpleServerReticleShape = OptionsParam(
             ["simple-server-reticle", "shape"],
             [
-                Option("pentagon", 0, Tr.SIMPLE_SERVER_RETICLE_PART_SHAPE_OPTION_PENTAGON),
-                Option("t-shape", 1, Tr.SIMPLE_SERVER_RETICLE_PART_SHAPE_OPTION_T_SHAPE),
-                Option("circle", 2, Tr.SIMPLE_SERVER_RETICLE_PART_SHAPE_OPTION_CIRCLE),
-                Option("dashed", 3, Tr.SIMPLE_SERVER_RETICLE_PART_SHAPE_OPTION_DASHED)
+                Option("pentagon", 0, "1. " + Tr.SIMPLE_SERVER_RETICLE_PART_SHAPE_OPTION_PENTAGON),
+                Option("t-shape", 1, "2. " + Tr.SIMPLE_SERVER_RETICLE_PART_SHAPE_OPTION_T_SHAPE),
+                Option("circle", 2, "3. " + Tr.SIMPLE_SERVER_RETICLE_PART_SHAPE_OPTION_CIRCLE),
+                Option("dashed", 3, "4. " + Tr.SIMPLE_SERVER_RETICLE_PART_SHAPE_OPTION_DASHED)
             ],
             defaultValue="pentagon"
         )

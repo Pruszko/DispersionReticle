@@ -76,6 +76,10 @@
   "simpleServerReticlePart.shape.body": [
     "这个准星的形状\n"
   ],
+  "simpleServerReticlePart.shape.option.pentagon": "Pentagon",
+  "simpleServerReticlePart.shape.option.t-shape": "T-shape",
+  "simpleServerReticlePart.shape.option.circle": "Circle",
+  "simpleServerReticlePart.shape.option.dashed": "Dashed",
   "simpleServerReticlePart.color.header": "颜色",
   "simpleServerReticlePart.color.body": [
     "这个准星的颜色。"

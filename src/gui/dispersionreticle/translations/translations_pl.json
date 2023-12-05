@@ -21,8 +21,8 @@
     "Nie używaj skrótu klawiszowego CTRL + P z otwartym oknem konfiguratora moda.\n",
     "Ten interfejs nie uwidoczni zmian dopóki nie zostanie otwarty ponownie."
   ],
-  "dispersionReticlePart.label": "Kółko skupienia (Dispersion reticle)",
-  "dispersionReticlePart.header": "Kółko skupienia (Dispersion reticle)",
+  "dispersionReticlePart.label": "Kółko skupienia",
+  "dispersionReticlePart.header": "Kółko skupienia",
   "dispersionReticlePart.body": [
     "Dodaje kółko wyświetlające w pełni skupiony rozrzut działa do standardowego kółka."
   ],
@@ -34,8 +34,8 @@
   "dispersionReticlePart.enabled.body": [
     "Jeżeli zaznaczone, wyświetl to kółko."
   ],
-  "latencyReticlePart.label": "Kółko opóźnienia (Latency reticle)",
-  "latencyReticlePart.header": "Kółko opóźnienia (Latency reticle)",
+  "latencyReticlePart.label": "Kółko opóźnienia",
+  "latencyReticlePart.header": "Kółko opóźnienia",
   "latencyReticlePart.body": [
     "Dodaje kółko wyświetlające obecny serwerowy rozrzut do klienckiego kółka."
   ],
@@ -55,8 +55,8 @@
   "latencyReticlePart.hideStandardReticle.note": [
     "Przydane gdy chcesz używać tylko kółka opóźnienia zamiast standardowego kółka."
   ],
-  "serverReticlePart.label": "Kółko serwerowe (Server reticle)",
-  "serverReticlePart.header": "Kółko serwerowe (Server reticle)",
+  "serverReticlePart.label": "Kółko serwerowe",
+  "serverReticlePart.header": "Kółko serwerowe",
   "serverReticlePart.body": [
     "Dodaje serwerowe kółko oprócz obecnego klienckiego kółka."
   ],
@@ -64,8 +64,8 @@
   "serverReticlePart.enabled.body": [
     "Jeżeli zaznaczone, wyświetl to kółko."
   ],
-  "simpleServerReticlePart.label": "Proste kółko serwerowe (Simple server reticle)",
-  "simpleServerReticlePart.header": "Proste kółko serwerowe (Simple server reticle)",
+  "simpleServerReticlePart.label": "Proste kółko serwerowe",
+  "simpleServerReticlePart.header": "Proste kółko serwerowe",
   "simpleServerReticlePart.body": [
     "Dodaje serwerowe kółko z konfigurowalnym kształtem oprócz obecnego kółka klienckiego."
   ],
@@ -81,10 +81,10 @@
   "simpleServerReticlePart.shape.body": [
     "Kształt jaki to kółko powinno mieć."
   ],
-  "simpleServerReticlePart.shape.option.pentagon": "Pięciokąt (pentagon)",
-  "simpleServerReticlePart.shape.option.t-shape": "Kształt T (t-shape)",
-  "simpleServerReticlePart.shape.option.circle": "Okrąg (circle)",
-  "simpleServerReticlePart.shape.option.dashed": "Kreskowany (dashed)",
+  "simpleServerReticlePart.shape.option.pentagon": "Pięciokąt",
+  "simpleServerReticlePart.shape.option.t-shape": "Kształt T",
+  "simpleServerReticlePart.shape.option.circle": "Okrąg",
+  "simpleServerReticlePart.shape.option.dashed": "Kreskowany",
   "simpleServerReticlePart.color.header": "Kolor",
   "simpleServerReticlePart.color.body": [
     "Koloruje to kółko wybranym kolorem."

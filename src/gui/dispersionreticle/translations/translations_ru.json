@@ -1,4 +1,5 @@
 {
+  "modname": "DispersionReticle",
   "checked": "включен",
   "unchecked": "выключен",
   "defaultValue": "по умолчанию",
@@ -20,8 +21,8 @@
     "Не используйте сочетание клавиш CTRL + P с открытым интерфейсом 'Настройка модификаций'.\n",
     "Интерфейс 'Настройка модификаций' не заметит изменений, если его не открыть заново."
   ],
-  "dispersionReticlePart.label": "Круг разброса (Dispersion reticle)",
-  "dispersionReticlePart.header": "Круг разброса (Dispersion reticle)",
+  "dispersionReticlePart.label": "Круг разброса",
+  "dispersionReticlePart.header": "Круг разброса",
   "dispersionReticlePart.body": [
     "Добавляет полностью сведенный 'Круг разброса' к прицелу."
   ],
@@ -32,8 +33,8 @@
   "dispersionReticlePart.enabled.body": [
     "Если галочка отмечена, то отображается 'Круг разброса'."
   ],
-  "latencyReticlePart.label": "Гибридный прицел (Latency reticle)",
-  "latencyReticlePart.header": "Гибридный прицел (Latency reticle)",
+  "latencyReticlePart.label": "Гибридный прицел",
+  "latencyReticlePart.header": "Гибридный прицел",
   "latencyReticlePart.body": [
     "Альтернативный режим 'Cерверному прицелу' в настройках игры."
   ],
@@ -53,8 +54,8 @@
   "latencyReticlePart.hideStandardReticle.note": [
     "Полезно, если вы хотите использовать 'Гибридный прицел' как основной круг."
   ],
-  "serverReticlePart.label": "Серверный прицел (Server reticle)",
-  "serverReticlePart.header": "Серверный прицел (Server reticle)",
+  "serverReticlePart.label": "Серверный прицел",
+  "serverReticlePart.header": "Серверный прицел",
   "serverReticlePart.body": [
     "Добавляет дополнительный круг 'Серверный прицел'."
   ],
@@ -62,8 +63,8 @@
   "serverReticlePart.enabled.body": [
     "Если галочка отмечена, то отображается 'Серверный прицел'."
   ],
-  "simpleServerReticlePart.label": "Настраиваемый серверный прицел (Simple server reticle)",
-  "simpleServerReticlePart.header": "Настраиваемый серверный прицел (Simple server reticle)",
+  "simpleServerReticlePart.label": "Настраиваемый серверный прицел",
+  "simpleServerReticlePart.header": "Настраиваемый серверный прицел",
   "simpleServerReticlePart.body": [
     "Добавляет дополнительный круг 'Настраиваемый серверный прицел', который можно настроить ниже."
   ],
@@ -79,6 +80,10 @@
   "simpleServerReticlePart.shape.body": [
     "Фигура, которую будет отображать 'Настраиваемый серверный прицел'."
   ],
+  "simpleServerReticlePart.shape.option.pentagon": "Pentagon",
+  "simpleServerReticlePart.shape.option.t-shape": "T-shape",
+  "simpleServerReticlePart.shape.option.circle": "Circle",
+  "simpleServerReticlePart.shape.option.dashed": "Dashed",
   "simpleServerReticlePart.color.header": "Цвет",
   "simpleServerReticlePart.color.body": [
     "Назначает цвет для фигуры в 'Настраиваемый серверный прицел'."

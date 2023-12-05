@@ -128,9 +128,9 @@ def _createDispersionReticlePart():
     return [
         {
             "type": "Label",
-            "text": Tr.DISPERSION_RETICLE_PART_LABEL,
+            "text": "1. " + Tr.DISPERSION_RETICLE_PART_LABEL,
             "tooltip": createTooltip(
-                header=Tr.DISPERSION_RETICLE_PART_HEADER,
+                header="1. " + Tr.DISPERSION_RETICLE_PART_HEADER,
                 body=Tr.DISPERSION_RETICLE_PART_BODY + "\n",
                 note=Tr.DISPERSION_RETICLE_PART_NOTE + "\n\n" + _createImg(src="imgs/all.jpg", width=475, height=428)
             ),
@@ -145,10 +145,8 @@ def _createDispersionReticlePart():
 def _emptyLine():
     return [
         {
-            "type": "Empty"
-        },
-        {
-            "type": "Empty"
+            "type": "Label",
+            "text": "________________________________________"
         }
     ]
 
@@ -157,9 +155,9 @@ def _createLatencyReticlePart():
     return [
         {
             "type": "Label",
-            "text": Tr.LATENCY_RETICLE_PART_LABEL,
+            "text": "2. " + Tr.LATENCY_RETICLE_PART_LABEL,
             "tooltip": createTooltip(
-                header=Tr.LATENCY_RETICLE_PART_HEADER,
+                header="2. " + Tr.LATENCY_RETICLE_PART_HEADER,
                 body=Tr.LATENCY_RETICLE_PART_BODY + "\n",
                 note=Tr.LATENCY_RETICLE_PART_NOTE + "\n\n" + _createImg(src="imgs/all.jpg", width=475, height=428)
             ),
@@ -180,9 +178,9 @@ def _createServerReticlePart():
     return [
         {
             "type": "Label",
-            "text": Tr.SERVER_RETICLE_PART_LABEL,
+            "text": "3. " + Tr.SERVER_RETICLE_PART_LABEL,
             "tooltip": createTooltip(
-                header=Tr.SERVER_RETICLE_PART_HEADER,
+                header="3. " + Tr.SERVER_RETICLE_PART_HEADER,
                 body=Tr.SERVER_RETICLE_PART_BODY + "\n\n" + _createImg(src="imgs/all.jpg", width=475, height=428)
             ),
         },
@@ -197,9 +195,9 @@ def _createSimpleServerReticlePart():
     return [
         {
             "type": "Label",
-            "text": Tr.SIMPLE_SERVER_RETICLE_PART_LABEL,
+            "text": "4. " + Tr.SIMPLE_SERVER_RETICLE_PART_LABEL,
             "tooltip": createTooltip(
-                header=Tr.SIMPLE_SERVER_RETICLE_PART_HEADER,
+                header="4. " + Tr.SIMPLE_SERVER_RETICLE_PART_HEADER,
                 body=Tr.SIMPLE_SERVER_RETICLE_PART_BODY + "\n",
                 attention=Tr.SIMPLE_SERVER_RETICLE_PART_ATTENTION + "\n\n" +
                           _createImg(src="imgs/all.jpg", width=475, height=428)
