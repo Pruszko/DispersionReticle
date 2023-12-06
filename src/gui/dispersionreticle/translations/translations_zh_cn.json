@@ -76,10 +76,10 @@
   "simpleServerReticlePart.shape.body": [
     "这个准星的形状\n"
   ],
-  "simpleServerReticlePart.shape.option.pentagon": "Pentagon",
-  "simpleServerReticlePart.shape.option.t-shape": "T-shape",
-  "simpleServerReticlePart.shape.option.circle": "Circle",
-  "simpleServerReticlePart.shape.option.dashed": "Dashed",
+  "simpleServerReticlePart.shape.option.pentagon": "角标落弹环",
+  "simpleServerReticlePart.shape.option.t-shape": "T标落弹环",
+  "simpleServerReticlePart.shape.option.circle": "实线落弹环",
+  "simpleServerReticlePart.shape.option.dashed": "虚线落弹环",
   "simpleServerReticlePart.color.header": "颜色",
   "simpleServerReticlePart.color.body": [
     "这个准星的颜色。"
