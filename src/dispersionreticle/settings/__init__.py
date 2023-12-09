@@ -149,7 +149,7 @@ CONFIG_TEMPLATE = """{
 }"""
 
 
-def getDefaultConfigReplaceTokens():
+def getDefaultConfigTokens():
     from dispersionreticle.settings.config_param import g_configParams
 
     return {
@@ -158,7 +158,7 @@ def getDefaultConfigReplaceTokens():
 
 
 def getDefaultConfigContent():
-    return CONFIG_TEMPLATE % getDefaultConfigReplaceTokens()
+    return CONFIG_TEMPLATE % getDefaultConfigTokens()
 
 
 def loadConfigDict(configPath):

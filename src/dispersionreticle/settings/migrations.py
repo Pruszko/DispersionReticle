@@ -1,27 +1,56 @@
 import os
 import logging
 
-from dispersionreticle.settings import toJson, toBool, copy, deleteEmptyFolderSafely, \
-    loadConfigDict, toPositiveFloat, getDefaultConfigReplaceTokens, CONFIG_TEMPLATE, toColorTuple
+from dispersionreticle.settings import copy, deleteEmptyFolderSafely, loadConfigDict, CONFIG_TEMPLATE
+from dispersionreticle.settings.config_param import g_configParams
 
 logger = logging.getLogger(__name__)
 
 
-def performMigrationsIfNecessary():
-    v2_0_2_migrateConfigFileLocation()
-    v2_1_0_addOptionLatencyReticleHideStandardReticle()
-    v2_2_0_addSimpleServerReticle()
-    v2_3_0_addNewSimpleServerReticleFeatures()
-    v2_4_0_addSupportForModsSettingsAPI()
-    v2_6_0_addDrawCenterDotToSimpleServerReticle()
+class ConfigVersion(object):
+
+    V2_0_X = 0
+    V2_1_X = 1
+    V2_2_X = 2
+    V2_3_X = 3
+    V2_4_X = 4
+    V2_6_X = 5
+
+    CURRENT = V2_6_X
 
 
-def v2_0_2_migrateConfigFileLocation():
+def performConfigMigrations():
+    configFilePath = os.path.join("mods", "configs", "DispersionReticle", "config.json")
+
+    v2_0_2_migrateConfigFileLocation(configFilePath)
+
+    if not os.path.isfile(configFilePath):
+        return
+
+    configDict = loadConfigDict(configFilePath)
+    if configDict is None:
+        return
+
+    if isVersion(configDict, ConfigVersion.CURRENT):
+        return
+
+    v2_1_0_addOptionLatencyReticleHideStandardReticle(configDict)
+    v2_2_0_addSimpleServerReticle(configDict)
+    v2_3_0_addNewSimpleServerReticleFeatures(configDict)
+    v2_4_0_addSupportForModsSettingsAPI(configDict)
+    v2_6_0_addDrawCenterDotToSimpleServerReticle(configDict)
+
+    configTokens = flattenConfigDictToTokens(configDict)
+    configContent = CONFIG_TEMPLATE % configTokens
+
+    with open(configFilePath, "w") as configFile:
+        configFile.write(configContent)
+
+
+def v2_0_2_migrateConfigFileLocation(newConfigFilePath):
     legacyConfigDir = os.path.join("mods", "config")
     legacyConfigFileDir = os.path.join("mods", "config", "DispersionReticle")
     legacyConfigFilePath = os.path.join("mods", "config", "DispersionReticle", "config.json")
-
-    newConfigFilePath = os.path.join("mods", "configs", "DispersionReticle", "config.json")
 
     # handle config folder name that differs from other mod configs folder
     if not os.path.isfile(legacyConfigFilePath):
@@ -42,225 +71,100 @@ def v2_0_2_migrateConfigFileLocation():
     logger.info("Finished moving config file to new location.")
 
 
-def v2_1_0_addOptionLatencyReticleHideStandardReticle():
-    configFilePath = os.path.join("mods", "configs", "DispersionReticle", "config.json")
-
-    if not os.path.isfile(configFilePath):
+def v2_1_0_addOptionLatencyReticleHideStandardReticle(configDict):
+    if not isVersion(configDict, ConfigVersion.V2_0_X):
         return
 
-    data = loadConfigDict(configFilePath)
+    logger.info("Migrating config file from version 2.0.x to 2.1.0 ...")
 
-    if data is None or "__version__" in data:
-        return
+    configDict["dispersion-reticle"] = {}
+    configDict["dispersion-reticle"]["enabled"] = configDict["dispersion-reticle-enabled"]
+    configDict["latency-reticle"] = {}
+    configDict["latency-reticle"]["enabled"] = configDict["latency-reticle-enabled"]
+    configDict["latency-reticle"]["hide-standard-reticle"] = False
+    configDict["server-reticle"] = {}
+    configDict["server-reticle"]["enabled"] = configDict["server-reticle-enabled"]
 
-    logger.info("Migrating config file from version 2.0.x ...")
+    del configDict["dispersion-reticle-enabled"]
+    del configDict["latency-reticle-enabled"]
+    del configDict["server-reticle-enabled"]
 
-    dispersionReticleEnabled = toBool(data["dispersion-reticle-enabled"])
-    latencyReticleEnabled = toBool(data["latency-reticle-enabled"])
-    serverReticleEnabled = toBool(data["server-reticle-enabled"])
-    reticleSizeMultiplier = toPositiveFloat(data["reticle-size-multiplier"])
-
-    tokens = getDefaultConfigReplaceTokens()
-    tokens.update({
-        "dispersion-reticle-enabled": toJson(dispersionReticleEnabled),
-        "latency-reticle-enabled": toJson(latencyReticleEnabled),
-        "server-reticle-enabled": toJson(serverReticleEnabled),
-        "reticle-size-multiplier": toJson(reticleSizeMultiplier),
-    })
-
-    newConfigFileContent = CONFIG_TEMPLATE % tokens
-
-    with open(configFilePath, "w") as configFile:
-        configFile.write(newConfigFileContent)
+    progressVersion(configDict)
 
     logger.info("Migration finished.")
 
 
-def v2_2_0_addSimpleServerReticle():
-    configFilePath = os.path.join("mods", "configs", "DispersionReticle", "config.json")
-
-    if not os.path.isfile(configFilePath):
+def v2_2_0_addSimpleServerReticle(configDict):
+    if not isVersion(configDict, ConfigVersion.V2_1_X):
         return
 
-    data = loadConfigDict(configFilePath)
+    logger.info("Migrating config file from version 2.1.x to 2.2.0 ...")
 
-    if data is None or "__version__" not in data or data["__version__"] != 1:
-        return
-
-    logger.info("Migrating config file from version 2.1.x ...")
-
-    dispersionReticleEnabled = toBool(data["dispersion-reticle"]["enabled"])
-
-    latencyReticleEnabled = toBool(data["latency-reticle"]["enabled"])
-    latencyReticleHideStandardReticle = toBool(data["latency-reticle"]["hide-standard-reticle"])
-    serverReticleEnabled = toBool(data["server-reticle"]["enabled"])
-    reticleSizeMultiplier = toPositiveFloat(data["reticle-size-multiplier"])
-
-    tokens = getDefaultConfigReplaceTokens()
-    tokens.update({
-        "dispersion-reticle-enabled": toJson(dispersionReticleEnabled),
-        "latency-reticle-enabled": toJson(latencyReticleEnabled),
-        "latency-reticle-hide-standard-reticle": toJson(latencyReticleHideStandardReticle),
-        "server-reticle-enabled": toJson(serverReticleEnabled),
-        "reticle-size-multiplier": toJson(reticleSizeMultiplier),
-    })
-
-    newConfigFileContent = CONFIG_TEMPLATE % tokens
-
-    with open(configFilePath, "w") as configFile:
-        configFile.write(newConfigFileContent)
+    configDict["simple-server-reticle"] = {}
+    configDict["simple-server-reticle"]["enabled"] = False
+    configDict["simple-server-reticle"]["color"] = (255, 0, 255)
+    configDict["simple-server-reticle"]["alpha"] = 1.0
+    progressVersion(configDict)
 
     logger.info("Migration finished.")
 
 
-def v2_3_0_addNewSimpleServerReticleFeatures():
-    configFilePath = os.path.join("mods", "configs", "DispersionReticle", "config.json")
-
-    if not os.path.isfile(configFilePath):
+def v2_3_0_addNewSimpleServerReticleFeatures(configDict):
+    if not isVersion(configDict, ConfigVersion.V2_2_X):
         return
 
-    data = loadConfigDict(configFilePath)
+    logger.info("Migrating config file from version 2.2.x to 2.3.0 ...")
 
-    if data is None or "__version__" not in data or data["__version__"] != 2:
-        return
-
-    logger.info("Migrating config file from version 2.2.x ...")
-
-    dispersionReticleEnabled = toBool(data["dispersion-reticle"]["enabled"])
-
-    latencyReticleEnabled = toBool(data["latency-reticle"]["enabled"])
-    latencyReticleHideStandardReticle = toBool(data["latency-reticle"]["hide-standard-reticle"])
-
-    serverReticleEnabled = toBool(data["server-reticle"]["enabled"])
-
-    simpleServerReticleEnabled = toBool(data["simple-server-reticle"]["enabled"])
-    simpleServerReticleColor = toColorTuple(data["simple-server-reticle"]["color"])
-    simpleServerReticleAlpha = toPositiveFloat(data["simple-server-reticle"]["alpha"])
-
-    reticleSizeMultiplier = toPositiveFloat(data["reticle-size-multiplier"])
-
-    tokens = getDefaultConfigReplaceTokens()
-    tokens.update({
-        "dispersion-reticle-enabled": toJson(dispersionReticleEnabled),
-        "latency-reticle-enabled": toJson(latencyReticleEnabled),
-        "latency-reticle-hide-standard-reticle": toJson(latencyReticleHideStandardReticle),
-        "server-reticle-enabled": toJson(serverReticleEnabled),
-        "simple-server-reticle-enabled": toJson(simpleServerReticleEnabled),
-        "simple-server-reticle-color": toJson(simpleServerReticleColor),
-        "simple-server-reticle-blend": toJson(0.0),
-        "simple-server-reticle-alpha": toJson(simpleServerReticleAlpha),
-        "reticle-size-multiplier": toJson(reticleSizeMultiplier),
-    })
-
-    newConfigFileContent = CONFIG_TEMPLATE % tokens
-
-    with open(configFilePath, "w") as configFile:
-        configFile.write(newConfigFileContent)
+    configDict["simple-server-reticle"]["shape"] = "pentagon"
+    configDict["simple-server-reticle"]["draw-outline"] = False
+    configDict["simple-server-reticle"]["blend"] = 0.0
+    progressVersion(configDict)
 
     logger.info("Migration finished.")
 
 
-def v2_4_0_addSupportForModsSettingsAPI():
-    configFilePath = os.path.join("mods", "configs", "DispersionReticle", "config.json")
-
-    if not os.path.isfile(configFilePath):
+def v2_4_0_addSupportForModsSettingsAPI(configDict):
+    if not isVersion(configDict, ConfigVersion.V2_3_X):
         return
 
-    data = loadConfigDict(configFilePath)
+    logger.info("Migrating config file from version 2.3.x to 2.4.0 ...")
 
-    if data is None or "__version__" not in data or data["__version__"] != 3:
-        return
-
-    logger.info("Migrating config file from version 2.3.x ...")
-
-    dispersionReticleEnabled = toBool(data["dispersion-reticle"]["enabled"])
-
-    latencyReticleEnabled = toBool(data["latency-reticle"]["enabled"])
-    latencyReticleHideStandardReticle = toBool(data["latency-reticle"]["hide-standard-reticle"])
-
-    serverReticleEnabled = toBool(data["server-reticle"]["enabled"])
-
-    simpleServerReticleEnabled = toBool(data["simple-server-reticle"]["enabled"])
-    simpleServerReticleShape = data["simple-server-reticle"]["shape"]
-    simpleServerReticleColor = toColorTuple(data["simple-server-reticle"]["color"])
-    simpleServerReticleDrawOutline = toBool(data["simple-server-reticle"]["draw-outline"])
-    simpleServerReticleBlend = toPositiveFloat(data["simple-server-reticle"]["blend"])
-    simpleServerReticleAlpha = toPositiveFloat(data["simple-server-reticle"]["alpha"])
-
-    reticleSizeMultiplier = toPositiveFloat(data["reticle-size-multiplier"])
-
-    tokens = getDefaultConfigReplaceTokens()
-    tokens.update({
-        "dispersion-reticle-enabled": toJson(dispersionReticleEnabled),
-        "latency-reticle-enabled": toJson(latencyReticleEnabled),
-        "latency-reticle-hide-standard-reticle": toJson(latencyReticleHideStandardReticle),
-        "server-reticle-enabled": toJson(serverReticleEnabled),
-        "simple-server-reticle-enabled": toJson(simpleServerReticleEnabled),
-        "simple-server-reticle-color": toJson(simpleServerReticleColor),
-        "simple-server-reticle-shape": toJson(simpleServerReticleShape),
-        "simple-server-reticle-draw-outline": toJson(simpleServerReticleDrawOutline),
-        "simple-server-reticle-blend": toJson(simpleServerReticleBlend),
-        "simple-server-reticle-alpha": toJson(simpleServerReticleAlpha),
-        "reticle-size-multiplier": toJson(reticleSizeMultiplier),
-    })
-
-    newConfigFileContent = CONFIG_TEMPLATE % tokens
-
-    with open(configFilePath, "w") as configFile:
-        configFile.write(newConfigFileContent)
+    configDict["enabled"] = True
+    progressVersion(configDict)
 
     logger.info("Migration finished.")
 
 
-def v2_6_0_addDrawCenterDotToSimpleServerReticle():
-    configFilePath = os.path.join("mods", "configs", "DispersionReticle", "config.json")
-
-    if not os.path.isfile(configFilePath):
+def v2_6_0_addDrawCenterDotToSimpleServerReticle(configDict):
+    if not isVersion(configDict, ConfigVersion.V2_4_X):
         return
 
-    data = loadConfigDict(configFilePath)
+    logger.info("Migrating config file from version 2.4.x to 2.6.0 ...")
 
-    if data is None or "__version__" not in data or data["__version__"] != 4:
-        return
-
-    logger.info("Migrating config file from version 2.4.x ...")
-
-    enabled = toBool(data["enabled"])
-    dispersionReticleEnabled = toBool(data["dispersion-reticle"]["enabled"])
-
-    latencyReticleEnabled = toBool(data["latency-reticle"]["enabled"])
-    latencyReticleHideStandardReticle = toBool(data["latency-reticle"]["hide-standard-reticle"])
-
-    serverReticleEnabled = toBool(data["server-reticle"]["enabled"])
-
-    simpleServerReticleEnabled = toBool(data["simple-server-reticle"]["enabled"])
-    simpleServerReticleShape = data["simple-server-reticle"]["shape"]
-    simpleServerReticleColor = toColorTuple(data["simple-server-reticle"]["color"])
-    simpleServerReticleDrawOutline = toBool(data["simple-server-reticle"]["draw-outline"])
-    simpleServerReticleBlend = toPositiveFloat(data["simple-server-reticle"]["blend"])
-    simpleServerReticleAlpha = toPositiveFloat(data["simple-server-reticle"]["alpha"])
-
-    reticleSizeMultiplier = toPositiveFloat(data["reticle-size-multiplier"])
-
-    tokens = getDefaultConfigReplaceTokens()
-    tokens.update({
-        "enabled": toJson(enabled),
-        "dispersion-reticle-enabled": toJson(dispersionReticleEnabled),
-        "latency-reticle-enabled": toJson(latencyReticleEnabled),
-        "latency-reticle-hide-standard-reticle": toJson(latencyReticleHideStandardReticle),
-        "server-reticle-enabled": toJson(serverReticleEnabled),
-        "simple-server-reticle-enabled": toJson(simpleServerReticleEnabled),
-        "simple-server-reticle-color": toJson(simpleServerReticleColor),
-        "simple-server-reticle-shape": toJson(simpleServerReticleShape),
-        "simple-server-reticle-draw-outline": toJson(simpleServerReticleDrawOutline),
-        "simple-server-reticle-blend": toJson(simpleServerReticleBlend),
-        "simple-server-reticle-alpha": toJson(simpleServerReticleAlpha),
-        "reticle-size-multiplier": toJson(reticleSizeMultiplier),
-    })
-
-    newConfigFileContent = CONFIG_TEMPLATE % tokens
-
-    with open(configFilePath, "w") as configFile:
-        configFile.write(newConfigFileContent)
+    configDict["simple-server-reticle"]["draw-center-dot"] = False
+    progressVersion(configDict)
 
     logger.info("Migration finished.")
+
+
+def flattenConfigDictToTokens(configDict):
+    flattenedConfigDict = {}
+    for tokenName, param in g_configParams.items():
+        value = param.readValueFromConfigDictSafely(configDict)
+        flattenedConfigDict[tokenName] = param.toJsonValue(value)
+    return flattenedConfigDict
+
+
+def progressVersion(configDict):
+    if "__version__" not in configDict:
+        configDict["__version__"] = ConfigVersion.V2_1_X
+        return
+
+    configDict["__version__"] = int(configDict["__version__"]) + 1
+
+
+def isVersion(configDict, version):
+    if "__version__" not in configDict:
+        return ConfigVersion.V2_0_X == version
+
+    return int(configDict["__version__"]) == version

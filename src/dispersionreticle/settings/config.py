@@ -6,9 +6,9 @@ import Keys
 import game
 
 from dispersionreticle.settings import getDefaultConfigContent, loadConfigDict, \
-    createFolderSafely, getDefaultConfigReplaceTokens, CONFIG_TEMPLATE
+    createFolderSafely, getDefaultConfigTokens, CONFIG_TEMPLATE
 from dispersionreticle.settings.config_param import g_configParams
-from dispersionreticle.settings.migrations import performMigrationsIfNecessary
+from dispersionreticle.settings.migrations import performConfigMigrations
 from dispersionreticle.utils import *
 from dispersionreticle.utils import debug_state
 from dispersionreticle.utils.debug_state import g_debugStateCollector
@@ -118,9 +118,9 @@ class Config:
     def loadConfigSafely(self):
         try:
             logger.info("Starting config loading ...")
-            self.createConfigIfNotExists()
 
-            performMigrationsIfNecessary()
+            performConfigMigrations()
+            self.createConfigIfNotExists()
 
             data = loadConfigDict(self.__configFilePath)
 
@@ -149,10 +149,10 @@ class Config:
         try:
             logger.info("Starting config saving ...")
 
-            tokens = getDefaultConfigReplaceTokens()
-            tokens.update(serializedSettings)
+            defaultConfigTokens = getDefaultConfigTokens()
+            defaultConfigTokens.update(serializedSettings)
 
-            newConfigFileContent = CONFIG_TEMPLATE % tokens
+            newConfigFileContent = CONFIG_TEMPLATE % defaultConfigTokens
 
             with open(self.__configFilePath, "w") as configFile:
                 configFile.write(newConfigFileContent)
@@ -190,8 +190,8 @@ class Config:
 
 
 def writeJsonValueSafely(configDict, param):
-    jsonValue = param.readJsonValueFromConfigDictSafely(configDict)
-    param.jsonValue = jsonValue
+    value = param.readValueFromConfigDictSafely(configDict)
+    param.jsonValue = value
     return param.value
 
 

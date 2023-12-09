@@ -21,20 +21,20 @@ class Param(object):
 
         PARAM_REGISTRY[self.tokenName] = self
 
-    def readJsonValueFromConfigDictSafely(self, configDict):
-        jsonValue = None
+    def readValueFromConfigDictSafely(self, configDict):
+        readValue = None
         prevConfigSection = configDict
 
         for pathSegment in self.path:
             if pathSegment not in prevConfigSection:
-                return self.jsonValue
+                return self.value
 
             dictSection = prevConfigSection[pathSegment]
 
-            jsonValue = dictSection
+            readValue = dictSection
             prevConfigSection = dictSection
 
-        return jsonValue
+        return readValue
 
     @property
     def jsonValue(self):
