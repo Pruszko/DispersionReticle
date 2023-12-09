@@ -36,6 +36,13 @@ class Param(object):
 
         return readValue
 
+    def __call__(self):
+        from dispersionreticle.settings.config_param import g_configParams
+
+        if not g_configParams.enabled.value:
+            return self.disabledValue
+        return self.value
+
     @property
     def jsonValue(self):
         return self.toJsonValue(self.value)

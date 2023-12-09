@@ -1,7 +1,7 @@
 import BigWorld, BattleReplay
 from AvatarInputHandler.gun_marker_ctrl import _SPGGunMarkerController, _MARKER_FLAG
 
-from dispersionreticle.settings.config import g_config
+from dispersionreticle.settings.config_param import g_configParams
 
 
 # gun_marker_ctrl
@@ -17,6 +17,6 @@ class OverriddenSPGGunMarkerController(_SPGGunMarkerController):
             self._SPGGunMarkerController__updateRelaxTime()
         self._updateDispersionData()
 
-        newSize = self._size * g_config.reticleSizeMultiplier
+        newSize = self._size * g_configParams.reticleSizeMultiplier()
 
         self._dataProvider.update(pos3d, vel3d, gravity3d, newSize)

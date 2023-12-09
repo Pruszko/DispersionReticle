@@ -16,95 +16,11 @@ from dispersionreticle.utils.debug_state import g_debugStateCollector
 logger = logging.getLogger(__name__)
 
 
-class _DispersionReticleConfig(object):
-
-    @property
-    def enabled(self):
-        return enabledAware(g_configParams.dispersionReticleEnabled)
-
-    def writeJsonValuesSafely(self, configDict):
-        writeJsonValueSafely(configDict, g_configParams.dispersionReticleEnabled)
-
-
-class _ServerReticleConfig(object):
-
-    @property
-    def enabled(self):
-        return enabledAware(g_configParams.serverReticleEnabled)
-
-    def writeJsonValuesSafely(self, configDict):
-        writeJsonValueSafely(configDict, g_configParams.serverReticleEnabled)
-
-
-class _LatencyReticleConfig(object):
-
-    @property
-    def enabled(self):
-        return enabledAware(g_configParams.latencyReticleEnabled)
-
-    @property
-    def hideStandardReticle(self):
-        return enabledAware(g_configParams.latencyReticleHideStandardReticle)
-
-    def writeJsonValuesSafely(self, configDict):
-        writeJsonValueSafely(configDict, g_configParams.latencyReticleEnabled)
-        writeJsonValueSafely(configDict, g_configParams.latencyReticleHideStandardReticle)
-
-
-class _SimpleServerReticleConfig(object):
-
-    @property
-    def enabled(self):
-        return enabledAware(g_configParams.simpleServerReticleEnabled)
-
-    @property
-    def shape(self):
-        return enabledAware(g_configParams.simpleServerReticleShape)
-
-    @property
-    def color(self):
-        return enabledAware(g_configParams.simpleServerReticleColor)
-
-    @property
-    def drawCenterDot(self):
-        return enabledAware(g_configParams.simpleServerReticleDrawCenterDot)
-
-    @property
-    def drawOutline(self):
-        return enabledAware(g_configParams.simpleServerReticleDrawOutline)
-
-    @property
-    def blend(self):
-        return enabledAware(g_configParams.simpleServerReticleBlend)
-
-    @property
-    def alpha(self):
-        return enabledAware(g_configParams.simpleServerReticleAlpha)
-
-    def writeJsonValuesSafely(self, configDict):
-        writeJsonValueSafely(configDict, g_configParams.simpleServerReticleEnabled)
-        writeJsonValueSafely(configDict, g_configParams.simpleServerReticleShape)
-        writeJsonValueSafely(configDict, g_configParams.simpleServerReticleColor)
-        writeJsonValueSafely(configDict, g_configParams.simpleServerReticleDrawCenterDot)
-        writeJsonValueSafely(configDict, g_configParams.simpleServerReticleDrawOutline)
-        writeJsonValueSafely(configDict, g_configParams.simpleServerReticleBlend)
-        writeJsonValueSafely(configDict, g_configParams.simpleServerReticleAlpha)
-
-
 class Config:
 
     def __init__(self):
         self.__configFileDir = os.path.join("mods", "configs", "DispersionReticle")
         self.__configFilePath = os.path.join("mods", "configs", "DispersionReticle", "config.json")
-
-        self.enabled = g_configParams.enabled.value
-
-        self.dispersionReticle = _DispersionReticleConfig()
-        self.latencyReticle = _LatencyReticleConfig()
-        self.serverReticle = _ServerReticleConfig()
-        self.simpleServerReticle = _SimpleServerReticleConfig()
-
-        self.reticleSizeMultiplier = g_configParams.reticleSizeMultiplier.value
 
         self.__eventManager = Event.EventManager()
         self.onConfigReload = Event.Event(self.__eventManager)
@@ -127,14 +43,9 @@ class Config:
             if data is None:
                 return
 
-            self.enabled = writeJsonValueSafely(data, g_configParams.enabled)
-
-            self.dispersionReticle.writeJsonValuesSafely(data)
-            self.latencyReticle.writeJsonValuesSafely(data)
-            self.serverReticle.writeJsonValuesSafely(data)
-            self.simpleServerReticle.writeJsonValuesSafely(data)
-
-            self.reticleSizeMultiplier = writeJsonValueSafely(data, g_configParams.reticleSizeMultiplier)
+            for tokenName, param in g_configParams.items():
+                value = param.readValueFromConfigDictSafely(data)
+                param.jsonValue = value
 
             logger.info("Finished config loading.")
         except Exception as e:
@@ -179,26 +90,6 @@ class Config:
         with open(self.__configFilePath, "w") as configFile:
             defaultConfigContent = getDefaultConfigContent()
             configFile.write(defaultConfigContent)
-
-    def isServerAimRequired(self):
-        return self.latencyReticle.enabled or \
-               self.serverReticle.enabled or \
-               self.simpleServerReticle.enabled
-
-    def shouldHideStandardReticle(self):
-        return self.latencyReticle.enabled and self.latencyReticle.hideStandardReticle
-
-
-def writeJsonValueSafely(configDict, param):
-    value = param.readValueFromConfigDictSafely(configDict)
-    param.jsonValue = value
-    return param.value
-
-
-def enabledAware(param):
-    if not g_config.enabled:
-        return param.disabledValue
-    return param.value
 
 
 g_config = Config()

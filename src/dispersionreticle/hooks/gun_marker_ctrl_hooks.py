@@ -15,7 +15,7 @@ from dispersionreticle.controllers.dispersion.dispersion_spg_controller import D
 from dispersionreticle.controllers.latency.latency_default_controller import LatencyDefaultGunMarkerController
 from dispersionreticle.controllers.latency.latency_spg_controller import LatencySPGGunMarkerController
 
-from dispersionreticle.settings.config import g_config
+from dispersionreticle.settings.config_param import g_configParams
 from dispersionreticle.utils import *
 from dispersionreticle.utils.reticle_registry import ReticleRegistry
 
@@ -83,7 +83,9 @@ def useServerGunMarker(func):
 
     settingsCore = dependency.instance(ISettingsCore)
 
-    if g_config.isServerAimRequired():
+    if g_configParams.latencyReticleEnabled() or \
+            g_configParams.serverReticleEnabled() or \
+            g_configParams.simpleServerReticleEnabled():
         return True
 
     return settingsCore.getSetting('useServerAim')

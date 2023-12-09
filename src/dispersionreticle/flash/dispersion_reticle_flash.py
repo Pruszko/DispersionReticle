@@ -12,6 +12,7 @@ from gui.Scaleform.flash_wrapper import InputKeyMode
 from gui.Scaleform.framework.entities.BaseDAAPIModule import BaseDAAPIModule
 
 from dispersionreticle.settings.config import g_config
+from dispersionreticle.settings.config_param import g_configParams
 
 logger = logging.getLogger(__name__)
 
@@ -152,12 +153,12 @@ class DispersionReticleFlash(ExternalFlashComponent, DispersionReticleFlashMeta)
 
     def __serializeSimpleServerReticleSection(self):
         return {
-            "color": self.__serializeColorTuple(g_config.simpleServerReticle.color),
-            "shape": g_config.simpleServerReticle.shape,
-            "draw-center-dot": g_config.simpleServerReticle.drawCenterDot,
-            "draw-outline": g_config.simpleServerReticle.drawOutline,
-            "blend": g_config.simpleServerReticle.blend,
-            "alpha": g_config.simpleServerReticle.alpha
+            "color": self.__serializeColorTuple(g_configParams.simpleServerReticleColor()),
+            "shape": g_configParams.simpleServerReticleShape(),
+            "draw-center-dot": g_configParams.simpleServerReticleDrawCenterDot(),
+            "draw-outline": g_configParams.simpleServerReticleDrawOutline(),
+            "blend": g_configParams.simpleServerReticleBlend(),
+            "alpha": g_configParams.simpleServerReticleAlpha()
         }
 
     @staticmethod

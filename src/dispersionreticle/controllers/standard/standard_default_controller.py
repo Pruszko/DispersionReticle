@@ -2,7 +2,7 @@ import BigWorld, Math, BattleReplay
 from AvatarInputHandler.gun_marker_ctrl import _DefaultGunMarkerController, _makeWorldMatrix, _MARKER_FLAG
 from aih_constants import GUN_MARKER_TYPE
 
-from dispersionreticle.settings.config import g_config
+from dispersionreticle.settings.config_param import g_configParams
 
 
 # gun_marker_ctrl
@@ -33,7 +33,7 @@ class OverriddenDefaultGunMarkerController(_DefaultGunMarkerController):
                 self._replayWriter(replayCtrl)(size)
 
         # this have to be here, we don't want to corrupt replays
-        sizeMultiplier = g_config.reticleSizeMultiplier
+        sizeMultiplier = g_configParams.reticleSizeMultiplier()
 
         size *= sizeMultiplier
         idealSize *= sizeMultiplier

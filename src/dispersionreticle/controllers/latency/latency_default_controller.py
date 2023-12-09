@@ -1,7 +1,7 @@
 import BigWorld, Math
 from AvatarInputHandler.gun_marker_ctrl import _DefaultGunMarkerController, _makeWorldMatrix, _MARKER_FLAG
 
-from dispersionreticle.settings.config import g_config
+from dispersionreticle.settings.config_param import g_configParams
 
 
 # gun_marker_ctrl
@@ -24,7 +24,7 @@ class LatencyDefaultGunMarkerController(_DefaultGunMarkerController):
         # here we avoid replay-specific code, it is handled by vanilla controllers
         # even if their markers may not be present
 
-        sizeMultiplier = g_config.reticleSizeMultiplier
+        sizeMultiplier = g_configParams.reticleSizeMultiplier()
 
         size *= sizeMultiplier
         idealSize *= sizeMultiplier

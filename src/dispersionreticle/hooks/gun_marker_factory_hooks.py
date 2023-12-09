@@ -8,7 +8,7 @@ from gui.Scaleform.daapi.view.battle.shared.crosshair.gm_factory import \
 from gui.Scaleform.genConsts.GUN_MARKER_VIEW_CONSTANTS import GUN_MARKER_VIEW_CONSTANTS as _CONSTANTS
 
 from dispersionreticle.hooks.gun_marker_components_hooks import AS3GunMarkerComponent
-from dispersionreticle.settings.config import g_config
+from dispersionreticle.settings.config import g_configParams
 from dispersionreticle.utils.reticle_registry import ReticleRegistry
 
 
@@ -54,24 +54,24 @@ class _NewControlMarkersFactory(_ControlMarkersFactory):
         result = ()
 
         if self.areBothMarkersEnabled():
-            if g_config.simpleServerReticle.enabled:
+            if g_configParams.simpleServerReticleEnabled():
                 result += ReticleRegistry.SERVER_SIMPLE.createDefaultMarkers(self, markerType)
 
-            if g_config.serverReticle.enabled:
+            if g_configParams.serverReticleEnabled():
                 result += (self._createArcadeMarker(serverType, _CONSTANTS.DEBUG_ARCADE_GUN_MARKER_NAME),
                            self._createSniperMarker(serverType, _CONSTANTS.DEBUG_SNIPER_GUN_MARKER_NAME))
 
-            if g_config.latencyReticle.enabled:
+            if g_configParams.latencyReticleEnabled():
                 result += ReticleRegistry.CLIENT_LATENCY.createDefaultMarkers(self, markerType)
 
-            if g_config.dispersionReticle.enabled:
+            if g_configParams.dispersionReticleEnabled():
                 result += ReticleRegistry.CLIENT_DISPERSION.createDefaultMarkers(self, markerType)
 
-            if not g_config.shouldHideStandardReticle():
+            if not shouldHideStandardReticle():
                 result += (self._createArcadeMarker(clientType, _CONSTANTS.ARCADE_GUN_MARKER_NAME),
                            self._createSniperMarker(clientType, _CONSTANTS.SNIPER_GUN_MARKER_NAME))
         else:
-            if g_config.dispersionReticle.enabled:
+            if g_configParams.dispersionReticleEnabled():
                 result += toFocusReticle(markerType).createDefaultMarkers(self, markerType)
 
             result += (self._createArcadeMarker(markerType, _CONSTANTS.ARCADE_GUN_MARKER_NAME),
@@ -89,28 +89,28 @@ class _NewControlMarkersFactory(_ControlMarkersFactory):
         if self.areBothMarkersEnabled():
             # IMPORTANT
             # account for spg NOT TO create additional SPG marker when both server reticles are enabled
-            if g_config.simpleServerReticle.enabled and g_config.serverReticle.enabled:
+            if g_configParams.simpleServerReticleEnabled() and g_configParams.serverReticleEnabled():
                 result += ReticleRegistry.SERVER_SIMPLE.createArcadeOnlySPGMarkers(self, markerType)
                 result += (self._createArcadeMarker(serverType, _CONSTANTS.DEBUG_ARCADE_GUN_MARKER_NAME),
                            self._createSPGMarker(serverType, _CONSTANTS.DEBUG_SPG_GUN_MARKER_NAME))
             else:
-                if g_config.simpleServerReticle.enabled:
+                if g_configParams.simpleServerReticleEnabled():
                     result += ReticleRegistry.SERVER_SIMPLE.createSPGMarkers(self, markerType)
-                if g_config.serverReticle.enabled:
+                if g_configParams.serverReticleEnabled():
                     result += (self._createArcadeMarker(serverType, _CONSTANTS.DEBUG_ARCADE_GUN_MARKER_NAME),
                                self._createSPGMarker(serverType, _CONSTANTS.DEBUG_SPG_GUN_MARKER_NAME))
 
-            if g_config.latencyReticle.enabled:
+            if g_configParams.latencyReticleEnabled():
                 result += ReticleRegistry.CLIENT_LATENCY.createSPGMarkers(self, markerType)
 
-            if g_config.dispersionReticle.enabled:
+            if g_configParams.dispersionReticleEnabled():
                 result += ReticleRegistry.CLIENT_DISPERSION.createSPGMarkers(self, markerType)
 
-            if not g_config.shouldHideStandardReticle():
+            if not shouldHideStandardReticle():
                 result += (self._createArcadeMarker(clientType, _CONSTANTS.ARCADE_GUN_MARKER_NAME),
                            self._createSPGMarker(clientType, _CONSTANTS.SPG_GUN_MARKER_NAME))
         else:
-            if g_config.dispersionReticle.enabled:
+            if g_configParams.dispersionReticleEnabled():
                 result += toFocusReticle(markerType).createSPGMarkers(self, markerType)
 
             result += (self._createArcadeMarker(markerType, _CONSTANTS.ARCADE_GUN_MARKER_NAME),
@@ -131,28 +131,28 @@ class _NewControlMarkersFactory(_ControlMarkersFactory):
         if self.areBothMarkersEnabled():
             # IMPORTANT
             # account for spg NOT TO create additional SPG marker when both server reticles are enabled
-            if g_config.simpleServerReticle.enabled and g_config.serverReticle.enabled:
+            if g_configParams.simpleServerReticleEnabled() and g_configParams.serverReticleEnabled():
                 result += ReticleRegistry.SERVER_SIMPLE.createArcadeOnlySPGMarkers(self, markerType)
                 result += (self._createArcadeMarker(serverType, _CONSTANTS.DEBUG_ARCADE_GUN_MARKER_NAME),
                            self._createSPGMarker(serverType, _CONSTANTS.DEBUG_SPG_GUN_MARKER_NAME))
             else:
-                if g_config.simpleServerReticle.enabled:
+                if g_configParams.simpleServerReticleEnabled():
                     result += ReticleRegistry.SERVER_SIMPLE.createSPGMarkers(self, markerType)
-                if g_config.serverReticle.enabled:
+                if g_configParams.serverReticleEnabled():
                     result += (self._createArcadeMarker(serverType, _CONSTANTS.DEBUG_ARCADE_GUN_MARKER_NAME),
                                self._createSPGMarker(serverType, _CONSTANTS.DEBUG_SPG_GUN_MARKER_NAME))
 
-            if g_config.latencyReticle.enabled:
+            if g_configParams.latencyReticleEnabled():
                 result += ReticleRegistry.CLIENT_LATENCY.createSPGMarkers(self, markerType)
 
-            if g_config.dispersionReticle.enabled:
+            if g_configParams.dispersionReticleEnabled():
                 result += ReticleRegistry.CLIENT_DISPERSION.createSPGMarkers(self, markerType)
 
-            if not g_config.shouldHideStandardReticle():
+            if not shouldHideStandardReticle():
                 result += (self._createArcadeMarker(clientType, _CONSTANTS.ARCADE_GUN_MARKER_NAME),
                            self._createSPGMarker(clientType, _CONSTANTS.SPG_GUN_MARKER_NAME))
         else:
-            if g_config.dispersionReticle.enabled:
+            if g_configParams.dispersionReticleEnabled():
                 result += toFocusReticle(markerType).createSPGMarkers(self, markerType)
 
             result += (self._createArcadeMarker(markerType, _CONSTANTS.ARCADE_GUN_MARKER_NAME),
@@ -168,24 +168,24 @@ class _NewControlMarkersFactory(_ControlMarkersFactory):
         result = ()
 
         if self.areBothMarkersEnabled():
-            if g_config.simpleServerReticle.enabled:
+            if g_configParams.simpleServerReticleEnabled():
                 result += ReticleRegistry.SERVER_SIMPLE.createDualGunMarkers(self, markerType)
 
-            if g_config.serverReticle.enabled:
+            if g_configParams.serverReticleEnabled():
                 result += (self._createArcadeMarker(serverType, _CONSTANTS.DEBUG_DUAL_GUN_ARCADE_MARKER_NAME),
                            self._createSniperMarker(serverType, _CONSTANTS.DEBUG_DUAL_GUN_SNIPER_MARKER_NAME))
 
-            if g_config.latencyReticle.enabled:
+            if g_configParams.latencyReticleEnabled():
                 result += ReticleRegistry.CLIENT_LATENCY.createDualGunMarkers(self, markerType)
 
-            if g_config.dispersionReticle.enabled:
+            if g_configParams.dispersionReticleEnabled():
                 result += ReticleRegistry.CLIENT_DISPERSION.createDualGunMarkers(self, markerType)
 
-            if not g_config.shouldHideStandardReticle():
+            if not shouldHideStandardReticle():
                 result += (self._createArcadeMarker(clientType, _CONSTANTS.DUAL_GUN_ARCADE_MARKER_NAME),
                            self._createSniperMarker(clientType, _CONSTANTS.DUAL_GUN_SNIPER_MARKER_NAME))
         else:
-            if g_config.dispersionReticle.enabled:
+            if g_configParams.dispersionReticleEnabled():
                 result += toFocusReticle(markerType).createDualGunMarkers(self, markerType)
 
             result += (self._createArcadeMarker(markerType, _CONSTANTS.DUAL_GUN_ARCADE_MARKER_NAME),
@@ -218,6 +218,10 @@ def toFocusReticle(markerType):
         return ReticleRegistry.SERVER_DISPERSION
 
     return ReticleRegistry.CLIENT_DISPERSION
+
+
+def shouldHideStandardReticle():
+    return g_configParams.latencyReticleEnabled() and g_configParams.latencyReticleHideStandardReticle()
 
 
 # It is needed to be overridden manually.
