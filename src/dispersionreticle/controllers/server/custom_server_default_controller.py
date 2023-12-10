@@ -6,12 +6,12 @@ from dispersionreticle.settings.config_param import g_configParams
 
 
 # gun_marker_ctrl
-class AS3DefaultGunMarkerController(_DefaultGunMarkerController):
+class CustomServerDefaultGunMarkerController(_DefaultGunMarkerController):
 
     def __init__(self, reticle, enabledFlag=_MARKER_FLAG.UNDEFINED):
-        super(AS3DefaultGunMarkerController, self).__init__(reticle.gunMarkerType,
-                                                            reticle.getStandardDataProvider(),
-                                                            enabledFlag=enabledFlag)
+        super(CustomServerDefaultGunMarkerController, self).__init__(reticle.gunMarkerType,
+                                                                     reticle.getStandardDataProvider(),
+                                                                     enabledFlag=enabledFlag)
         self.__reticle = reticle
 
     def update(self, markerType, pos, direction, sizeVector, relaxTime, collData):

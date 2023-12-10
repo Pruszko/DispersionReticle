@@ -1,3 +1,4 @@
+from dispersionreticle.settings.config_file import g_configFiles
 from dispersionreticle.settings.config_param_types import *
 from dispersionreticle.settings.translations import Tr
 
@@ -5,70 +6,68 @@ from dispersionreticle.settings.translations import Tr
 class ConfigParams(object):
 
     def __init__(self):
-        self.__tokenNameRegistry = {}
-
         self.enabled = BooleanParam(
-            ["enabled"],
+            g_configFiles.config, ["enabled"],
             defaultValue=True, disabledValue=False
         )
-        self.dispersionReticleEnabled = BooleanParam(
-            ["dispersion-reticle", "enabled"],
+        self.standardFocusedReticleEnabled = BooleanParam(
+            g_configFiles.configFocusedReticle, ["standard-focused-reticle", "enabled"],
             defaultValue=True, disabledValue=False
         )
 
-        self.latencyReticleEnabled = BooleanParam(
-            ["latency-reticle", "enabled"],
+        self.standardHybridReticleEnabled = BooleanParam(
+            g_configFiles.configLatencyReticle, ["standard-hybrid-reticle", "enabled"],
             defaultValue=False
         )
-        self.latencyReticleHideStandardReticle = BooleanParam(
-            ["latency-reticle", "hide-standard-reticle"],
-            defaultValue=False
-        )
-
-        self.serverReticleEnabled = BooleanParam(
-            ["server-reticle", "enabled"],
+        self.standardHybridReticleHideStandardReticle = BooleanParam(
+            g_configFiles.configLatencyReticle, ["standard-hybrid-reticle", "hide-standard-reticle"],
             defaultValue=False
         )
 
-        self.simpleServerReticleEnabled = BooleanParam(
-            ["simple-server-reticle", "enabled"],
+        self.standardServerReticleEnabled = BooleanParam(
+            g_configFiles.configServerReticle, ["standard-server-reticle", "enabled"],
             defaultValue=False
         )
-        self.simpleServerReticleShape = OptionsParam(
-            ["simple-server-reticle", "shape"],
+
+        self.customServerReticleEnabled = BooleanParam(
+            g_configFiles.configServerReticle, ["custom-server-reticle", "enabled"],
+            defaultValue=False
+        )
+        self.customServerReticleShape = OptionsParam(
+            g_configFiles.configServerReticle, ["custom-server-reticle", "shape"],
             [
-                Option("pentagon", 0, "1. " + Tr.SIMPLE_SERVER_RETICLE_PART_SHAPE_OPTION_PENTAGON),
-                Option("t-shape", 1, "2. " + Tr.SIMPLE_SERVER_RETICLE_PART_SHAPE_OPTION_T_SHAPE),
-                Option("circle", 2, "3. " + Tr.SIMPLE_SERVER_RETICLE_PART_SHAPE_OPTION_CIRCLE),
-                Option("dashed", 3, "4. " + Tr.SIMPLE_SERVER_RETICLE_PART_SHAPE_OPTION_DASHED)
+                Option("pentagon", 0, "1. " + Tr.CUSTOM_SERVER_RETICLE_SHAPE_OPTION_PENTAGON),
+                Option("t-shape", 1, "2. " + Tr.CUSTOM_SERVER_RETICLE_SHAPE_OPTION_T_SHAPE),
+                Option("circle", 2, "3. " + Tr.CUSTOM_SERVER_RETICLE_SHAPE_OPTION_CIRCLE),
+                Option("dashed", 3, "4. " + Tr.CUSTOM_SERVER_RETICLE_SHAPE_OPTION_DASHED)
             ],
             defaultValue="pentagon"
         )
-        self.simpleServerReticleColor = ColorParam(
-            ["simple-server-reticle", "color"],
+        self.customServerReticleColor = ColorParam(
+            g_configFiles.configServerReticle, ["custom-server-reticle", "color"],
             defaultValue=(255, 0, 255)
         )
-        self.simpleServerReticleDrawCenterDot = BooleanParam(
-            ["simple-server-reticle", "draw-center-dot"],
+        self.customServerReticleDrawCenterDot = BooleanParam(
+            g_configFiles.configServerReticle, ["custom-server-reticle", "draw-center-dot"],
             defaultValue=False
         )
-        self.simpleServerReticleDrawOutline = BooleanParam(
-            ["simple-server-reticle", "draw-outline"],
+        self.customServerReticleDrawOutline = BooleanParam(
+            g_configFiles.configServerReticle, ["custom-server-reticle", "draw-outline"],
             defaultValue=False
         )
-        self.simpleServerReticleBlend = FloatSliderParam(
-            ["simple-server-reticle", "blend"],
+        self.customServerReticleBlend = FloatSliderParam(
+            g_configFiles.configServerReticle, ["custom-server-reticle", "blend"],
             minValue=0.0, step=0.01, maxValue=1.0,
             defaultValue=0.5
         )
-        self.simpleServerReticleAlpha = FloatSliderParam(
-            ["simple-server-reticle", "alpha"],
+        self.customServerReticleAlpha = FloatSliderParam(
+            g_configFiles.configServerReticle, ["custom-server-reticle", "alpha"],
             minValue=0.0, step=0.01, maxValue=1.0,
             defaultValue=1.0
         )
 
         self.reticleSizeMultiplier = FloatTextParam(
-            ["reticle-size-multiplier"],
+            g_configFiles.config, ["reticle-size-multiplier"],
             minValue=0.0, maxValue=None,
             defaultValue=1.0
         )

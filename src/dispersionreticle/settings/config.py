@@ -1,12 +1,11 @@
 import logging
-import os
 
 import Event
 import Keys
 import game
 
-from dispersionreticle.settings import getDefaultConfigContent, loadConfigDict, \
-    createFolderSafely, getDefaultConfigTokens, CONFIG_TEMPLATE
+from dispersionreticle.settings import getDefaultConfigTokens
+from dispersionreticle.settings.config_file import g_configFiles
 from dispersionreticle.settings.config_param import g_configParams
 from dispersionreticle.settings.migrations import performConfigMigrations
 from dispersionreticle.utils import *
@@ -16,12 +15,9 @@ from dispersionreticle.utils.debug_state import g_debugStateCollector
 logger = logging.getLogger(__name__)
 
 
-class Config:
+class Config(object):
 
     def __init__(self):
-        self.__configFileDir = os.path.join("mods", "configs", "DispersionReticle")
-        self.__configFilePath = os.path.join("mods", "configs", "DispersionReticle", "config.json")
-
         self.__eventManager = Event.EventManager()
         self.onConfigReload = Event.Event(self.__eventManager)
 
@@ -36,22 +32,23 @@ class Config:
             logger.info("Starting config loading ...")
 
             performConfigMigrations()
-            self.createConfigIfNotExists()
+            g_configFiles.createMissingConfigFiles()
+            g_configFiles.loadConfigDict()
 
-            data = loadConfigDict(self.__configFilePath)
-
-            if data is None:
+            if not g_configFiles.areAllValid():
                 return
 
             for tokenName, param in g_configParams.items():
-                value = param.readValueFromConfigDictSafely(data)
+                value = param.readValueFromConfigFile()
+                value = value if value is not None else param.defaultValue
+
                 param.jsonValue = value
 
             logger.info("Finished config loading.")
         except Exception as e:
             logger.error("Failed to load (or create) config", exc_info=e)
 
-    def updateConfigSafely(self, serializedSettings):
+    def updateConfigSafely(self, rawSerializedSettings):
         # reload config prior to saving
         # to make sure everything is created
         # and potentially migrated
@@ -60,13 +57,10 @@ class Config:
         try:
             logger.info("Starting config saving ...")
 
-            defaultConfigTokens = getDefaultConfigTokens()
-            defaultConfigTokens.update(serializedSettings)
+            serializedSettings = getDefaultConfigTokens()
+            serializedSettings.update(rawSerializedSettings)
 
-            newConfigFileContent = CONFIG_TEMPLATE % defaultConfigTokens
-
-            with open(self.__configFilePath, "w") as configFile:
-                configFile.write(newConfigFileContent)
+            g_configFiles.writeConfigTokens(serializedSettings)
 
             logger.info("Finished config saving.")
         except Exception as e:
@@ -76,20 +70,6 @@ class Config:
         # with changes written to config file
         self.loadConfigSafely()
         self.onConfigReload()
-
-    def createConfigIfNotExists(self):
-        logger.info("Checking config existence ...")
-        if os.path.isfile(self.__configFilePath):
-            logger.info("Config already exists.")
-            return
-
-        logger.info("Creating config directory ...")
-        createFolderSafely(self.__configFileDir)
-
-        logger.info("Creating config file ...")
-        with open(self.__configFilePath, "w") as configFile:
-            defaultConfigContent = getDefaultConfigContent()
-            configFile.write(defaultConfigContent)
 
 
 g_config = Config()

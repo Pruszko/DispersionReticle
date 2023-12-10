@@ -7,12 +7,12 @@ from dispersionreticle.flash.dispersion_reticle_flash import DispersionReticleFl
 from dispersionreticle.settings.config_param import g_configParams
 
 
-class AS3SPGGunMarkerController(_SPGGunMarkerController):
+class CustomServerSPGGunMarkerController(_SPGGunMarkerController):
 
     def __init__(self, reticle, enabledFlag=_MARKER_FLAG.UNDEFINED):
-        super(AS3SPGGunMarkerController, self).__init__(reticle.gunMarkerType,
-                                                        reticle.getSpgDataProvider(),
-                                                        enabledFlag=enabledFlag)
+        super(CustomServerSPGGunMarkerController, self).__init__(reticle.gunMarkerType,
+                                                                 reticle.getSpgDataProvider(),
+                                                                 enabledFlag=enabledFlag)
         self.__reticle = reticle
 
     def _update(self):

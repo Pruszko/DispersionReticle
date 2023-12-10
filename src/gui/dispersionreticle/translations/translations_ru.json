@@ -3,121 +3,121 @@
   "checked": "включен",
   "unchecked": "выключен",
   "defaultValue": "по умолчанию",
-  "introPart.label": "Информация о файле конфигурации",
-  "introPart.header": "Файл конфигурации",
-  "introPart.body": [
+  "intro.label": "Информация о файле конфигурации",
+  "intro.header": "Файл конфигурации",
+  "intro.body": [
     "Файл конфигурации также может быть изменен вручную, путем внесения изменений в файл.\n",
     "Чтобы изменения вступили в силу, перезагрузите его в игре, используя сочетание клавиш:\n",
     "- CTRL + P\n\n",
     "Расположение файла конфигурации:\n",
     "- [Расположение файлов игры WoT]/mods/configs/DispersionReticle/config.json"
   ],
-  "introPart.note": [
+  "intro.note": [
     "Если вы хотите сгенерировать файл конфигурации по умолчанию, удалите файл конфигурации и:\n",
     "- также перезагрузите его с помощью указанным выше сочетанием клавиш\n",
     "- или снова запустите игру"
   ],
-  "introPart.attention": [
+  "intro.attention": [
     "Не используйте сочетание клавиш CTRL + P с открытым интерфейсом 'Настройка модификаций'.\n",
     "Интерфейс 'Настройка модификаций' не заметит изменений, если его не открыть заново."
   ],
-  "dispersionReticlePart.label": "Круг разброса",
-  "dispersionReticlePart.header": "Круг разброса",
-  "dispersionReticlePart.body": [
+  "standardFocusedReticle.label": "Круг разброса",
+  "standardFocusedReticle.header": "Круг разброса",
+  "standardFocusedReticle.body": [
     "Добавляет полностью сведенный 'Круг разброса' к прицелу."
   ],
-  "dispersionReticlePart.note": [
+  "standardFocusedReticle.note": [
     "Может работать с включенным 'Cерверным прицелом' в настройках игры."
   ],
-  "dispersionReticlePart.enabled.header": "Включить",
-  "dispersionReticlePart.enabled.body": [
+  "standardFocusedReticle.enabled.header": "Включить",
+  "standardFocusedReticle.enabled.body": [
     "Если галочка отмечена, то отображается 'Круг разброса'."
   ],
-  "latencyReticlePart.label": "Гибридный прицел",
-  "latencyReticlePart.header": "Гибридный прицел",
-  "latencyReticlePart.body": [
+  "standardHybridReticle.label": "Гибридный прицел",
+  "standardHybridReticle.header": "Гибридный прицел",
+  "standardHybridReticle.body": [
     "Альтернативный режим 'Cерверному прицелу' в настройках игры."
   ],
-  "latencyReticlePart.note": [
+  "standardHybridReticle.note": [
     "Принцип, позиция на стороне клиента, а разброс на стороне сервера.\n",
     "Таким образом, видна десинхронизация разброса на стороне клиента и на стороне сервера.\n\n",
     "Полезно, если вы хотите видеть десинхронизацию разброса на стороне сервера, но при этом иметь отзывчивость на стороне клиента."
   ],
-  "latencyReticlePart.enabled.header": "Включить",
-  "latencyReticlePart.enabled.body": [
+  "standardHybridReticle.enabled.header": "Включить",
+  "standardHybridReticle.enabled.body": [
     "Если галочка отмечена, то отображается 'Гибридный прицел'."
   ],
-  "latencyReticlePart.hideStandardReticle.header": "Скрыть стандартный прицел",
-  "latencyReticlePart.hideStandardReticle.body": [
+  "standardHybridReticle.hideStandardReticle.header": "Скрыть стандартный прицел",
+  "standardHybridReticle.hideStandardReticle.body": [
     "Если галочка отмечена, то при включенной функции 'Гибридный прицел', стандартный круг будет скрыт."
   ],
-  "latencyReticlePart.hideStandardReticle.note": [
+  "standardHybridReticle.hideStandardReticle.note": [
     "Полезно, если вы хотите использовать 'Гибридный прицел' как основной круг."
   ],
-  "serverReticlePart.label": "Серверный прицел",
-  "serverReticlePart.header": "Серверный прицел",
-  "serverReticlePart.body": [
+  "standardServerReticle.label": "Серверный прицел",
+  "standardServerReticle.header": "Серверный прицел",
+  "standardServerReticle.body": [
     "Добавляет дополнительный круг 'Серверный прицел'."
   ],
-  "serverReticlePart.enabled.header": "Включить",
-  "serverReticlePart.enabled.body": [
+  "standardServerReticle.enabled.header": "Включить",
+  "standardServerReticle.enabled.body": [
     "Если галочка отмечена, то отображается 'Серверный прицел'."
   ],
-  "simpleServerReticlePart.label": "Настраиваемый серверный прицел",
-  "simpleServerReticlePart.header": "Настраиваемый серверный прицел",
-  "simpleServerReticlePart.body": [
+  "customServerReticle.label": "Настраиваемый серверный прицел",
+  "customServerReticle.header": "Настраиваемый серверный прицел",
+  "customServerReticle.body": [
     "Добавляет дополнительный круг 'Настраиваемый серверный прицел', который можно настроить ниже."
   ],
-  "simpleServerReticlePart.attention": [
+  "customServerReticle.attention": [
     "Для артиллерии будет включен 'Серверный прицел',",
     "вместо этого."
   ],
-  "simpleServerReticlePart.enabled.header": "Включить",
-  "simpleServerReticlePart.enabled.body": [
+  "customServerReticle.enabled.header": "Включить",
+  "customServerReticle.enabled.body": [
     "Если галочка отмечена, то отображается 'Настраиваемый серверный прицел'."
   ],
-  "simpleServerReticlePart.shape.header": "Фигура",
-  "simpleServerReticlePart.shape.body": [
+  "customServerReticle.shape.header": "Фигура",
+  "customServerReticle.shape.body": [
     "Фигура, которую будет отображать 'Настраиваемый серверный прицел'."
   ],
-  "simpleServerReticlePart.shape.option.pentagon": "Pentagon",
-  "simpleServerReticlePart.shape.option.t-shape": "T-shape",
-  "simpleServerReticlePart.shape.option.circle": "Circle",
-  "simpleServerReticlePart.shape.option.dashed": "Dashed",
-  "simpleServerReticlePart.color.header": "Цвет",
-  "simpleServerReticlePart.color.body": [
+  "customServerReticle.shape.option.pentagon": "Pentagon",
+  "customServerReticle.shape.option.t-shape": "T-shape",
+  "customServerReticle.shape.option.circle": "Circle",
+  "customServerReticle.shape.option.dashed": "Dashed",
+  "customServerReticle.color.header": "Цвет",
+  "customServerReticle.color.body": [
     "Назначает цвет для фигуры в 'Настраиваемый серверный прицел'."
   ],
-  "simpleServerReticlePart.drawCenterDot.header": "Включить центральную точку",
-  "simpleServerReticlePart.drawCenterDot.body": [
+  "customServerReticle.drawCenterDot.header": "Включить центральную точку",
+  "customServerReticle.drawCenterDot.body": [
     "Если галочка отмечена, то у фигуры будет дополнительно отображаться точка в центре."
   ],
-  "simpleServerReticlePart.drawOutline.header": "Включить контур",
-  "simpleServerReticlePart.drawOutline.body": [
+  "customServerReticle.drawOutline.header": "Включить контур",
+  "customServerReticle.drawOutline.body": [
     "Если галочка отмечена, то у фигуры будет дополнительно отображаться черный контур с размером в 1 пиксель."
   ],
-  "simpleServerReticlePart.drawOutline.note": [
+  "customServerReticle.drawOutline.note": [
     "Полезно, если цвет фигуры сливается с фоном."
   ],
-  "simpleServerReticlePart.blend.header": "Смешивание",
-  "simpleServerReticlePart.blend.body": [
+  "customServerReticle.blend.header": "Смешивание",
+  "customServerReticle.blend.body": [
     "Регулирует, насколько цвет фигуры будет сливаться с цветом фона, а не заменять его.\n",
     "Стандартная \"dashed / пунктир\" фигура использует этот параметр со значением 1.0 без контура, чтобы фигура выглядела более органично."
   ],
-  "simpleServerReticlePart.blend.note": [
+  "customServerReticle.blend.note": [
     "При значении 1.0, цвет полностью дополняет цвет фона.\n",
     "При значении 0.0, цвет полностью заменяет цвет фона.\n",
     "Значения между ними настраивают силу этих эффектов между друг другом."
   ],
-  "simpleServerReticlePart.blend.attention": [
+  "customServerReticle.blend.attention": [
     "Значение 1.0 эффективно предотвращает получение темных цветов.\n",
     "Потому что ... черный цвет + цвет фона = цвет фона."
   ],
-  "simpleServerReticlePart.alpha.header": "Прозрачность",
-  "simpleServerReticlePart.alpha.body": [
+  "customServerReticle.alpha.header": "Прозрачность",
+  "customServerReticle.alpha.body": [
     "Настройка прозрачности для 'Обычный серверный прицел'."
   ],
-  "simpleServerReticlePart.alpha.note": [
+  "customServerReticle.alpha.note": [
     "Значение 1.0 соответствует полной видимости.\n",
     "Значение 0.0 соответствует нулевой видимости."
   ],

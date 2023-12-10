@@ -1,15 +1,15 @@
 from AvatarInputHandler.gun_marker_ctrl import _MARKER_FLAG
 
-from dispersionreticle.controllers.standard.standard_spg_controller import OverriddenSPGGunMarkerController
+from dispersionreticle.controllers.overridden.overridden_spg_controller import OverriddenSPGGunMarkerController
 
 
 # gun_marker_ctrl
-class LatencySPGGunMarkerController(OverriddenSPGGunMarkerController):
+class StandardHybridSPGGunMarkerController(OverriddenSPGGunMarkerController):
 
     def __init__(self, reticle, enabledFlag=_MARKER_FLAG.UNDEFINED):
-        super(LatencySPGGunMarkerController, self).__init__(reticle.gunMarkerType,
-                                                            reticle.getSpgDataProvider(),
-                                                            enabledFlag=enabledFlag)
+        super(StandardHybridSPGGunMarkerController, self).__init__(reticle.gunMarkerType,
+                                                                   reticle.getSpgDataProvider(),
+                                                                   enabledFlag=enabledFlag)
         self.__serverDispersionAngle = None
 
     def _updateDispersionData(self):

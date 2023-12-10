@@ -1,16 +1,16 @@
 import BigWorld
 from AvatarInputHandler.gun_marker_ctrl import _MARKER_FLAG
 
-from dispersionreticle.controllers.standard.standard_spg_controller import OverriddenSPGGunMarkerController
+from dispersionreticle.controllers.overridden.overridden_spg_controller import OverriddenSPGGunMarkerController
 
 
 # gun_marker_ctrl
-class DispersionSPGGunMarkerController(OverriddenSPGGunMarkerController):
+class StandardFocusedSPGGunMarkerController(OverriddenSPGGunMarkerController):
 
     def __init__(self, reticle, enabledFlag=_MARKER_FLAG.UNDEFINED):
-        super(DispersionSPGGunMarkerController, self).__init__(reticle.gunMarkerType,
-                                                               reticle.getSpgDataProvider(),
-                                                               enabledFlag=enabledFlag)
+        super(StandardFocusedSPGGunMarkerController, self).__init__(reticle.gunMarkerType,
+                                                                    reticle.getSpgDataProvider(),
+                                                                    enabledFlag=enabledFlag)
 
     def _updateDispersionData(self):
         # dispersionAngle = self._gunRotator.dispersionAngle

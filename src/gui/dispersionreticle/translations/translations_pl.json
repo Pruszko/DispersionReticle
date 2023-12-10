@@ -3,122 +3,122 @@
   "checked": "zaznaczone",
   "unchecked": "odznaczone",
   "defaultValue": "domyślnie",
-  "introPart.label": "Informacje o pliku konfiguracyjnym",
-  "introPart.header": "Plik konfiguracyjny",
-  "introPart.body": [
+  "intro.label": "Informacje o pliku konfiguracyjnym",
+  "intro.header": "Plik konfiguracyjny",
+  "intro.body": [
     "Konfiguracja może także zostać zmieniona poprzez manualną modyfikację pliku konfiguracyjnego.\n",
     "By zmiany były widoczne, przeładuj go w grze z użyciem skrótu klawiszowego:\n",
     "- CTRL + P\n\n",
     "Lokalizacja pliku konfiguracyjnego:\n",
     "- [WoT game directory]/mods/configs/DispersionReticle/config.json"
   ],
-  "introPart.note": [
+  "intro.note": [
     "Jeżeli chcesz wygenerować domyślny plik konfiguracyjny, usuń jego plik a następnie:\n",
     "- albo przełąduj go z użyciem powyższego skrótu klawiszowego\n",
     "- lub uruchom grę ponownie"
   ],
-  "introPart.attention": [
+  "intro.attention": [
     "Nie używaj skrótu klawiszowego CTRL + P z otwartym oknem konfiguratora moda.\n",
     "Ten interfejs nie uwidoczni zmian dopóki nie zostanie otwarty ponownie."
   ],
-  "dispersionReticlePart.label": "Kółko skupienia",
-  "dispersionReticlePart.header": "Kółko skupienia",
-  "dispersionReticlePart.body": [
+  "standardFocusedReticle.label": "Kółko skupienia",
+  "standardFocusedReticle.header": "Kółko skupienia",
+  "standardFocusedReticle.body": [
     "Dodaje kółko wyświetlające w pełni skupiony rozrzut działa do standardowego kółka."
   ],
-  "dispersionReticlePart.note": [
+  "standardFocusedReticle.note": [
     "Gdy oba rodzaje kółek - klienckie oraz serwerowe - są uruchomione, to obecne kółko dołączane jest ",
     "do kółka klienckiego."
   ],
-  "dispersionReticlePart.enabled.header": "Czy włączone",
-  "dispersionReticlePart.enabled.body": [
+  "standardFocusedReticle.enabled.header": "Czy włączone",
+  "standardFocusedReticle.enabled.body": [
     "Jeżeli zaznaczone, wyświetl to kółko."
   ],
-  "latencyReticlePart.label": "Kółko opóźnienia",
-  "latencyReticlePart.header": "Kółko opóźnienia",
-  "latencyReticlePart.body": [
+  "standardHybridReticle.label": "Kółko opóźnienia",
+  "standardHybridReticle.header": "Kółko opóźnienia",
+  "standardHybridReticle.body": [
     "Dodaje kółko wyświetlające obecny serwerowy rozrzut do klienckiego kółka."
   ],
-  "latencyReticlePart.note": [
+  "standardHybridReticle.note": [
     "Innymi słowy, pozycja po stronie klienta, ale rozrzut serwerowy.\n",
     "Dzięki temu, desynchronizacja rozrzutu kółek klienckiego i serwerowego jest wyraźnie widoczna.\n\n",
     "Przydatne gdy chcesz znać serwerowy rozrzut, ale nadal chcesz zachować responsywność klienckiego kółka."
   ],
-  "latencyReticlePart.enabled.header": "Czy włączone",
-  "latencyReticlePart.enabled.body": [
+  "standardHybridReticle.enabled.header": "Czy włączone",
+  "standardHybridReticle.enabled.body": [
     "Jeżeli zaznaczone, wyświetl to kółko."
   ],
-  "latencyReticlePart.hideStandardReticle.header": "Ukryj standardowe kółko",
-  "latencyReticlePart.hideStandardReticle.body": [
+  "standardHybridReticle.hideStandardReticle.header": "Ukryj standardowe kółko",
+  "standardHybridReticle.hideStandardReticle.body": [
     "Jeżeli zaznaczone, standardowe kółko jest ukryte gdy kółko opóźnienia jest włączone."
   ],
-  "latencyReticlePart.hideStandardReticle.note": [
+  "standardHybridReticle.hideStandardReticle.note": [
     "Przydane gdy chcesz używać tylko kółka opóźnienia zamiast standardowego kółka."
   ],
-  "serverReticlePart.label": "Kółko serwerowe",
-  "serverReticlePart.header": "Kółko serwerowe",
-  "serverReticlePart.body": [
+  "standardServerReticle.label": "Kółko serwerowe",
+  "standardServerReticle.header": "Kółko serwerowe",
+  "standardServerReticle.body": [
     "Dodaje serwerowe kółko oprócz obecnego klienckiego kółka."
   ],
-  "serverReticlePart.enabled.header": "Czy włączone",
-  "serverReticlePart.enabled.body": [
+  "standardServerReticle.enabled.header": "Czy włączone",
+  "standardServerReticle.enabled.body": [
     "Jeżeli zaznaczone, wyświetl to kółko."
   ],
-  "simpleServerReticlePart.label": "Proste kółko serwerowe",
-  "simpleServerReticlePart.header": "Proste kółko serwerowe",
-  "simpleServerReticlePart.body": [
+  "customServerReticle.label": "Proste kółko serwerowe",
+  "customServerReticle.header": "Proste kółko serwerowe",
+  "customServerReticle.body": [
     "Dodaje serwerowe kółko z konfigurowalnym kształtem oprócz obecnego kółka klienckiego."
   ],
-  "simpleServerReticlePart.attention": [
+  "customServerReticle.attention": [
     "Dla widoku artyleryjskiego, niejawnie włączone zostanie kółko serwerowe z lewej strony ",
     "zamiast tego kółka."
   ],
-  "simpleServerReticlePart.enabled.header": "Czy włączone",
-  "simpleServerReticlePart.enabled.body": [
+  "customServerReticle.enabled.header": "Czy włączone",
+  "customServerReticle.enabled.body": [
     "Jeżeli zaznaczone, wyświetl to kółko."
   ],
-  "simpleServerReticlePart.shape.header": "Kształt",
-  "simpleServerReticlePart.shape.body": [
+  "customServerReticle.shape.header": "Kształt",
+  "customServerReticle.shape.body": [
     "Kształt jaki to kółko powinno mieć."
   ],
-  "simpleServerReticlePart.shape.option.pentagon": "Pięciokąt",
-  "simpleServerReticlePart.shape.option.t-shape": "Kształt T",
-  "simpleServerReticlePart.shape.option.circle": "Okrąg",
-  "simpleServerReticlePart.shape.option.dashed": "Kreskowany",
-  "simpleServerReticlePart.color.header": "Kolor",
-  "simpleServerReticlePart.color.body": [
+  "customServerReticle.shape.option.pentagon": "Pięciokąt",
+  "customServerReticle.shape.option.t-shape": "Kształt T",
+  "customServerReticle.shape.option.circle": "Okrąg",
+  "customServerReticle.shape.option.dashed": "Kreskowany",
+  "customServerReticle.color.header": "Kolor",
+  "customServerReticle.color.body": [
     "Koloruje to kółko wybranym kolorem."
   ],
-  "simpleServerReticlePart.drawCenterDot.header": "Czy rysować środkową kropkę",
-  "simpleServerReticlePart.drawCenterDot.body": [
+  "customServerReticle.drawCenterDot.header": "Czy rysować środkową kropkę",
+  "customServerReticle.drawCenterDot.body": [
     "Jeżeli zaznaczone, kształt kółka będzie dodatkowo wyświetlany ze środkową kropką."
   ],
-  "simpleServerReticlePart.drawOutline.header": "Czy rysować obwódkę",
-  "simpleServerReticlePart.drawOutline.body": [
+  "customServerReticle.drawOutline.header": "Czy rysować obwódkę",
+  "customServerReticle.drawOutline.body": [
     "Jeżeli zaznaczone, kształt kółka będzie dodatkowo wyświetlany z 1 pikselową czarną obwódką."
   ],
-  "simpleServerReticlePart.drawOutline.note": [
+  "customServerReticle.drawOutline.note": [
     "Przydatne gdy kolor kształtu zlewa się z tłem."
   ],
-  "simpleServerReticlePart.blend.header": "Zlewanie koloru z tłem",
-  "simpleServerReticlePart.blend.body": [
+  "customServerReticle.blend.header": "Zlewanie koloru z tłem",
+  "customServerReticle.blend.body": [
     "Kontroluje, jak bardzo kolor kółka będzie zlewać się z kolorem tła zamiast go nadpisywać.\n",
     "Standardowe \"kreskowe\" kółko używa tego z wartością 1.0 bez obwódki by kółko wyglądało bardziej naturalnie."
   ],
-  "simpleServerReticlePart.blend.note": [
+  "customServerReticle.blend.note": [
     "Ustaw ją na 1.0 jeżeli chcesz, by kolor pełnił rolę dodatku do koloru tła.\n",
     "Ustaw ją na 0.0 jeżeli chcesz, by kolor w pełni nadpisywał kolor tła.\n",
     "Wartości między nimi kontroluję siłę danego efektu im bliżej się go znajdują."
   ],
-  "simpleServerReticlePart.blend.attention": [
+  "customServerReticle.blend.attention": [
     "Wartość 1.0 praktycznie uniemożliwia Ci uzyskanie ciemnych kolorów\n",
     "ponieważ ... czarny kolor + kolor tła = kolor tła."
   ],
-  "simpleServerReticlePart.alpha.header": "Przezroczystość",
-  "simpleServerReticlePart.alpha.body": [
+  "customServerReticle.alpha.header": "Przezroczystość",
+  "customServerReticle.alpha.body": [
     "Kontroluje przezroczystość wyświetlanego kółka."
   ],
-  "simpleServerReticlePart.alpha.note": [
+  "customServerReticle.alpha.note": [
     "Wartość 1.0 oznacza pełną widoczność\n",
     "Wartość 0.0 oznacza zerową widoczność"
   ],

@@ -146,19 +146,19 @@ class DispersionReticleFlash(ExternalFlashComponent, DispersionReticleFlashMeta)
 
     def __onConfigReload(self):
         serializedConfig = {
-            "simple-server-reticle": self.__serializeSimpleServerReticleSection()
+            "simple-server-reticle": self.__serializeCustomServerReticleSection()
         }
 
         self.as_onConfigReload(serializedConfig)
 
-    def __serializeSimpleServerReticleSection(self):
+    def __serializeCustomServerReticleSection(self):
         return {
-            "color": self.__serializeColorTuple(g_configParams.simpleServerReticleColor()),
-            "shape": g_configParams.simpleServerReticleShape(),
-            "draw-center-dot": g_configParams.simpleServerReticleDrawCenterDot(),
-            "draw-outline": g_configParams.simpleServerReticleDrawOutline(),
-            "blend": g_configParams.simpleServerReticleBlend(),
-            "alpha": g_configParams.simpleServerReticleAlpha()
+            "color": self.__serializeColorTuple(g_configParams.customServerReticleColor()),
+            "shape": g_configParams.customServerReticleShape(),
+            "draw-center-dot": g_configParams.customServerReticleDrawCenterDot(),
+            "draw-outline": g_configParams.customServerReticleDrawOutline(),
+            "blend": g_configParams.customServerReticleBlend(),
+            "alpha": g_configParams.customServerReticleAlpha()
         }
 
     @staticmethod
@@ -191,7 +191,7 @@ class DispersionReticleFlash(ExternalFlashComponent, DispersionReticleFlashMeta)
         return [screenResolution[0], screenResolution[1]]
 
     def py_getNormalizedMarkerPosition(self, markerName):
-        # this method should be called by an swf app only, if there is created marker
+        # this method should be called by swf app only if there is created marker
         # in its display list and has marker data provider presence
         #
         # by this we assume, that its data provider MUST be present prior to it being called

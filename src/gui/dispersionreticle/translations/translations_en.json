@@ -3,121 +3,121 @@
   "checked": "checked",
   "unchecked": "unchecked",
   "defaultValue": "default",
-  "introPart.label": "Config file info",
-  "introPart.header": "Config file",
-  "introPart.body": [
+  "intro.label": "Config file info",
+  "intro.header": "Config file",
+  "intro.body": [
     "Config can also be changed by manually altering config file.\n",
     "For changes to take effect, reload it in game using hotkeys:\n",
     "- CTRL + P\n\n",
     "Config file location:\n",
     "- [WoT game directory]/mods/configs/DispersionReticle/config.json"
   ],
-  "introPart.note": [
+  "intro.note": [
     "If you want to generate default config file, delete its file and:\n",
     "- either reload it with above hotkey\n",
     "- or launch a game again"
   ],
-  "introPart.attention": [
+  "intro.attention": [
     "Don't use CTRL + P hotkey with open mod configurator.\n",
     "This gui won't notice it unless reopened."
   ],
-  "dispersionReticlePart.label": "Dispersion reticle",
-  "dispersionReticlePart.header": "Dispersion reticle",
-  "dispersionReticlePart.body": [
+  "standardFocusedReticle.label": "Dispersion reticle",
+  "standardFocusedReticle.header": "Dispersion reticle",
+  "standardFocusedReticle.body": [
     "Adds reticle displaying fully-focused dispersion to standard reticle."
   ],
-  "dispersionReticlePart.note": [
+  "standardFocusedReticle.note": [
     "When both client-side and server-side reticle are on, it attaches to client-side reticle."
   ],
-  "dispersionReticlePart.enabled.header": "Enabled",
-  "dispersionReticlePart.enabled.body": [
+  "standardFocusedReticle.enabled.header": "Enabled",
+  "standardFocusedReticle.enabled.body": [
     "If checked, display this reticle."
   ],
-  "latencyReticlePart.label": "Latency reticle",
-  "latencyReticlePart.header": "Latency reticle",
-  "latencyReticlePart.body": [
+  "standardHybridReticle.label": "Latency reticle",
+  "standardHybridReticle.header": "Latency reticle",
+  "standardHybridReticle.body": [
     "Adds reticle displaying current server-side dispersion to client-side reticle."
   ],
-  "latencyReticlePart.note": [
+  "standardHybridReticle.note": [
     "Basically, client-side position, but server-side dispersion.\n",
     "By this, client-side and server-side dispersion desynchronization is clearly visible.\n\n",
     "Useful if you want to know server-side dispersion, but still want client-side responsiveness."
   ],
-  "latencyReticlePart.enabled.header": "Enabled",
-  "latencyReticlePart.enabled.body": [
+  "standardHybridReticle.enabled.header": "Enabled",
+  "standardHybridReticle.enabled.body": [
     "If checked, display this reticle."
   ],
-  "latencyReticlePart.hideStandardReticle.header": "Hide standard reticle",
-  "latencyReticlePart.hideStandardReticle.body": [
+  "standardHybridReticle.hideStandardReticle.header": "Hide standard reticle",
+  "standardHybridReticle.hideStandardReticle.body": [
     "If checked, standard client reticle is hidden while latency reticle is enabled."
   ],
-  "latencyReticlePart.hideStandardReticle.note": [
+  "standardHybridReticle.hideStandardReticle.note": [
     "Useful if you want to only use latency reticle instead of standard reticle."
   ],
-  "serverReticlePart.label": "Server reticle",
-  "serverReticlePart.header": "Server reticle",
-  "serverReticlePart.body": [
+  "standardServerReticle.label": "Server reticle",
+  "standardServerReticle.header": "Server reticle",
+  "standardServerReticle.body": [
     "Adds server-side reticle alongside with client-side reticle."
   ],
-  "serverReticlePart.enabled.header": "Enabled",
-  "serverReticlePart.enabled.body": [
+  "standardServerReticle.enabled.header": "Enabled",
+  "standardServerReticle.enabled.body": [
     "If checked, display this reticle."
   ],
-  "simpleServerReticlePart.label": "Simple server reticle",
-  "simpleServerReticlePart.header": "Simple server reticle",
-  "simpleServerReticlePart.body": [
+  "customServerReticle.label": "Simple server reticle",
+  "customServerReticle.header": "Simple server reticle",
+  "customServerReticle.body": [
     "Adds server-side reticle with customizable shape alongside with client-side reticle."
   ],
-  "simpleServerReticlePart.attention": [
+  "customServerReticle.attention": [
     "For SPG artillery view, it will implicitly enable Server reticle on the left ",
     "instead of this reticle."
   ],
-  "simpleServerReticlePart.enabled.header": "Enabled",
-  "simpleServerReticlePart.enabled.body": [
+  "customServerReticle.enabled.header": "Enabled",
+  "customServerReticle.enabled.body": [
     "If checked, display this reticle."
   ],
-  "simpleServerReticlePart.shape.header": "Shape",
-  "simpleServerReticlePart.shape.body": [
+  "customServerReticle.shape.header": "Shape",
+  "customServerReticle.shape.body": [
     "Shape which this reticle should have."
   ],
-  "simpleServerReticlePart.shape.option.pentagon": "Pentagon",
-  "simpleServerReticlePart.shape.option.t-shape": "T-shape",
-  "simpleServerReticlePart.shape.option.circle": "Circle",
-  "simpleServerReticlePart.shape.option.dashed": "Dashed",
-  "simpleServerReticlePart.color.header": "Color",
-  "simpleServerReticlePart.color.body": [
+  "customServerReticle.shape.option.pentagon": "Pentagon",
+  "customServerReticle.shape.option.t-shape": "T-shape",
+  "customServerReticle.shape.option.circle": "Circle",
+  "customServerReticle.shape.option.dashed": "Dashed",
+  "customServerReticle.color.header": "Color",
+  "customServerReticle.color.body": [
     "Colors this reticle using provided color."
   ],
-  "simpleServerReticlePart.drawCenterDot.header": "Draw center dot",
-  "simpleServerReticlePart.drawCenterDot.body": [
+  "customServerReticle.drawCenterDot.header": "Draw center dot",
+  "customServerReticle.drawCenterDot.body": [
     "If true, shape is additionally displayed with center dot."
   ],
-  "simpleServerReticlePart.drawOutline.header": "Draw outline",
-  "simpleServerReticlePart.drawOutline.body": [
+  "customServerReticle.drawOutline.header": "Draw outline",
+  "customServerReticle.drawOutline.body": [
     "If checked, shape is additionally displayed with 1 pixel black outline."
   ],
-  "simpleServerReticlePart.drawOutline.note": [
+  "customServerReticle.drawOutline.note": [
     "Useful if shape color blends with the background."
   ],
-  "simpleServerReticlePart.blend.header": "Blend",
-  "simpleServerReticlePart.blend.body": [
+  "customServerReticle.blend.header": "Blend",
+  "customServerReticle.blend.body": [
     "Controls, how much reticle color will blend with the background color instead of replacing it.\n",
     "Vanilla \"dashed\" reticle uses this with value 1.0 without outline to make reticle look more natural."
   ],
-  "simpleServerReticlePart.blend.note": [
+  "customServerReticle.blend.note": [
     "Set it to 1.0 if you want color to fully act as an addition to background color.\n",
     "Set it to 0.0 if you want color to fully replace background color.\n",
     "Values between them controls strength of those effects the closer it gets to them."
   ],
-  "simpleServerReticlePart.blend.attention": [
+  "customServerReticle.blend.attention": [
     "Value 1.0 effectively prevents you from getting dark colors\n",
     "because ... black color + background color = background color."
   ],
-  "simpleServerReticlePart.alpha.header": "Alpha",
-  "simpleServerReticlePart.alpha.body": [
+  "customServerReticle.alpha.header": "Alpha",
+  "customServerReticle.alpha.body": [
     "Controls transparency of displayed reticle."
   ],
-  "simpleServerReticlePart.alpha.note": [
+  "customServerReticle.alpha.note": [
     "Value 1.0 means full visibility\n",
     "Value 0.0 means zero visibility"
   ],

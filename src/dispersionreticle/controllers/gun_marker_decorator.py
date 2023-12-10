@@ -9,7 +9,7 @@ from dispersionreticle.utils.reticle_registry import ReticleRegistry
 
 
 # gun_marker_ctrl
-class NewGunMarkersDecorator(IGunMarkerController):
+class DispersionGunMarkersDecorator(IGunMarkerController):
     __gunMarkersFlags = aih_global_binding.bindRW(_BINDING_ID.GUN_MARKERS_FLAGS)
     __clientState = aih_global_binding.bindRW(_BINDING_ID.CLIENT_GUN_MARKER_STATE)
     __serverState = aih_global_binding.bindRW(_BINDING_ID.SERVER_GUN_MARKER_STATE)
@@ -17,25 +17,25 @@ class NewGunMarkersDecorator(IGunMarkerController):
 
     def __init__(self,
                  clientController, serverController, dualAccController,
-                 dispersionClientController, dispersionServerController,
-                 latencyClientController,
-                 simpleServerController):
-        super(NewGunMarkersDecorator, self).__init__()
+                 standardFocusedClientController, standardFocusedServerController,
+                 standardHybridClientController,
+                 customServerServerController):
+        super(DispersionGunMarkersDecorator, self).__init__()
         self.__clientController = clientController
         self.__serverController = serverController
         self.__dualAccController = dualAccController
-        self.__dispersionClientController = dispersionClientController
-        self.__dispersionServerController = dispersionServerController
+        self.__standardFocusedClientController = standardFocusedClientController
+        self.__standardFocusedServerController = standardFocusedServerController
 
-        self.__latencyClientController = latencyClientController
+        self.__standardHybridClientController = standardHybridClientController
 
-        self.__simpleServerController = simpleServerController
+        self.__customServerServerController = customServerServerController
 
         self._allControllers = [
             clientController, serverController, dualAccController,
-            dispersionClientController, dispersionServerController,
-            latencyClientController,
-            simpleServerController
+            standardFocusedClientController, standardFocusedServerController,
+            standardHybridClientController,
+            customServerServerController
         ]
 
         self.__serverSizeDispersion = None
@@ -57,16 +57,16 @@ class NewGunMarkersDecorator(IGunMarkerController):
         self.__dualAccController.enable()
         self.__dualAccController.setPosition(self.__dualAccState[0])
 
-        self.__dispersionClientController.enable()
-        self.__dispersionClientController.setPosition(self.__clientState[0])
-        self.__dispersionServerController.enable()
-        self.__dispersionServerController.setPosition(self.__serverState[0])
+        self.__standardFocusedClientController.enable()
+        self.__standardFocusedClientController.setPosition(self.__clientState[0])
+        self.__standardFocusedServerController.enable()
+        self.__standardFocusedServerController.setPosition(self.__serverState[0])
 
-        self.__latencyClientController.enable()
-        self.__latencyClientController.setPosition(self.__clientState[0])
+        self.__standardHybridClientController.enable()
+        self.__standardHybridClientController.setPosition(self.__clientState[0])
 
-        self.__simpleServerController.enable()
-        self.__simpleServerController.setPosition(self.__serverState[0])
+        self.__customServerServerController.enable()
+        self.__customServerServerController.setPosition(self.__serverState[0])
 
     def disable(self):
         for controller in self._allControllers:
@@ -100,12 +100,12 @@ class NewGunMarkersDecorator(IGunMarkerController):
             if bit == _MARKER_FLAG.SERVER_MODE_ENABLED:
                 self.__serverController.setPosition(self.__clientController.getPosition())
                 self.__serverController.setSize(self.__clientController.getSize())
-                self.__dispersionServerController.setPosition(self.__dispersionClientController.getPosition())
-                self.__dispersionServerController.setSize(self.__dispersionClientController.getSize())
-                self.__latencyClientController.setPosition(self.__clientController.getPosition())
-                self.__latencyClientController.setSize(self.__clientController.getSize())
-                self.__simpleServerController.setPosition(self.__clientController.getPosition())
-                self.__simpleServerController.setSize(self.__clientController.getSize())
+                self.__standardFocusedServerController.setPosition(self.__standardFocusedClientController.getPosition())
+                self.__standardFocusedServerController.setSize(self.__standardFocusedClientController.getSize())
+                self.__standardHybridClientController.setPosition(self.__clientController.getPosition())
+                self.__standardHybridClientController.setSize(self.__clientController.getSize())
+                self.__customServerServerController.setPosition(self.__clientController.getPosition())
+                self.__customServerServerController.setSize(self.__clientController.getSize())
         else:
             self.__gunMarkersFlags &= ~bit
 
@@ -122,7 +122,7 @@ class NewGunMarkersDecorator(IGunMarkerController):
             self.__serverState = (
              position, direction, collData)
             if self.__gunMarkersFlags & _MARKER_FLAG.SERVER_MODE_ENABLED:
-                # collect server size dispersion for latency reticle
+                # collect server size dispersion for hybrid reticle
                 self.__serverSizeDispersion = size
                 if BigWorld.player() and BigWorld.player().gunRotator:
                     self.__serverDispersionAngle = BigWorld.player().gunRotator.dispersionAngle
@@ -138,33 +138,32 @@ class NewGunMarkersDecorator(IGunMarkerController):
                 position, direction, collData)
             if self.__gunMarkersFlags & _MARKER_FLAG.CLIENT_MODE_ENABLED:
                 self.__dualAccController.update(markerType, position, direction, size, relaxTime, collData)
-        elif markerType == ReticleRegistry.CLIENT_DISPERSION.gunMarkerType:
+        elif markerType == ReticleRegistry.STANDARD_FOCUSED_CLIENT.gunMarkerType:
             if self.__gunMarkersFlags & _MARKER_FLAG.CLIENT_MODE_ENABLED:
-                self.__dispersionClientController.update(markerType, position, direction, size, relaxTime, collData)
-        elif markerType == ReticleRegistry.SERVER_DISPERSION.gunMarkerType:
+                self.__standardFocusedClientController.update(markerType, position, direction, size, relaxTime, collData)
+        elif markerType == ReticleRegistry.STANDARD_FOCUSED_SERVER.gunMarkerType:
             if self.__gunMarkersFlags & _MARKER_FLAG.SERVER_MODE_ENABLED:
-                self.__dispersionServerController.update(markerType, position, direction, size, relaxTime, collData)
-        elif markerType == ReticleRegistry.CLIENT_LATENCY.gunMarkerType:
+                self.__standardFocusedServerController.update(markerType, position, direction, size, relaxTime, collData)
+        elif markerType == ReticleRegistry.STANDARD_HYBRID_CLIENT.gunMarkerType:
             # this has to be done outside controllers because we have to collect server reticle size
             # also, we will have delayed access to server size, so we need to wait
             # until GunMarkerComponent will provide server data
             if self.__gunMarkersFlags & _MARKER_FLAG.SERVER_MODE_ENABLED:
                 # first calls won't have ready server data yet
                 # just display client size whenever it is not known
-                # it also works well when rendering in replays because there server marker is not called
                 if self.__serverSizeDispersion is not None and self.__serverDispersionAngle is not None:
-                    # scale server size dispersion by distance for latency reticle
+                    # scale server size dispersion by distance for hybrid reticle
                     distance = getDistanceFromSniperViewport(position)
                     serverSize = tuple(i * distance for i in self.__serverSizeDispersion)
 
-                    self.__latencyClientController.setServerDispersionAngle(self.__serverDispersionAngle)
-                    self.__latencyClientController.update(markerType, position, direction, serverSize, relaxTime, collData)
+                    self.__standardHybridClientController.setServerDispersionAngle(self.__serverDispersionAngle)
+                    self.__standardHybridClientController.update(markerType, position, direction, serverSize, relaxTime, collData)
                 else:
-                    self.__latencyClientController.setServerDispersionAngle(None)
-                    self.__latencyClientController.update(markerType, position, direction, size, relaxTime, collData)
-        elif markerType == ReticleRegistry.SERVER_SIMPLE.gunMarkerType:
+                    self.__standardHybridClientController.setServerDispersionAngle(None)
+                    self.__standardHybridClientController.update(markerType, position, direction, size, relaxTime, collData)
+        elif markerType == ReticleRegistry.CUSTOM_SERVER_SERVER.gunMarkerType:
             if self.__gunMarkersFlags & _MARKER_FLAG.SERVER_MODE_ENABLED:
-                self.__simpleServerController.update(markerType, position, direction, size, relaxTime, collData)
+                self.__customServerServerController.update(markerType, position, direction, size, relaxTime, collData)
         else:
             gun_marker_ctrl._logger.warning('Gun maker control is not found by type: %d', markerType)
 

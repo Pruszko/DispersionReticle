@@ -3,115 +3,115 @@
   "checked": "已启用",
   "unchecked": "未启用",
   "defaultValue": "默认",
-  "introPart.label": "配置文件信息",
-  "introPart.header": "配置文件",
-  "introPart.body": [
+  "intro.label": "配置文件信息",
+  "intro.header": "配置文件",
+  "intro.body": [
     "配置文件可以手动更改。\n",
     "修改后可以通过在游戏中使用 Ctrl+P 的快捷键重新加载新的配置文件\n",
     "配置文件位置:\n",
     "- [游戏安装路径]/mods/configs/DispersionReticle/config.json\n"
   ],
-  "introPart.note": [
+  "intro.note": [
     "如果想恢复默认设置，请删除上述文件，并:\n",
     "- 使用上述快捷键重新加载配置，或\n",
     "- 重启游戏\n"
   ],
-  "introPart.attention": [
+  "intro.attention": [
     "不要在设置界面打开的时候使用上面的快捷键。\n"
   ],
-  "dispersionReticlePart.label": "最小落弹环",
-  "dispersionReticlePart.header": "最小落弹环",
-  "dispersionReticlePart.body": [
+  "standardFocusedReticle.label": "最小落弹环",
+  "standardFocusedReticle.header": "最小落弹环",
+  "standardFocusedReticle.body": [
     "在显示标准瞄准环的同时，显示出最小的缩圈大小。\n"
   ],
-  "dispersionReticlePart.note": [
+  "standardFocusedReticle.note": [
     "在打开了插件中的服务器准星选项时最小缩圈将显示在客户端准星上。\n\n"
   ],
-  "dispersionReticlePart.enabled.header": "启用",
-  "dispersionReticlePart.enabled.body": [
+  "standardFocusedReticle.enabled.header": "启用",
+  "standardFocusedReticle.enabled.body": [
     "如果启用则显示这个瞄准环。"
   ],
-  "latencyReticlePart.label": "延迟瞄准环",
-  "latencyReticlePart.header": "延迟瞄准环",
-  "latencyReticlePart.body": [
+  "standardHybridReticle.label": "延迟瞄准环",
+  "standardHybridReticle.header": "延迟瞄准环",
+  "standardHybridReticle.body": [
     "在客户端瞄准环的基础上同时显示服务端瞄准环。\n"
   ],
-  "latencyReticlePart.note": [
+  "standardHybridReticle.note": [
     "开启这个选项后客户端瞄准环和服务端瞄准环的位置差异就清楚可见。\n\n",
     "在想获知服务端准星位置， 同时又想获得客户端的快速响应速度时较为有用。\n\n"
   ],
-  "latencyReticlePart.enabled.header": "启用",
-  "latencyReticlePart.enabled.body": [
+  "standardHybridReticle.enabled.header": "启用",
+  "standardHybridReticle.enabled.body": [
     "如果启用则显示这个瞄准环。"
   ],
-  "latencyReticlePart.hideStandardReticle.header": "隐藏标准瞄准环",
-  "latencyReticlePart.hideStandardReticle.body": [
+  "standardHybridReticle.hideStandardReticle.header": "隐藏标准瞄准环",
+  "standardHybridReticle.hideStandardReticle.body": [
     "如果选中标准客户端瞄准环将不可见， 仅延迟瞄准环可见。\n"
   ],
-  "latencyReticlePart.hideStandardReticle.note": [
+  "standardHybridReticle.hideStandardReticle.note": [
     "在您仅想使用服务端准星时有用。"
   ],
-  "serverReticlePart.label": "服务端瞄准环",
-  "serverReticlePart.header": "服务端瞄准环",
-  "serverReticlePart.body": [
+  "standardServerReticle.label": "服务端瞄准环",
+  "standardServerReticle.header": "服务端瞄准环",
+  "standardServerReticle.body": [
     "在客户端准星显示的同时显示服务端瞄准环。\n\n"
   ],
-  "serverReticlePart.enabled.header": "启用",
-  "serverReticlePart.enabled.body": [
+  "standardServerReticle.enabled.header": "启用",
+  "standardServerReticle.enabled.body": [
     "如果启用则显示这个瞄准环。"
   ],
-  "simpleServerReticlePart.label": "简单服务端瞄准环",
-  "simpleServerReticlePart.header": "简单服务端瞄准环",
-  "simpleServerReticlePart.body": [
+  "customServerReticle.label": "简单服务端瞄准环",
+  "customServerReticle.header": "简单服务端瞄准环",
+  "customServerReticle.body": [
     "添加可自定义形状的服务端准星。\n"
   ],
-  "simpleServerReticlePart.attention": [
+  "customServerReticle.attention": [
     "在火炮视角中，会在左侧默认添加服务端瞄准环而不会显示这个准星。\n\n"
   ],
-  "simpleServerReticlePart.enabled.header": "启用",
-  "simpleServerReticlePart.enabled.body": [
+  "customServerReticle.enabled.header": "启用",
+  "customServerReticle.enabled.body": [
     "如果启用则显示这个瞄准环。"
   ],
-  "simpleServerReticlePart.shape.header": "形状",
-  "simpleServerReticlePart.shape.body": [
+  "customServerReticle.shape.header": "形状",
+  "customServerReticle.shape.body": [
     "这个准星的形状\n"
   ],
-  "simpleServerReticlePart.shape.option.pentagon": "角标落弹环",
-  "simpleServerReticlePart.shape.option.t-shape": "T标落弹环",
-  "simpleServerReticlePart.shape.option.circle": "实线落弹环",
-  "simpleServerReticlePart.shape.option.dashed": "虚线落弹环",
-  "simpleServerReticlePart.color.header": "颜色",
-  "simpleServerReticlePart.color.body": [
+  "customServerReticle.shape.option.pentagon": "角标落弹环",
+  "customServerReticle.shape.option.t-shape": "T标落弹环",
+  "customServerReticle.shape.option.circle": "实线落弹环",
+  "customServerReticle.shape.option.dashed": "虚线落弹环",
+  "customServerReticle.color.header": "颜色",
+  "customServerReticle.color.body": [
     "这个准星的颜色。"
   ],
-  "simpleServerReticlePart.drawCenterDot.header": "绘制中心点",
-  "simpleServerReticlePart.drawCenterDot.body": [
+  "customServerReticle.drawCenterDot.header": "绘制中心点",
+  "customServerReticle.drawCenterDot.body": [
     "如果选中则绘制中心点"
   ],
-  "simpleServerReticlePart.drawOutline.header": "绘制边框",
-  "simpleServerReticlePart.drawOutline.body": [
+  "customServerReticle.drawOutline.header": "绘制边框",
+  "customServerReticle.drawOutline.body": [
     "如果选中，选定的形状之外会显示1像素的黑色边框。\n"
   ],
-  "simpleServerReticlePart.drawOutline.note": [
+  "customServerReticle.drawOutline.note": [
     "可在准星颜色可能和背景颜色混淆时使用。"
   ],
-  "simpleServerReticlePart.blend.header": "混色",
-  "simpleServerReticlePart.blend.body": [
+  "customServerReticle.blend.header": "混色",
+  "customServerReticle.blend.body": [
     "控制瞄准环与背景的融合程度 ",
     "选择 \"dashed\" 形状的瞄准环时 ， 这里选择 1.0 且不选择显示边框可以使得瞄准环更加自然。\n"
   ],
-  "simpleServerReticlePart.blend.note": [
+  "customServerReticle.blend.note": [
     "设置为1.0将完全将瞄准环的颜色叠加到背景之上。\n",
     "设置为0.0则完全用瞄准环的颜色覆盖背景色。\n"
   ],
-  "simpleServerReticlePart.blend.attention": [
+  "customServerReticle.blend.attention": [
     "如果设置为 1.0 则会使得瞄准环始终是亮色。"
   ],
-  "simpleServerReticlePart.alpha.header": "透明度",
-  "simpleServerReticlePart.alpha.body": [
+  "customServerReticle.alpha.header": "透明度",
+  "customServerReticle.alpha.body": [
     "控制显示的瞄准环的透明程度。\n"
   ],
-  "simpleServerReticlePart.alpha.note": [
+  "customServerReticle.alpha.note": [
     "1.0 表示完全可见\n",
     "0.0 则表示完全消隐"
   ],

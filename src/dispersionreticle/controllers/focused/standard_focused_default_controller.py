@@ -6,12 +6,12 @@ from dispersionreticle.settings.config_param import g_configParams
 
 
 # gun_marker_ctrl
-class DispersionDefaultGunMarkerController(_DefaultGunMarkerController):
+class StandardFocusedDefaultGunMarkerController(_DefaultGunMarkerController):
 
     def __init__(self, reticle, enabledFlag=_MARKER_FLAG.UNDEFINED):
-        super(DispersionDefaultGunMarkerController, self).__init__(reticle.gunMarkerType,
-                                                                   reticle.getStandardDataProvider(),
-                                                                   enabledFlag=enabledFlag)
+        super(StandardFocusedDefaultGunMarkerController, self).__init__(reticle.gunMarkerType,
+                                                                        reticle.getStandardDataProvider(),
+                                                                        enabledFlag=enabledFlag)
 
     def update(self, markerType, pos, direction, sizeVector, relaxTime, collData):
         super(_DefaultGunMarkerController, self).update(markerType, pos, direction, sizeVector, relaxTime, collData)

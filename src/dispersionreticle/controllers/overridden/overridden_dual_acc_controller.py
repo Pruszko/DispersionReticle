@@ -1,4 +1,4 @@
-from dispersionreticle.controllers.standard.standard_default_controller import OverriddenDefaultGunMarkerController
+from dispersionreticle.controllers.overridden.overridden_default_controller import OverriddenDefaultGunMarkerController
 
 
 # gun_marker_ctrl

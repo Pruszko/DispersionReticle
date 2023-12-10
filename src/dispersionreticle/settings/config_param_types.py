@@ -10,7 +10,9 @@ logger = logging.getLogger(__name__)
 
 class Param(object):
 
-    def __init__(self, path, defaultValue, disabledValue=None):
+    def __init__(self, configFile, path, defaultValue, disabledValue=None):
+        self.configFile = configFile
+
         self.name = path[-1]
         self.path = path
         self.tokenName = "-".join(self.path)
@@ -21,13 +23,20 @@ class Param(object):
 
         PARAM_REGISTRY[self.tokenName] = self
 
+    def readValueFromConfigFile(self):
+        return self.readValueFromConfigDict(self.configFile.configDict)
+
     def readValueFromConfigDictSafely(self, configDict):
+        value = self.readValueFromConfigDict(configDict)
+        return value if value is not None else self.defaultValue
+
+    def readValueFromConfigDict(self, configDict):
         readValue = None
         prevConfigSection = configDict
 
         for pathSegment in self.path:
             if pathSegment not in prevConfigSection:
-                return self.value
+                return None
 
             dictSection = prevConfigSection[pathSegment]
 
@@ -98,8 +107,8 @@ class Param(object):
 
 class BooleanParam(Param):
 
-    def __init__(self, path, defaultValue=None, disabledValue=None):
-        super(BooleanParam, self).__init__(path, defaultValue, disabledValue)
+    def __init__(self, configFile, path, defaultValue=None, disabledValue=None):
+        super(BooleanParam, self).__init__(configFile, path, defaultValue, disabledValue)
 
     def toMsaValue(self, value):
         return value
@@ -130,8 +139,8 @@ class BooleanParam(Param):
 
 class FloatParam(Param):
 
-    def __init__(self, path, minValue, step, maxValue, defaultValue, disabledValue=None):
-        super(FloatParam, self).__init__(path, defaultValue, disabledValue)
+    def __init__(self, configFile, path, minValue, step, maxValue, defaultValue, disabledValue=None):
+        super(FloatParam, self).__init__(configFile, path, defaultValue, disabledValue)
         self.minValue = minValue
         self.step = step
         self.maxValue = maxValue
@@ -155,8 +164,8 @@ class FloatParam(Param):
 
 class FloatTextParam(Param):
 
-    def __init__(self, path, minValue, maxValue, defaultValue, disabledValue=None):
-        super(FloatTextParam, self).__init__(path, defaultValue, disabledValue)
+    def __init__(self, configFile, path, minValue, maxValue, defaultValue, disabledValue=None):
+        super(FloatTextParam, self).__init__(configFile, path, defaultValue, disabledValue)
         self.minValue = minValue
         self.maxValue = maxValue
 
@@ -195,8 +204,8 @@ class FloatTextParam(Param):
 # it is only possible by up and down arrows, but using them with snapInterval 0.001 is an overkill
 class FloatStepperParam(FloatParam):
 
-    def __init__(self, path, minValue, step, maxValue, defaultValue, disabledValue=None):
-        super(FloatStepperParam, self).__init__(path, minValue, step, maxValue, defaultValue, disabledValue)
+    def __init__(self, configFile, path, minValue, step, maxValue, defaultValue, disabledValue=None):
+        super(FloatStepperParam, self).__init__(configFile, path, minValue, step, maxValue, defaultValue, disabledValue)
 
     def renderParam(self, header, body=None, note=None, attention=None):
         return {
@@ -218,8 +227,8 @@ class FloatStepperParam(FloatParam):
 
 class FloatSliderParam(FloatParam):
 
-    def __init__(self, path, minValue, step, maxValue, defaultValue, disabledValue=None):
-        super(FloatSliderParam, self).__init__(path, minValue, step, maxValue, defaultValue, disabledValue)
+    def __init__(self, configFile, path, minValue, step, maxValue, defaultValue, disabledValue=None):
+        super(FloatSliderParam, self).__init__(configFile, path, minValue, step, maxValue, defaultValue, disabledValue)
 
     def renderParam(self, header, body=None, note=None, attention=None):
         return {
@@ -242,8 +251,8 @@ class FloatSliderParam(FloatParam):
 
 class ColorParam(Param):
 
-    def __init__(self, path, defaultValue=None, disabledValue=None):
-        super(ColorParam, self).__init__(path, defaultValue, disabledValue)
+    def __init__(self, configFile, path, defaultValue=None, disabledValue=None):
+        super(ColorParam, self).__init__(configFile, path, defaultValue, disabledValue)
 
     def toMsaValue(self, value):
         return self.__colorToHex(value)
@@ -288,8 +297,8 @@ class Option(object):
 
 class OptionsParam(Param):
 
-    def __init__(self, path, options, defaultValue, disabledValue=None):
-        super(OptionsParam, self).__init__(path, defaultValue, disabledValue)
+    def __init__(self, configFile, path, options, defaultValue, disabledValue=None):
+        super(OptionsParam, self).__init__(configFile, path, defaultValue, disabledValue)
         self.options = options
 
     def toMsaValue(self, value):
