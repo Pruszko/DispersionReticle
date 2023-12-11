@@ -1,6 +1,6 @@
 package com.github.pruszko.dispersionreticle.marker.simple 
 {
-	import com.github.pruszko.dispersionreticle.marker.SimpleStatefulMarker;
+	import com.github.pruszko.dispersionreticle.marker.CustomStatefulMarker;
 	import com.github.pruszko.dispersionreticle.utils.Utils;
 	
 	public class DashedStatefulRenderer extends StatefulRenderer
@@ -13,7 +13,7 @@ package com.github.pruszko.dispersionreticle.marker.simple
 		
 		private var _circleRadius:Number = 0.0;
 		
-		public function DashedStatefulRenderer(simpleMarker:SimpleStatefulMarker) 
+		public function DashedStatefulRenderer(simpleMarker:CustomStatefulMarker) 
 		{
 			super(simpleMarker);
 		}

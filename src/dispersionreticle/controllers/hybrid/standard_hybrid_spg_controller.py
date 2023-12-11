@@ -10,17 +10,17 @@ class StandardHybridSPGGunMarkerController(OverriddenSPGGunMarkerController):
         super(StandardHybridSPGGunMarkerController, self).__init__(reticle.gunMarkerType,
                                                                    reticle.getSpgDataProvider(),
                                                                    enabledFlag=enabledFlag)
+        self._reticle = reticle
         self.__serverDispersionAngle = None
 
-    def _updateDispersionData(self):
-        dispersionAngle = self._gunRotator.dispersionAngle
-        if self.__serverDispersionAngle is not None:
-            dispersionAngle = self.__serverDispersionAngle
+    def _interceptAngle(self, dispersionAngle):
+        if self.__serverDispersionAngle is None:
+            return dispersionAngle
 
-        # here we avoid replay-specific code, it is handled by vanilla controllers
-        # even if their markers may not be present
+        return self.__serverDispersionAngle
 
-        self._dataProvider.setupConicDispersion(dispersionAngle)
+    def _interceptReplayLogic(self, dispersionAngle):
+        return dispersionAngle
 
     def setServerDispersionAngle(self, serverDispersionAngle):
         self.__serverDispersionAngle = serverDispersionAngle

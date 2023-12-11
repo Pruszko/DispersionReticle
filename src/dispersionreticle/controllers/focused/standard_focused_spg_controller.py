@@ -1,6 +1,6 @@
-import BigWorld
 from AvatarInputHandler.gun_marker_ctrl import _MARKER_FLAG
 
+from dispersionreticle.controllers.focused import getFocusedDispersionAngle, getFocusedDispersionSize
 from dispersionreticle.controllers.overridden.overridden_spg_controller import OverriddenSPGGunMarkerController
 
 
@@ -11,32 +11,13 @@ class StandardFocusedSPGGunMarkerController(OverriddenSPGGunMarkerController):
         super(StandardFocusedSPGGunMarkerController, self).__init__(reticle.gunMarkerType,
                                                                     reticle.getSpgDataProvider(),
                                                                     enabledFlag=enabledFlag)
+        self._reticle = reticle
 
-    def _updateDispersionData(self):
-        # dispersionAngle = self._gunRotator.dispersionAngle
-        dispersionAngle = getFocusedDispersionAngle()
+    def _interceptSize(self, size, pos, direction, relaxTime, collData):
+        return getFocusedDispersionSize(pos)
 
-        # here we avoid replay-specific code, it is handled by vanilla controllers
-        # even if their markers may not be present
+    def _interceptAngle(self, dispersionAngle):
+        return getFocusedDispersionAngle()
 
-        self._dataProvider.setupConicDispersion(dispersionAngle)
-
-
-def getFocusedDispersionAngle():
-    playerAvatar = BigWorld.player()
-    vehicleDesc = playerAvatar._PlayerAvatar__getDetailedVehicleDescriptor()
-
-    # gun dispersion per 1m unit
-    shotDispersionAngle = vehicleDesc.gun.shotDispersionAngle
-
-    # multiplier that accounts crew, food, etc.
-    # PlayerAvatar -> updateTargetingInfo
-    # dispersionInfo[0] = shotDispMultiplierFactor
-    # dispersionInfo[1] = gunShotDispersionFactorsTurretRotation
-    # dispersionInfo[2] = chassisShotDispersionFactorsMovement
-    # dispersionInfo[3] = chassisShotDispersionFactorsRotation
-    # dispersionInfo[4] = aimingTime
-    shotDispMultiplierFactor = playerAvatar._PlayerAvatar__dispersionInfo[0]
-
-    # just return actual angle for conic dispersion
-    return shotDispersionAngle * shotDispMultiplierFactor
+    def _interceptReplayLogic(self, dispersionAngle):
+        return dispersionAngle

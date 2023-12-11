@@ -56,11 +56,11 @@ class ConfigFiles(object):
     def __init__(self):
         self.config = ConfigFile(CONFIG_TEMPLATE, os.path.join(CONFIG_FILE_DIR, "config.json"))
         self.configFocusedReticle = ConfigFile(CONFIG_FOCUSED_RETICLE_TEMPLATE, os.path.join(CONFIG_FILE_DIR, "focused-reticle.json"))
-        self.configLatencyReticle = ConfigFile(CONFIG_HYBRID_RETICLE_TEMPLATE, os.path.join(CONFIG_FILE_DIR, "hybrid-reticle.json"))
+        self.configHybridReticle = ConfigFile(CONFIG_HYBRID_RETICLE_TEMPLATE, os.path.join(CONFIG_FILE_DIR, "hybrid-reticle.json"))
         self.configServerReticle = ConfigFile(CONFIG_SERVER_RETICLE_TEMPLATE, os.path.join(CONFIG_FILE_DIR, "server-reticle.json"))
 
         self.allConfigFiles = [self.config,
-                               self.configFocusedReticle, self.configLatencyReticle, self.configServerReticle]
+                               self.configFocusedReticle, self.configHybridReticle, self.configServerReticle]
 
     def loadConfigDict(self):
         for configFile in self.allConfigFiles:

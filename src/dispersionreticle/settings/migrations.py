@@ -176,29 +176,51 @@ def v3_0_0_splitConfigFile():
     g_configFiles.configFocusedReticle.configDict = {}
     focusedReticleConfigDict = g_configFiles.configFocusedReticle.configDict
     focusedReticleConfigDict["__version__"] = configDict["__version__"]
+
+    # standard focused reticle
     focusedReticleConfigDict["standard-focused-reticle"] = {}
     focusedReticleConfigDict["standard-focused-reticle"]["enabled"] = configDict["dispersion-reticle"]["enabled"]
-    del configDict["dispersion-reticle"]["enabled"]
     del configDict["dispersion-reticle"]
 
+    # custom focused reticle
+    focusedReticleConfigDict["custom-focused-reticle"] = {}
+    focusedReticleConfigDict["custom-focused-reticle"]["enabled"] = False
+    focusedReticleConfigDict["custom-focused-reticle"]["shape"] = "circle"
+    focusedReticleConfigDict["custom-focused-reticle"]["color"] = (255, 0, 255)
+    focusedReticleConfigDict["custom-focused-reticle"]["draw-center-dot"] = False
+    focusedReticleConfigDict["custom-focused-reticle"]["draw-outline"] = False
+    focusedReticleConfigDict["custom-focused-reticle"]["blend"] = 0.5
+    focusedReticleConfigDict["custom-focused-reticle"]["alpha"] = 1.0
+
     # hybrid reticle
-    g_configFiles.configLatencyReticle.configDict = {}
-    latencyReticleConfigDict = g_configFiles.configLatencyReticle.configDict
-    latencyReticleConfigDict["__version__"] = configDict["__version__"]
-    latencyReticleConfigDict["standard-hybrid-reticle"] = {}
-    latencyReticleConfigDict["standard-hybrid-reticle"]["enabled"] = configDict["latency-reticle"]["enabled"]
-    latencyReticleConfigDict["standard-hybrid-reticle"]["hide-standard-reticle"] = configDict["latency-reticle"]["hide-standard-reticle"]
-    del configDict["latency-reticle"]["enabled"]
-    del configDict["latency-reticle"]["hide-standard-reticle"]
+    g_configFiles.configHybridReticle.configDict = {}
+    hybridReticleConfigDict = g_configFiles.configHybridReticle.configDict
+    hybridReticleConfigDict["__version__"] = configDict["__version__"]
+
+    # standard hybrid reticle
+    hybridReticleConfigDict["standard-hybrid-reticle"] = {}
+    hybridReticleConfigDict["standard-hybrid-reticle"]["enabled"] = configDict["latency-reticle"]["enabled"]
+    hybridReticleConfigDict["standard-hybrid-reticle"]["hide-standard-reticle"] = configDict["latency-reticle"]["hide-standard-reticle"]
     del configDict["latency-reticle"]
+
+    # custom hybrid reticle
+    hybridReticleConfigDict["custom-hybrid-reticle"] = {}
+    hybridReticleConfigDict["custom-hybrid-reticle"]["enabled"] = False
+    hybridReticleConfigDict["custom-hybrid-reticle"]["shape"] = "circle"
+    hybridReticleConfigDict["custom-hybrid-reticle"]["color"] = (255, 0, 255)
+    hybridReticleConfigDict["custom-hybrid-reticle"]["draw-center-dot"] = False
+    hybridReticleConfigDict["custom-hybrid-reticle"]["draw-outline"] = False
+    hybridReticleConfigDict["custom-hybrid-reticle"]["blend"] = 0.5
+    hybridReticleConfigDict["custom-hybrid-reticle"]["alpha"] = 1.0
 
     # server reticle
     g_configFiles.configServerReticle.configDict = {}
     serverReticleConfigDict = g_configFiles.configServerReticle.configDict
     serverReticleConfigDict["__version__"] = configDict["__version__"]
+
+    # standard server reticle
     serverReticleConfigDict["standard-server-reticle"] = {}
     serverReticleConfigDict["standard-server-reticle"]["enabled"] = configDict["server-reticle"]["enabled"]
-    del configDict["server-reticle"]["enabled"]
     del configDict["server-reticle"]
 
     # custom server reticle
@@ -210,13 +232,6 @@ def v3_0_0_splitConfigFile():
     serverReticleConfigDict["custom-server-reticle"]["draw-outline"] = configDict["simple-server-reticle"]["draw-outline"]
     serverReticleConfigDict["custom-server-reticle"]["blend"] = configDict["simple-server-reticle"]["blend"]
     serverReticleConfigDict["custom-server-reticle"]["alpha"] = configDict["simple-server-reticle"]["alpha"]
-    del configDict["simple-server-reticle"]["enabled"]
-    del configDict["simple-server-reticle"]["shape"]
-    del configDict["simple-server-reticle"]["color"]
-    del configDict["simple-server-reticle"]["draw-center-dot"]
-    del configDict["simple-server-reticle"]["draw-outline"]
-    del configDict["simple-server-reticle"]["blend"]
-    del configDict["simple-server-reticle"]["alpha"]
     del configDict["simple-server-reticle"]
 
     logger.info("Migration finished.")

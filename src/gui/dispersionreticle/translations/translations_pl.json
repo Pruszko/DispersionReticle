@@ -73,52 +73,52 @@
     "Dla widoku artyleryjskiego, niejawnie włączone zostanie kółko serwerowe z lewej strony ",
     "zamiast tego kółka."
   ],
-  "customServerReticle.enabled.header": "Czy włączone",
-  "customServerReticle.enabled.body": [
+  "customReticle.enabled.header": "Czy włączone",
+  "customReticle.enabled.body": [
     "Jeżeli zaznaczone, wyświetl to kółko."
   ],
-  "customServerReticle.shape.header": "Kształt",
-  "customServerReticle.shape.body": [
+  "customReticle.shape.header": "Kształt",
+  "customReticle.shape.body": [
     "Kształt jaki to kółko powinno mieć."
   ],
-  "customServerReticle.shape.option.pentagon": "Pięciokąt",
-  "customServerReticle.shape.option.t-shape": "Kształt T",
-  "customServerReticle.shape.option.circle": "Okrąg",
-  "customServerReticle.shape.option.dashed": "Kreskowany",
-  "customServerReticle.color.header": "Kolor",
-  "customServerReticle.color.body": [
+  "customReticle.shape.option.pentagon": "Pięciokąt",
+  "customReticle.shape.option.t-shape": "Kształt T",
+  "customReticle.shape.option.circle": "Okrąg",
+  "customReticle.shape.option.dashed": "Kreskowany",
+  "customReticle.color.header": "Kolor",
+  "customReticle.color.body": [
     "Koloruje to kółko wybranym kolorem."
   ],
-  "customServerReticle.drawCenterDot.header": "Czy rysować środkową kropkę",
-  "customServerReticle.drawCenterDot.body": [
+  "customReticle.drawCenterDot.header": "Czy rysować środkową kropkę",
+  "customReticle.drawCenterDot.body": [
     "Jeżeli zaznaczone, kształt kółka będzie dodatkowo wyświetlany ze środkową kropką."
   ],
-  "customServerReticle.drawOutline.header": "Czy rysować obwódkę",
-  "customServerReticle.drawOutline.body": [
+  "customReticle.drawOutline.header": "Czy rysować obwódkę",
+  "customReticle.drawOutline.body": [
     "Jeżeli zaznaczone, kształt kółka będzie dodatkowo wyświetlany z 1 pikselową czarną obwódką."
   ],
-  "customServerReticle.drawOutline.note": [
+  "customReticle.drawOutline.note": [
     "Przydatne gdy kolor kształtu zlewa się z tłem."
   ],
-  "customServerReticle.blend.header": "Zlewanie koloru z tłem",
-  "customServerReticle.blend.body": [
+  "customReticle.blend.header": "Zlewanie koloru z tłem",
+  "customReticle.blend.body": [
     "Kontroluje, jak bardzo kolor kółka będzie zlewać się z kolorem tła zamiast go nadpisywać.\n",
     "Standardowe \"kreskowe\" kółko używa tego z wartością 1.0 bez obwódki by kółko wyglądało bardziej naturalnie."
   ],
-  "customServerReticle.blend.note": [
+  "customReticle.blend.note": [
     "Ustaw ją na 1.0 jeżeli chcesz, by kolor pełnił rolę dodatku do koloru tła.\n",
     "Ustaw ją na 0.0 jeżeli chcesz, by kolor w pełni nadpisywał kolor tła.\n",
     "Wartości między nimi kontroluję siłę danego efektu im bliżej się go znajdują."
   ],
-  "customServerReticle.blend.attention": [
+  "customReticle.blend.attention": [
     "Wartość 1.0 praktycznie uniemożliwia Ci uzyskanie ciemnych kolorów\n",
     "ponieważ ... czarny kolor + kolor tła = kolor tła."
   ],
-  "customServerReticle.alpha.header": "Przezroczystość",
-  "customServerReticle.alpha.body": [
+  "customReticle.alpha.header": "Przezroczystość",
+  "customReticle.alpha.body": [
     "Kontroluje przezroczystość wyświetlanego kółka."
   ],
-  "customServerReticle.alpha.note": [
+  "customReticle.alpha.note": [
     "Wartość 1.0 oznacza pełną widoczność\n",
     "Wartość 0.0 oznacza zerową widoczność"
   ],

@@ -52,7 +52,7 @@ _logger = gm_components._logger
 ###########################################################
 
 # gm_components
-class _AS3GunMarkerProxy(object):
+class _CustomGunMarkerProxy(object):
 
     def __init__(self, gunMarkerComponent):
         self.markerName = gunMarkerComponent.getName()
@@ -65,11 +65,11 @@ class _AS3GunMarkerProxy(object):
 
 
 # gm_components
-class AS3GunMarkerComponent(GunMarkerComponent):
+class CustomGunMarkerComponent(GunMarkerComponent):
 
     def _createView(self, container):
         # imitate GUI.WGCrosshairFlash data provider methods
-        return _AS3GunMarkerProxy(self)
+        return _CustomGunMarkerProxy(self)
 
     # because we can't add our markers to CrosshairPanelContainer GUI, we need
     # to skip those steps when adding/removing it from GunMarkerComponents
@@ -124,6 +124,9 @@ GUN_MARKERS_PRIORITY += [
     _CONSTANTS.DEBUG_SPG_GUN_MARKER_NAME
 ]
 
+GUN_MARKERS_PRIORITY += ReticleRegistry.CUSTOM_FOCUSED_CLIENT.getMarkerNames()
+GUN_MARKERS_PRIORITY += ReticleRegistry.CUSTOM_FOCUSED_SERVER.getMarkerNames()
+GUN_MARKERS_PRIORITY += ReticleRegistry.CUSTOM_HYBRID_CLIENT.getMarkerNames()
 GUN_MARKERS_PRIORITY += ReticleRegistry.CUSTOM_SERVER_SERVER.getMarkerNames()
 
 

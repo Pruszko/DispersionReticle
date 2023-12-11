@@ -96,6 +96,7 @@ class TranslationList(TranslationBase):
         return "".join(DEFAULT_TRANSLATIONS_MAP[self._tokenName])
 
 
+# TODO add all translations
 class Tr(object):
     # common
     MODNAME = TranslationElement("modname")
@@ -140,41 +141,42 @@ class Tr(object):
     STANDARD_SERVER_RETICLE_ENABLED_HEADER = TranslationElement("standardServerReticle.enabled.header")
     STANDARD_SERVER_RETICLE_ENABLED_BODY = TranslationList("standardServerReticle.enabled.body")
 
-    # simple server reticle
+    # custom server reticle
     CUSTOM_SERVER_RETICLE_LABEL = TranslationElement("customServerReticle.label")
     CUSTOM_SERVER_RETICLE_HEADER = TranslationElement("customServerReticle.header")
     CUSTOM_SERVER_RETICLE_BODY = TranslationList("customServerReticle.body")
     CUSTOM_SERVER_RETICLE_ATTENTION = TranslationList("customServerReticle.attention")
 
-    CUSTOM_SERVER_RETICLE_ENABLED_HEADER = TranslationElement("customServerReticle.enabled.header")
-    CUSTOM_SERVER_RETICLE_ENABLED_BODY = TranslationList("customServerReticle.enabled.body")
+    # commons for custom reticle
+    CUSTOM_RETICLE_ENABLED_HEADER = TranslationElement("customReticle.enabled.header")
+    CUSTOM_RETICLE_ENABLED_BODY = TranslationList("customReticle.enabled.body")
 
-    CUSTOM_SERVER_RETICLE_SHAPE_HEADER = TranslationElement("customServerReticle.shape.header")
-    CUSTOM_SERVER_RETICLE_SHAPE_BODY = TranslationList("customServerReticle.shape.body")
+    CUSTOM_RETICLE_SHAPE_HEADER = TranslationElement("customReticle.shape.header")
+    CUSTOM_RETICLE_SHAPE_BODY = TranslationList("customReticle.shape.body")
 
-    CUSTOM_SERVER_RETICLE_SHAPE_OPTION_PENTAGON = TranslationElement("customServerReticle.shape.option.pentagon")
-    CUSTOM_SERVER_RETICLE_SHAPE_OPTION_T_SHAPE = TranslationElement("customServerReticle.shape.option.t-shape")
-    CUSTOM_SERVER_RETICLE_SHAPE_OPTION_CIRCLE = TranslationElement("customServerReticle.shape.option.circle")
-    CUSTOM_SERVER_RETICLE_SHAPE_OPTION_DASHED = TranslationElement("customServerReticle.shape.option.dashed")
+    CUSTOM_RETICLE_SHAPE_OPTION_PENTAGON = TranslationElement("customReticle.shape.option.pentagon")
+    CUSTOM_RETICLE_SHAPE_OPTION_T_SHAPE = TranslationElement("customReticle.shape.option.t-shape")
+    CUSTOM_RETICLE_SHAPE_OPTION_CIRCLE = TranslationElement("customReticle.shape.option.circle")
+    CUSTOM_RETICLE_SHAPE_OPTION_DASHED = TranslationElement("customReticle.shape.option.dashed")
 
-    CUSTOM_SERVER_RETICLE_COLOR_HEADER = TranslationElement("customServerReticle.color.header")
-    CUSTOM_SERVER_RETICLE_COLOR_BODY = TranslationList("customServerReticle.color.body")
+    CUSTOM_RETICLE_COLOR_HEADER = TranslationElement("customReticle.color.header")
+    CUSTOM_RETICLE_COLOR_BODY = TranslationList("customReticle.color.body")
 
-    CUSTOM_SERVER_RETICLE_DRAW_CENTER_DOT_HEADER = TranslationElement("customServerReticle.drawCenterDot.header")
-    CUSTOM_SERVER_RETICLE_DRAW_CENTER_DOT_BODY = TranslationList("customServerReticle.drawCenterDot.body")
+    CUSTOM_RETICLE_DRAW_CENTER_DOT_HEADER = TranslationElement("customReticle.drawCenterDot.header")
+    CUSTOM_RETICLE_DRAW_CENTER_DOT_BODY = TranslationList("customReticle.drawCenterDot.body")
 
-    CUSTOM_SERVER_RETICLE_DRAW_OUTLINE_HEADER = TranslationElement("customServerReticle.drawOutline.header")
-    CUSTOM_SERVER_RETICLE_DRAW_OUTLINE_BODY = TranslationList("customServerReticle.drawOutline.body")
-    CUSTOM_SERVER_RETICLE_DRAW_OUTLINE_NOTE = TranslationList("customServerReticle.drawOutline.note")
+    CUSTOM_RETICLE_DRAW_OUTLINE_HEADER = TranslationElement("customReticle.drawOutline.header")
+    CUSTOM_RETICLE_DRAW_OUTLINE_BODY = TranslationList("customReticle.drawOutline.body")
+    CUSTOM_RETICLE_DRAW_OUTLINE_NOTE = TranslationList("customReticle.drawOutline.note")
 
-    CUSTOM_SERVER_RETICLE_BLEND_HEADER = TranslationElement("customServerReticle.blend.header")
-    CUSTOM_SERVER_RETICLE_BLEND_BODY = TranslationList("customServerReticle.blend.body")
-    CUSTOM_SERVER_RETICLE_BLEND_NOTE = TranslationList("customServerReticle.blend.note")
-    CUSTOM_SERVER_RETICLE_BLEND_ATTENTION = TranslationList("customServerReticle.blend.attention")
+    CUSTOM_RETICLE_BLEND_HEADER = TranslationElement("customReticle.blend.header")
+    CUSTOM_RETICLE_BLEND_BODY = TranslationList("customReticle.blend.body")
+    CUSTOM_RETICLE_BLEND_NOTE = TranslationList("customReticle.blend.note")
+    CUSTOM_RETICLE_BLEND_ATTENTION = TranslationList("customReticle.blend.attention")
 
-    CUSTOM_SERVER_RETICLE_ALPHA_HEADER = TranslationElement("customServerReticle.alpha.header")
-    CUSTOM_SERVER_RETICLE_ALPHA_BODY = TranslationList("customServerReticle.alpha.body")
-    CUSTOM_SERVER_RETICLE_ALPHA_NOTE = TranslationList("customServerReticle.alpha.note")
+    CUSTOM_RETICLE_ALPHA_HEADER = TranslationElement("customReticle.alpha.header")
+    CUSTOM_RETICLE_ALPHA_BODY = TranslationList("customReticle.alpha.body")
+    CUSTOM_RETICLE_ALPHA_NOTE = TranslationList("customReticle.alpha.note")
 
     # reticle size multiplier
     RETICLE_SIZE_MULTIPLIER_HEADER = TranslationElement("reticleSizeMultiplier.header")

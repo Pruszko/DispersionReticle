@@ -68,50 +68,50 @@
   "customServerReticle.attention": [
     "在火炮视角中，会在左侧默认添加服务端瞄准环而不会显示这个准星。\n\n"
   ],
-  "customServerReticle.enabled.header": "启用",
-  "customServerReticle.enabled.body": [
+  "customReticle.enabled.header": "启用",
+  "customReticle.enabled.body": [
     "如果启用则显示这个瞄准环。"
   ],
-  "customServerReticle.shape.header": "形状",
-  "customServerReticle.shape.body": [
+  "customReticle.shape.header": "形状",
+  "customReticle.shape.body": [
     "这个准星的形状\n"
   ],
-  "customServerReticle.shape.option.pentagon": "角标落弹环",
-  "customServerReticle.shape.option.t-shape": "T标落弹环",
-  "customServerReticle.shape.option.circle": "实线落弹环",
-  "customServerReticle.shape.option.dashed": "虚线落弹环",
-  "customServerReticle.color.header": "颜色",
-  "customServerReticle.color.body": [
+  "customReticle.shape.option.pentagon": "角标落弹环",
+  "customReticle.shape.option.t-shape": "T标落弹环",
+  "customReticle.shape.option.circle": "实线落弹环",
+  "customReticle.shape.option.dashed": "虚线落弹环",
+  "customReticle.color.header": "颜色",
+  "customReticle.color.body": [
     "这个准星的颜色。"
   ],
-  "customServerReticle.drawCenterDot.header": "绘制中心点",
-  "customServerReticle.drawCenterDot.body": [
+  "customReticle.drawCenterDot.header": "绘制中心点",
+  "customReticle.drawCenterDot.body": [
     "如果选中则绘制中心点"
   ],
-  "customServerReticle.drawOutline.header": "绘制边框",
-  "customServerReticle.drawOutline.body": [
+  "customReticle.drawOutline.header": "绘制边框",
+  "customReticle.drawOutline.body": [
     "如果选中，选定的形状之外会显示1像素的黑色边框。\n"
   ],
-  "customServerReticle.drawOutline.note": [
+  "customReticle.drawOutline.note": [
     "可在准星颜色可能和背景颜色混淆时使用。"
   ],
-  "customServerReticle.blend.header": "混色",
-  "customServerReticle.blend.body": [
+  "customReticle.blend.header": "混色",
+  "customReticle.blend.body": [
     "控制瞄准环与背景的融合程度 ",
     "选择 \"dashed\" 形状的瞄准环时 ， 这里选择 1.0 且不选择显示边框可以使得瞄准环更加自然。\n"
   ],
-  "customServerReticle.blend.note": [
+  "customReticle.blend.note": [
     "设置为1.0将完全将瞄准环的颜色叠加到背景之上。\n",
     "设置为0.0则完全用瞄准环的颜色覆盖背景色。\n"
   ],
-  "customServerReticle.blend.attention": [
+  "customReticle.blend.attention": [
     "如果设置为 1.0 则会使得瞄准环始终是亮色。"
   ],
-  "customServerReticle.alpha.header": "透明度",
-  "customServerReticle.alpha.body": [
+  "customReticle.alpha.header": "透明度",
+  "customReticle.alpha.body": [
     "控制显示的瞄准环的透明程度。\n"
   ],
-  "customServerReticle.alpha.note": [
+  "customReticle.alpha.note": [
     "1.0 表示完全可见\n",
     "0.0 则表示完全消隐"
   ],

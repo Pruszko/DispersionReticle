@@ -1,6 +1,7 @@
 package com.github.pruszko.dispersionreticle.marker 
 {
 	import com.github.pruszko.dispersionreticle.DispersionReticleFlash;
+	import com.github.pruszko.dispersionreticle.config.marker.DisposableCustomMarkerConfig;
 	import com.github.pruszko.dispersionreticle.marker.simple.CircleStatefulRenderer;
 	import com.github.pruszko.dispersionreticle.marker.simple.DashedStatefulRenderer;
 	import com.github.pruszko.dispersionreticle.marker.simple.PentagonStatefulRenderer;
@@ -11,18 +12,20 @@ package com.github.pruszko.dispersionreticle.marker
 	import flash.display.BlendMode;
 	import flash.display.LineScaleMode;
 	
-	public class SimpleStatefulMarker extends StatefulMarker
+	public class CustomStatefulMarker extends StatefulMarker
 	{
 		
-		public static const GUN_MARKER_TYPE:int = 7;
+		private var _customMarkerConfig:DisposableCustomMarkerConfig;
 		
 		private var _shape:DisposableCustomShape;
 		private var _outlineShape:DisposableCustomShape;
 		private var _statefulRenderers:Object;
 		
-		public function SimpleStatefulMarker(app:DispersionReticleFlash, gunMarkerType:int, isServerReticle:Boolean)
+		public function CustomStatefulMarker(app:DispersionReticleFlash, gunMarkerType:int, customMarkerConfig:DisposableCustomMarkerConfig)
 		{
-			super(app, gunMarkerType, isServerReticle);
+			super(app, gunMarkerType);
+			
+			this._customMarkerConfig = customMarkerConfig;
 			
 			this._shape = new DisposableCustomShape()
 			addChild(_shape);
@@ -70,7 +73,7 @@ package com.github.pruszko.dispersionreticle.marker
 		{
 			super.renderState();
 			
-			this.alpha = app.config.simpleServerReticle.alpha
+			this.alpha = _customMarkerConfig.alpha;
 			
 			_shape.setBlendStrength(blendStrength);
 			_shape.clear();
@@ -103,27 +106,27 @@ package com.github.pruszko.dispersionreticle.marker
 		
 		public function get fillColor() : Number
 		{
-			return app.config.simpleServerReticle.color;
+			return _customMarkerConfig.color;
 		}
 		
 		public function get selectedShape() : String
 		{
-			return app.config.simpleServerReticle.shape;
+			return _customMarkerConfig.shape;
 		}
 		
 		public function get blendStrength() : Number
 		{
-			return app.config.simpleServerReticle.blend;
+			return _customMarkerConfig.blend;
 		}
 		
 		public function get shouldDrawCenterDot() : Boolean
 		{
-			return app.config.simpleServerReticle.drawCenterDot;
+			return _customMarkerConfig.drawCenterDot;
 		}
 		
 		public function get shouldDrawOutline() : Boolean
 		{
-			return app.config.simpleServerReticle.drawOutline;
+			return _customMarkerConfig.drawOutline;
 		}
 		
 	}

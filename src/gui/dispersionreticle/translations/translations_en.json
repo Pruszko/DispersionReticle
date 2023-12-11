@@ -21,10 +21,10 @@
     "Don't use CTRL + P hotkey with open mod configurator.\n",
     "This gui won't notice it unless reopened."
   ],
-  "standardFocusedReticle.label": "Dispersion reticle",
-  "standardFocusedReticle.header": "Dispersion reticle",
+  "standardFocusedReticle.label": "Standard focused reticle",
+  "standardFocusedReticle.header": "Standard focused reticle",
   "standardFocusedReticle.body": [
-    "Adds reticle displaying fully-focused dispersion to standard reticle."
+    "Adds standard reticle displaying fully-focused dispersion to standard reticle."
   ],
   "standardFocusedReticle.note": [
     "When both client-side and server-side reticle are on, it attaches to client-side reticle."
@@ -33,10 +33,19 @@
   "standardFocusedReticle.enabled.body": [
     "If checked, display this reticle."
   ],
-  "standardHybridReticle.label": "Latency reticle",
-  "standardHybridReticle.header": "Latency reticle",
+  "customFocusedReticle.label": "Custom focused reticle",
+  "customFocusedReticle.header": "Custom focused reticle",
+  "customFocusedReticle.body": [
+    "Adds custom reticle with customizable shape displaying fully-focused dispersion to standard reticle."
+  ],
+  "customFocusedReticle.attention": [
+    "For SPG artillery view, it will implicitly enable above Standard focused reticle ",
+    "instead of this reticle."
+  ],
+  "standardHybridReticle.label": "Standard hybrid reticle",
+  "standardHybridReticle.header": "Standard hybrid reticle",
   "standardHybridReticle.body": [
-    "Adds reticle displaying current server-side dispersion to client-side reticle."
+    "Adds standard reticle displaying current server-side dispersion to client-side reticle."
   ],
   "standardHybridReticle.note": [
     "Basically, client-side position, but server-side dispersion.\n",
@@ -54,6 +63,20 @@
   "standardHybridReticle.hideStandardReticle.note": [
     "Useful if you want to only use latency reticle instead of standard reticle."
   ],
+  "customHybridReticle.label": "Custom hybrid reticle",
+  "customHybridReticle.header": "Custom hybrid reticle",
+  "customHybridReticle.body": [
+    "Adds standard reticle displaying current server-side dispersion to client-side reticle."
+  ],
+  "customHybridReticle.note": [
+    "Basically, client-side position, but server-side dispersion.\n",
+    "By this, client-side and server-side dispersion desynchronization is clearly visible.\n\n",
+    "Useful if you want to know server-side dispersion, but still want client-side responsiveness."
+  ],
+  "customHybridReticle.attention": [
+    "For SPG artillery view, it will implicitly enable above Standard hybrid reticle ",
+    "instead of this reticle."
+  ],
   "standardServerReticle.label": "Server reticle",
   "standardServerReticle.header": "Server reticle",
   "standardServerReticle.body": [
@@ -63,61 +86,61 @@
   "standardServerReticle.enabled.body": [
     "If checked, display this reticle."
   ],
-  "customServerReticle.label": "Simple server reticle",
-  "customServerReticle.header": "Simple server reticle",
+  "customServerReticle.label": "Custom server reticle",
+  "customServerReticle.header": "Custom server reticle",
   "customServerReticle.body": [
-    "Adds server-side reticle with customizable shape alongside with client-side reticle."
+    "Adds server-side custom reticle with customizable shape alongside with client-side reticle."
   ],
   "customServerReticle.attention": [
-    "For SPG artillery view, it will implicitly enable Server reticle on the left ",
+    "For SPG artillery view, it will implicitly enable above Standard server reticle ",
     "instead of this reticle."
   ],
-  "customServerReticle.enabled.header": "Enabled",
-  "customServerReticle.enabled.body": [
+  "customReticle.enabled.header": "Enabled",
+  "customReticle.enabled.body": [
     "If checked, display this reticle."
   ],
-  "customServerReticle.shape.header": "Shape",
-  "customServerReticle.shape.body": [
+  "customReticle.shape.header": "Shape",
+  "customReticle.shape.body": [
     "Shape which this reticle should have."
   ],
-  "customServerReticle.shape.option.pentagon": "Pentagon",
-  "customServerReticle.shape.option.t-shape": "T-shape",
-  "customServerReticle.shape.option.circle": "Circle",
-  "customServerReticle.shape.option.dashed": "Dashed",
-  "customServerReticle.color.header": "Color",
-  "customServerReticle.color.body": [
+  "customReticle.shape.option.pentagon": "Pentagon",
+  "customReticle.shape.option.t-shape": "T-shape",
+  "customReticle.shape.option.circle": "Circle",
+  "customReticle.shape.option.dashed": "Dashed",
+  "customReticle.color.header": "Color",
+  "customReticle.color.body": [
     "Colors this reticle using provided color."
   ],
-  "customServerReticle.drawCenterDot.header": "Draw center dot",
-  "customServerReticle.drawCenterDot.body": [
+  "customReticle.drawCenterDot.header": "Draw center dot",
+  "customReticle.drawCenterDot.body": [
     "If true, shape is additionally displayed with center dot."
   ],
-  "customServerReticle.drawOutline.header": "Draw outline",
-  "customServerReticle.drawOutline.body": [
+  "customReticle.drawOutline.header": "Draw outline",
+  "customReticle.drawOutline.body": [
     "If checked, shape is additionally displayed with 1 pixel black outline."
   ],
-  "customServerReticle.drawOutline.note": [
+  "customReticle.drawOutline.note": [
     "Useful if shape color blends with the background."
   ],
-  "customServerReticle.blend.header": "Blend",
-  "customServerReticle.blend.body": [
+  "customReticle.blend.header": "Blend",
+  "customReticle.blend.body": [
     "Controls, how much reticle color will blend with the background color instead of replacing it.\n",
     "Vanilla \"dashed\" reticle uses this with value 1.0 without outline to make reticle look more natural."
   ],
-  "customServerReticle.blend.note": [
+  "customReticle.blend.note": [
     "Set it to 1.0 if you want color to fully act as an addition to background color.\n",
     "Set it to 0.0 if you want color to fully replace background color.\n",
     "Values between them controls strength of those effects the closer it gets to them."
   ],
-  "customServerReticle.blend.attention": [
+  "customReticle.blend.attention": [
     "Value 1.0 effectively prevents you from getting dark colors\n",
     "because ... black color + background color = background color."
   ],
-  "customServerReticle.alpha.header": "Alpha",
-  "customServerReticle.alpha.body": [
+  "customReticle.alpha.header": "Alpha",
+  "customReticle.alpha.body": [
     "Controls transparency of displayed reticle."
   ],
-  "customServerReticle.alpha.note": [
+  "customReticle.alpha.note": [
     "Value 1.0 means full visibility\n",
     "Value 0.0 means zero visibility"
   ],

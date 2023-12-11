@@ -72,52 +72,52 @@
     "Для артиллерии будет включен 'Серверный прицел',",
     "вместо этого."
   ],
-  "customServerReticle.enabled.header": "Включить",
-  "customServerReticle.enabled.body": [
+  "customReticle.enabled.header": "Включить",
+  "customReticle.enabled.body": [
     "Если галочка отмечена, то отображается 'Настраиваемый серверный прицел'."
   ],
-  "customServerReticle.shape.header": "Фигура",
-  "customServerReticle.shape.body": [
+  "customReticle.shape.header": "Фигура",
+  "customReticle.shape.body": [
     "Фигура, которую будет отображать 'Настраиваемый серверный прицел'."
   ],
-  "customServerReticle.shape.option.pentagon": "Pentagon",
-  "customServerReticle.shape.option.t-shape": "T-shape",
-  "customServerReticle.shape.option.circle": "Circle",
-  "customServerReticle.shape.option.dashed": "Dashed",
-  "customServerReticle.color.header": "Цвет",
-  "customServerReticle.color.body": [
+  "customReticle.shape.option.pentagon": "Pentagon",
+  "customReticle.shape.option.t-shape": "T-shape",
+  "customReticle.shape.option.circle": "Circle",
+  "customReticle.shape.option.dashed": "Dashed",
+  "customReticle.color.header": "Цвет",
+  "customReticle.color.body": [
     "Назначает цвет для фигуры в 'Настраиваемый серверный прицел'."
   ],
-  "customServerReticle.drawCenterDot.header": "Включить центральную точку",
-  "customServerReticle.drawCenterDot.body": [
+  "customReticle.drawCenterDot.header": "Включить центральную точку",
+  "customReticle.drawCenterDot.body": [
     "Если галочка отмечена, то у фигуры будет дополнительно отображаться точка в центре."
   ],
-  "customServerReticle.drawOutline.header": "Включить контур",
-  "customServerReticle.drawOutline.body": [
+  "customReticle.drawOutline.header": "Включить контур",
+  "customReticle.drawOutline.body": [
     "Если галочка отмечена, то у фигуры будет дополнительно отображаться черный контур с размером в 1 пиксель."
   ],
-  "customServerReticle.drawOutline.note": [
+  "customReticle.drawOutline.note": [
     "Полезно, если цвет фигуры сливается с фоном."
   ],
-  "customServerReticle.blend.header": "Смешивание",
-  "customServerReticle.blend.body": [
+  "customReticle.blend.header": "Смешивание",
+  "customReticle.blend.body": [
     "Регулирует, насколько цвет фигуры будет сливаться с цветом фона, а не заменять его.\n",
     "Стандартная \"dashed / пунктир\" фигура использует этот параметр со значением 1.0 без контура, чтобы фигура выглядела более органично."
   ],
-  "customServerReticle.blend.note": [
+  "customReticle.blend.note": [
     "При значении 1.0, цвет полностью дополняет цвет фона.\n",
     "При значении 0.0, цвет полностью заменяет цвет фона.\n",
     "Значения между ними настраивают силу этих эффектов между друг другом."
   ],
-  "customServerReticle.blend.attention": [
+  "customReticle.blend.attention": [
     "Значение 1.0 эффективно предотвращает получение темных цветов.\n",
     "Потому что ... черный цвет + цвет фона = цвет фона."
   ],
-  "customServerReticle.alpha.header": "Прозрачность",
-  "customServerReticle.alpha.body": [
+  "customReticle.alpha.header": "Прозрачность",
+  "customReticle.alpha.body": [
     "Настройка прозрачности для 'Обычный серверный прицел'."
   ],
-  "customServerReticle.alpha.note": [
+  "customReticle.alpha.note": [
     "Значение 1.0 соответствует полной видимости.\n",
     "Значение 0.0 соответствует нулевой видимости."
   ],

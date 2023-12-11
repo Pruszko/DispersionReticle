@@ -21,22 +21,13 @@ class OverriddenDefaultGunMarkerController(_DefaultGunMarkerController):
         size = sizeVector[0]
         idealSize = sizeVector[1]
 
-        replayCtrl = BattleReplay.g_replayCtrl
-        if replayCtrl.isPlaying and replayCtrl.isClientReady:
-            s = self._replayReader(replayCtrl)()
-            if s != -1.0:
-                size = s
-        elif replayCtrl.isRecording:
-            if replayCtrl.isServerAim and self._gunMarkerType == GUN_MARKER_TYPE.SERVER:
-                self._replayWriter(replayCtrl)(size)
-            elif self._gunMarkerType in (GUN_MARKER_TYPE.CLIENT, GUN_MARKER_TYPE.DUAL_ACC):
-                self._replayWriter(replayCtrl)(size)
+        size = self._interceptReplayLogic(size)
 
         # this have to be here, we don't want to corrupt replays
         sizeMultiplier = g_configParams.reticleSizeMultiplier()
 
-        size *= sizeMultiplier
-        idealSize *= sizeMultiplier
+        size = self._interceptSize(size, pos, direction, relaxTime, collData) * sizeMultiplier
+        idealSize *= self._interceptSize(idealSize, pos, direction, relaxTime, collData) * sizeMultiplier
 
         positionMatrixForScale = BigWorld.checkAndRecalculateIfPositionInExtremeProjection(positionMatrix)
         worldMatrix = _makeWorldMatrix(positionMatrixForScale)
@@ -49,3 +40,24 @@ class OverriddenDefaultGunMarkerController(_DefaultGunMarkerController):
             self._dataProvider.updateSize(self._DefaultGunMarkerController__curSize, 0.0)
         else:
             self._dataProvider.updateSize(self._DefaultGunMarkerController__curSize, relaxTime)
+
+        self._interceptPostUpdate(self._DefaultGunMarkerController__curSize)
+
+    def _interceptReplayLogic(self, size):
+        replayCtrl = BattleReplay.g_replayCtrl
+        if replayCtrl.isPlaying and replayCtrl.isClientReady:
+            s = self._replayReader(replayCtrl)()
+            if s != -1.0:
+                size = s
+        elif replayCtrl.isRecording:
+            if replayCtrl.isServerAim and self._gunMarkerType == GUN_MARKER_TYPE.SERVER:
+                self._replayWriter(replayCtrl)(size)
+            elif self._gunMarkerType in (GUN_MARKER_TYPE.CLIENT, GUN_MARKER_TYPE.DUAL_ACC):
+                self._replayWriter(replayCtrl)(size)
+        return size
+
+    def _interceptPostUpdate(self, size):
+        pass
+
+    def _interceptSize(self, size, pos, direction, relaxTime, collData):
+        return size

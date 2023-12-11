@@ -1,8 +1,10 @@
 package com.github.pruszko.dispersionreticle
 {
 	import com.github.pruszko.dispersionreticle.config.DisposableConfig;
+	import com.github.pruszko.dispersionreticle.config.marker.DisposableCustomMarkerConfig;
 	import com.github.pruszko.dispersionreticle.marker.StatefulMarker;
-	import com.github.pruszko.dispersionreticle.marker.SimpleStatefulMarker;
+	import com.github.pruszko.dispersionreticle.marker.CustomStatefulMarker;
+	import com.github.pruszko.dispersionreticle.utils.GunMarkerTypes;
 	import flash.display.Sprite;
 	import flash.events.Event;
 	
@@ -57,20 +59,28 @@ package com.github.pruszko.dispersionreticle
 			_config = null;
 		}
 		
-		public function as_createMarker(gunMarkerType:int, markerName:String, isServerReticle:Boolean) : void
+		public function as_createMarker(gunMarkerType:int, markerName:String) : void
 		{
 			var foundMarker:StatefulMarker = getMarkerByName(markerName);
 			if (foundMarker != null) {
-				warn("Present marker " + markerName + " were attempted to be spawned more than once");
+				warn("Present marker " + markerName + " was attempted to be spawned more than once");
 				return;
 			}
 			
 			var newMarker:StatefulMarker = null;
 			
 			// Gun marker types are present in python-side ReticleRegistry
-			if (gunMarkerType == SimpleStatefulMarker.GUN_MARKER_TYPE)
+			if (GunMarkerTypes.isCustomReticle(gunMarkerType))
 			{
-				newMarker = new SimpleStatefulMarker(this, gunMarkerType, isServerReticle);
+				var customMarkerConfig:DisposableCustomMarkerConfig = _config.getCustomMarkerConfig(gunMarkerType);
+				
+				if (customMarkerConfig == null)
+				{
+					warn("Could not find custom marker config for marker " + markerName + ".");
+					return;
+				}
+				
+				newMarker = new CustomStatefulMarker(this, gunMarkerType, customMarkerConfig);
 			}
 			else
 			{

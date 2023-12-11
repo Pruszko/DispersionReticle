@@ -1,6 +1,6 @@
 package com.github.pruszko.dispersionreticle.marker.simple 
 {
-	import com.github.pruszko.dispersionreticle.marker.SimpleStatefulMarker;
+	import com.github.pruszko.dispersionreticle.marker.CustomStatefulMarker;
 	
 	public class PentagonStatefulRenderer extends StatefulRenderer
 	{
@@ -9,7 +9,7 @@ package com.github.pruszko.dispersionreticle.marker.simple
 		
 		private var _circleRadius:Number = 0.0;
 		
-		public function PentagonStatefulRenderer(simpleMarker:SimpleStatefulMarker) 
+		public function PentagonStatefulRenderer(simpleMarker:CustomStatefulMarker) 
 		{
 			super(simpleMarker);
 		}

@@ -208,37 +208,37 @@ def _createCustomServerReticlePart():
             )
         },
         g_configParams.customServerReticleEnabled.renderParam(
-            header=Tr.CUSTOM_SERVER_RETICLE_ENABLED_HEADER,
-            body=Tr.CUSTOM_SERVER_RETICLE_ENABLED_BODY
+            header=Tr.CUSTOM_RETICLE_ENABLED_HEADER,
+            body=Tr.CUSTOM_RETICLE_ENABLED_BODY
         ),
         g_configParams.customServerReticleShape.renderParam(
-            header=Tr.CUSTOM_SERVER_RETICLE_SHAPE_HEADER,
-            body=Tr.CUSTOM_SERVER_RETICLE_SHAPE_BODY + "\n",
+            header=Tr.CUSTOM_RETICLE_SHAPE_HEADER,
+            body=Tr.CUSTOM_RETICLE_SHAPE_BODY + "\n",
             note=_createImg(src="imgs/simple_server.jpg", width=402, height=412)
         ),
         g_configParams.customServerReticleColor.renderParam(
-            header=Tr.CUSTOM_SERVER_RETICLE_COLOR_HEADER,
-            body=Tr.CUSTOM_SERVER_RETICLE_COLOR_BODY
+            header=Tr.CUSTOM_RETICLE_COLOR_HEADER,
+            body=Tr.CUSTOM_RETICLE_COLOR_BODY
         ),
         g_configParams.customServerReticleDrawCenterDot.renderParam(
-            header=Tr.CUSTOM_SERVER_RETICLE_DRAW_CENTER_DOT_HEADER,
-            body=Tr.CUSTOM_SERVER_RETICLE_DRAW_CENTER_DOT_BODY
+            header=Tr.CUSTOM_RETICLE_DRAW_CENTER_DOT_HEADER,
+            body=Tr.CUSTOM_RETICLE_DRAW_CENTER_DOT_BODY
         ),
         g_configParams.customServerReticleDrawOutline.renderParam(
-            header=Tr.CUSTOM_SERVER_RETICLE_DRAW_OUTLINE_HEADER,
-            body=Tr.CUSTOM_SERVER_RETICLE_DRAW_OUTLINE_BODY + "\n",
-            note=Tr.CUSTOM_SERVER_RETICLE_DRAW_OUTLINE_NOTE
+            header=Tr.CUSTOM_RETICLE_DRAW_OUTLINE_HEADER,
+            body=Tr.CUSTOM_RETICLE_DRAW_OUTLINE_BODY + "\n",
+            note=Tr.CUSTOM_RETICLE_DRAW_OUTLINE_NOTE
         ),
         g_configParams.customServerReticleBlend.renderParam(
-            header=Tr.CUSTOM_SERVER_RETICLE_BLEND_HEADER,
-            body=Tr.CUSTOM_SERVER_RETICLE_BLEND_BODY + "\n",
-            note=Tr.CUSTOM_SERVER_RETICLE_BLEND_NOTE + "\n",
-            attention=Tr.CUSTOM_SERVER_RETICLE_BLEND_ATTENTION
+            header=Tr.CUSTOM_RETICLE_BLEND_HEADER,
+            body=Tr.CUSTOM_RETICLE_BLEND_BODY + "\n",
+            note=Tr.CUSTOM_RETICLE_BLEND_NOTE + "\n",
+            attention=Tr.CUSTOM_RETICLE_BLEND_ATTENTION
         ),
         g_configParams.customServerReticleAlpha.renderParam(
-            header=Tr.CUSTOM_SERVER_RETICLE_ALPHA_HEADER,
-            body=Tr.CUSTOM_SERVER_RETICLE_ALPHA_BODY + "\n",
-            note=Tr.CUSTOM_SERVER_RETICLE_ALPHA_NOTE
+            header=Tr.CUSTOM_RETICLE_ALPHA_HEADER,
+            body=Tr.CUSTOM_RETICLE_ALPHA_BODY + "\n",
+            note=Tr.CUSTOM_RETICLE_ALPHA_NOTE
         )
     ]
 

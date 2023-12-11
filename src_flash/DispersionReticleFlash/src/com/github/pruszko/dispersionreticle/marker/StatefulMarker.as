@@ -11,7 +11,6 @@ package com.github.pruszko.dispersionreticle.marker
 		
 		private var _app:DispersionReticleFlash;
 		private var _gunMarkerType:int;
-		private var _isServerReticle:Boolean;
 		
 		private var _hasDataProvider:Boolean = false;
 		
@@ -24,12 +23,11 @@ package com.github.pruszko.dispersionreticle.marker
 		private var _partial:DisposablePartial = new DisposablePartial(100.0);
 		private var _reticleRadius:DisposablePartialValue = new DisposablePartialValue(_partial, 0.0);
 		
-		public function StatefulMarker(app:DispersionReticleFlash, gunMarkerType:int, isServerReticle:Boolean) 
+		public function StatefulMarker(app:DispersionReticleFlash, gunMarkerType:int) 
 		{
 			super();
 			this._app = app;
 			this._gunMarkerType = gunMarkerType;
-			this._isServerReticle = isServerReticle;
 		}
 		
 		public function disposeState() : void
@@ -70,11 +68,6 @@ package com.github.pruszko.dispersionreticle.marker
 		public function get gunMarkerType() : int
 		{
 			return _gunMarkerType;
-		}
-		
-		public function get isServerReticle() : Boolean
-		{
-			return _isServerReticle;
 		}
 		
 		public function get reticleRadius() : Number

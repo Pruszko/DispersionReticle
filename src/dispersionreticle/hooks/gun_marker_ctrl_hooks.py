@@ -4,7 +4,12 @@ from AvatarInputHandler.gun_marker_ctrl import _GunMarkersDPFactory, _MARKER_TYP
 from helpers import dependency
 from skeletons.account_helpers.settings_core import ISettingsCore
 
+from dispersionreticle.controllers.focused.custom_focused_default_controller import \
+    CustomFocusedDefaultGunMarkerController
+from dispersionreticle.controllers.focused.custom_focused_spg_controller import CustomFocusedSPGGunMarkerController
 from dispersionreticle.controllers.gun_marker_decorator import DispersionGunMarkersDecorator
+from dispersionreticle.controllers.hybrid.custom_hybrid_default_controller import CustomHybridDefaultGunMarkerController
+from dispersionreticle.controllers.hybrid.custom_hybrid_spg_controller import CustomHybridSPGGunMarkerController
 from dispersionreticle.controllers.server.custom_server_default_controller import CustomServerDefaultGunMarkerController
 from dispersionreticle.controllers.server.custom_server_spg_controller import CustomServerSPGGunMarkerController
 from dispersionreticle.controllers.overridden.overridden_default_controller import OverriddenDefaultGunMarkerController
@@ -35,43 +40,59 @@ from dispersionreticle.utils.reticle_registry import ReticleRegistry
 # gun_marker_ctrl
 @overrideIn(gun_marker_ctrl)
 def createGunMarker(func, isStrategic):
+    return createStrategicGunMarkers() if isStrategic else createDefaultGunMarkers()
+
+
+def createStrategicGunMarkers():
     factory = _GunMarkersDPFactory()
 
-    standardFocusedClientReticle = ReticleRegistry.STANDARD_FOCUSED_CLIENT
-    standardFocusedServerReticle = ReticleRegistry.STANDARD_FOCUSED_SERVER
+    clientController = OverriddenSPGGunMarkerController(_MARKER_TYPE.CLIENT, factory.getClientSPGProvider())
+    serverController = OverriddenSPGGunMarkerController(_MARKER_TYPE.SERVER, factory.getServerSPGProvider())
 
-    standardHybridClientReticle = ReticleRegistry.STANDARD_HYBRID_CLIENT
+    # this is what WG wrote
+    # I hope it won't collapse universe or something
+    dualAccController = _EmptyGunMarkerController(_MARKER_TYPE.UNDEFINED, None)
 
-    customServerServerReticle = ReticleRegistry.CUSTOM_SERVER_SERVER
+    standardFocusedClientController = StandardFocusedSPGGunMarkerController(ReticleRegistry.STANDARD_FOCUSED_CLIENT)
+    standardFocusedServerController = StandardFocusedSPGGunMarkerController(ReticleRegistry.STANDARD_FOCUSED_SERVER)
 
-    if isStrategic:
-        clientController = OverriddenSPGGunMarkerController(_MARKER_TYPE.CLIENT, factory.getClientSPGProvider())
-        serverController = OverriddenSPGGunMarkerController(_MARKER_TYPE.SERVER, factory.getServerSPGProvider())
-        # this is what WG wrote
-        # I hope it won't collapse universe or something
-        dualAccController = _EmptyGunMarkerController(_MARKER_TYPE.UNDEFINED, None)
+    standardHybridClientController = StandardHybridSPGGunMarkerController(ReticleRegistry.STANDARD_HYBRID_CLIENT)
+    customHybridClientController = CustomHybridSPGGunMarkerController(ReticleRegistry.CUSTOM_HYBRID_CLIENT)
 
-        standardFocusedClientController = StandardFocusedSPGGunMarkerController(standardFocusedClientReticle)
-        standardFocusedServerController = StandardFocusedSPGGunMarkerController(standardFocusedServerReticle)
+    customFocusedClientController = CustomFocusedSPGGunMarkerController(ReticleRegistry.CUSTOM_FOCUSED_CLIENT)
+    customFocusedServerController = CustomFocusedSPGGunMarkerController(ReticleRegistry.CUSTOM_FOCUSED_SERVER)
 
-        standardHybridClientController = StandardHybridSPGGunMarkerController(standardHybridClientReticle)
-
-        customServerServerController = CustomServerSPGGunMarkerController(customServerServerReticle)
-    else:
-        clientController = OverriddenDefaultGunMarkerController(_MARKER_TYPE.CLIENT, factory.getClientProvider())
-        serverController = OverriddenDefaultGunMarkerController(_MARKER_TYPE.SERVER, factory.getServerProvider())
-        dualAccController = OverriddenDualAccGunMarkerController(_MARKER_TYPE.DUAL_ACC, factory.getDualAccuracyProvider())
-
-        standardFocusedClientController = StandardFocusedDefaultGunMarkerController(standardFocusedClientReticle)
-        standardFocusedServerController = StandardFocusedDefaultGunMarkerController(standardFocusedServerReticle)
-
-        standardHybridClientController = StandardHybridDefaultGunMarkerController(standardHybridClientReticle)
-
-        customServerServerController = CustomServerDefaultGunMarkerController(customServerServerReticle)
+    customServerServerController = CustomServerSPGGunMarkerController(ReticleRegistry.CUSTOM_SERVER_SERVER)
 
     return DispersionGunMarkersDecorator(clientController, serverController, dualAccController,
                                          standardFocusedClientController, standardFocusedServerController,
-                                         standardHybridClientController,
+                                         standardHybridClientController, customHybridClientController,
+                                         customFocusedClientController, customFocusedServerController,
+                                         customServerServerController)
+
+
+def createDefaultGunMarkers():
+    factory = _GunMarkersDPFactory()
+
+    clientController = OverriddenDefaultGunMarkerController(_MARKER_TYPE.CLIENT, factory.getClientProvider())
+    serverController = OverriddenDefaultGunMarkerController(_MARKER_TYPE.SERVER, factory.getServerProvider())
+    dualAccController = OverriddenDualAccGunMarkerController(_MARKER_TYPE.DUAL_ACC, factory.getDualAccuracyProvider())
+
+    standardFocusedClientController = StandardFocusedDefaultGunMarkerController(ReticleRegistry.STANDARD_FOCUSED_CLIENT)
+    standardFocusedServerController = StandardFocusedDefaultGunMarkerController(ReticleRegistry.STANDARD_FOCUSED_SERVER)
+
+    standardHybridClientController = StandardHybridDefaultGunMarkerController(ReticleRegistry.STANDARD_HYBRID_CLIENT)
+    customHybridClientController = CustomHybridDefaultGunMarkerController(ReticleRegistry.CUSTOM_HYBRID_CLIENT)
+
+    customFocusedClientController = CustomFocusedDefaultGunMarkerController(ReticleRegistry.CUSTOM_FOCUSED_CLIENT)
+    customFocusedServerController = CustomFocusedDefaultGunMarkerController(ReticleRegistry.CUSTOM_FOCUSED_SERVER)
+
+    customServerServerController = CustomServerDefaultGunMarkerController(ReticleRegistry.CUSTOM_SERVER_SERVER)
+
+    return DispersionGunMarkersDecorator(clientController, serverController, dualAccController,
+                                         standardFocusedClientController, standardFocusedServerController,
+                                         standardHybridClientController, customHybridClientController,
+                                         customFocusedClientController, customFocusedServerController,
                                          customServerServerController)
 
 
@@ -84,6 +105,7 @@ def useServerGunMarker(func):
     settingsCore = dependency.instance(ISettingsCore)
 
     if g_configParams.standardHybridReticleEnabled() or \
+            g_configParams.customHybridReticleEnabled() or \
             g_configParams.standardServerReticleEnabled() or \
             g_configParams.customServerReticleEnabled():
         return True

@@ -19,9 +19,9 @@ logger = logging.getLogger(__name__)
 
 class DispersionReticleFlashMeta(BaseDAAPIModule):
 
-    def as_createMarker(self, gunMarkerType, markerName, isServerReticle):
+    def as_createMarker(self, gunMarkerType, markerName):
         if self._isDAAPIInited():
-            self.flashObject.as_createMarker(gunMarkerType, markerName, isServerReticle)
+            self.flashObject.as_createMarker(gunMarkerType, markerName)
 
     def as_updateReticle(self, gunMarkerType, reticleSize):
         if self._isDAAPIInited():
@@ -128,7 +128,7 @@ class DispersionReticleFlash(ExternalFlashComponent, DispersionReticleFlashMeta)
         self.as_updateReticle(reticle.gunMarkerType, reticleSize)
 
     def __onMarkerCreate(self, markerName, reticle):
-        self.as_createMarker(reticle.gunMarkerType, markerName, reticle.isServerReticle())
+        self.as_createMarker(reticle.gunMarkerType, markerName)
 
     def __onMarkerDestroy(self, markerName, reticle):
         self.as_destroyMarker(markerName)
@@ -146,10 +146,32 @@ class DispersionReticleFlash(ExternalFlashComponent, DispersionReticleFlashMeta)
 
     def __onConfigReload(self):
         serializedConfig = {
-            "simple-server-reticle": self.__serializeCustomServerReticleSection()
+            "custom-focused-reticle": self.__serializeCustomFocusedReticleSection(),
+            "custom-hybrid-reticle": self.__serializeCustomHybridReticleSection(),
+            "custom-server-reticle": self.__serializeCustomServerReticleSection()
         }
 
         self.as_onConfigReload(serializedConfig)
+
+    def __serializeCustomFocusedReticleSection(self):
+        return {
+            "color": self.__serializeColorTuple(g_configParams.customFocusedReticleColor()),
+            "shape": g_configParams.customFocusedReticleShape(),
+            "draw-center-dot": g_configParams.customFocusedReticleDrawCenterDot(),
+            "draw-outline": g_configParams.customFocusedReticleDrawOutline(),
+            "blend": g_configParams.customFocusedReticleBlend(),
+            "alpha": g_configParams.customFocusedReticleAlpha()
+        }
+
+    def __serializeCustomHybridReticleSection(self):
+        return {
+            "color": self.__serializeColorTuple(g_configParams.customHybridReticleColor()),
+            "shape": g_configParams.customHybridReticleShape(),
+            "draw-center-dot": g_configParams.customHybridReticleDrawCenterDot(),
+            "draw-outline": g_configParams.customHybridReticleDrawOutline(),
+            "blend": g_configParams.customHybridReticleBlend(),
+            "alpha": g_configParams.customHybridReticleAlpha()
+        }
 
     def __serializeCustomServerReticleSection(self):
         return {

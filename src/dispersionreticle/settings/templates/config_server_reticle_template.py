@@ -19,7 +19,7 @@ CONFIG_SERVER_RETICLE_TEMPLATE = """{
     // Custom server reticle
     // 
     // Adds server-side reticle with customizable shape alongside with client-side reticle.
-    // For SPG artillery view, it will implicitly enable "server-reticle" above instead of this reticle.
+    // For SPG artillery view, it will implicitly enable "standard-server-reticle" above instead of this reticle.
 
     "custom-server-reticle": {
 
@@ -75,5 +75,9 @@ CONFIG_SERVER_RETICLE_TEMPLATE = """{
         // - value 1.0 means full visibility
         // - value 0.0 means zero visibility
         "alpha": %(custom-server-reticle-alpha)s
-    }
+    },
+
+    // DO NOT touch "__version__" field
+    // It is used by me to seamlessly update config file :)
+    "__version__": 6
 }"""

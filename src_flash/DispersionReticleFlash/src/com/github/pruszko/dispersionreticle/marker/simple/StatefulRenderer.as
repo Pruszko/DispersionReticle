@@ -1,7 +1,7 @@
 package com.github.pruszko.dispersionreticle.marker.simple 
 {
 	import com.github.pruszko.dispersionreticle.DispersionReticleFlash;
-	import com.github.pruszko.dispersionreticle.marker.SimpleStatefulMarker;
+	import com.github.pruszko.dispersionreticle.marker.CustomStatefulMarker;
 	import com.github.pruszko.dispersionreticle.utils.DisposableCustomShape;
 	import com.github.pruszko.dispersionreticle.utils.Stateful;
 	
@@ -9,16 +9,16 @@ package com.github.pruszko.dispersionreticle.marker.simple
 	public class StatefulRenderer implements Stateful
 	{
 		
-		private var _simpleMarker:SimpleStatefulMarker;
+		private var _customMarker:CustomStatefulMarker;
 		
-		public function StatefulRenderer(simpleMarker:SimpleStatefulMarker) 
+		public function StatefulRenderer(customMarker:CustomStatefulMarker) 
 		{
-			this._simpleMarker = simpleMarker;
+			this._customMarker = customMarker;
 		}
 		
 		public function disposeState() : void
 		{
-			this._simpleMarker = null;
+			this._customMarker = null;
 		}
 		
 		public function updateState() : void
@@ -31,24 +31,24 @@ package com.github.pruszko.dispersionreticle.marker.simple
 			
 		}
 		
-		protected function get simpleMarker() : SimpleStatefulMarker
+		protected function get customMarker() : CustomStatefulMarker
 		{
-			return _simpleMarker;
+			return _customMarker;
 		}
 		
 		protected function get app() : DispersionReticleFlash
 		{
-			return simpleMarker.app;
+			return customMarker.app;
 		}
 		
 		protected function get shape() : DisposableCustomShape
 		{
-			return simpleMarker.shape;
+			return customMarker.shape;
 		}
 		
 		protected function get outlineShape() : DisposableCustomShape
 		{
-			return simpleMarker.outlineShape;
+			return customMarker.outlineShape;
 		}
 		
 		protected function scaleLogByReticleRadius(value:Number) : Number
@@ -58,27 +58,27 @@ package com.github.pruszko.dispersionreticle.marker.simple
 		
 		protected function get reticleRadius() : Number
 		{
-			return simpleMarker.reticleRadius;
+			return customMarker.reticleRadius;
 		}
 		
 		protected function get fillColor() : Number
 		{
-			return simpleMarker.fillColor;
+			return customMarker.fillColor;
 		}
 		
 		public function get selectedShape() : String
 		{
-			return simpleMarker.selectedShape;
+			return customMarker.selectedShape;
 		}
 		
 		public function get shouldDrawCenterDot() : Boolean
 		{
-			return simpleMarker.shouldDrawCenterDot;
+			return customMarker.shouldDrawCenterDot;
 		}
 		
 		public function get shouldDrawOutline() : Boolean
 		{
-			return simpleMarker.shouldDrawOutline;
+			return customMarker.shouldDrawOutline;
 		}
 		
 	}
