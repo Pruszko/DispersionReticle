@@ -186,7 +186,7 @@ def v3_0_0_splitConfigFile():
     focusedReticleConfigDict["custom-focused-reticle"] = {}
     focusedReticleConfigDict["custom-focused-reticle"]["enabled"] = False
     focusedReticleConfigDict["custom-focused-reticle"]["shape"] = "circle"
-    focusedReticleConfigDict["custom-focused-reticle"]["color"] = (255, 0, 255)
+    focusedReticleConfigDict["custom-focused-reticle"]["color"] = (255, 255, 0)
     focusedReticleConfigDict["custom-focused-reticle"]["draw-center-dot"] = False
     focusedReticleConfigDict["custom-focused-reticle"]["draw-outline"] = False
     focusedReticleConfigDict["custom-focused-reticle"]["blend"] = 0.5
@@ -207,7 +207,7 @@ def v3_0_0_splitConfigFile():
     hybridReticleConfigDict["custom-hybrid-reticle"] = {}
     hybridReticleConfigDict["custom-hybrid-reticle"]["enabled"] = False
     hybridReticleConfigDict["custom-hybrid-reticle"]["shape"] = "circle"
-    hybridReticleConfigDict["custom-hybrid-reticle"]["color"] = (255, 0, 255)
+    hybridReticleConfigDict["custom-hybrid-reticle"]["color"] = (0, 255, 255)
     hybridReticleConfigDict["custom-hybrid-reticle"]["draw-center-dot"] = False
     hybridReticleConfigDict["custom-hybrid-reticle"]["draw-outline"] = False
     hybridReticleConfigDict["custom-hybrid-reticle"]["blend"] = 0.5

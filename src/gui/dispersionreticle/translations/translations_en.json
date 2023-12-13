@@ -3,18 +3,18 @@
   "checked": "checked",
   "unchecked": "unchecked",
   "defaultValue": "default",
-  "intro.label": "Config file info",
-  "intro.header": "Config file",
+  "intro.label": "Config files info",
+  "intro.header": "Config files",
   "intro.body": [
-    "Config can also be changed by manually altering config file.\n",
+    "Configs can also be changed by manually altering config files.\n",
     "For changes to take effect, reload it in game using hotkeys:\n",
     "- CTRL + P\n\n",
-    "Config file location:\n",
-    "- [WoT game directory]/mods/configs/DispersionReticle/config.json"
+    "Config files directory:\n",
+    "- [WoT game directory]/mods/configs/DispersionReticle/"
   ],
   "intro.note": [
-    "If you want to generate default config file, delete its file and:\n",
-    "- either reload it with above hotkey\n",
+    "If you want to generate default config files, delete them and:\n",
+    "- either reload mod with above hotkey\n",
     "- or launch a game again"
   ],
   "intro.attention": [
@@ -24,23 +24,25 @@
   "standardFocusedReticle.label": "Standard focused reticle",
   "standardFocusedReticle.header": "Standard focused reticle",
   "standardFocusedReticle.body": [
-    "Adds standard reticle displaying fully-focused dispersion to standard reticle."
+    "Adds standard reticle displaying fully-focused dispersion to in-game reticle."
   ],
   "standardFocusedReticle.note": [
-    "When both client-side and server-side reticle are on, it attaches to client-side reticle."
+    "When both client-side and server-side reticles are on, it attaches to client-side reticle."
   ],
   "standardFocusedReticle.enabled.header": "Enabled",
   "standardFocusedReticle.enabled.body": [
     "If checked, display this reticle."
   ],
-  "customFocusedReticle.label": "Custom focused reticle",
-  "customFocusedReticle.header": "Custom focused reticle",
+  "customFocusedReticle.label": "Customizable focused reticle",
+  "customFocusedReticle.header": "Customizable focused reticle",
   "customFocusedReticle.body": [
-    "Adds custom reticle with customizable shape displaying fully-focused dispersion to standard reticle."
+    "Adds configurable reticle displaying fully-focused dispersion to in-game reticle."
+  ],
+  "customFocusedReticle.note": [
+    "When both client-side and server-side reticles are on, it attaches to client-side reticle."
   ],
   "customFocusedReticle.attention": [
-    "For SPG artillery view, it will implicitly enable above Standard focused reticle ",
-    "instead of this reticle."
+    "For SPG artillery view, a standard version of this reticle will be used."
   ],
   "standardHybridReticle.label": "Standard hybrid reticle",
   "standardHybridReticle.header": "Standard hybrid reticle",
@@ -58,15 +60,15 @@
   ],
   "standardHybridReticle.hideStandardReticle.header": "Hide standard reticle",
   "standardHybridReticle.hideStandardReticle.body": [
-    "If checked, standard client reticle is hidden while latency reticle is enabled."
+    "If checked, standard client reticle is hidden while hybrid reticle is enabled."
   ],
   "standardHybridReticle.hideStandardReticle.note": [
-    "Useful if you want to only use latency reticle instead of standard reticle."
+    "Useful if you want to only use hybrid reticle instead of standard reticle."
   ],
-  "customHybridReticle.label": "Custom hybrid reticle",
-  "customHybridReticle.header": "Custom hybrid reticle",
+  "customHybridReticle.label": "Customizable hybrid reticle",
+  "customHybridReticle.header": "Customizable hybrid reticle",
   "customHybridReticle.body": [
-    "Adds standard reticle displaying current server-side dispersion to client-side reticle."
+    "Adds configurable reticle displaying current server-side dispersion to client-side reticle."
   ],
   "customHybridReticle.note": [
     "Basically, client-side position, but server-side dispersion.\n",
@@ -74,26 +76,24 @@
     "Useful if you want to know server-side dispersion, but still want client-side responsiveness."
   ],
   "customHybridReticle.attention": [
-    "For SPG artillery view, it will implicitly enable above Standard hybrid reticle ",
-    "instead of this reticle."
+    "For SPG artillery view, a standard version of this reticle will be used."
   ],
-  "standardServerReticle.label": "Server reticle",
-  "standardServerReticle.header": "Server reticle",
+  "standardServerReticle.label": "Standard server reticle",
+  "standardServerReticle.header": "Standard server reticle",
   "standardServerReticle.body": [
-    "Adds server-side reticle alongside with client-side reticle."
+    "Adds standard server-side reticle alongside with client-side reticle."
   ],
   "standardServerReticle.enabled.header": "Enabled",
   "standardServerReticle.enabled.body": [
     "If checked, display this reticle."
   ],
-  "customServerReticle.label": "Custom server reticle",
-  "customServerReticle.header": "Custom server reticle",
+  "customServerReticle.label": "Customizable server reticle",
+  "customServerReticle.header": "Customizable server reticle",
   "customServerReticle.body": [
-    "Adds server-side custom reticle with customizable shape alongside with client-side reticle."
+    "Adds configurable server-side reticle alongside with client-side reticle."
   ],
   "customServerReticle.attention": [
-    "For SPG artillery view, it will implicitly enable above Standard server reticle ",
-    "instead of this reticle."
+    "For SPG artillery view, a standard version of this reticle will be used."
   ],
   "customReticle.enabled.header": "Enabled",
   "customReticle.enabled.body": [

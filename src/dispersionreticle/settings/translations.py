@@ -96,7 +96,6 @@ class TranslationList(TranslationBase):
         return "".join(DEFAULT_TRANSLATIONS_MAP[self._tokenName])
 
 
-# TODO add all translations
 class Tr(object):
     # common
     MODNAME = TranslationElement("modname")
@@ -111,7 +110,7 @@ class Tr(object):
     INTRO_NOTE = TranslationList("intro.note")
     INTRO_ATTENTION = TranslationList("intro.attention")
 
-    # dispersion reticle
+    # standard focused reticle
     STANDARD_FOCUSED_RETICLE_LABEL = TranslationElement("standardFocusedReticle.label")
     STANDARD_FOCUSED_RETICLE_HEADER = TranslationElement("standardFocusedReticle.header")
     STANDARD_FOCUSED_RETICLE_BODY = TranslationList("standardFocusedReticle.body")
@@ -120,7 +119,14 @@ class Tr(object):
     STANDARD_FOCUSED_RETICLE_ENABLED_HEADER = TranslationElement("standardFocusedReticle.enabled.header")
     STANDARD_FOCUSED_RETICLE_ENABLED_BODY = TranslationList("standardFocusedReticle.enabled.body")
 
-    # latency reticle
+    # custom focused reticle
+    CUSTOM_FOCUSED_RETICLE_LABEL = TranslationElement("customFocusedReticle.label")
+    CUSTOM_FOCUSED_RETICLE_HEADER = TranslationElement("customFocusedReticle.header")
+    CUSTOM_FOCUSED_RETICLE_BODY = TranslationList("customFocusedReticle.body")
+    CUSTOM_FOCUSED_RETICLE_NOTE = TranslationList("customFocusedReticle.note")
+    CUSTOM_FOCUSED_RETICLE_ATTENTION = TranslationList("customFocusedReticle.attention")
+
+    # standard hybrid reticle
     STANDARD_HYBRID_RETICLE_LABEL = TranslationElement("standardHybridReticle.label")
     STANDARD_HYBRID_RETICLE_HEADER = TranslationElement("standardHybridReticle.header")
     STANDARD_HYBRID_RETICLE_BODY = TranslationList("standardHybridReticle.body")
@@ -133,7 +139,14 @@ class Tr(object):
     STANDARD_HYBRID_RETICLE_HIDE_STANDARD_RETICLE_BODY = TranslationList("standardHybridReticle.hideStandardReticle.body")
     STANDARD_HYBRID_RETICLE_HIDE_STANDARD_RETICLE_NOTE = TranslationList("standardHybridReticle.hideStandardReticle.note")
 
-    # server reticle
+    # custom hybrid reticle
+    CUSTOM_HYBRID_RETICLE_LABEL = TranslationElement("customHybridReticle.label")
+    CUSTOM_HYBRID_RETICLE_HEADER = TranslationElement("customHybridReticle.header")
+    CUSTOM_HYBRID_RETICLE_BODY = TranslationList("customHybridReticle.body")
+    CUSTOM_HYBRID_RETICLE_NOTE = TranslationList("customHybridReticle.note")
+    CUSTOM_HYBRID_RETICLE_ATTENTION = TranslationList("customHybridReticle.attention")
+
+    # standard server reticle
     STANDARD_SERVER_RETICLE_LABEL = TranslationElement("standardServerReticle.label")
     STANDARD_SERVER_RETICLE_HEADER = TranslationElement("standardServerReticle.header")
     STANDARD_SERVER_RETICLE_BODY = TranslationList("standardServerReticle.body")

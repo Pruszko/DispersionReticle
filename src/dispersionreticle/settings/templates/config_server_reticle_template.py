@@ -1,6 +1,6 @@
 CONFIG_SERVER_RETICLE_TEMPLATE = """{
     // Configs can be reloaded in game using hotkeys: CTRL + P
-    // To generate default config, delete config files and:
+    // To generate default configs, delete config files and:
     // - either reload them with above hotkey
     // - or launch a game again
 
@@ -18,8 +18,8 @@ CONFIG_SERVER_RETICLE_TEMPLATE = """{
 
     // Custom server reticle
     // 
-    // Adds server-side reticle with customizable shape alongside with client-side reticle.
-    // For SPG artillery view, it will implicitly enable "standard-server-reticle" above instead of this reticle.
+    // Adds configurable server-side reticle alongside with client-side reticle.
+    // For SPG artillery view, a standard version of this reticle will be used.
 
     "custom-server-reticle": {
 

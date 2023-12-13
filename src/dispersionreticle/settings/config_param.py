@@ -34,7 +34,7 @@ class ConfigParams(object):
         )
         self.customFocusedReticleColor = ColorParam(
             g_configFiles.configFocusedReticle, ["custom-focused-reticle", "color"],
-            defaultValue=(255, 0, 255)
+            defaultValue=(255, 255, 0)
         )
         self.customFocusedReticleDrawCenterDot = BooleanParam(
             g_configFiles.configFocusedReticle, ["custom-focused-reticle", "draw-center-dot"],
@@ -82,7 +82,7 @@ class ConfigParams(object):
         )
         self.customHybridReticleColor = ColorParam(
             g_configFiles.configHybridReticle, ["custom-hybrid-reticle", "color"],
-            defaultValue=(255, 0, 255)
+            defaultValue=(0, 255, 255)
         )
         self.customHybridReticleDrawCenterDot = BooleanParam(
             g_configFiles.configHybridReticle, ["custom-hybrid-reticle", "draw-center-dot"],

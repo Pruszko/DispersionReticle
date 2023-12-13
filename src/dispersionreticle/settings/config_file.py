@@ -67,6 +67,9 @@ class ConfigFiles(object):
             configFile.loadConfigDict()
 
     def writeConfigDicts(self):
+        # TODO validate and prepare content before write
+        # TODO acquire write-lock to all files before write
+        # to make sure everything will be properly saved in one go
         for configFile in self.allConfigFiles:
             configFile.writeConfigDict()
 

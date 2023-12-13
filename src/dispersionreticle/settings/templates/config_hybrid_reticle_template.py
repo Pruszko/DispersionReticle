@@ -1,6 +1,6 @@
 CONFIG_HYBRID_RETICLE_TEMPLATE = """{
     // Configs can be reloaded in game using hotkeys: CTRL + P
-    // To generate default config, delete config files and:
+    // To generate default configs, delete config files and:
     // - either reload them with above hotkey
     // - or launch a game again
 
@@ -21,20 +21,20 @@ CONFIG_HYBRID_RETICLE_TEMPLATE = """{
 
         // Valid values: true/false (default: false)
         //
-        // If true, standard client reticle is hidden.
+        // If true, standard client reticle is hidden while hybrid reticle is enabled..
         // Useful if you want to only use hybrid reticle instead of standard reticle.
         "hide-standard-reticle": %(standard-hybrid-reticle-hide-standard-reticle)s
     },
 
-    // Custom hybrid reticle
+    // Customizable hybrid reticle
     // 
-    // Adds custom reticle with customizable shape displaying current server-side dispersion to client-side reticle.
+    // Adds configurable reticle displaying current server-side dispersion to client-side reticle.
     // Basically, client-side position, but server-side dispersion.
     // By this, client-side and server-side dispersion desynchronization is clearly visible.
     //
     // Useful if you want to know server-side dispersion, but still want client-side responsiveness.
     //
-    // For SPG artillery view, it will implicitly enable "standard-hybrid-reticle" above instead of this reticle.
+    // For SPG artillery view, a standard version of this reticle will be used.
 
     "custom-hybrid-reticle": {
 
@@ -44,7 +44,7 @@ CONFIG_HYBRID_RETICLE_TEMPLATE = """{
         "enabled": %(custom-hybrid-reticle-enabled)s,
 
         // Valid values: ["pentagon", "t-shape", "circle", "dashed"]
-        // Default value: "pentagon"
+        // Default value: "circle"
         //
         // Shape which this reticle should have:
         // - "pentagon" - displays reticle made of pentagons,
@@ -54,7 +54,7 @@ CONFIG_HYBRID_RETICLE_TEMPLATE = """{
         "shape": %(custom-hybrid-reticle-shape)s,
 
         // Valid value: 3-element array of numbers between 0 and 255
-        // Default value: [255, 0, 255] (this is purple color)
+        // Default value: [0, 255, 255] (this is cyan color)
         //
         // Colors this reticle using red, green and blue components.
         // You can use color picker from internet to visually choose desired color.

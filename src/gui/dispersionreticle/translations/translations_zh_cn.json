@@ -31,6 +31,17 @@
   "standardFocusedReticle.enabled.body": [
     "如果启用则显示这个瞄准环。"
   ],
+  "customFocusedReticle.label": "Customizable focused reticle",
+  "customFocusedReticle.header": "Customizable focused reticle",
+  "customFocusedReticle.body": [
+    "Adds configurable reticle displaying fully-focused dispersion to in-game reticle."
+  ],
+  "customFocusedReticle.note": [
+    "When both client-side and server-side reticles are on, it attaches to client-side reticle."
+  ],
+  "customFocusedReticle.attention": [
+    "For SPG artillery view, a standard version of this reticle will be used."
+  ],
   "standardHybridReticle.label": "延迟瞄准环",
   "standardHybridReticle.header": "延迟瞄准环",
   "standardHybridReticle.body": [
@@ -50,6 +61,19 @@
   ],
   "standardHybridReticle.hideStandardReticle.note": [
     "在您仅想使用服务端准星时有用。"
+  ],
+  "customHybridReticle.label": "Customizable hybrid reticle",
+  "customHybridReticle.header": "Customizable hybrid reticle",
+  "customHybridReticle.body": [
+    "Adds configurable reticle displaying current server-side dispersion to client-side reticle."
+  ],
+  "customHybridReticle.note": [
+    "Basically, client-side position, but server-side dispersion.\n",
+    "By this, client-side and server-side dispersion desynchronization is clearly visible.\n\n",
+    "Useful if you want to know server-side dispersion, but still want client-side responsiveness."
+  ],
+  "customHybridReticle.attention": [
+    "For SPG artillery view, a standard version of this reticle will be used."
   ],
   "standardServerReticle.label": "服务端瞄准环",
   "standardServerReticle.header": "服务端瞄准环",

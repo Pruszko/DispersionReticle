@@ -1,13 +1,13 @@
 CONFIG_FOCUSED_RETICLE_TEMPLATE = """{
     // Configs can be reloaded in game using hotkeys: CTRL + P
-    // To generate default config, delete config files and:
+    // To generate default configs, delete config files and:
     // - either reload them with above hotkey
     // - or launch a game again
 
     // Standard focused reticle (enabled by default)
     //
-    // Adds standard reticle displaying fully-focused dispersion to standard reticle.
-    // When both client-side and server-side reticle are on, it attaches to client-side reticle.
+    // Adds standard reticle displaying fully-focused dispersion to in-game reticle.
+    // When both client-side and server-side reticles are on, it attaches to client-side reticle.
 
     "standard-focused-reticle": {
 
@@ -17,12 +17,12 @@ CONFIG_FOCUSED_RETICLE_TEMPLATE = """{
         "enabled": %(standard-focused-reticle-enabled)s
     },
 
-    // Custom focused reticle
+    // Customizable focused reticle
     //
-    // Adds custom reticle with customizable shape displaying fully-focused dispersion to standard reticle.
-    // When both client-side and server-side reticle are on, it attaches to client-side reticle.
+    // Adds configurable reticle displaying fully-focused dispersion to in-game reticle.
+    // When both client-side and server-side reticles are on, it attaches to client-side reticle.
     // 
-    // For SPG artillery view, it will implicitly enable "standard-focused-reticle" above instead of this reticle.
+    // For SPG artillery view, a standard version of this reticle will be used.
 
     "custom-focused-reticle": {
 
@@ -32,7 +32,7 @@ CONFIG_FOCUSED_RETICLE_TEMPLATE = """{
         "enabled": %(custom-focused-reticle-enabled)s,
 
         // Valid values: ["pentagon", "t-shape", "circle", "dashed"]
-        // Default value: "pentagon"
+        // Default value: "circle"
         //
         // Shape which this reticle should have:
         // - "pentagon" - displays reticle made of pentagons,
@@ -42,7 +42,7 @@ CONFIG_FOCUSED_RETICLE_TEMPLATE = """{
         "shape": %(custom-focused-reticle-shape)s,
 
         // Valid value: 3-element array of numbers between 0 and 255
-        // Default value: [255, 0, 255] (this is purple color)
+        // Default value: [255, 255, 0] (this is yellow color)
         //
         // Colors this reticle using red, green and blue components.
         // You can use color picker from internet to visually choose desired color.

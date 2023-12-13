@@ -1,6 +1,6 @@
 CONFIG_TEMPLATE = """{
     // Configs can be reloaded in game using hotkeys: CTRL + P
-    // To generate default config, delete config files and:
+    // To generate default configs, delete config files and:
     // - either reload them with above hotkey
     // - or launch a game again
 

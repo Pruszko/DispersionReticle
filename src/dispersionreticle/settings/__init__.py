@@ -3,8 +3,6 @@ import logging
 import os
 import re
 
-from dispersionreticle.settings.templates.config_template import CONFIG_TEMPLATE
-
 
 logger = logging.getLogger(__name__)
 

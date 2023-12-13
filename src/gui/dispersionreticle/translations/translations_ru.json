@@ -33,6 +33,17 @@
   "standardFocusedReticle.enabled.body": [
     "Если галочка отмечена, то отображается 'Круг разброса'."
   ],
+  "customFocusedReticle.label": "Customizable focused reticle",
+  "customFocusedReticle.header": "Customizable focused reticle",
+  "customFocusedReticle.body": [
+    "Adds configurable reticle displaying fully-focused dispersion to in-game reticle."
+  ],
+  "customFocusedReticle.note": [
+    "When both client-side and server-side reticles are on, it attaches to client-side reticle."
+  ],
+  "customFocusedReticle.attention": [
+    "For SPG artillery view, a standard version of this reticle will be used."
+  ],
   "standardHybridReticle.label": "Гибридный прицел",
   "standardHybridReticle.header": "Гибридный прицел",
   "standardHybridReticle.body": [
@@ -53,6 +64,19 @@
   ],
   "standardHybridReticle.hideStandardReticle.note": [
     "Полезно, если вы хотите использовать 'Гибридный прицел' как основной круг."
+  ],
+  "customHybridReticle.label": "Customizable hybrid reticle",
+  "customHybridReticle.header": "Customizable hybrid reticle",
+  "customHybridReticle.body": [
+    "Adds configurable reticle displaying current server-side dispersion to client-side reticle."
+  ],
+  "customHybridReticle.note": [
+    "Basically, client-side position, but server-side dispersion.\n",
+    "By this, client-side and server-side dispersion desynchronization is clearly visible.\n\n",
+    "Useful if you want to know server-side dispersion, but still want client-side responsiveness."
+  ],
+  "customHybridReticle.attention": [
+    "For SPG artillery view, a standard version of this reticle will be used."
   ],
   "standardServerReticle.label": "Серверный прицел",
   "standardServerReticle.header": "Серверный прицел",
@@ -121,7 +145,7 @@
     "Значение 1.0 соответствует полной видимости.\n",
     "Значение 0.0 соответствует нулевой видимости."
   ],
-  "reticleSizeMultiplier.header": "Множитель размера круга (Reticle size multiplier)",
+  "reticleSizeMultiplier.header": "Множитель размера круга",
   "reticleSizeMultiplier.body": [
     "Масштабирует размеры всех 'Кругов разброса', кроме артиллерии."
   ],
