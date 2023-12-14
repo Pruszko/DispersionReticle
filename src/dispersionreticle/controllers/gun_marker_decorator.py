@@ -17,30 +17,30 @@ class DispersionGunMarkersDecorator(IGunMarkerController):
 
     def __init__(self,
                  clientController, serverController, dualAccController,
-                 standardFocusedClientController, standardFocusedServerController,
-                 standardHybridClientController, customHybridClientController,
-                 customFocusedClientController, customFocusedServerController,
-                 customServerServerController):
+                 focusedClientController, focusedServerController,
+                 hybridClientController, hybridExtendedClientController,
+                 focusedExtendedClientController, focusedExtendedServerController,
+                 serverExtendedServerController):
         super(DispersionGunMarkersDecorator, self).__init__()
         self.__clientController = clientController
         self.__serverController = serverController
         self.__dualAccController = dualAccController
-        self.__standardFocusedClientController = standardFocusedClientController
-        self.__standardFocusedServerController = standardFocusedServerController
+        self.__focusedClientController = focusedClientController
+        self.__focusedServerController = focusedServerController
 
-        self.__standardHybridClientController = standardHybridClientController
-        self.__customHybridClientController = customHybridClientController
+        self.__hybridClientController = hybridClientController
+        self.__hybridExtendedClientController = hybridExtendedClientController
 
-        self.__customFocusedClientController = customFocusedClientController
-        self.__customFocusedServerController = customFocusedServerController
+        self.__focusedExtendedClientController = focusedExtendedClientController
+        self.__focusedExtendedServerController = focusedExtendedServerController
 
-        self.__customServerServerController = customServerServerController
+        self.__serverExtendedServerController = serverExtendedServerController
 
         self._allAdditionalControllers = [
-            standardFocusedClientController, standardFocusedServerController,
-            standardHybridClientController, customHybridClientController,
-            customFocusedClientController, customFocusedServerController,
-            customServerServerController
+            focusedClientController, focusedServerController,
+            hybridClientController, hybridExtendedClientController,
+            focusedExtendedClientController, focusedExtendedServerController,
+            serverExtendedServerController
         ]
 
         self._allControllers = [clientController, serverController, dualAccController] + self._allAdditionalControllers
@@ -143,32 +143,32 @@ class DispersionGunMarkersDecorator(IGunMarkerController):
                 position, direction, collData)
             if self.__gunMarkersFlags & _MARKER_FLAG.CLIENT_MODE_ENABLED:
                 self.__dualAccController.update(markerType, position, direction, size, relaxTime, collData)
-        elif markerType == ReticleRegistry.STANDARD_FOCUSED_CLIENT.gunMarkerType:
+        elif markerType == ReticleRegistry.FOCUSED_CLIENT.gunMarkerType:
             if self.__gunMarkersFlags & _MARKER_FLAG.CLIENT_MODE_ENABLED:
-                self.__standardFocusedClientController.update(markerType, position, direction, size, relaxTime, collData)
-        elif markerType == ReticleRegistry.STANDARD_FOCUSED_SERVER.gunMarkerType:
+                self.__focusedClientController.update(markerType, position, direction, size, relaxTime, collData)
+        elif markerType == ReticleRegistry.FOCUSED_SERVER.gunMarkerType:
             if self.__gunMarkersFlags & _MARKER_FLAG.SERVER_MODE_ENABLED:
-                self.__standardFocusedServerController.update(markerType, position, direction, size, relaxTime, collData)
+                self.__focusedServerController.update(markerType, position, direction, size, relaxTime, collData)
         # those 2x elif has to be done outside controllers because we have to collect server reticle size
         # also, we will have delayed access to server size, so we need to wait
         # until GunMarkerComponent will provide server data
-        elif markerType == ReticleRegistry.STANDARD_HYBRID_CLIENT.gunMarkerType:
+        elif markerType == ReticleRegistry.HYBRID_CLIENT.gunMarkerType:
             if self.__gunMarkersFlags & _MARKER_FLAG.SERVER_MODE_ENABLED:
-                self.updateHybridReticle(self.__standardHybridClientController,
+                self.updateHybridReticle(self.__hybridClientController,
                                          collData, direction, markerType, position, relaxTime, size)
-        elif markerType == ReticleRegistry.CUSTOM_HYBRID_CLIENT.gunMarkerType:
+        elif markerType == ReticleRegistry.HYBRID_EXTENDED_CLIENT.gunMarkerType:
             if self.__gunMarkersFlags & _MARKER_FLAG.SERVER_MODE_ENABLED:
-                self.updateHybridReticle(self.__customHybridClientController,
+                self.updateHybridReticle(self.__hybridExtendedClientController,
                                          collData, direction, markerType, position, relaxTime, size)
-        elif markerType == ReticleRegistry.CUSTOM_FOCUSED_CLIENT.gunMarkerType:
+        elif markerType == ReticleRegistry.FOCUSED_EXTENDED_CLIENT.gunMarkerType:
             if self.__gunMarkersFlags & _MARKER_FLAG.CLIENT_MODE_ENABLED:
-                self.__customFocusedClientController.update(markerType, position, direction, size, relaxTime, collData)
-        elif markerType == ReticleRegistry.CUSTOM_FOCUSED_SERVER.gunMarkerType:
+                self.__focusedExtendedClientController.update(markerType, position, direction, size, relaxTime, collData)
+        elif markerType == ReticleRegistry.FOCUSED_EXTENDED_SERVER.gunMarkerType:
             if self.__gunMarkersFlags & _MARKER_FLAG.SERVER_MODE_ENABLED:
-                self.__customFocusedServerController.update(markerType, position, direction, size, relaxTime, collData)
-        elif markerType == ReticleRegistry.CUSTOM_SERVER_SERVER.gunMarkerType:
+                self.__focusedExtendedServerController.update(markerType, position, direction, size, relaxTime, collData)
+        elif markerType == ReticleRegistry.SERVER_EXTENDED_SERVER.gunMarkerType:
             if self.__gunMarkersFlags & _MARKER_FLAG.SERVER_MODE_ENABLED:
-                self.__customServerServerController.update(markerType, position, direction, size, relaxTime, collData)
+                self.__serverExtendedServerController.update(markerType, position, direction, size, relaxTime, collData)
         else:
             gun_marker_ctrl._logger.warning('Gun maker control is not found by type: %d', markerType)
 

@@ -21,130 +21,6 @@
     "Не используйте сочетание клавиш CTRL + P с открытым интерфейсом 'Настройка модификаций'.\n",
     "Интерфейс 'Настройка модификаций' не заметит изменений, если его не открыть заново."
   ],
-  "standardFocusedReticle.label": "Круг разброса",
-  "standardFocusedReticle.header": "Круг разброса",
-  "standardFocusedReticle.body": [
-    "Добавляет полностью сведенный 'Круг разброса' к прицелу."
-  ],
-  "standardFocusedReticle.note": [
-    "Может работать с включенным 'Cерверным прицелом' в настройках игры."
-  ],
-  "standardFocusedReticle.enabled.header": "Включить",
-  "standardFocusedReticle.enabled.body": [
-    "Если галочка отмечена, то отображается 'Круг разброса'."
-  ],
-  "customFocusedReticle.label": "Customizable focused reticle",
-  "customFocusedReticle.header": "Customizable focused reticle",
-  "customFocusedReticle.body": [
-    "Adds configurable reticle displaying fully-focused dispersion to in-game reticle."
-  ],
-  "customFocusedReticle.note": [
-    "When both client-side and server-side reticles are on, it attaches to client-side reticle."
-  ],
-  "customFocusedReticle.attention": [
-    "For SPG artillery view, a standard version of this reticle will be used."
-  ],
-  "standardHybridReticle.label": "Гибридный прицел",
-  "standardHybridReticle.header": "Гибридный прицел",
-  "standardHybridReticle.body": [
-    "Альтернативный режим 'Cерверному прицелу' в настройках игры."
-  ],
-  "standardHybridReticle.note": [
-    "Принцип, позиция на стороне клиента, а разброс на стороне сервера.\n",
-    "Таким образом, видна десинхронизация разброса на стороне клиента и на стороне сервера.\n\n",
-    "Полезно, если вы хотите видеть десинхронизацию разброса на стороне сервера, но при этом иметь отзывчивость на стороне клиента."
-  ],
-  "standardHybridReticle.enabled.header": "Включить",
-  "standardHybridReticle.enabled.body": [
-    "Если галочка отмечена, то отображается 'Гибридный прицел'."
-  ],
-  "standardHybridReticle.hideStandardReticle.header": "Скрыть стандартный прицел",
-  "standardHybridReticle.hideStandardReticle.body": [
-    "Если галочка отмечена, то при включенной функции 'Гибридный прицел', стандартный круг будет скрыт."
-  ],
-  "standardHybridReticle.hideStandardReticle.note": [
-    "Полезно, если вы хотите использовать 'Гибридный прицел' как основной круг."
-  ],
-  "customHybridReticle.label": "Customizable hybrid reticle",
-  "customHybridReticle.header": "Customizable hybrid reticle",
-  "customHybridReticle.body": [
-    "Adds configurable reticle displaying current server-side dispersion to client-side reticle."
-  ],
-  "customHybridReticle.note": [
-    "Basically, client-side position, but server-side dispersion.\n",
-    "By this, client-side and server-side dispersion desynchronization is clearly visible.\n\n",
-    "Useful if you want to know server-side dispersion, but still want client-side responsiveness."
-  ],
-  "customHybridReticle.attention": [
-    "For SPG artillery view, a standard version of this reticle will be used."
-  ],
-  "standardServerReticle.label": "Серверный прицел",
-  "standardServerReticle.header": "Серверный прицел",
-  "standardServerReticle.body": [
-    "Добавляет дополнительный круг 'Серверный прицел'."
-  ],
-  "standardServerReticle.enabled.header": "Включить",
-  "standardServerReticle.enabled.body": [
-    "Если галочка отмечена, то отображается 'Серверный прицел'."
-  ],
-  "customServerReticle.label": "Настраиваемый серверный прицел",
-  "customServerReticle.header": "Настраиваемый серверный прицел",
-  "customServerReticle.body": [
-    "Добавляет дополнительный круг 'Настраиваемый серверный прицел', который можно настроить ниже."
-  ],
-  "customServerReticle.attention": [
-    "Для артиллерии будет включен 'Серверный прицел',",
-    "вместо этого."
-  ],
-  "customReticle.enabled.header": "Включить",
-  "customReticle.enabled.body": [
-    "Если галочка отмечена, то отображается 'Настраиваемый серверный прицел'."
-  ],
-  "customReticle.shape.header": "Фигура",
-  "customReticle.shape.body": [
-    "Фигура, которую будет отображать 'Настраиваемый серверный прицел'."
-  ],
-  "customReticle.shape.option.pentagon": "Pentagon",
-  "customReticle.shape.option.t-shape": "T-shape",
-  "customReticle.shape.option.circle": "Circle",
-  "customReticle.shape.option.dashed": "Dashed",
-  "customReticle.color.header": "Цвет",
-  "customReticle.color.body": [
-    "Назначает цвет для фигуры в 'Настраиваемый серверный прицел'."
-  ],
-  "customReticle.drawCenterDot.header": "Включить центральную точку",
-  "customReticle.drawCenterDot.body": [
-    "Если галочка отмечена, то у фигуры будет дополнительно отображаться точка в центре."
-  ],
-  "customReticle.drawOutline.header": "Включить контур",
-  "customReticle.drawOutline.body": [
-    "Если галочка отмечена, то у фигуры будет дополнительно отображаться черный контур с размером в 1 пиксель."
-  ],
-  "customReticle.drawOutline.note": [
-    "Полезно, если цвет фигуры сливается с фоном."
-  ],
-  "customReticle.blend.header": "Смешивание",
-  "customReticle.blend.body": [
-    "Регулирует, насколько цвет фигуры будет сливаться с цветом фона, а не заменять его.\n",
-    "Стандартная \"dashed / пунктир\" фигура использует этот параметр со значением 1.0 без контура, чтобы фигура выглядела более органично."
-  ],
-  "customReticle.blend.note": [
-    "При значении 1.0, цвет полностью дополняет цвет фона.\n",
-    "При значении 0.0, цвет полностью заменяет цвет фона.\n",
-    "Значения между ними настраивают силу этих эффектов между друг другом."
-  ],
-  "customReticle.blend.attention": [
-    "Значение 1.0 эффективно предотвращает получение темных цветов.\n",
-    "Потому что ... черный цвет + цвет фона = цвет фона."
-  ],
-  "customReticle.alpha.header": "Прозрачность",
-  "customReticle.alpha.body": [
-    "Настройка прозрачности для 'Обычный серверный прицел'."
-  ],
-  "customReticle.alpha.note": [
-    "Значение 1.0 соответствует полной видимости.\n",
-    "Значение 0.0 соответствует нулевой видимости."
-  ],
   "reticleSizeMultiplier.header": "Множитель размера круга",
   "reticleSizeMultiplier.body": [
     "Масштабирует размеры всех 'Кругов разброса', кроме артиллерии."
@@ -157,5 +33,129 @@
     "- 1.0 (по умолчанию \"неправильная\" WG рассеивание)\n",
     "- 0.6 (коэффициент, определённый мной)\n",
     "- 0.5848 (коэффициент, определённый Jak_Attackka, StranikS_Scan и другими)"
+  ],
+  "focusedReticle.label": "Круг разброса",
+  "focusedReticle.header": "Круг разброса",
+  "focusedReticle.body": [
+    "Добавляет полностью сведенный 'Круг разброса' к прицелу."
+  ],
+  "focusedReticle.note": [
+    "Может работать с включенным 'Cерверным прицелом' в настройках игры."
+  ],
+  "focusedReticle.enabled.header": "Включить",
+  "focusedReticle.enabled.body": [
+    "Если галочка отмечена, то отображается 'Круг разброса'."
+  ],
+  "focusedReticleExtended.label": "Focused reticle extended",
+  "focusedReticleExtended.header": "Focused reticle extended",
+  "focusedReticleExtended.body": [
+    "Adds configurable reticle displaying fully-focused dispersion to in-game reticle."
+  ],
+  "focusedReticleExtended.note": [
+    "When both client-side and server-side reticles are on, it attaches to client-side reticle."
+  ],
+  "focusedReticleExtended.attention": [
+    "For SPG artillery view, a standard version of this reticle will be used."
+  ],
+  "hybridReticle.label": "Гибридный прицел",
+  "hybridReticle.header": "Гибридный прицел",
+  "hybridReticle.body": [
+    "Альтернативный режим 'Cерверному прицелу' в настройках игры."
+  ],
+  "hybridReticle.note": [
+    "Принцип, позиция на стороне клиента, а разброс на стороне сервера.\n",
+    "Таким образом, видна десинхронизация разброса на стороне клиента и на стороне сервера.\n\n",
+    "Полезно, если вы хотите видеть десинхронизацию разброса на стороне сервера, но при этом иметь отзывчивость на стороне клиента."
+  ],
+  "hybridReticle.enabled.header": "Включить",
+  "hybridReticle.enabled.body": [
+    "Если галочка отмечена, то отображается 'Гибридный прицел'."
+  ],
+  "hybridReticle.hideStandardReticle.header": "Скрыть стандартный прицел",
+  "hybridReticle.hideStandardReticle.body": [
+    "Если галочка отмечена, то при включенной функции 'Гибридный прицел', стандартный круг будет скрыт."
+  ],
+  "hybridReticle.hideStandardReticle.note": [
+    "Полезно, если вы хотите использовать 'Гибридный прицел' как основной круг."
+  ],
+  "hybridReticleExtended.label": "Hybrid reticle extended",
+  "hybridReticleExtended.header": "Hybrid reticle extended",
+  "hybridReticleExtended.body": [
+    "Adds configurable reticle displaying current server-side dispersion to client-side reticle."
+  ],
+  "hybridReticleExtended.note": [
+    "Basically, client-side position, but server-side dispersion.\n",
+    "By this, client-side and server-side dispersion desynchronization is clearly visible.\n\n",
+    "Useful if you want to know server-side dispersion, but still want client-side responsiveness."
+  ],
+  "hybridReticleExtended.attention": [
+    "For SPG artillery view, a standard version of this reticle will be used."
+  ],
+  "serverReticle.label": "Серверный прицел",
+  "serverReticle.header": "Серверный прицел",
+  "serverReticle.body": [
+    "Добавляет дополнительный круг 'Серверный прицел'."
+  ],
+  "serverReticle.enabled.header": "Включить",
+  "serverReticle.enabled.body": [
+    "Если галочка отмечена, то отображается 'Серверный прицел'."
+  ],
+  "serverReticleExtended.label": "Настраиваемый серверный прицел",
+  "serverReticleExtended.header": "Настраиваемый серверный прицел",
+  "serverReticleExtended.body": [
+    "Добавляет дополнительный круг 'Настраиваемый серверный прицел', который можно настроить ниже."
+  ],
+  "serverReticleExtended.attention": [
+    "Для артиллерии будет включен 'Серверный прицел',",
+    "вместо этого."
+  ],
+  "reticleExtended.enabled.header": "Включить",
+  "reticleExtended.enabled.body": [
+    "Если галочка отмечена, то отображается 'Настраиваемый серверный прицел'."
+  ],
+  "reticleExtended.shape.header": "Фигура",
+  "reticleExtended.shape.body": [
+    "Фигура, которую будет отображать 'Настраиваемый серверный прицел'."
+  ],
+  "reticleExtended.shape.option.pentagon": "Pentagon",
+  "reticleExtended.shape.option.t-shape": "T-shape",
+  "reticleExtended.shape.option.circle": "Circle",
+  "reticleExtended.shape.option.dashed": "Dashed",
+  "reticleExtended.color.header": "Цвет",
+  "reticleExtended.color.body": [
+    "Назначает цвет для фигуры в 'Настраиваемый серверный прицел'."
+  ],
+  "reticleExtended.drawCenterDot.header": "Включить центральную точку",
+  "reticleExtended.drawCenterDot.body": [
+    "Если галочка отмечена, то у фигуры будет дополнительно отображаться точка в центре."
+  ],
+  "reticleExtended.drawOutline.header": "Включить контур",
+  "reticleExtended.drawOutline.body": [
+    "Если галочка отмечена, то у фигуры будет дополнительно отображаться черный контур с размером в 1 пиксель."
+  ],
+  "reticleExtended.drawOutline.note": [
+    "Полезно, если цвет фигуры сливается с фоном."
+  ],
+  "reticleExtended.blend.header": "Смешивание",
+  "reticleExtended.blend.body": [
+    "Регулирует, насколько цвет фигуры будет сливаться с цветом фона, а не заменять его.\n",
+    "Стандартная \"dashed / пунктир\" фигура использует этот параметр со значением 1.0 без контура, чтобы фигура выглядела более органично."
+  ],
+  "reticleExtended.blend.note": [
+    "При значении 1.0, цвет полностью дополняет цвет фона.\n",
+    "При значении 0.0, цвет полностью заменяет цвет фона.\n",
+    "Значения между ними настраивают силу этих эффектов между друг другом."
+  ],
+  "reticleExtended.blend.attention": [
+    "Значение 1.0 эффективно предотвращает получение темных цветов.\n",
+    "Потому что ... черный цвет + цвет фона = цвет фона."
+  ],
+  "reticleExtended.alpha.header": "Прозрачность",
+  "reticleExtended.alpha.body": [
+    "Настройка прозрачности для 'Обычный серверный прицел'."
+  ],
+  "reticleExtended.alpha.note": [
+    "Значение 1.0 соответствует полной видимости.\n",
+    "Значение 0.0 соответствует нулевой видимости."
   ]
 }

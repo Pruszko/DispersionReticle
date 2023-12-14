@@ -3,148 +3,23 @@
   "checked": "zaznaczone",
   "unchecked": "odznaczone",
   "defaultValue": "domyślnie",
-  "intro.label": "Informacje o plikach konfiguracyjnych",
-  "intro.header": "Pliki konfiguracyjne",
+  "intro.label": "Informacje o pliku konfiguracyjnym",
+  "intro.header": "Plik konfiguracyjny",
   "intro.body": [
-    "Konfiguracja może także zostać zmieniona poprzez manualne modyfikacje plików konfiguracyjnych.\n",
-    "By zmiany były widoczne, przeładuj je w grze z użyciem skrótu klawiszowego:\n",
+    "Konfiguracja może także zostać zmieniona poprzez manualne modyfikacje pliku konfiguracyjnego.\n",
+    "By zmiany były widoczne, przeładuj go w grze z użyciem skrótu klawiszowego:\n",
     "- CTRL + P\n\n",
-    "Folder plików konfiguracyjnych:\n",
-    "- [folder gry WoT]/mods/configs/DispersionReticle/"
+    "Lokalizacja pliku konfiguracyjnego:\n",
+    "- [Folder gry WoT]/mods/configs/DispersionReticle/config.json"
   ],
   "intro.note": [
-    "Jeżeli chcesz wygenerować domyślne pliki konfiguracyjne, usuń je a następnie:\n",
-    "- albo przełąduj je z użyciem powyższego skrótu klawiszowego\n",
+    "Jeżeli chcesz wygenerować domyślny plik konfiguracyjny, usuń go a następnie:\n",
+    "- albo przeładuj go z użyciem powyższego skrótu klawiszowego\n",
     "- lub uruchom grę ponownie"
   ],
   "intro.attention": [
     "Nie używaj skrótu klawiszowego CTRL + P z otwartym oknem konfiguratora moda.\n",
     "Ten interfejs nie uwidoczni zmian dopóki nie zostanie otwarty ponownie."
-  ],
-  "standardFocusedReticle.label": "Standardowy okrąg skupienia",
-  "standardFocusedReticle.header": "Standardowy okrąg skupienia",
-  "standardFocusedReticle.body": [
-    "Dodaje standardowy okrąg wyświetlający w pełni skupiony rozrzut działa do okręgu w grze."
-  ],
-  "standardFocusedReticle.note": [
-    "Gdy oba rodzaje okręgów - klienckie oraz serwerowe - są uruchomione, to okrąg dołączany jest ",
-    "do okręgu klienckiego."
-  ],
-  "standardFocusedReticle.enabled.header": "Czy włączone",
-  "standardFocusedReticle.enabled.body": [
-    "Jeżeli zaznaczone, wyświetl ten okrąg."
-  ],
-  "customFocusedReticle.label": "Konfigurowalny okrąg skupienia",
-  "customFocusedReticle.header": "Konfigurowalny okrąg skupienia",
-  "customFocusedReticle.body": [
-    "Dodaje konfigurowalny okrąg wyświetlający w pełni skupiony rozrzut działa do okręgu w grze."
-  ],
-  "customFocusedReticle.note": [
-    "Gdy oba rodzaje okręgów - klienckie oraz serwerowe - są uruchomione, to okrąg dołączany jest ",
-    "do okręgu klienckiego."
-  ],
-  "customFocusedReticle.attention": [
-    "Dla widoku artyleryjskiego zostanie użyta standardowa wersja tego okręgu."
-  ],
-  "standardHybridReticle.label": "Standardowy okrąg hybrydowy",
-  "standardHybridReticle.header": "Standardowy okrąg hybrydowy",
-  "standardHybridReticle.body": [
-    "Dodaje standardowy okrąg wyświetlający obecny serwerowy rozrzut do klienckiego okręgu."
-  ],
-  "standardHybridReticle.note": [
-    "Innymi słowy, pozycja po stronie klienta, ale rozrzut serwerowy.\n",
-    "Dzięki temu, desynchronizacja rozrzutu okręgów klienckiego i serwerowego jest wyraźnie widoczna.\n\n",
-    "Przydatne gdy chcesz znać serwerowy rozrzut, ale nadal chcesz zachować responsywność klienckiego okręgu."
-  ],
-  "standardHybridReticle.enabled.header": "Czy włączone",
-  "standardHybridReticle.enabled.body": [
-    "Jeżeli zaznaczone, wyświetl ten okrąg."
-  ],
-  "standardHybridReticle.hideStandardReticle.header": "Ukryj standardowy okrąg",
-  "standardHybridReticle.hideStandardReticle.body": [
-    "Jeżeli zaznaczone, standardowy kliencki okrąg jest ukryty gdy okrąg hybrydowy jest włączony."
-  ],
-  "standardHybridReticle.hideStandardReticle.note": [
-    "Przydane gdy chcesz używać tylko okręgu hybrydowego zamiast standardowego okręgu w grze."
-  ],
-  "customHybridReticle.label": "Konfigurowalny okrąg hybrydowy",
-  "customHybridReticle.header": "Konfigurowalny okrąg hybrydowy",
-  "customHybridReticle.body": [
-    "Dodaje konfigurowalny okrąg wyświetlający obecny serwerowy rozrzut do klienckiego okręgu."
-  ],
-  "customHybridReticle.note": [
-    "Innymi słowy, pozycja po stronie klienta, ale rozrzut serwerowy.\n",
-    "Dzięki temu, desynchronizacja rozrzutu okręgów klienckiego i serwerowego jest wyraźnie widoczna.\n\n",
-    "Przydatne gdy chcesz znać serwerowy rozrzut, ale nadal chcesz zachować responsywność klienckiego okręgu."
-   ],
-  "customHybridReticle.attention": [
-    "Dla widoku artyleryjskiego zostanie użyta standardowa wersja tego okręgu."
-  ],
-  "standardServerReticle.label": "Standardowy okrąg serwerowy",
-  "standardServerReticle.header": "Standardowy okrąg serwerowy",
-  "standardServerReticle.body": [
-    "Dodaje standardowy serwerowy okrąg oprócz obecnego klienckiego okręgu."
-  ],
-  "standardServerReticle.enabled.header": "Czy włączone",
-  "standardServerReticle.enabled.body": [
-    "Jeżeli zaznaczone, wyświetl ten okrąg."
-  ],
-  "customServerReticle.label": "Konfigurowalny okrąg serwerowy",
-  "customServerReticle.header": "Konfigurowalny okrąg serwerowy",
-  "customServerReticle.body": [
-    "Dodaje konfigurowalny serwerowy okrąg oprócz obecnego okręgu klienckiego."
-  ],
-  "customServerReticle.attention": [
-    "Dla widoku artyleryjskiego zostanie użyta standardowa wersja tego okręgu."
-  ],
-  "customReticle.enabled.header": "Czy włączone",
-  "customReticle.enabled.body": [
-    "Jeżeli zaznaczone, wyświetl ten okrąg."
-  ],
-  "customReticle.shape.header": "Kształt",
-  "customReticle.shape.body": [
-    "Kształt jaki ten okrąg powinien mieć."
-  ],
-  "customReticle.shape.option.pentagon": "Pięciokąt",
-  "customReticle.shape.option.t-shape": "Kształt T",
-  "customReticle.shape.option.circle": "Okrąg",
-  "customReticle.shape.option.dashed": "Kreskowany",
-  "customReticle.color.header": "Kolor",
-  "customReticle.color.body": [
-    "Koloruje ten okrąg wybranym kolorem."
-  ],
-  "customReticle.drawCenterDot.header": "Czy rysować środkową kropkę",
-  "customReticle.drawCenterDot.body": [
-    "Jeżeli zaznaczone, kształt będzie dodatkowo wyświetlany ze środkową kropką."
-  ],
-  "customReticle.drawOutline.header": "Czy rysować obwódkę",
-  "customReticle.drawOutline.body": [
-    "Jeżeli zaznaczone, kształt będzie dodatkowo wyświetlany z 1 pikselową czarną obwódką."
-  ],
-  "customReticle.drawOutline.note": [
-    "Przydatne gdy kolor kształtu zlewa się z tłem."
-  ],
-  "customReticle.blend.header": "Zlewanie koloru z tłem",
-  "customReticle.blend.body": [
-    "Kontroluje, jak bardzo kolor okręgu będzie zlewać się z kolorem tła zamiast go nadpisywać.\n",
-    "Standardowy \"kreskowe\" okrąg używa tego z wartością 1.0 bez obwódki by okrąg wyglądał bardziej naturalnie."
-  ],
-  "customReticle.blend.note": [
-    "Ustaw ją na 1.0 jeżeli chcesz, by kolor pełnił rolę dodatku do koloru tła.\n",
-    "Ustaw ją na 0.0 jeżeli chcesz, by kolor w pełni nadpisywał kolor tła.\n",
-    "Wartości między nimi kontroluję siłę danego efektu im bliżej się go znajdują."
-  ],
-  "customReticle.blend.attention": [
-    "Wartość 1.0 praktycznie uniemożliwia Ci uzyskanie ciemnych kolorów\n",
-    "ponieważ ... czarny kolor + kolor tła = kolor tła."
-  ],
-  "customReticle.alpha.header": "Przezroczystość",
-  "customReticle.alpha.body": [
-    "Kontroluje przezroczystość wyświetlanego okręgu."
-  ],
-  "customReticle.alpha.note": [
-    "Wartość 1.0 oznacza pełną widoczność\n",
-    "Wartość 0.0 oznacza zerową widoczność"
   ],
   "reticleSizeMultiplier.header": "Mnożnik wielkości okręgu",
   "reticleSizeMultiplier.body": [
@@ -158,5 +33,130 @@
     "- 1.0 (domyślny \"niepoprawny\" rozrzut od WG)\n",
     "- 0.6 (mnożnik wyznaczony przeze mnie)\n",
     "- 0.5848 (mnożnik wyznaczony przez Jak_Attackka, StranikS_Scan oraz innych)"
+  ],
+  "focusedReticle.label": "Okrąg skupienia",
+  "focusedReticle.header": "Okrąg skupienia",
+  "focusedReticle.body": [
+    "Dodaje standardowy okrąg wyświetlający w pełni skupiony rozrzut działa do okręgu w grze."
+  ],
+  "focusedReticle.note": [
+    "Gdy oba rodzaje okręgów - klienckie oraz serwerowe - są uruchomione, to okrąg dołączany jest ",
+    "do okręgu klienckiego."
+  ],
+  "focusedReticle.enabled.header": "Czy włączone",
+  "focusedReticle.enabled.body": [
+    "Jeżeli zaznaczone, wyświetl ten okrąg."
+  ],
+  "focusedReticleExtended.label": "Okrąg skupienia rozszerzony",
+  "focusedReticleExtended.header": "Okrąg skupienia rozszerzony",
+  "focusedReticleExtended.body": [
+    "Dodaje konfigurowalny okrąg wyświetlający w pełni skupiony rozrzut działa do okręgu w grze."
+  ],
+  "focusedReticleExtended.note": [
+    "Gdy oba rodzaje okręgów - klienckie oraz serwerowe - są uruchomione, to okrąg dołączany jest ",
+    "do okręgu klienckiego."
+  ],
+  "focusedReticleExtended.attention": [
+    "Dla widoku artyleryjskiego zostanie użyta standardowa wersja tego okręgu."
+  ],
+  "hybridReticle.label": "Okrąg hybrydowy",
+  "hybridReticle.header": "Okrąg hybrydowy",
+  "hybridReticle.body": [
+    "Dodaje standardowy okrąg wyświetlający obecny serwerowy rozrzut do klienckiego okręgu."
+  ],
+  "hybridReticle.note": [
+    "Innymi słowy, pozycja po stronie klienta, ale rozrzut serwerowy.\n",
+    "Dzięki temu, desynchronizacja rozrzutu okręgów klienckiego i serwerowego jest wyraźnie widoczna.\n\n",
+    "Przydatne gdy chcesz znać serwerowy rozrzut, ale nadal chcesz zachować responsywność klienckiego okręgu."
+  ],
+  "hybridReticle.enabled.header": "Czy włączone",
+  "hybridReticle.enabled.body": [
+    "Jeżeli zaznaczone, wyświetl ten okrąg."
+  ],
+  "hybridReticle.hideStandardReticle.header": "Ukryj standardowy okrąg",
+  "hybridReticle.hideStandardReticle.body": [
+    "Jeżeli zaznaczone, standardowy kliencki okrąg jest ukryty gdy okrąg hybrydowy jest włączony."
+  ],
+  "hybridReticle.hideStandardReticle.note": [
+    "Przydane gdy chcesz używać tylko okręgu hybrydowego zamiast standardowego okręgu w grze."
+  ],
+  "hybridReticleExtended.label": "Okrąg hybrydowy rozszerzony",
+  "hybridReticleExtended.header": "Okrąg hybrydowy rozszerzony",
+  "hybridReticleExtended.body": [
+    "Dodaje konfigurowalny okrąg wyświetlający obecny serwerowy rozrzut do klienckiego okręgu."
+  ],
+  "hybridReticleExtended.note": [
+    "Innymi słowy, pozycja po stronie klienta, ale rozrzut serwerowy.\n",
+    "Dzięki temu, desynchronizacja rozrzutu okręgów klienckiego i serwerowego jest wyraźnie widoczna.\n\n",
+    "Przydatne gdy chcesz znać serwerowy rozrzut, ale nadal chcesz zachować responsywność klienckiego okręgu."
+   ],
+  "hybridReticleExtended.attention": [
+    "Dla widoku artyleryjskiego zostanie użyta standardowa wersja tego okręgu."
+  ],
+  "serverReticle.label": "Okrąg serwerowy",
+  "serverReticle.header": "Okrąg serwerowy",
+  "serverReticle.body": [
+    "Dodaje standardowy serwerowy okrąg oprócz obecnego klienckiego okręgu."
+  ],
+  "serverReticle.enabled.header": "Czy włączone",
+  "serverReticle.enabled.body": [
+    "Jeżeli zaznaczone, wyświetl ten okrąg."
+  ],
+  "serverReticleExtended.label": "Okrąg serwerowy rozszerzony",
+  "serverReticleExtended.header": "Okrąg serwerowy rozszerzony",
+  "serverReticleExtended.body": [
+    "Dodaje konfigurowalny serwerowy okrąg oprócz obecnego okręgu klienckiego."
+  ],
+  "serverReticleExtended.attention": [
+    "Dla widoku artyleryjskiego zostanie użyta standardowa wersja tego okręgu."
+  ],
+  "reticleExtended.enabled.header": "Czy włączone",
+  "reticleExtended.enabled.body": [
+    "Jeżeli zaznaczone, wyświetl ten okrąg."
+  ],
+  "reticleExtended.shape.header": "Kształt",
+  "reticleExtended.shape.body": [
+    "Kształt jaki ten okrąg powinien mieć."
+  ],
+  "reticleExtended.shape.option.pentagon": "Pięciokąt",
+  "reticleExtended.shape.option.t-shape": "Kształt T",
+  "reticleExtended.shape.option.circle": "Okrąg",
+  "reticleExtended.shape.option.dashed": "Kreskowany",
+  "reticleExtended.color.header": "Kolor",
+  "reticleExtended.color.body": [
+    "Koloruje ten okrąg wybranym kolorem."
+  ],
+  "reticleExtended.drawCenterDot.header": "Czy rysować środkową kropkę",
+  "reticleExtended.drawCenterDot.body": [
+    "Jeżeli zaznaczone, kształt będzie dodatkowo wyświetlany ze środkową kropką."
+  ],
+  "reticleExtended.drawOutline.header": "Czy rysować obwódkę",
+  "reticleExtended.drawOutline.body": [
+    "Jeżeli zaznaczone, kształt będzie dodatkowo wyświetlany z 1 pikselową czarną obwódką."
+  ],
+  "reticleExtended.drawOutline.note": [
+    "Przydatne gdy kolor kształtu zlewa się z tłem."
+  ],
+  "reticleExtended.blend.header": "Zlewanie koloru z tłem",
+  "reticleExtended.blend.body": [
+    "Kontroluje, jak bardzo kolor okręgu będzie zlewać się z kolorem tła zamiast go nadpisywać.\n",
+    "Standardowy \"kreskowe\" okrąg używa tego z wartością 1.0 bez obwódki by okrąg wyglądał bardziej naturalnie."
+  ],
+  "reticleExtended.blend.note": [
+    "Ustaw ją na 1.0 jeżeli chcesz, by kolor pełnił rolę dodatku do koloru tła.\n",
+    "Ustaw ją na 0.0 jeżeli chcesz, by kolor w pełni nadpisywał kolor tła.\n",
+    "Wartości między nimi kontroluję siłę danego efektu im bliżej się go znajdują."
+  ],
+  "reticleExtended.blend.attention": [
+    "Wartość 1.0 praktycznie uniemożliwia Ci uzyskanie ciemnych kolorów\n",
+    "ponieważ ... czarny kolor + kolor tła = kolor tła."
+  ],
+  "reticleExtended.alpha.header": "Przezroczystość",
+  "reticleExtended.alpha.body": [
+    "Kontroluje przezroczystość wyświetlanego okręgu."
+  ],
+  "reticleExtended.alpha.note": [
+    "Wartość 1.0 oznacza pełną widoczność\n",
+    "Wartość 0.0 oznacza zerową widoczność"
   ]
 }

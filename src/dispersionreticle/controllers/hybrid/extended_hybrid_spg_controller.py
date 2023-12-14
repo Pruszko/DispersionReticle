@@ -1,14 +1,13 @@
 from AvatarInputHandler.gun_marker_ctrl import _MARKER_FLAG
 
-from dispersionreticle.controllers.focused.standard_focused_default_controller import \
-    StandardFocusedDefaultGunMarkerController
+from dispersionreticle.controllers.hybrid.hybrid_spg_controller import HybridSPGGunMarkerController
 from dispersionreticle.flash.dispersion_reticle_flash import DispersionReticleFlash
 
 
-class CustomFocusedDefaultGunMarkerController(StandardFocusedDefaultGunMarkerController):
+class ExtendedHybridSPGGunMarkerController(HybridSPGGunMarkerController):
 
     def __init__(self, reticle, enabledFlag=_MARKER_FLAG.UNDEFINED):
-        super(CustomFocusedDefaultGunMarkerController, self).__init__(reticle, enabledFlag=enabledFlag)
+        super(ExtendedHybridSPGGunMarkerController, self).__init__(reticle, enabledFlag=enabledFlag)
 
     def _interceptPostUpdate(self, size):
         DispersionReticleFlash.onReticleUpdate(self._reticle, size)

@@ -1,45 +1,45 @@
 from dispersionreticle.utils.reticle_properties import ReticleType, ReticleLinkages
-from dispersionreticle.utils.reticle_types.custom_reticle import CustomReticle
+from dispersionreticle.utils.reticle_types.extended_reticle import ExtendedReticle
 from dispersionreticle.utils.reticle_types.vanilla_reticle import VanillaReticle
 
 
 class ReticleRegistry(object):
 
-    STANDARD_FOCUSED_CLIENT = VanillaReticle(name="ClientStandardFocused", gunMarkerType=4,
+    FOCUSED_CLIENT = VanillaReticle(name="ClientFocused", gunMarkerType=4,
+                                    reticleType=ReticleType.CLIENT,
+                                    reticleLinkages=ReticleLinkages.GREEN)
+
+    FOCUSED_SERVER = VanillaReticle(name="ServerFocused", gunMarkerType=5,
+                                    reticleType=ReticleType.SERVER,
+                                    reticleLinkages=ReticleLinkages.GREEN)
+
+    HYBRID_CLIENT = VanillaReticle(name="ClientHybrid", gunMarkerType=6,
+                                   reticleType=ReticleType.CLIENT,
+                                   reticleLinkages=ReticleLinkages.GREEN)
+
+    FOCUSED_EXTENDED_CLIENT = ExtendedReticle(name="ClientFocusedExtended", gunMarkerType=7,
+                                              reticleType=ReticleType.CLIENT,
+                                              reticleLinkages=ReticleLinkages.GREEN)
+
+    FOCUSED_EXTENDED_SERVER = ExtendedReticle(name="ServerFocusedExtended", gunMarkerType=8,
+                                              reticleType=ReticleType.SERVER,
+                                              reticleLinkages=ReticleLinkages.GREEN)
+
+    HYBRID_EXTENDED_CLIENT = ExtendedReticle(name="ClientHybridExtended", gunMarkerType=9,
                                              reticleType=ReticleType.CLIENT,
                                              reticleLinkages=ReticleLinkages.GREEN)
 
-    STANDARD_FOCUSED_SERVER = VanillaReticle(name="ServerStandardFocused", gunMarkerType=5,
+    # I know it sounds dumb, but it is server "server-reticle-extended", so ...
+    SERVER_EXTENDED_SERVER = ExtendedReticle(name="ServerServerExtended", gunMarkerType=10,
                                              reticleType=ReticleType.SERVER,
-                                             reticleLinkages=ReticleLinkages.GREEN)
+                                             reticleLinkages=ReticleLinkages.PURPLE)
 
-    STANDARD_HYBRID_CLIENT = VanillaReticle(name="ClientStandardHybrid", gunMarkerType=6,
-                                            reticleType=ReticleType.CLIENT,
-                                            reticleLinkages=ReticleLinkages.GREEN)
+    RETICLES = [FOCUSED_CLIENT, FOCUSED_SERVER, HYBRID_CLIENT,
+                FOCUSED_EXTENDED_CLIENT, FOCUSED_EXTENDED_SERVER, HYBRID_EXTENDED_CLIENT,
+                SERVER_EXTENDED_SERVER]
 
-    CUSTOM_FOCUSED_CLIENT = CustomReticle(name="ClientCustomFocused", gunMarkerType=7,
-                                          reticleType=ReticleType.CLIENT,
-                                          reticleLinkages=ReticleLinkages.GREEN)
-
-    CUSTOM_FOCUSED_SERVER = CustomReticle(name="ServerCustomFocused", gunMarkerType=8,
-                                          reticleType=ReticleType.SERVER,
-                                          reticleLinkages=ReticleLinkages.GREEN)
-
-    CUSTOM_HYBRID_CLIENT = CustomReticle(name="ClientCustomHybrid", gunMarkerType=9,
-                                         reticleType=ReticleType.CLIENT,
-                                         reticleLinkages=ReticleLinkages.GREEN)
-
-    # I know it sounds dumb, but it is server "custom-server-reticle", so ...
-    CUSTOM_SERVER_SERVER = CustomReticle(name="ServerCustomServer", gunMarkerType=10,
-                                         reticleType=ReticleType.SERVER,
-                                         reticleLinkages=ReticleLinkages.PURPLE)
-
-    RETICLES = [STANDARD_FOCUSED_CLIENT, STANDARD_FOCUSED_SERVER, STANDARD_HYBRID_CLIENT,
-                CUSTOM_FOCUSED_CLIENT, CUSTOM_FOCUSED_SERVER, CUSTOM_HYBRID_CLIENT,
-                CUSTOM_SERVER_SERVER]
-
-    FLASH_RETICLES = [CUSTOM_FOCUSED_CLIENT, CUSTOM_FOCUSED_SERVER, CUSTOM_HYBRID_CLIENT,
-                      CUSTOM_SERVER_SERVER]
+    FLASH_RETICLES = [FOCUSED_EXTENDED_CLIENT, FOCUSED_EXTENDED_SERVER, HYBRID_EXTENDED_CLIENT,
+                      SERVER_EXTENDED_SERVER]
 
     @staticmethod
     def getReticleByFlashMarkerName(markerName):

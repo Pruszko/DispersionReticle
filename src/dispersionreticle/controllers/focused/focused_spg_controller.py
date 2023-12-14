@@ -5,12 +5,12 @@ from dispersionreticle.controllers.overridden.overridden_spg_controller import O
 
 
 # gun_marker_ctrl
-class StandardFocusedSPGGunMarkerController(OverriddenSPGGunMarkerController):
+class FocusedSPGGunMarkerController(OverriddenSPGGunMarkerController):
 
     def __init__(self, reticle, enabledFlag=_MARKER_FLAG.UNDEFINED):
-        super(StandardFocusedSPGGunMarkerController, self).__init__(reticle.gunMarkerType,
-                                                                    reticle.getSpgDataProvider(),
-                                                                    enabledFlag=enabledFlag)
+        super(FocusedSPGGunMarkerController, self).__init__(reticle.gunMarkerType,
+                                                            reticle.getSpgDataProvider(),
+                                                            enabledFlag=enabledFlag)
         self._reticle = reticle
 
     def _interceptSize(self, size, pos, direction, relaxTime, collData):

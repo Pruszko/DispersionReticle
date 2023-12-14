@@ -25,7 +25,7 @@ _logger = gm_components._logger
 # - then panel notifies GunMarkerComponents to clear data provider and removes GUI.WGCrosshairFlash
 #   from panel's GUI child list
 #
-# Because using custom AS3GunMarkerComponent we have control over how we will spawn our markers, we will
+# Because using custom ExtendedGunMarkerComponent we have control over how we will spawn our markers, we will
 # attempt to interpose that logic in the most "vanilla way" possible
 #
 # Instead of returning GUI.WGCrosshairFlash, we will use a "proxy" to control marker visibility
@@ -52,7 +52,7 @@ _logger = gm_components._logger
 ###########################################################
 
 # gm_components
-class _CustomGunMarkerProxy(object):
+class _ExtendedGunMarkerProxy(object):
 
     def __init__(self, gunMarkerComponent):
         self.markerName = gunMarkerComponent.getName()
@@ -65,11 +65,11 @@ class _CustomGunMarkerProxy(object):
 
 
 # gm_components
-class CustomGunMarkerComponent(GunMarkerComponent):
+class ExtendedGunMarkerComponent(GunMarkerComponent):
 
     def _createView(self, container):
         # imitate GUI.WGCrosshairFlash data provider methods
-        return _CustomGunMarkerProxy(self)
+        return _ExtendedGunMarkerProxy(self)
 
     # because we can't add our markers to CrosshairPanelContainer GUI, we need
     # to skip those steps when adding/removing it from GunMarkerComponents
@@ -112,9 +112,9 @@ GUN_MARKERS_PRIORITY = [
     _CONSTANTS.SPG_GUN_MARKER_NAME
 ]
 
-GUN_MARKERS_PRIORITY += ReticleRegistry.STANDARD_FOCUSED_CLIENT.getMarkerNames()
-GUN_MARKERS_PRIORITY += ReticleRegistry.STANDARD_FOCUSED_SERVER.getMarkerNames()
-GUN_MARKERS_PRIORITY += ReticleRegistry.STANDARD_HYBRID_CLIENT.getMarkerNames()
+GUN_MARKERS_PRIORITY += ReticleRegistry.FOCUSED_CLIENT.getMarkerNames()
+GUN_MARKERS_PRIORITY += ReticleRegistry.FOCUSED_SERVER.getMarkerNames()
+GUN_MARKERS_PRIORITY += ReticleRegistry.HYBRID_CLIENT.getMarkerNames()
 
 GUN_MARKERS_PRIORITY += [
     _CONSTANTS.DEBUG_ARCADE_GUN_MARKER_NAME,
@@ -124,10 +124,10 @@ GUN_MARKERS_PRIORITY += [
     _CONSTANTS.DEBUG_SPG_GUN_MARKER_NAME
 ]
 
-GUN_MARKERS_PRIORITY += ReticleRegistry.CUSTOM_FOCUSED_CLIENT.getMarkerNames()
-GUN_MARKERS_PRIORITY += ReticleRegistry.CUSTOM_FOCUSED_SERVER.getMarkerNames()
-GUN_MARKERS_PRIORITY += ReticleRegistry.CUSTOM_HYBRID_CLIENT.getMarkerNames()
-GUN_MARKERS_PRIORITY += ReticleRegistry.CUSTOM_SERVER_SERVER.getMarkerNames()
+GUN_MARKERS_PRIORITY += ReticleRegistry.FOCUSED_EXTENDED_CLIENT.getMarkerNames()
+GUN_MARKERS_PRIORITY += ReticleRegistry.FOCUSED_EXTENDED_SERVER.getMarkerNames()
+GUN_MARKERS_PRIORITY += ReticleRegistry.HYBRID_EXTENDED_CLIENT.getMarkerNames()
+GUN_MARKERS_PRIORITY += ReticleRegistry.SERVER_EXTENDED_SERVER.getMarkerNames()
 
 
 def positionInPriorityList(viewSetting):

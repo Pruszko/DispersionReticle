@@ -21,19 +21,19 @@ def registerSoftDependencySupport():
             _createIntroPart() +
             _emptyLine(3) +
             _endSection() +
-            _createStandardFocusedReticlePart() +
+            _createFocusedReticle() +
             _endSection() +
-            _createCustomFocusedReticlePart() +
+            _createFocusedReticleExtended() +
             _endSection() +
-            _createStandardHybridReticlePart() +
+            _createHybridReticle() +
             _endSection() +
-            _createCustomHybridReticlePart(),
+            _createHybridReticleExtended(),
         "column2":
-            _createCommonPart() +
+            _createCommon() +
             _endSection() +
-            _createStandardServerReticlePart() +
+            _createServerReticle() +
             _endSection() +
-            _createCustomServerReticlePart() +
+            _createServerReticleExtended() +
             _endSection()
     }
 
@@ -154,7 +154,7 @@ def _createIntroPart():
     ]
 
 
-def _createCommonPart():
+def _createCommon():
     return [
         g_configParams.reticleSizeMultiplier.renderParam(
             header=Tr.RETICLE_SIZE_MULTIPLIER_HEADER,
@@ -164,206 +164,206 @@ def _createCommonPart():
     ]
 
 
-def _createStandardFocusedReticlePart():
+def _createFocusedReticle():
     return [
         {
             "type": "Label",
-            "text": "1. " + Tr.STANDARD_FOCUSED_RETICLE_LABEL,
+            "text": "1. " + Tr.FOCUSED_RETICLE_LABEL,
             "tooltip": createTooltip(
-                header="1. " + Tr.STANDARD_FOCUSED_RETICLE_HEADER,
-                body=Tr.STANDARD_FOCUSED_RETICLE_BODY + "\n",
-                note=Tr.STANDARD_FOCUSED_RETICLE_NOTE + "\n\n" + _createImg(src="imgs/all.jpg", width=475, height=428)
+                header="1. " + Tr.FOCUSED_RETICLE_HEADER,
+                body=Tr.FOCUSED_RETICLE_BODY + "\n",
+                note=Tr.FOCUSED_RETICLE_NOTE + "\n\n" + _createImg(src="imgs/all.jpg", width=475, height=428)
             ),
         },
-        g_configParams.standardFocusedReticleEnabled.renderParam(
-            header=Tr.STANDARD_FOCUSED_RETICLE_ENABLED_HEADER,
-            body=Tr.STANDARD_FOCUSED_RETICLE_ENABLED_BODY
+        g_configParams.focusedReticleEnabled.renderParam(
+            header=Tr.FOCUSED_RETICLE_ENABLED_HEADER,
+            body=Tr.FOCUSED_RETICLE_ENABLED_BODY
         )
     ]
 
 
-def _createCustomFocusedReticlePart():
+def _createFocusedReticleExtended():
     return [
         {
             "type": "Label",
-            "text": "2. " + Tr.CUSTOM_FOCUSED_RETICLE_LABEL,
+            "text": "2. " + Tr.FOCUSED_RETICLE_EXTENDED_LABEL,
             "tooltip": createTooltip(
-                header="2. " + Tr.CUSTOM_FOCUSED_RETICLE_HEADER,
-                body=Tr.CUSTOM_FOCUSED_RETICLE_BODY + "\n",
-                note=Tr.CUSTOM_FOCUSED_RETICLE_NOTE + "\n",
-                attention=Tr.CUSTOM_FOCUSED_RETICLE_ATTENTION + "\n\n" +
+                header="2. " + Tr.FOCUSED_RETICLE_EXTENDED_HEADER,
+                body=Tr.FOCUSED_RETICLE_EXTENDED_BODY + "\n",
+                note=Tr.FOCUSED_RETICLE_EXTENDED_NOTE + "\n",
+                attention=Tr.FOCUSED_RETICLE_EXTENDED_ATTENTION + "\n\n" +
                           _createImg(src="imgs/all.jpg", width=475, height=428)
             )
         },
-        g_configParams.customFocusedReticleEnabled.renderParam(
-            header=Tr.CUSTOM_RETICLE_ENABLED_HEADER,
-            body=Tr.CUSTOM_RETICLE_ENABLED_BODY
+        g_configParams.focusedReticleExtendedEnabled.renderParam(
+            header=Tr.RETICLE_EXTENDED_ENABLED_HEADER,
+            body=Tr.RETICLE_EXTENDED_ENABLED_BODY
         ),
-        g_configParams.customFocusedReticleShape.renderParam(
-            header=Tr.CUSTOM_RETICLE_SHAPE_HEADER,
-            body=Tr.CUSTOM_RETICLE_SHAPE_BODY + "\n",
+        g_configParams.focusedReticleExtendedShape.renderParam(
+            header=Tr.RETICLE_EXTENDED_SHAPE_HEADER,
+            body=Tr.RETICLE_EXTENDED_SHAPE_BODY + "\n",
             note=_createImg(src="imgs/simple_server.jpg", width=402, height=412)
         ),
-        g_configParams.customFocusedReticleColor.renderParam(
-            header=Tr.CUSTOM_RETICLE_COLOR_HEADER,
-            body=Tr.CUSTOM_RETICLE_COLOR_BODY
+        g_configParams.focusedReticleExtendedColor.renderParam(
+            header=Tr.RETICLE_EXTENDED_COLOR_HEADER,
+            body=Tr.RETICLE_EXTENDED_COLOR_BODY
         ),
-        g_configParams.customFocusedReticleDrawCenterDot.renderParam(
-            header=Tr.CUSTOM_RETICLE_DRAW_CENTER_DOT_HEADER,
-            body=Tr.CUSTOM_RETICLE_DRAW_CENTER_DOT_BODY
+        g_configParams.focusedReticleExtendedDrawCenterDot.renderParam(
+            header=Tr.RETICLE_EXTENDED_DRAW_CENTER_DOT_HEADER,
+            body=Tr.RETICLE_EXTENDED_DRAW_CENTER_DOT_BODY
         ),
-        g_configParams.customFocusedReticleDrawOutline.renderParam(
-            header=Tr.CUSTOM_RETICLE_DRAW_OUTLINE_HEADER,
-            body=Tr.CUSTOM_RETICLE_DRAW_OUTLINE_BODY + "\n",
-            note=Tr.CUSTOM_RETICLE_DRAW_OUTLINE_NOTE
+        g_configParams.focusedReticleExtendedDrawOutline.renderParam(
+            header=Tr.RETICLE_EXTENDED_DRAW_OUTLINE_HEADER,
+            body=Tr.RETICLE_EXTENDED_DRAW_OUTLINE_BODY + "\n",
+            note=Tr.RETICLE_EXTENDED_DRAW_OUTLINE_NOTE
         ),
-        g_configParams.customFocusedReticleBlend.renderParam(
-            header=Tr.CUSTOM_RETICLE_BLEND_HEADER,
-            body=Tr.CUSTOM_RETICLE_BLEND_BODY + "\n",
-            note=Tr.CUSTOM_RETICLE_BLEND_NOTE + "\n",
-            attention=Tr.CUSTOM_RETICLE_BLEND_ATTENTION
+        g_configParams.focusedReticleExtendedBlend.renderParam(
+            header=Tr.RETICLE_EXTENDED_BLEND_HEADER,
+            body=Tr.RETICLE_EXTENDED_BLEND_BODY + "\n",
+            note=Tr.RETICLE_EXTENDED_BLEND_NOTE + "\n",
+            attention=Tr.RETICLE_EXTENDED_BLEND_ATTENTION
         ),
-        g_configParams.customFocusedReticleAlpha.renderParam(
-            header=Tr.CUSTOM_RETICLE_ALPHA_HEADER,
-            body=Tr.CUSTOM_RETICLE_ALPHA_BODY + "\n",
-            note=Tr.CUSTOM_RETICLE_ALPHA_NOTE
+        g_configParams.focusedReticleExtendedAlpha.renderParam(
+            header=Tr.RETICLE_EXTENDED_ALPHA_HEADER,
+            body=Tr.RETICLE_EXTENDED_ALPHA_BODY + "\n",
+            note=Tr.RETICLE_EXTENDED_ALPHA_NOTE
         )
     ]
 
 
-def _createStandardServerReticlePart():
+def _createServerReticle():
     return [
         {
             "type": "Label",
-            "text": "3. " + Tr.STANDARD_SERVER_RETICLE_LABEL,
+            "text": "3. " + Tr.SERVER_RETICLE_LABEL,
             "tooltip": createTooltip(
-                header="3. " + Tr.STANDARD_SERVER_RETICLE_HEADER,
-                body=Tr.STANDARD_SERVER_RETICLE_BODY + "\n\n" + _createImg(src="imgs/all.jpg", width=475, height=428)
+                header="3. " + Tr.SERVER_RETICLE_HEADER,
+                body=Tr.SERVER_RETICLE_BODY + "\n\n" + _createImg(src="imgs/all.jpg", width=475, height=428)
             ),
         },
-        g_configParams.standardServerReticleEnabled.renderParam(
-            header=Tr.STANDARD_SERVER_RETICLE_ENABLED_HEADER,
-            body=Tr.STANDARD_SERVER_RETICLE_ENABLED_BODY
+        g_configParams.serverReticleEnabled.renderParam(
+            header=Tr.SERVER_RETICLE_ENABLED_HEADER,
+            body=Tr.SERVER_RETICLE_ENABLED_BODY
         )
     ]
 
 
-def _createCustomServerReticlePart():
+def _createServerReticleExtended():
     return [
         {
             "type": "Label",
-            "text": "4. " + Tr.CUSTOM_SERVER_RETICLE_LABEL,
+            "text": "4. " + Tr.SERVER_RETICLE_EXTENDED_LABEL,
             "tooltip": createTooltip(
-                header="4. " + Tr.CUSTOM_SERVER_RETICLE_HEADER,
-                body=Tr.CUSTOM_SERVER_RETICLE_BODY + "\n",
-                attention=Tr.CUSTOM_SERVER_RETICLE_ATTENTION + "\n\n" +
+                header="4. " + Tr.SERVER_RETICLE_EXTENDED_HEADER,
+                body=Tr.SERVER_RETICLE_EXTENDED_BODY + "\n",
+                attention=Tr.SERVER_RETICLE_EXTENDED_ATTENTION + "\n\n" +
                           _createImg(src="imgs/all.jpg", width=475, height=428)
             )
         },
-        g_configParams.customServerReticleEnabled.renderParam(
-            header=Tr.CUSTOM_RETICLE_ENABLED_HEADER,
-            body=Tr.CUSTOM_RETICLE_ENABLED_BODY
+        g_configParams.serverReticleExtendedEnabled.renderParam(
+            header=Tr.RETICLE_EXTENDED_ENABLED_HEADER,
+            body=Tr.RETICLE_EXTENDED_ENABLED_BODY
         ),
-        g_configParams.customServerReticleShape.renderParam(
-            header=Tr.CUSTOM_RETICLE_SHAPE_HEADER,
-            body=Tr.CUSTOM_RETICLE_SHAPE_BODY + "\n",
+        g_configParams.serverReticleExtendedShape.renderParam(
+            header=Tr.RETICLE_EXTENDED_SHAPE_HEADER,
+            body=Tr.RETICLE_EXTENDED_SHAPE_BODY + "\n",
             note=_createImg(src="imgs/simple_server.jpg", width=402, height=412)
         ),
-        g_configParams.customServerReticleColor.renderParam(
-            header=Tr.CUSTOM_RETICLE_COLOR_HEADER,
-            body=Tr.CUSTOM_RETICLE_COLOR_BODY
+        g_configParams.serverReticleExtendedColor.renderParam(
+            header=Tr.RETICLE_EXTENDED_COLOR_HEADER,
+            body=Tr.RETICLE_EXTENDED_COLOR_BODY
         ),
-        g_configParams.customServerReticleDrawCenterDot.renderParam(
-            header=Tr.CUSTOM_RETICLE_DRAW_CENTER_DOT_HEADER,
-            body=Tr.CUSTOM_RETICLE_DRAW_CENTER_DOT_BODY
+        g_configParams.serverReticleExtendedDrawCenterDot.renderParam(
+            header=Tr.RETICLE_EXTENDED_DRAW_CENTER_DOT_HEADER,
+            body=Tr.RETICLE_EXTENDED_DRAW_CENTER_DOT_BODY
         ),
-        g_configParams.customServerReticleDrawOutline.renderParam(
-            header=Tr.CUSTOM_RETICLE_DRAW_OUTLINE_HEADER,
-            body=Tr.CUSTOM_RETICLE_DRAW_OUTLINE_BODY + "\n",
-            note=Tr.CUSTOM_RETICLE_DRAW_OUTLINE_NOTE
+        g_configParams.serverReticleExtendedDrawOutline.renderParam(
+            header=Tr.RETICLE_EXTENDED_DRAW_OUTLINE_HEADER,
+            body=Tr.RETICLE_EXTENDED_DRAW_OUTLINE_BODY + "\n",
+            note=Tr.RETICLE_EXTENDED_DRAW_OUTLINE_NOTE
         ),
-        g_configParams.customServerReticleBlend.renderParam(
-            header=Tr.CUSTOM_RETICLE_BLEND_HEADER,
-            body=Tr.CUSTOM_RETICLE_BLEND_BODY + "\n",
-            note=Tr.CUSTOM_RETICLE_BLEND_NOTE + "\n",
-            attention=Tr.CUSTOM_RETICLE_BLEND_ATTENTION
+        g_configParams.serverReticleExtendedBlend.renderParam(
+            header=Tr.RETICLE_EXTENDED_BLEND_HEADER,
+            body=Tr.RETICLE_EXTENDED_BLEND_BODY + "\n",
+            note=Tr.RETICLE_EXTENDED_BLEND_NOTE + "\n",
+            attention=Tr.RETICLE_EXTENDED_BLEND_ATTENTION
         ),
-        g_configParams.customServerReticleAlpha.renderParam(
-            header=Tr.CUSTOM_RETICLE_ALPHA_HEADER,
-            body=Tr.CUSTOM_RETICLE_ALPHA_BODY + "\n",
-            note=Tr.CUSTOM_RETICLE_ALPHA_NOTE
+        g_configParams.serverReticleExtendedAlpha.renderParam(
+            header=Tr.RETICLE_EXTENDED_ALPHA_HEADER,
+            body=Tr.RETICLE_EXTENDED_ALPHA_BODY + "\n",
+            note=Tr.RETICLE_EXTENDED_ALPHA_NOTE
         )
     ]
 
 
-def _createStandardHybridReticlePart():
+def _createHybridReticle():
     return [
         {
             "type": "Label",
-            "text": "5. " + Tr.STANDARD_HYBRID_RETICLE_LABEL,
+            "text": "5. " + Tr.HYBRID_RETICLE_LABEL,
             "tooltip": createTooltip(
-                header="5. " + Tr.STANDARD_HYBRID_RETICLE_HEADER,
-                body=Tr.STANDARD_HYBRID_RETICLE_BODY + "\n",
-                note=Tr.STANDARD_HYBRID_RETICLE_NOTE + "\n\n" + _createImg(src="imgs/all.jpg", width=475, height=428)
+                header="5. " + Tr.HYBRID_RETICLE_HEADER,
+                body=Tr.HYBRID_RETICLE_BODY + "\n",
+                note=Tr.HYBRID_RETICLE_NOTE + "\n\n" + _createImg(src="imgs/all.jpg", width=475, height=428)
             ),
         },
-        g_configParams.standardHybridReticleEnabled.renderParam(
-            header=Tr.STANDARD_HYBRID_RETICLE_ENABLED_HEADER,
-            body=Tr.STANDARD_HYBRID_RETICLE_ENABLED_BODY
+        g_configParams.hybridReticleEnabled.renderParam(
+            header=Tr.HYBRID_RETICLE_ENABLED_HEADER,
+            body=Tr.HYBRID_RETICLE_ENABLED_BODY
         ),
-        g_configParams.standardHybridReticleHideStandardReticle.renderParam(
-            header=Tr.STANDARD_HYBRID_RETICLE_HIDE_STANDARD_RETICLE_HEADER,
-            body=Tr.STANDARD_HYBRID_RETICLE_HIDE_STANDARD_RETICLE_BODY + "\n",
-            note=Tr.STANDARD_HYBRID_RETICLE_HIDE_STANDARD_RETICLE_NOTE
+        g_configParams.hybridReticleHideStandardReticle.renderParam(
+            header=Tr.HYBRID_RETICLE_HIDE_STANDARD_RETICLE_HEADER,
+            body=Tr.HYBRID_RETICLE_HIDE_STANDARD_RETICLE_BODY + "\n",
+            note=Tr.HYBRID_RETICLE_HIDE_STANDARD_RETICLE_NOTE
         )
     ]
 
 
-def _createCustomHybridReticlePart():
+def _createHybridReticleExtended():
     return [
         {
             "type": "Label",
-            "text": "6. " + Tr.CUSTOM_HYBRID_RETICLE_LABEL,
+            "text": "6. " + Tr.HYBRID_RETICLE_EXTENDED_LABEL,
             "tooltip": createTooltip(
-                header="6. " + Tr.CUSTOM_HYBRID_RETICLE_HEADER,
-                body=Tr.CUSTOM_HYBRID_RETICLE_BODY + "\n",
-                note=Tr.CUSTOM_HYBRID_RETICLE_NOTE + "\n",
-                attention=Tr.CUSTOM_HYBRID_RETICLE_ATTENTION + "\n\n" +
+                header="6. " + Tr.HYBRID_RETICLE_EXTENDED_HEADER,
+                body=Tr.HYBRID_RETICLE_EXTENDED_BODY + "\n",
+                note=Tr.HYBRID_RETICLE_EXTENDED_NOTE + "\n",
+                attention=Tr.HYBRID_RETICLE_EXTENDED_ATTENTION + "\n\n" +
                           _createImg(src="imgs/all.jpg", width=475, height=428)
             )
         },
-        g_configParams.customHybridReticleEnabled.renderParam(
-            header=Tr.CUSTOM_RETICLE_ENABLED_HEADER,
-            body=Tr.CUSTOM_RETICLE_ENABLED_BODY
+        g_configParams.hybridReticleExtendedEnabled.renderParam(
+            header=Tr.RETICLE_EXTENDED_ENABLED_HEADER,
+            body=Tr.RETICLE_EXTENDED_ENABLED_BODY
         ),
-        g_configParams.customHybridReticleShape.renderParam(
-            header=Tr.CUSTOM_RETICLE_SHAPE_HEADER,
-            body=Tr.CUSTOM_RETICLE_SHAPE_BODY + "\n",
+        g_configParams.hybridReticleExtendedShape.renderParam(
+            header=Tr.RETICLE_EXTENDED_SHAPE_HEADER,
+            body=Tr.RETICLE_EXTENDED_SHAPE_BODY + "\n",
             note=_createImg(src="imgs/simple_server.jpg", width=402, height=412)
         ),
-        g_configParams.customHybridReticleColor.renderParam(
-            header=Tr.CUSTOM_RETICLE_COLOR_HEADER,
-            body=Tr.CUSTOM_RETICLE_COLOR_BODY
+        g_configParams.hybridReticleExtendedColor.renderParam(
+            header=Tr.RETICLE_EXTENDED_COLOR_HEADER,
+            body=Tr.RETICLE_EXTENDED_COLOR_BODY
         ),
-        g_configParams.customHybridReticleDrawCenterDot.renderParam(
-            header=Tr.CUSTOM_RETICLE_DRAW_CENTER_DOT_HEADER,
-            body=Tr.CUSTOM_RETICLE_DRAW_CENTER_DOT_BODY
+        g_configParams.hybridReticleExtendedDrawCenterDot.renderParam(
+            header=Tr.RETICLE_EXTENDED_DRAW_CENTER_DOT_HEADER,
+            body=Tr.RETICLE_EXTENDED_DRAW_CENTER_DOT_BODY
         ),
-        g_configParams.customHybridReticleDrawOutline.renderParam(
-            header=Tr.CUSTOM_RETICLE_DRAW_OUTLINE_HEADER,
-            body=Tr.CUSTOM_RETICLE_DRAW_OUTLINE_BODY + "\n",
-            note=Tr.CUSTOM_RETICLE_DRAW_OUTLINE_NOTE
+        g_configParams.hybridReticleExtendedDrawOutline.renderParam(
+            header=Tr.RETICLE_EXTENDED_DRAW_OUTLINE_HEADER,
+            body=Tr.RETICLE_EXTENDED_DRAW_OUTLINE_BODY + "\n",
+            note=Tr.RETICLE_EXTENDED_DRAW_OUTLINE_NOTE
         ),
-        g_configParams.customHybridReticleBlend.renderParam(
-            header=Tr.CUSTOM_RETICLE_BLEND_HEADER,
-            body=Tr.CUSTOM_RETICLE_BLEND_BODY + "\n",
-            note=Tr.CUSTOM_RETICLE_BLEND_NOTE + "\n",
-            attention=Tr.CUSTOM_RETICLE_BLEND_ATTENTION
+        g_configParams.hybridReticleExtendedBlend.renderParam(
+            header=Tr.RETICLE_EXTENDED_BLEND_HEADER,
+            body=Tr.RETICLE_EXTENDED_BLEND_BODY + "\n",
+            note=Tr.RETICLE_EXTENDED_BLEND_NOTE + "\n",
+            attention=Tr.RETICLE_EXTENDED_BLEND_ATTENTION
         ),
-        g_configParams.customHybridReticleAlpha.renderParam(
-            header=Tr.CUSTOM_RETICLE_ALPHA_HEADER,
-            body=Tr.CUSTOM_RETICLE_ALPHA_BODY + "\n",
-            note=Tr.CUSTOM_RETICLE_ALPHA_NOTE
+        g_configParams.hybridReticleExtendedAlpha.renderParam(
+            header=Tr.RETICLE_EXTENDED_ALPHA_HEADER,
+            body=Tr.RETICLE_EXTENDED_ALPHA_BODY + "\n",
+            note=Tr.RETICLE_EXTENDED_ALPHA_NOTE
         )
     ]
 

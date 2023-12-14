@@ -5,12 +5,12 @@ from dispersionreticle.flash.dispersion_reticle_flash import DispersionReticleFl
 
 
 # gun_marker_ctrl
-class CustomServerDefaultGunMarkerController(OverriddenDefaultGunMarkerController):
+class ExtendedServerDefaultGunMarkerController(OverriddenDefaultGunMarkerController):
 
     def __init__(self, reticle, enabledFlag=_MARKER_FLAG.UNDEFINED):
-        super(CustomServerDefaultGunMarkerController, self).__init__(reticle.gunMarkerType,
-                                                                     reticle.getStandardDataProvider(),
-                                                                     enabledFlag=enabledFlag)
+        super(ExtendedServerDefaultGunMarkerController, self).__init__(reticle.gunMarkerType,
+                                                                       reticle.getStandardDataProvider(),
+                                                                       enabledFlag=enabledFlag)
         self._reticle = reticle
 
     def _interceptPostUpdate(self, size):

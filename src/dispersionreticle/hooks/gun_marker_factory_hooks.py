@@ -7,7 +7,7 @@ from gui.Scaleform.daapi.view.battle.shared.crosshair.gm_factory import \
     _EquipmentMarkersFactory
 from gui.Scaleform.genConsts.GUN_MARKER_VIEW_CONSTANTS import GUN_MARKER_VIEW_CONSTANTS as _CONSTANTS
 
-from dispersionreticle.hooks.gun_marker_components_hooks import CustomGunMarkerComponent
+from dispersionreticle.hooks.gun_marker_components_hooks import ExtendedGunMarkerComponent
 from dispersionreticle.settings.config import g_configParams
 from dispersionreticle.utils.reticle_registry import ReticleRegistry
 
@@ -42,31 +42,31 @@ class _NewControlMarkersFactory(_ControlMarkersFactory):
         result = ()
 
         if self.areBothMarkersEnabled():
-            if g_configParams.customServerReticleEnabled():
-                result += ReticleRegistry.CUSTOM_SERVER_SERVER.createDefaultMarkers(self, markerType)
-            if g_configParams.customHybridReticleEnabled():
-                result += ReticleRegistry.CUSTOM_HYBRID_CLIENT.createDefaultMarkers(self, markerType)
-            if g_configParams.customFocusedReticleEnabled():
-                result += ReticleRegistry.CUSTOM_FOCUSED_CLIENT.createDefaultMarkers(self, markerType)
+            if g_configParams.serverReticleExtendedEnabled():
+                result += ReticleRegistry.SERVER_EXTENDED_SERVER.createDefaultMarkers(self, markerType)
+            if g_configParams.hybridReticleExtendedEnabled():
+                result += ReticleRegistry.HYBRID_EXTENDED_CLIENT.createDefaultMarkers(self, markerType)
+            if g_configParams.focusedReticleExtendedEnabled():
+                result += ReticleRegistry.FOCUSED_EXTENDED_CLIENT.createDefaultMarkers(self, markerType)
 
-            if g_configParams.standardServerReticleEnabled():
+            if g_configParams.serverReticleEnabled():
                 result += (self._createArcadeMarker(serverType, _CONSTANTS.DEBUG_ARCADE_GUN_MARKER_NAME),
                            self._createSniperMarker(serverType, _CONSTANTS.DEBUG_SNIPER_GUN_MARKER_NAME))
 
-            if g_configParams.standardHybridReticleEnabled():
-                result += ReticleRegistry.STANDARD_HYBRID_CLIENT.createDefaultMarkers(self, markerType)
+            if g_configParams.hybridReticleEnabled():
+                result += ReticleRegistry.HYBRID_CLIENT.createDefaultMarkers(self, markerType)
 
-            if g_configParams.standardFocusedReticleEnabled():
-                result += ReticleRegistry.STANDARD_FOCUSED_CLIENT.createDefaultMarkers(self, markerType)
+            if g_configParams.focusedReticleEnabled():
+                result += ReticleRegistry.FOCUSED_CLIENT.createDefaultMarkers(self, markerType)
 
             if not shouldHideStandardReticle():
                 result += (self._createArcadeMarker(clientType, _CONSTANTS.ARCADE_GUN_MARKER_NAME),
                            self._createSniperMarker(clientType, _CONSTANTS.SNIPER_GUN_MARKER_NAME))
         else:
-            if g_configParams.standardFocusedReticleEnabled():
+            if g_configParams.focusedReticleEnabled():
                 result += toFocusedReticle(markerType).createDefaultMarkers(self, markerType)
-            if g_configParams.customFocusedReticleEnabled():
-                result += toCustomFocusedReticle(markerType).createDefaultMarkers(self, markerType)
+            if g_configParams.focusedReticleExtendedEnabled():
+                result += toFocusedReticleExtended(markerType).createDefaultMarkers(self, markerType)
 
             result += (self._createArcadeMarker(markerType, _CONSTANTS.ARCADE_GUN_MARKER_NAME),
                        self._createSniperMarker(markerType, _CONSTANTS.SNIPER_GUN_MARKER_NAME))
@@ -86,45 +86,45 @@ class _NewControlMarkersFactory(_ControlMarkersFactory):
             # of some type are enabled
 
             # server reticles
-            if g_configParams.customServerReticleEnabled() and g_configParams.standardServerReticleEnabled():
-                result += ReticleRegistry.CUSTOM_SERVER_SERVER.createArcadeOnlySPGMarkers(self, markerType)
+            if g_configParams.serverReticleExtendedEnabled() and g_configParams.serverReticleEnabled():
+                result += ReticleRegistry.SERVER_EXTENDED_SERVER.createArcadeOnlySPGMarkers(self, markerType)
                 result += (self._createArcadeMarker(serverType, _CONSTANTS.DEBUG_ARCADE_GUN_MARKER_NAME),
                            self._createSPGMarker(serverType, _CONSTANTS.DEBUG_SPG_GUN_MARKER_NAME))
             else:
-                if g_configParams.customServerReticleEnabled():
-                    result += ReticleRegistry.CUSTOM_SERVER_SERVER.createSPGMarkers(self, markerType)
-                if g_configParams.standardServerReticleEnabled():
+                if g_configParams.serverReticleExtendedEnabled():
+                    result += ReticleRegistry.SERVER_EXTENDED_SERVER.createSPGMarkers(self, markerType)
+                if g_configParams.serverReticleEnabled():
                     result += (self._createArcadeMarker(serverType, _CONSTANTS.DEBUG_ARCADE_GUN_MARKER_NAME),
                                self._createSPGMarker(serverType, _CONSTANTS.DEBUG_SPG_GUN_MARKER_NAME))
 
             # hybrid reticles
-            if g_configParams.customHybridReticleEnabled() and g_configParams.standardHybridReticleEnabled():
-                result += ReticleRegistry.CUSTOM_HYBRID_CLIENT.createArcadeOnlySPGMarkers(self, markerType)
-                result += ReticleRegistry.STANDARD_HYBRID_CLIENT.createSPGMarkers(self, markerType)
+            if g_configParams.hybridReticleExtendedEnabled() and g_configParams.hybridReticleEnabled():
+                result += ReticleRegistry.HYBRID_EXTENDED_CLIENT.createArcadeOnlySPGMarkers(self, markerType)
+                result += ReticleRegistry.HYBRID_CLIENT.createSPGMarkers(self, markerType)
             else:
-                if g_configParams.customHybridReticleEnabled():
-                    result += ReticleRegistry.CUSTOM_HYBRID_CLIENT.createSPGMarkers(self, markerType)
-                if g_configParams.standardHybridReticleEnabled():
-                    result += ReticleRegistry.STANDARD_HYBRID_CLIENT.createSPGMarkers(self, markerType)
+                if g_configParams.hybridReticleExtendedEnabled():
+                    result += ReticleRegistry.HYBRID_EXTENDED_CLIENT.createSPGMarkers(self, markerType)
+                if g_configParams.hybridReticleEnabled():
+                    result += ReticleRegistry.HYBRID_CLIENT.createSPGMarkers(self, markerType)
 
             # focused reticles
-            if g_configParams.customFocusedReticleEnabled() and g_configParams.standardFocusedReticleEnabled():
-                result += ReticleRegistry.CUSTOM_FOCUSED_CLIENT.createArcadeOnlySPGMarkers(self, markerType)
-                result += ReticleRegistry.STANDARD_FOCUSED_CLIENT.createSPGMarkers(self, markerType)
+            if g_configParams.focusedReticleExtendedEnabled() and g_configParams.focusedReticleEnabled():
+                result += ReticleRegistry.FOCUSED_EXTENDED_CLIENT.createArcadeOnlySPGMarkers(self, markerType)
+                result += ReticleRegistry.FOCUSED_CLIENT.createSPGMarkers(self, markerType)
             else:
-                if g_configParams.customFocusedReticleEnabled():
-                    result += ReticleRegistry.CUSTOM_FOCUSED_CLIENT.createSPGMarkers(self, markerType)
-                if g_configParams.standardFocusedReticleEnabled():
-                    result += ReticleRegistry.STANDARD_FOCUSED_CLIENT.createSPGMarkers(self, markerType)
+                if g_configParams.focusedReticleExtendedEnabled():
+                    result += ReticleRegistry.FOCUSED_EXTENDED_CLIENT.createSPGMarkers(self, markerType)
+                if g_configParams.focusedReticleEnabled():
+                    result += ReticleRegistry.FOCUSED_CLIENT.createSPGMarkers(self, markerType)
 
             if not shouldHideStandardReticle():
                 result += (self._createArcadeMarker(clientType, _CONSTANTS.ARCADE_GUN_MARKER_NAME),
                            self._createSPGMarker(clientType, _CONSTANTS.SPG_GUN_MARKER_NAME))
         else:
-            if g_configParams.standardFocusedReticleEnabled():
+            if g_configParams.focusedReticleEnabled():
                 result += toFocusedReticle(markerType).createSPGMarkers(self, markerType)
-            if g_configParams.customFocusedReticleEnabled():
-                result += toCustomFocusedReticle(markerType).createSPGMarkers(self, markerType)
+            if g_configParams.focusedReticleExtendedEnabled():
+                result += toFocusedReticleExtended(markerType).createSPGMarkers(self, markerType)
 
             result += (self._createArcadeMarker(markerType, _CONSTANTS.ARCADE_GUN_MARKER_NAME),
                        self._createSPGMarker(markerType, _CONSTANTS.SPG_GUN_MARKER_NAME))
@@ -147,45 +147,45 @@ class _NewControlMarkersFactory(_ControlMarkersFactory):
             # both reticles of some type are enabled
 
             # server reticles
-            if g_configParams.customServerReticleEnabled() and g_configParams.standardServerReticleEnabled():
-                result += ReticleRegistry.CUSTOM_SERVER_SERVER.createArcadeOnlySPGMarkers(self, markerType)
+            if g_configParams.serverReticleExtendedEnabled() and g_configParams.serverReticleEnabled():
+                result += ReticleRegistry.SERVER_EXTENDED_SERVER.createArcadeOnlySPGMarkers(self, markerType)
                 result += (self._createArcadeMarker(serverType, _CONSTANTS.DEBUG_ARCADE_GUN_MARKER_NAME),
                            self._createSPGMarker(serverType, _CONSTANTS.DEBUG_SPG_GUN_MARKER_NAME))
             else:
-                if g_configParams.customServerReticleEnabled():
-                    result += ReticleRegistry.CUSTOM_SERVER_SERVER.createSPGMarkers(self, markerType)
-                if g_configParams.standardServerReticleEnabled():
+                if g_configParams.serverReticleExtendedEnabled():
+                    result += ReticleRegistry.SERVER_EXTENDED_SERVER.createSPGMarkers(self, markerType)
+                if g_configParams.serverReticleEnabled():
                     result += (self._createArcadeMarker(serverType, _CONSTANTS.DEBUG_ARCADE_GUN_MARKER_NAME),
                                self._createSPGMarker(serverType, _CONSTANTS.DEBUG_SPG_GUN_MARKER_NAME))
 
             # hybrid reticles
-            if g_configParams.customHybridReticleEnabled() and g_configParams.standardHybridReticleEnabled():
-                result += ReticleRegistry.CUSTOM_HYBRID_CLIENT.createArcadeOnlySPGMarkers(self, markerType)
-                result += ReticleRegistry.STANDARD_HYBRID_CLIENT.createSPGMarkers(self, markerType)
+            if g_configParams.hybridReticleExtendedEnabled() and g_configParams.hybridReticleEnabled():
+                result += ReticleRegistry.HYBRID_EXTENDED_CLIENT.createArcadeOnlySPGMarkers(self, markerType)
+                result += ReticleRegistry.HYBRID_CLIENT.createSPGMarkers(self, markerType)
             else:
-                if g_configParams.customHybridReticleEnabled():
-                    result += ReticleRegistry.CUSTOM_HYBRID_CLIENT.createSPGMarkers(self, markerType)
-                if g_configParams.standardHybridReticleEnabled():
-                    result += ReticleRegistry.STANDARD_HYBRID_CLIENT.createSPGMarkers(self, markerType)
+                if g_configParams.hybridReticleExtendedEnabled():
+                    result += ReticleRegistry.HYBRID_EXTENDED_CLIENT.createSPGMarkers(self, markerType)
+                if g_configParams.hybridReticleEnabled():
+                    result += ReticleRegistry.HYBRID_CLIENT.createSPGMarkers(self, markerType)
 
             # focused reticles
-            if g_configParams.customFocusedReticleEnabled() and g_configParams.standardFocusedReticleEnabled():
-                result += ReticleRegistry.CUSTOM_FOCUSED_CLIENT.createArcadeOnlySPGMarkers(self, markerType)
-                result += ReticleRegistry.STANDARD_FOCUSED_CLIENT.createSPGMarkers(self, markerType)
+            if g_configParams.focusedReticleExtendedEnabled() and g_configParams.focusedReticleEnabled():
+                result += ReticleRegistry.FOCUSED_EXTENDED_CLIENT.createArcadeOnlySPGMarkers(self, markerType)
+                result += ReticleRegistry.FOCUSED_CLIENT.createSPGMarkers(self, markerType)
             else:
-                if g_configParams.customFocusedReticleEnabled():
-                    result += ReticleRegistry.CUSTOM_FOCUSED_CLIENT.createSPGMarkers(self, markerType)
-                if g_configParams.standardFocusedReticleEnabled():
-                    result += ReticleRegistry.STANDARD_FOCUSED_CLIENT.createSPGMarkers(self, markerType)
+                if g_configParams.focusedReticleExtendedEnabled():
+                    result += ReticleRegistry.FOCUSED_EXTENDED_CLIENT.createSPGMarkers(self, markerType)
+                if g_configParams.focusedReticleEnabled():
+                    result += ReticleRegistry.FOCUSED_CLIENT.createSPGMarkers(self, markerType)
 
             if not shouldHideStandardReticle():
                 result += (self._createArcadeMarker(clientType, _CONSTANTS.ARCADE_GUN_MARKER_NAME),
                            self._createSPGMarker(clientType, _CONSTANTS.SPG_GUN_MARKER_NAME))
         else:
-            if g_configParams.standardFocusedReticleEnabled():
+            if g_configParams.focusedReticleEnabled():
                 result += toFocusedReticle(markerType).createSPGMarkers(self, markerType)
-            if g_configParams.customFocusedReticleEnabled():
-                result += toCustomFocusedReticle(markerType).createSPGMarkers(self, markerType)
+            if g_configParams.focusedReticleExtendedEnabled():
+                result += toFocusedReticleExtended(markerType).createSPGMarkers(self, markerType)
 
             result += (self._createArcadeMarker(markerType, _CONSTANTS.ARCADE_GUN_MARKER_NAME),
                        self._createSPGMarker(markerType, _CONSTANTS.SPG_GUN_MARKER_NAME))
@@ -200,31 +200,31 @@ class _NewControlMarkersFactory(_ControlMarkersFactory):
         result = ()
 
         if self.areBothMarkersEnabled():
-            if g_configParams.customServerReticleEnabled():
-                result += ReticleRegistry.CUSTOM_SERVER_SERVER.createDualGunMarkers(self, markerType)
-            if g_configParams.customHybridReticleEnabled():
-                result += ReticleRegistry.CUSTOM_HYBRID_CLIENT.createDualGunMarkers(self, markerType)
-            if g_configParams.customFocusedReticleEnabled():
-                result += ReticleRegistry.CUSTOM_FOCUSED_CLIENT.createDualGunMarkers(self, markerType)
+            if g_configParams.serverReticleExtendedEnabled():
+                result += ReticleRegistry.SERVER_EXTENDED_SERVER.createDualGunMarkers(self, markerType)
+            if g_configParams.hybridReticleExtendedEnabled():
+                result += ReticleRegistry.HYBRID_EXTENDED_CLIENT.createDualGunMarkers(self, markerType)
+            if g_configParams.focusedReticleExtendedEnabled():
+                result += ReticleRegistry.FOCUSED_EXTENDED_CLIENT.createDualGunMarkers(self, markerType)
 
-            if g_configParams.standardServerReticleEnabled():
+            if g_configParams.serverReticleEnabled():
                 result += (self._createArcadeMarker(serverType, _CONSTANTS.DEBUG_DUAL_GUN_ARCADE_MARKER_NAME),
                            self._createSniperMarker(serverType, _CONSTANTS.DEBUG_DUAL_GUN_SNIPER_MARKER_NAME))
 
-            if g_configParams.standardHybridReticleEnabled():
-                result += ReticleRegistry.STANDARD_HYBRID_CLIENT.createDualGunMarkers(self, markerType)
+            if g_configParams.hybridReticleEnabled():
+                result += ReticleRegistry.HYBRID_CLIENT.createDualGunMarkers(self, markerType)
 
-            if g_configParams.standardFocusedReticleEnabled():
-                result += ReticleRegistry.STANDARD_FOCUSED_CLIENT.createDualGunMarkers(self, markerType)
+            if g_configParams.focusedReticleEnabled():
+                result += ReticleRegistry.FOCUSED_CLIENT.createDualGunMarkers(self, markerType)
 
             if not shouldHideStandardReticle():
                 result += (self._createArcadeMarker(clientType, _CONSTANTS.DUAL_GUN_ARCADE_MARKER_NAME),
                            self._createSniperMarker(clientType, _CONSTANTS.DUAL_GUN_SNIPER_MARKER_NAME))
         else:
-            if g_configParams.standardFocusedReticleEnabled():
+            if g_configParams.focusedReticleEnabled():
                 result += toFocusedReticle(markerType).createDualGunMarkers(self, markerType)
-            if g_configParams.customFocusedReticleEnabled():
-                result += toCustomFocusedReticle(markerType).createDualGunMarkers(self, markerType)
+            if g_configParams.focusedReticleExtendedEnabled():
+                result += toFocusedReticleExtended(markerType).createDualGunMarkers(self, markerType)
 
             result += (self._createArcadeMarker(markerType, _CONSTANTS.DUAL_GUN_ARCADE_MARKER_NAME),
                        self._createSniperMarker(markerType, _CONSTANTS.DUAL_GUN_SNIPER_MARKER_NAME))
@@ -234,13 +234,13 @@ class _NewControlMarkersFactory(_ControlMarkersFactory):
     def areBothMarkersEnabled(self):
         return self._markersInfo.isClientMarkerActivated and self._markersInfo.isServerMarkerActivated
 
-    def _createCustomArcadeMarker(self, markerType, name):
+    def _createExtendedArcadeMarker(self, markerType, name):
         dataProvider = self._getMarkerDataProvider(markerType)
-        return self._createMarker(CustomGunMarkerComponent, _VIEW_ID.ARCADE, markerType, dataProvider, name)
+        return self._createMarker(ExtendedGunMarkerComponent, _VIEW_ID.ARCADE, markerType, dataProvider, name)
 
-    def _createCustomSniperMarker(self, markerType, name):
+    def _createExtendedSniperMarker(self, markerType, name):
         dataProvider = self._getMarkerDataProvider(markerType)
-        return self._createMarker(CustomGunMarkerComponent, _VIEW_ID.SNIPER, markerType, dataProvider, name)
+        return self._createMarker(ExtendedGunMarkerComponent, _VIEW_ID.SNIPER, markerType, dataProvider, name)
 
 
 def selectProperType(markerType, currentType):
@@ -252,23 +252,23 @@ def selectProperType(markerType, currentType):
 def toFocusedReticle(markerType):
     if markerType != GUN_MARKER_TYPE.UNDEFINED:
         if markerType == GUN_MARKER_TYPE.CLIENT:
-            return ReticleRegistry.STANDARD_FOCUSED_CLIENT
-        return ReticleRegistry.STANDARD_FOCUSED_SERVER
+            return ReticleRegistry.FOCUSED_CLIENT
+        return ReticleRegistry.FOCUSED_SERVER
 
-    return ReticleRegistry.STANDARD_FOCUSED_CLIENT
+    return ReticleRegistry.FOCUSED_CLIENT
 
 
-def toCustomFocusedReticle(markerType):
+def toFocusedReticleExtended(markerType):
     if markerType != GUN_MARKER_TYPE.UNDEFINED:
         if markerType == GUN_MARKER_TYPE.CLIENT:
-            return ReticleRegistry.CUSTOM_FOCUSED_CLIENT
-        return ReticleRegistry.CUSTOM_FOCUSED_SERVER
+            return ReticleRegistry.FOCUSED_EXTENDED_CLIENT
+        return ReticleRegistry.FOCUSED_EXTENDED_SERVER
 
-    return ReticleRegistry.CUSTOM_FOCUSED_CLIENT
+    return ReticleRegistry.FOCUSED_EXTENDED_CLIENT
 
 
 def shouldHideStandardReticle():
-    return g_configParams.standardHybridReticleEnabled() and g_configParams.standardHybridReticleHideStandardReticle()
+    return g_configParams.hybridReticleEnabled() and g_configParams.hybridReticleHideStandardReticle()
 
 
 # It is needed to be overridden manually.

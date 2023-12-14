@@ -27,32 +27,32 @@ CONFIG_TEMPLATE = """{
 
     "reticle-size-multiplier": %(reticle-size-multiplier)s,
 
-    // Standard focused reticle (enabled by default)
+    // Focused reticle (enabled by default)
     //
     // Adds standard reticle displaying fully-focused dispersion to in-game reticle.
     // When both client-side and server-side reticles are on, it attaches to client-side reticle.
 
-    "standard-focused-reticle": {
+    "focused-reticle": {
 
         // Valid values: true/false (default: true)
         //
         // If true, displays this reticle.
-        "enabled": %(standard-focused-reticle-enabled)s
+        "enabled": %(focused-reticle-enabled)s
     },
 
-    // Customizable focused reticle
+    // Focused reticle extended
     //
     // Adds configurable reticle displaying fully-focused dispersion to in-game reticle.
     // When both client-side and server-side reticles are on, it attaches to client-side reticle.
     // 
     // For SPG artillery view, a standard version of this reticle will be used.
 
-    "custom-focused-reticle": {
+    "focused-reticle-extended": {
 
         // Valid values: true/false (default: false)
         //
         // If true, displays this reticle.
-        "enabled": %(custom-focused-reticle-enabled)s,
+        "enabled": %(focused-reticle-extended-enabled)s,
 
         // Valid values: ["pentagon", "t-shape", "circle", "dashed"]
         // Default value: "circle"
@@ -62,25 +62,25 @@ CONFIG_TEMPLATE = """{
         // - "t-shape"  - displays reticle made of T-shaped figures,
         // - "circle"   - displays reticle as a circle with 1 pixel thickness; similar to vanilla reticle,
         // - "dashed"   - displays reticle made of dash lines; similar to vanilla reticle.
-        "shape": %(custom-focused-reticle-shape)s,
+        "shape": %(focused-reticle-extended-shape)s,
 
         // Valid value: 3-element array of numbers between 0 and 255
         // Default value: [255, 255, 0] (this is yellow color)
         //
         // Colors this reticle using red, green and blue components.
         // You can use color picker from internet to visually choose desired color.
-        "color": %(custom-focused-reticle-color)s,
+        "color": %(focused-reticle-extended-color)s,
 
         // Valid values: true/false (default: false)
         //
         // If true, shape is additionally displayed with center dot.
-        "draw-center-dot": %(custom-focused-reticle-draw-center-dot)s,
+        "draw-center-dot": %(focused-reticle-extended-draw-center-dot)s,
 
         // Valid values: true/false (default: false)
         //
         // If true, shape is additionally displayed with 1 pixel black outline.
         // Useful if shape color blends with the background.
-        "draw-outline": %(custom-focused-reticle-draw-outline)s,
+        "draw-outline": %(focused-reticle-extended-draw-outline)s,
 
         // Valid values: number between 0.0 and 1.0 (default 0.5)
         //
@@ -93,17 +93,17 @@ CONFIG_TEMPLATE = """{
         //
         // Value 1.0 effectively prevents you from getting dark colors
         // because ... black color + background color = background color.
-        "blend": %(custom-focused-reticle-blend)s,
+        "blend": %(focused-reticle-extended-blend)s,
 
         // Valid values: number between 0.0 and 1.0 (default 1.0)
         //
         // Controls transparency of displayed reticle:
         // - value 1.0 means full visibility
         // - value 0.0 means zero visibility
-        "alpha": %(custom-focused-reticle-alpha)s
+        "alpha": %(focused-reticle-extended-alpha)s
     },
 
-    // Standard hybrid reticle
+    // Hybrid reticle
     // 
     // Adds standard reticle displaying current server-side dispersion to client-side reticle.
     // Basically, client-side position, but server-side dispersion.
@@ -111,21 +111,21 @@ CONFIG_TEMPLATE = """{
     //
     // Useful if you want to know server-side dispersion, but still want client-side responsiveness.
 
-    "standard-hybrid-reticle": {
+    "hybrid-reticle": {
 
         // Valid values: true/false (default: false)
         //
         // If true, displays this reticle.
-        "enabled": %(standard-hybrid-reticle-enabled)s,
+        "enabled": %(hybrid-reticle-enabled)s,
 
         // Valid values: true/false (default: false)
         //
         // If true, standard client reticle is hidden while hybrid reticle is enabled..
         // Useful if you want to only use hybrid reticle instead of standard reticle.
-        "hide-standard-reticle": %(standard-hybrid-reticle-hide-standard-reticle)s
+        "hide-standard-reticle": %(hybrid-reticle-hide-standard-reticle)s
     },
 
-    // Customizable hybrid reticle
+    // Hybrid reticle extended
     // 
     // Adds configurable reticle displaying current server-side dispersion to client-side reticle.
     // Basically, client-side position, but server-side dispersion.
@@ -135,12 +135,12 @@ CONFIG_TEMPLATE = """{
     //
     // For SPG artillery view, a standard version of this reticle will be used.
 
-    "custom-hybrid-reticle": {
+    "hybrid-reticle-extended": {
 
         // Valid values: true/false (default: false)
         //
         // If true, displays this reticle.
-        "enabled": %(custom-hybrid-reticle-enabled)s,
+        "enabled": %(hybrid-reticle-extended-enabled)s,
 
         // Valid values: ["pentagon", "t-shape", "circle", "dashed"]
         // Default value: "circle"
@@ -150,25 +150,25 @@ CONFIG_TEMPLATE = """{
         // - "t-shape"  - displays reticle made of T-shaped figures,
         // - "circle"   - displays reticle as a circle with 1 pixel thickness; similar to vanilla reticle,
         // - "dashed"   - displays reticle made of dash lines; similar to vanilla reticle.
-        "shape": %(custom-hybrid-reticle-shape)s,
+        "shape": %(hybrid-reticle-extended-shape)s,
 
         // Valid value: 3-element array of numbers between 0 and 255
         // Default value: [0, 255, 255] (this is cyan color)
         //
         // Colors this reticle using red, green and blue components.
         // You can use color picker from internet to visually choose desired color.
-        "color": %(custom-hybrid-reticle-color)s,
+        "color": %(hybrid-reticle-extended-color)s,
 
         // Valid values: true/false (default: false)
         //
         // If true, shape is additionally displayed with center dot.
-        "draw-center-dot": %(custom-hybrid-reticle-draw-center-dot)s,
+        "draw-center-dot": %(hybrid-reticle-extended-draw-center-dot)s,
 
         // Valid values: true/false (default: false)
         //
         // If true, shape is additionally displayed with 1 pixel black outline.
         // Useful if shape color blends with the background.
-        "draw-outline": %(custom-hybrid-reticle-draw-outline)s,
+        "draw-outline": %(hybrid-reticle-extended-draw-outline)s,
 
         // Valid values: number between 0.0 and 1.0 (default 0.5)
         //
@@ -181,39 +181,39 @@ CONFIG_TEMPLATE = """{
         //
         // Value 1.0 effectively prevents you from getting dark colors
         // because ... black color + background color = background color.
-        "blend": %(custom-hybrid-reticle-blend)s,
+        "blend": %(hybrid-reticle-extended-blend)s,
 
         // Valid values: number between 0.0 and 1.0 (default 1.0)
         //
         // Controls transparency of displayed reticle:
         // - value 1.0 means full visibility
         // - value 0.0 means zero visibility
-        "alpha": %(custom-hybrid-reticle-alpha)s
+        "alpha": %(hybrid-reticle-extended-alpha)s
     },
 
-    // Standard server reticle
+    // Server reticle
     // 
     // Adds server-side standard reticle alongside with client-side reticle.
 
-    "standard-server-reticle": {
+    "server-reticle": {
 
         // Valid values: true/false (default: false)
         //
         // If true, displays this reticle.
-        "enabled": %(standard-server-reticle-enabled)s
+        "enabled": %(server-reticle-enabled)s
     },
 
-    // Custom server reticle
+    // Server reticle extended
     // 
     // Adds configurable server-side reticle alongside with client-side reticle.
     // For SPG artillery view, a standard version of this reticle will be used.
 
-    "custom-server-reticle": {
+    "server-reticle-extended": {
 
         // Valid values: true/false (default: false)
         //
         // If true, displays this reticle.
-        "enabled": %(custom-server-reticle-enabled)s,
+        "enabled": %(server-reticle-extended-enabled)s,
 
         // Valid values: ["pentagon", "t-shape", "circle", "dashed"]
         // Default value: "pentagon"
@@ -223,25 +223,25 @@ CONFIG_TEMPLATE = """{
         // - "t-shape"  - displays reticle made of T-shaped figures,
         // - "circle"   - displays reticle as a circle with 1 pixel thickness; similar to vanilla reticle,
         // - "dashed"   - displays reticle made of dash lines; similar to vanilla reticle.
-        "shape": %(custom-server-reticle-shape)s,
+        "shape": %(server-reticle-extended-shape)s,
 
         // Valid value: 3-element array of numbers between 0 and 255
         // Default value: [255, 0, 255] (this is purple color)
         //
         // Colors this reticle using red, green and blue components.
         // You can use color picker from internet to visually choose desired color.
-        "color": %(custom-server-reticle-color)s,
+        "color": %(server-reticle-extended-color)s,
 
         // Valid values: true/false (default: false)
         //
         // If true, shape is additionally displayed with center dot.
-        "draw-center-dot": %(custom-server-reticle-draw-center-dot)s,
+        "draw-center-dot": %(server-reticle-extended-draw-center-dot)s,
 
         // Valid values: true/false (default: false)
         //
         // If true, shape is additionally displayed with 1 pixel black outline.
         // Useful if shape color blends with the background.
-        "draw-outline": %(custom-server-reticle-draw-outline)s,
+        "draw-outline": %(server-reticle-extended-draw-outline)s,
 
         // Valid values: number between 0.0 and 1.0 (default 0.5)
         //
@@ -254,14 +254,14 @@ CONFIG_TEMPLATE = """{
         //
         // Value 1.0 effectively prevents you from getting dark colors
         // because ... black color + background color = background color.
-        "blend": %(custom-server-reticle-blend)s,
+        "blend": %(server-reticle-extended-blend)s,
 
         // Valid values: number between 0.0 and 1.0 (default 1.0)
         //
         // Controls transparency of displayed reticle:
         // - value 1.0 means full visibility
         // - value 0.0 means zero visibility
-        "alpha": %(custom-server-reticle-alpha)s
+        "alpha": %(server-reticle-extended-alpha)s
     },
 
     // DO NOT touch "__version__" field

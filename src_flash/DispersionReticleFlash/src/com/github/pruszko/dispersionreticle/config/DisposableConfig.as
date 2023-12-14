@@ -7,9 +7,9 @@ package com.github.pruszko.dispersionreticle.config
 	public class DisposableConfig implements Disposable
 	{
 		
-		private var _customFocusedReticle:DisposableCustomMarkerConfig = new DisposableCustomMarkerConfig();
-		private var _customHybridReticle:DisposableCustomMarkerConfig = new DisposableCustomMarkerConfig();
-		private var _customServerReticle:DisposableCustomMarkerConfig = new DisposableCustomMarkerConfig();
+		private var _focusedReticleExtended:DisposableCustomMarkerConfig = new DisposableCustomMarkerConfig();
+		private var _hybridReticleExtended:DisposableCustomMarkerConfig = new DisposableCustomMarkerConfig();
+		private var _serverReticleExtended:DisposableCustomMarkerConfig = new DisposableCustomMarkerConfig();
 		
 		public function DisposableConfig() 
 		{
@@ -18,51 +18,37 @@ package com.github.pruszko.dispersionreticle.config
 		
 		public function disposeState() : void
 		{
-			_customFocusedReticle.disposeState();
-			_customFocusedReticle = null;
-			_customHybridReticle.disposeState();
-			_customHybridReticle = null;
-			_customServerReticle.disposeState();
-			_customServerReticle = null;
+			_focusedReticleExtended.disposeState();
+			_focusedReticleExtended = null;
+			_hybridReticleExtended.disposeState();
+			_hybridReticleExtended = null;
+			_serverReticleExtended.disposeState();
+			_serverReticleExtended = null;
 		}
 		
 		public function deserialize(serializedConfig:Object) : void
 		{
-			this._customFocusedReticle.deserialize(serializedConfig["custom-focused-reticle"]);
-			this._customHybridReticle.deserialize(serializedConfig["custom-hybrid-reticle"]);
-			this._customServerReticle.deserialize(serializedConfig["custom-server-reticle"]);
+			this._focusedReticleExtended.deserialize(serializedConfig["focused-reticle-extended"]);
+			this._hybridReticleExtended.deserialize(serializedConfig["hybrid-reticle-extended"]);
+			this._serverReticleExtended.deserialize(serializedConfig["server-reticle-extended"]);
 		}
 		
 		public function getCustomMarkerConfig(gunMarkerType:int) : DisposableCustomMarkerConfig
 		{
 			switch (gunMarkerType)
 			{
-				case GunMarkerTypes.CUSTOM_FOCUSED_CLIENT:
-				case GunMarkerTypes.CUSTOM_FOCUSED_SERVER:
-					return _customFocusedReticle;
-				case GunMarkerTypes.CUSTOM_HYBRID_CLIENT:
-					return _customHybridReticle;
-				case GunMarkerTypes.CUSTOM_SERVER_SERVER:
-					return _customServerReticle;
+				case GunMarkerTypes.FOCUSED_EXTENDED_CLIENT:
+				case GunMarkerTypes.FOCUSED_EXTENDED_SERVER:
+					return _focusedReticleExtended;
+				case GunMarkerTypes.HYBRID_EXTENDED_CLIENT:
+					return _hybridReticleExtended;
+				case GunMarkerTypes.SERVER_EXTENDED_SERVER:
+					return _serverReticleExtended;
 				default:
 					return null;
 			}
 		}
-		
-		public function get customFocusedReticle() : DisposableCustomMarkerConfig
-		{
-			return _customFocusedReticle;
-		}
-		
-		public function get customHybridReticle() : DisposableCustomMarkerConfig
-		{
-			return _customHybridReticle;
-		}
-		
-		public function get customServerReticle() : DisposableCustomMarkerConfig
-		{
-			return _customServerReticle;
-		}
+	
 		
 	}
 

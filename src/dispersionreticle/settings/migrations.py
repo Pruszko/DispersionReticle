@@ -161,51 +161,46 @@ def v3_0_0_splitConfigFile():
 
     logger.info("Migrating config file from version 2.6.x to 3.0.x ...")
 
-    # standard focused reticle
-    configDict["standard-focused-reticle"] = {}
-    configDict["standard-focused-reticle"]["enabled"] = configDict["dispersion-reticle"]["enabled"]
+    # focused reticle
+    configDict["focused-reticle"] = {}
+    configDict["focused-reticle"]["enabled"] = configDict["dispersion-reticle"]["enabled"]
     del configDict["dispersion-reticle"]
 
-    # custom focused reticle
-    configDict["custom-focused-reticle"] = {}
-    configDict["custom-focused-reticle"]["enabled"] = False
-    configDict["custom-focused-reticle"]["shape"] = "circle"
-    configDict["custom-focused-reticle"]["color"] = (255, 255, 0)
-    configDict["custom-focused-reticle"]["draw-center-dot"] = False
-    configDict["custom-focused-reticle"]["draw-outline"] = False
-    configDict["custom-focused-reticle"]["blend"] = 0.5
-    configDict["custom-focused-reticle"]["alpha"] = 1.0
+    # focused reticle extended
+    configDict["focused-reticle-extended"] = {}
+    configDict["focused-reticle-extended"]["enabled"] = False
+    configDict["focused-reticle-extended"]["shape"] = "circle"
+    configDict["focused-reticle-extended"]["color"] = (255, 255, 0)
+    configDict["focused-reticle-extended"]["draw-center-dot"] = False
+    configDict["focused-reticle-extended"]["draw-outline"] = False
+    configDict["focused-reticle-extended"]["blend"] = 0.5
+    configDict["focused-reticle-extended"]["alpha"] = 1.0
 
-    # standard hybrid reticle
-    configDict["standard-hybrid-reticle"] = {}
-    configDict["standard-hybrid-reticle"]["enabled"] = configDict["latency-reticle"]["enabled"]
-    configDict["standard-hybrid-reticle"]["hide-standard-reticle"] = configDict["latency-reticle"]["hide-standard-reticle"]
+    # hybrid reticle
+    configDict["hybrid-reticle"] = {}
+    configDict["hybrid-reticle"]["enabled"] = configDict["latency-reticle"]["enabled"]
+    configDict["hybrid-reticle"]["hide-standard-reticle"] = configDict["latency-reticle"]["hide-standard-reticle"]
     del configDict["latency-reticle"]
 
-    # custom hybrid reticle
-    configDict["custom-hybrid-reticle"] = {}
-    configDict["custom-hybrid-reticle"]["enabled"] = False
-    configDict["custom-hybrid-reticle"]["shape"] = "circle"
-    configDict["custom-hybrid-reticle"]["color"] = (0, 255, 255)
-    configDict["custom-hybrid-reticle"]["draw-center-dot"] = False
-    configDict["custom-hybrid-reticle"]["draw-outline"] = False
-    configDict["custom-hybrid-reticle"]["blend"] = 0.5
-    configDict["custom-hybrid-reticle"]["alpha"] = 1.0
+    # hybrid reticle extended
+    configDict["hybrid-reticle-extended"] = {}
+    configDict["hybrid-reticle-extended"]["enabled"] = False
+    configDict["hybrid-reticle-extended"]["shape"] = "circle"
+    configDict["hybrid-reticle-extended"]["color"] = (0, 255, 255)
+    configDict["hybrid-reticle-extended"]["draw-center-dot"] = False
+    configDict["hybrid-reticle-extended"]["draw-outline"] = False
+    configDict["hybrid-reticle-extended"]["blend"] = 0.5
+    configDict["hybrid-reticle-extended"]["alpha"] = 1.0
 
-    # standard server reticle
-    configDict["standard-server-reticle"] = {}
-    configDict["standard-server-reticle"]["enabled"] = configDict["server-reticle"]["enabled"]
-    del configDict["server-reticle"]
-
-    # custom server reticle
-    configDict["custom-server-reticle"] = {}
-    configDict["custom-server-reticle"]["enabled"] = configDict["simple-server-reticle"]["enabled"]
-    configDict["custom-server-reticle"]["shape"] = configDict["simple-server-reticle"]["shape"]
-    configDict["custom-server-reticle"]["color"] = configDict["simple-server-reticle"]["color"]
-    configDict["custom-server-reticle"]["draw-center-dot"] = configDict["simple-server-reticle"]["draw-center-dot"]
-    configDict["custom-server-reticle"]["draw-outline"] = configDict["simple-server-reticle"]["draw-outline"]
-    configDict["custom-server-reticle"]["blend"] = configDict["simple-server-reticle"]["blend"]
-    configDict["custom-server-reticle"]["alpha"] = configDict["simple-server-reticle"]["alpha"]
+    # server reticle extended
+    configDict["server-reticle-extended"] = {}
+    configDict["server-reticle-extended"]["enabled"] = configDict["simple-server-reticle"]["enabled"]
+    configDict["server-reticle-extended"]["shape"] = configDict["simple-server-reticle"]["shape"]
+    configDict["server-reticle-extended"]["color"] = configDict["simple-server-reticle"]["color"]
+    configDict["server-reticle-extended"]["draw-center-dot"] = configDict["simple-server-reticle"]["draw-center-dot"]
+    configDict["server-reticle-extended"]["draw-outline"] = configDict["simple-server-reticle"]["draw-outline"]
+    configDict["server-reticle-extended"]["blend"] = configDict["simple-server-reticle"]["blend"]
+    configDict["server-reticle-extended"]["alpha"] = configDict["simple-server-reticle"]["alpha"]
     del configDict["simple-server-reticle"]
 
     progressVersion(configDict)
