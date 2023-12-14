@@ -2,10 +2,7 @@ import logging
 import os
 
 from dispersionreticle.settings import loadConfigDict, createFolderSafely, getDefaultConfigTokens
-from dispersionreticle.settings.templates.config_focused_reticle_template import CONFIG_FOCUSED_RETICLE_TEMPLATE
-from dispersionreticle.settings.templates.config_hybrid_reticle_template import CONFIG_HYBRID_RETICLE_TEMPLATE
-from dispersionreticle.settings.templates.config_server_reticle_template import CONFIG_SERVER_RETICLE_TEMPLATE
-from dispersionreticle.settings.templates.config_template import CONFIG_TEMPLATE
+from dispersionreticle.settings.config_template import CONFIG_TEMPLATE
 
 
 logger = logging.getLogger(__name__)
@@ -55,38 +52,26 @@ class ConfigFiles(object):
 
     def __init__(self):
         self.config = ConfigFile(CONFIG_TEMPLATE, os.path.join(CONFIG_FILE_DIR, "config.json"))
-        self.configFocusedReticle = ConfigFile(CONFIG_FOCUSED_RETICLE_TEMPLATE, os.path.join(CONFIG_FILE_DIR, "focused-reticle.json"))
-        self.configHybridReticle = ConfigFile(CONFIG_HYBRID_RETICLE_TEMPLATE, os.path.join(CONFIG_FILE_DIR, "hybrid-reticle.json"))
-        self.configServerReticle = ConfigFile(CONFIG_SERVER_RETICLE_TEMPLATE, os.path.join(CONFIG_FILE_DIR, "server-reticle.json"))
-
-        self.allConfigFiles = [self.config,
-                               self.configFocusedReticle, self.configHybridReticle, self.configServerReticle]
 
     def loadConfigDict(self):
-        for configFile in self.allConfigFiles:
-            configFile.loadConfigDict()
+        self.config.loadConfigDict()
 
     def writeConfigDicts(self):
-        # TODO validate and prepare content before write
-        # TODO acquire write-lock to all files before write
-        # to make sure everything will be properly saved in one go
-        for configFile in self.allConfigFiles:
-            configFile.writeConfigDict()
+        self.config.writeConfigDict()
 
     def writeConfigTokens(self, configTokens):
-        for configFile in self.allConfigFiles:
-            configFile.writeConfigTokens(configTokens)
+        self.config.writeConfigTokens(configTokens)
 
     def areAllExists(self):
-        return all(configFile.exists() for configFile in self.allConfigFiles)
+        return self.config.exists()
 
     def areAllValid(self):
-        return all(configFile.configDict is not None for configFile in self.allConfigFiles)
+        return self.config.configDict is not None
 
     def createMissingConfigFiles(self):
-        logger.info("Checking configs existence ...")
-        if g_configFiles.areAllExists():
-            logger.info("Configs already exists.")
+        logger.info("Checking config existence ...")
+        if self.areAllExists():
+            logger.info("Config already exists.")
             return
 
         logger.info("Creating config directory ...")
@@ -95,11 +80,10 @@ class ConfigFiles(object):
         logger.info("Creating missing config files ...")
 
         defaultConfigTokens = getDefaultConfigTokens()
-        for configFile in self.allConfigFiles:
-            if configFile.exists():
-                continue
+        if self.config.exists():
+            return
 
-            configFile.writeConfigTokens(defaultConfigTokens)
+        self.config.writeConfigTokens(defaultConfigTokens)
 
 
 g_configFiles = ConfigFiles()
