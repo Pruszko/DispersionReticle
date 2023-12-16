@@ -7,8 +7,9 @@ from dispersionreticle.controllers.overridden.overridden_spg_controller import O
 class HybridSPGGunMarkerController(OverriddenSPGGunMarkerController):
 
     def __init__(self, reticle, enabledFlag=_MARKER_FLAG.UNDEFINED):
-        super(HybridSPGGunMarkerController, self).__init__(reticle.gunMarkerType,
+        super(HybridSPGGunMarkerController, self).__init__(reticle.getGunMarkerType(),
                                                            reticle.getSpgDataProvider(),
+                                                           reticle.isServerReticle(),
                                                            enabledFlag=enabledFlag)
         self._reticle = reticle
         self.__serverDispersionAngle = None

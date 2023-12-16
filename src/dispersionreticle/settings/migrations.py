@@ -41,7 +41,7 @@ def performConfigMigrations():
     v2_4_0_addSupportForModsSettingsAPI()
     v2_6_0_addDrawCenterDotToSimpleServerReticle()
 
-    v3_0_0_splitConfigFile()
+    v3_0_0_addNewReticlesAndNewFeatures()
 
     g_configFiles.writeConfigDicts()
 
@@ -154,7 +154,7 @@ def v2_6_0_addDrawCenterDotToSimpleServerReticle():
     logger.info("Migration finished.")
 
 
-def v3_0_0_splitConfigFile():
+def v3_0_0_addNewReticlesAndNewFeatures():
     configDict = g_configFiles.config.configDict
     if not isVersion(configDict, ConfigVersion.V2_6_X):
         return
@@ -164,6 +164,7 @@ def v3_0_0_splitConfigFile():
     # focused reticle
     configDict["focused-reticle"] = {}
     configDict["focused-reticle"]["enabled"] = configDict["dispersion-reticle"]["enabled"]
+    configDict["focused-reticle"]["type"] = "default"
     del configDict["dispersion-reticle"]
 
     # focused reticle extended
@@ -179,6 +180,7 @@ def v3_0_0_splitConfigFile():
     # hybrid reticle
     configDict["hybrid-reticle"] = {}
     configDict["hybrid-reticle"]["enabled"] = configDict["latency-reticle"]["enabled"]
+    configDict["hybrid-reticle"]["type"] = "default"
     configDict["hybrid-reticle"]["hide-standard-reticle"] = configDict["latency-reticle"]["hide-standard-reticle"]
     del configDict["latency-reticle"]
 
@@ -191,6 +193,9 @@ def v3_0_0_splitConfigFile():
     configDict["hybrid-reticle-extended"]["draw-outline"] = False
     configDict["hybrid-reticle-extended"]["blend"] = 0.5
     configDict["hybrid-reticle-extended"]["alpha"] = 1.0
+
+    # server reticle
+    configDict["server-reticle"]["type"] = "purple"
 
     # server reticle extended
     configDict["server-reticle-extended"] = {}

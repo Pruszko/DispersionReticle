@@ -126,10 +126,10 @@ class DispersionReticleFlash(ExternalFlashComponent, DispersionReticleFlashMeta)
 
     def __onReticleUpdate(self, reticle, reticleSize):
         minReticleSize = reticle.getStandardDataProvider().sizeConstraint[0]
-        self.as_updateReticle(reticle.gunMarkerType, reticleSize, minReticleSize)
+        self.as_updateReticle(reticle.getGunMarkerType(), reticleSize, minReticleSize)
 
     def __onMarkerCreate(self, markerName, reticle):
-        self.as_createMarker(reticle.gunMarkerType, markerName)
+        self.as_createMarker(reticle.getGunMarkerType(), markerName)
 
     def __onMarkerDestroy(self, markerName, reticle):
         self.as_destroyMarker(markerName)

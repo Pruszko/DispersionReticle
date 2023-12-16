@@ -1,112 +1,100 @@
+from typing import Callable
+
 from AvatarInputHandler import aih_global_binding
-from AvatarInputHandler.aih_global_binding import BINDING_ID, _Observable, _DEFAULT_VALUES
 from AvatarInputHandler.gun_marker_ctrl import _GunMarkersDPFactory
 from aih_constants import GUN_MARKER_TYPE
-from gui.battle_control.controllers import crosshair_proxy
 from gui.Scaleform.daapi.view.battle.shared.crosshair import gm_factory
 
-from dispersionreticle.utils.reticle_properties import ReticleType
+from dispersionreticle.utils.reticle_properties import MarkerNames, ReticleType
 
 
 class VanillaReticle(object):
 
-    NEXT_DATA_PROVIDER_ID = 6114
+    _gunMarkerType = None  # type: int
+    _reticleType = None  # type: int
 
-    def __init__(self, name, gunMarkerType, reticleType, reticleLinkages):
-        self.name = name
-        self.gunMarkerType = gunMarkerType
-        self.reticleType = reticleType
-        self.reticleLinkages = reticleLinkages
+    _markerNames = None  # type: MarkerNames
+    _markerLinkagesProvider = None  # type: Callable[[MarkerNames], dict]
 
-        self.standardDataProviderID = VanillaReticle.NEXT_DATA_PROVIDER_ID
-        VanillaReticle.NEXT_DATA_PROVIDER_ID += 1
-        self.spgDataProviderID = VanillaReticle.NEXT_DATA_PROVIDER_ID
-        VanillaReticle.NEXT_DATA_PROVIDER_ID += 1
+    _standardDataProviderID = None  # type: int
+    _spgDataProviderID = None  # type: int
 
-        # aih_global_binding
-        BINDING_ID.RANGE += (self.standardDataProviderID,
-                             self.spgDataProviderID)
+    def __init__(self, markerNames, gunMarkerType,
+                 reticleType,
+                 markerLinkagesProvider,
+                 standardDataProviderID, spgDataProviderID):
+        self._markerNames = markerNames
+        self._gunMarkerType = gunMarkerType
 
-        # aih_global_binding
-        _DEFAULT_VALUES.update({
-            self.standardDataProviderID: lambda: _Observable(None),
-            self.spgDataProviderID: lambda: _Observable(None),
-        })
+        self._reticleType = reticleType
+        self._markerLinkagesProvider = markerLinkagesProvider
 
-        # crosshair_proxy
-        crosshair_proxy._GUN_MARKERS_SET_IDS += (self.standardDataProviderID,
-                                                 self.spgDataProviderID)
+        self.refreshLinkages()
+
+        self._standardDataProviderID = standardDataProviderID
+        self._spgDataProviderID = spgDataProviderID
 
         # gun_marker_ctrl
         # beware, those are descriptors
-        self.standardDataProviderRW = aih_global_binding.bindRW(self.standardDataProviderID)
-        self.spgDataProviderRW = aih_global_binding.bindRW(self.spgDataProviderID)
+        self._standardDataProviderRW = aih_global_binding.bindRW(self._standardDataProviderID)
+        self._spgDataProviderRW = aih_global_binding.bindRW(self._spgDataProviderID)
+
+    def refreshLinkages(self):
+        reticleLinkages = self._markerLinkagesProvider(self._markerNames)
 
         # gm_factory
-        self.arcadeGunMarkerName = 'arcadeGunMarker' + name
-        self.sniperGunMarkerName = 'sniperGunMarker' + name
-        self.dualGunArcadeGunMarkerName = 'arcadeDualGunMarker' + name
-        self.dualGunSniperGunMarkerName = 'sniperDualGunMarker' + name
-        self.spgGunMarkerName = 'spgGunMarker' + name
+        gm_factory._GUN_MARKER_LINKAGES.update(reticleLinkages)
 
-        # gm_factory
-        gm_factory._GUN_MARKER_LINKAGES.update({
-            self.arcadeGunMarkerName: reticleLinkages['arcadeLinkage'],
-            self.sniperGunMarkerName: reticleLinkages['sniperLinkage'],
-            self.dualGunArcadeGunMarkerName: reticleLinkages['dualGunArcadeLinkage'],
-            self.dualGunSniperGunMarkerName: reticleLinkages['dualGunSniperLinkage'],
-            self.spgGunMarkerName: reticleLinkages['spgLinkage']
-        })
+    def getGunMarkerType(self):
+        return self._gunMarkerType
 
     def getMarkerNames(self):
-        return (
-            self.arcadeGunMarkerName,
-            self.sniperGunMarkerName,
-            self.dualGunArcadeGunMarkerName,
-            self.dualGunSniperGunMarkerName,
-            self.spgGunMarkerName
-        )
+        return self._markerNames.getMarkerNames()
+
+    def getMarkerLinkagesProvider(self):
+        return self._markerLinkagesProvider
 
     def getFlashMarkerNames(self):
         return ()
 
     def isServerReticle(self):
-        return self.reticleType == ReticleType.SERVER
+        return self._reticleType == ReticleType.SERVER
 
     # gun_marker_ctrl
     def getStandardDataProvider(self):
         # this is awful, but we have to do this like that
-        if self.standardDataProviderRW.__get__(self) is None:
-            self.standardDataProviderRW.__set__(self, _GunMarkersDPFactory._makeDefaultProvider())
-        return self.standardDataProviderRW.__get__(self)
+        if self._standardDataProviderRW.__get__(self) is None:
+            self._standardDataProviderRW.__set__(self, _GunMarkersDPFactory._makeDefaultProvider())
+        return self._standardDataProviderRW.__get__(self)
 
-    # gun_marker_ctrl
+        # gun_marker_ctrl
+
     def getSpgDataProvider(self):
         # this is awful, but we have to do this like that
-        if self.spgDataProviderRW.__get__(self) is None:
-            self.spgDataProviderRW.__set__(self, _GunMarkersDPFactory._makeSPGProvider())
-        return self.spgDataProviderRW.__get__(self)
+        if self._spgDataProviderRW.__get__(self) is None:
+            self._spgDataProviderRW.__set__(self, _GunMarkersDPFactory._makeSPGProvider())
+        return self._spgDataProviderRW.__get__(self)
 
     # gm_factory
     def createDefaultMarkers(self, gunMarkerFactory, markerType):
         if markerType != GUN_MARKER_TYPE.UNDEFINED:
-            return (gunMarkerFactory._createArcadeMarker(self.gunMarkerType, self.arcadeGunMarkerName),
-                    gunMarkerFactory._createSniperMarker(self.gunMarkerType, self.sniperGunMarkerName))
-        return (gunMarkerFactory._createArcadeMarker(GUN_MARKER_TYPE.UNDEFINED, self.arcadeGunMarkerName),
-                gunMarkerFactory._createSniperMarker(GUN_MARKER_TYPE.UNDEFINED, self.sniperGunMarkerName))
+            return (gunMarkerFactory._createArcadeMarker(self._gunMarkerType, self._markerNames.arcadeGunMarkerName),
+                    gunMarkerFactory._createSniperMarker(self._gunMarkerType, self._markerNames.sniperGunMarkerName))
+        return (gunMarkerFactory._createArcadeMarker(GUN_MARKER_TYPE.UNDEFINED, self._markerNames.arcadeGunMarkerName),
+                gunMarkerFactory._createSniperMarker(GUN_MARKER_TYPE.UNDEFINED, self._markerNames.sniperGunMarkerName))
 
     # gm_factory
     def createSPGMarkers(self, gunMarkerFactory, markerType):
         if markerType != GUN_MARKER_TYPE.UNDEFINED:
-            return (gunMarkerFactory._createArcadeMarker(self.gunMarkerType, self.arcadeGunMarkerName),
-                    gunMarkerFactory._createSPGMarker(self.gunMarkerType, self.spgGunMarkerName))
-        return (gunMarkerFactory._createArcadeMarker(GUN_MARKER_TYPE.UNDEFINED, self.arcadeGunMarkerName),
-                gunMarkerFactory._createSPGMarker(GUN_MARKER_TYPE.UNDEFINED, self.spgGunMarkerName))
+            return (gunMarkerFactory._createArcadeMarker(self._gunMarkerType, self._markerNames.arcadeGunMarkerName),
+                    gunMarkerFactory._createSPGMarker(self._gunMarkerType, self._markerNames.spgGunMarkerName))
+        return (gunMarkerFactory._createArcadeMarker(GUN_MARKER_TYPE.UNDEFINED, self._markerNames.arcadeGunMarkerName),
+                gunMarkerFactory._createSPGMarker(GUN_MARKER_TYPE.UNDEFINED, self._markerNames.spgGunMarkerName))
 
     # gm_factory
     def createDualGunMarkers(self, gunMarkerFactory, markerType):
         if markerType != GUN_MARKER_TYPE.UNDEFINED:
-            return (gunMarkerFactory._createArcadeMarker(self.gunMarkerType, self.dualGunArcadeGunMarkerName),
-                    gunMarkerFactory._createSniperMarker(self.gunMarkerType, self.dualGunSniperGunMarkerName))
-        return (gunMarkerFactory._createArcadeMarker(GUN_MARKER_TYPE.UNDEFINED, self.dualGunArcadeGunMarkerName),
-                gunMarkerFactory._createSniperMarker(GUN_MARKER_TYPE.UNDEFINED, self.dualGunSniperGunMarkerName))
+            return (gunMarkerFactory._createArcadeMarker(self._gunMarkerType, self._markerNames.dualGunArcadeGunMarkerName),
+                    gunMarkerFactory._createSniperMarker(self._gunMarkerType, self._markerNames.dualGunSniperGunMarkerName))
+        return (gunMarkerFactory._createArcadeMarker(GUN_MARKER_TYPE.UNDEFINED, self._markerNames.dualGunArcadeGunMarkerName),
+                gunMarkerFactory._createSniperMarker(GUN_MARKER_TYPE.UNDEFINED, self._markerNames.dualGunSniperGunMarkerName))

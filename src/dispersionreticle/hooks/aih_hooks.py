@@ -37,9 +37,9 @@ if debug_state.IS_DEBUGGING:
 def updateClientGunMarker(func, self, pos, direction, size, relaxTime, collData):
     func(self, pos, direction, size, relaxTime, collData)
 
-    for reticle in ReticleRegistry.RETICLES:
+    for reticle in ReticleRegistry.ADDITIONAL_RETICLES:
         if not reticle.isServerReticle():
-            self._AvatarInputHandler__curCtrl.updateGunMarker(reticle.gunMarkerType,
+            self._AvatarInputHandler__curCtrl.updateGunMarker(reticle.getGunMarkerType(),
                                                               pos, direction, size, relaxTime, collData)
 
 
@@ -47,9 +47,9 @@ def updateClientGunMarker(func, self, pos, direction, size, relaxTime, collData)
 def updateServerGunMarker(func, self, pos, direction, size, relaxTime, collData):
     func(self, pos, direction, size, relaxTime, collData)
 
-    for reticle in ReticleRegistry.RETICLES:
+    for reticle in ReticleRegistry.ADDITIONAL_RETICLES:
         if reticle.isServerReticle():
-            self._AvatarInputHandler__curCtrl.updateGunMarker(reticle.gunMarkerType,
+            self._AvatarInputHandler__curCtrl.updateGunMarker(reticle.getGunMarkerType(),
                                                               pos, direction, size, relaxTime, collData)
 
 

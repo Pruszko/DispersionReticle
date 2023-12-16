@@ -11,6 +11,7 @@ from dispersionreticle.settings.migrations import performConfigMigrations
 from dispersionreticle.utils import *
 from dispersionreticle.utils import debug_state
 from dispersionreticle.utils.debug_state import g_debugStateCollector
+from dispersionreticle.utils.reticle_registry import ReticleRegistry
 
 logger = logging.getLogger(__name__)
 
@@ -22,6 +23,9 @@ class Config(object):
         self.onConfigReload = Event.Event(self.__eventManager)
 
     def refreshGameState(self):
+        for reticle in ReticleRegistry.ADDITIONAL_RETICLES:
+            reticle.refreshLinkages()
+
         self.onConfigReload()
 
         if debug_state.IS_DEBUGGING:
@@ -69,7 +73,7 @@ class Config(object):
         # reload config again to update our mod internal config state
         # with changes written to config file
         self.loadConfigSafely()
-        self.onConfigReload()
+        self.refreshGameState()
 
 
 g_config = Config()

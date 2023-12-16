@@ -1,7 +1,6 @@
 import logging
 
 from dispersionreticle.settings import toJson, toColorTuple, toBool, clamp
-from dispersionreticle.settings.config_file import g_configFiles
 from dispersionreticle.settings.translations import Tr
 
 PARAM_REGISTRY = {}
@@ -23,6 +22,7 @@ class Param(object):
         PARAM_REGISTRY[self.tokenName] = self
 
     def readValueFromConfigFile(self):
+        from dispersionreticle.settings.config_file import g_configFiles
         return self.readValueFromConfigDict(g_configFiles.config.configDict)
 
     def readValueFromConfigDictSafely(self, configDict):

@@ -37,20 +37,18 @@
   "focusedReticle.label": "Okrąg skupienia",
   "focusedReticle.header": "Okrąg skupienia",
   "focusedReticle.body": [
-    "Dodaje standardowy okrąg wyświetlający w pełni skupiony rozrzut działa do okręgu w grze."
+    "Dodaje standardowy okrąg wyświetlający w pełni skupiony rozrzut działa do okręgu w grze.\n",
+    "Inne mody mogą wpłynąć na wygląd tego okręgu."
   ],
   "focusedReticle.note": [
     "Gdy oba rodzaje okręgów - klienckie oraz serwerowe - są uruchomione, to okrąg dołączany jest ",
     "do okręgu klienckiego."
   ],
-  "focusedReticle.enabled.header": "Czy włączone",
-  "focusedReticle.enabled.body": [
-    "Jeżeli zaznaczone, wyświetl ten okrąg."
-  ],
   "focusedReticleExtended.label": "Okrąg skupienia rozszerzony",
   "focusedReticleExtended.header": "Okrąg skupienia rozszerzony",
   "focusedReticleExtended.body": [
-    "Dodaje konfigurowalny okrąg wyświetlający w pełni skupiony rozrzut działa do okręgu w grze."
+    "Dodaje konfigurowalny okrąg wyświetlający w pełni skupiony rozrzut działa do okręgu w grze.\n",
+    "Inne mody nie mają wpływu na wygląd tego okręgu."
   ],
   "focusedReticleExtended.note": [
     "Gdy oba rodzaje okręgów - klienckie oraz serwerowe - są uruchomione, to okrąg dołączany jest ",
@@ -62,16 +60,13 @@
   "hybridReticle.label": "Okrąg hybrydowy",
   "hybridReticle.header": "Okrąg hybrydowy",
   "hybridReticle.body": [
-    "Dodaje standardowy okrąg wyświetlający obecny serwerowy rozrzut do klienckiego okręgu."
+    "Dodaje standardowy okrąg wyświetlający obecny serwerowy rozrzut do klienckiego okręgu.\n",
+    "Inne mody mogą wpłynąć na wygląd tego okręgu."
   ],
   "hybridReticle.note": [
     "Innymi słowy, pozycja po stronie klienta, ale rozrzut serwerowy.\n",
     "Dzięki temu, desynchronizacja rozrzutu okręgów klienckiego i serwerowego jest wyraźnie widoczna.\n\n",
     "Przydatne gdy chcesz znać serwerowy rozrzut, ale nadal chcesz zachować responsywność klienckiego okręgu."
-  ],
-  "hybridReticle.enabled.header": "Czy włączone",
-  "hybridReticle.enabled.body": [
-    "Jeżeli zaznaczone, wyświetl ten okrąg."
   ],
   "hybridReticle.hideStandardReticle.header": "Ukryj standardowy okrąg",
   "hybridReticle.hideStandardReticle.body": [
@@ -83,7 +78,8 @@
   "hybridReticleExtended.label": "Okrąg hybrydowy rozszerzony",
   "hybridReticleExtended.header": "Okrąg hybrydowy rozszerzony",
   "hybridReticleExtended.body": [
-    "Dodaje konfigurowalny okrąg wyświetlający obecny serwerowy rozrzut do klienckiego okręgu."
+    "Dodaje konfigurowalny okrąg wyświetlający obecny serwerowy rozrzut do klienckiego okręgu.\n",
+    "Inne mody nie mają wpływu na wygląd tego okręgu."
   ],
   "hybridReticleExtended.note": [
     "Innymi słowy, pozycja po stronie klienta, ale rozrzut serwerowy.\n",
@@ -96,24 +92,36 @@
   "serverReticle.label": "Okrąg serwerowy",
   "serverReticle.header": "Okrąg serwerowy",
   "serverReticle.body": [
-    "Dodaje standardowy serwerowy okrąg oprócz obecnego klienckiego okręgu."
-  ],
-  "serverReticle.enabled.header": "Czy włączone",
-  "serverReticle.enabled.body": [
-    "Jeżeli zaznaczone, wyświetl ten okrąg."
+    "Dodaje standardowy serwerowy okrąg oprócz obecnego klienckiego okręgu.\n",
+    "Inne mody mogą wpłynąć na wygląd tego okręgu."
   ],
   "serverReticleExtended.label": "Okrąg serwerowy rozszerzony",
   "serverReticleExtended.header": "Okrąg serwerowy rozszerzony",
   "serverReticleExtended.body": [
-    "Dodaje konfigurowalny serwerowy okrąg oprócz obecnego okręgu klienckiego."
+    "Dodaje konfigurowalny serwerowy okrąg oprócz obecnego okręgu klienckiego.\n",
+    "Inne mody nie mają wpływu na wygląd tego okręgu."
   ],
   "serverReticleExtended.attention": [
     "Dla widoku artyleryjskiego zostanie użyta standardowa wersja tego okręgu."
   ],
-  "reticleExtended.enabled.header": "Czy włączone",
-  "reticleExtended.enabled.body": [
+  "reticle.enabled.header": "Czy włączone",
+  "reticle.enabled.body": [
     "Jeżeli zaznaczone, wyświetl ten okrąg."
   ],
+  "reticle.type.header": "Typ",
+  "reticle.type.body": [
+    "Typ tego okręgu."
+  ],
+  "reticle.type.note": [
+    "Opcja domyślna wyświetla ten okrąg w sposób taki, jaki domyślnie dokonuje tego gra.\n",
+    "Opcja fioletowa dodatkowo próbuje pokolorować go na fioletowo."
+  ],
+  "reticle.type.attention": [
+    "Jeżeli inne mody zmieniły kolory domyślnego okręgu, to fioletowa opcja może nieprawidłowo go pokolorować.\n",
+    "To ograniczenie nie występuje w okręgach rozszerzonych."
+  ],
+  "reticle.type.option.default": "Domyślny",
+  "reticle.type.option.purple": "Fioletowy",
   "reticleExtended.shape.header": "Kształt",
   "reticleExtended.shape.body": [
     "Kształt jaki ten okrąg powinien mieć."

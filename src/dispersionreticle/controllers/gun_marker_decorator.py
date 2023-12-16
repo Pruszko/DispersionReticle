@@ -1,4 +1,3 @@
-# gun_marker_ctrl
 import BigWorld, Math
 from AvatarInputHandler import gun_marker_ctrl, aih_global_binding, AimingSystems
 from AvatarInputHandler.gun_marker_ctrl import IGunMarkerController, _BINDING_ID, _MARKER_TYPE, _MARKER_FLAG
@@ -17,6 +16,7 @@ class DispersionGunMarkersDecorator(IGunMarkerController):
 
     def __init__(self,
                  clientController, serverController, dualAccController,
+                 debugServerController,
                  focusedClientController, focusedServerController,
                  hybridClientController, hybridExtendedClientController,
                  focusedExtendedClientController, focusedExtendedServerController,
@@ -25,6 +25,9 @@ class DispersionGunMarkersDecorator(IGunMarkerController):
         self.__clientController = clientController
         self.__serverController = serverController
         self.__dualAccController = dualAccController
+
+        self.__debugServerController = debugServerController
+
         self.__focusedClientController = focusedClientController
         self.__focusedServerController = focusedServerController
 
@@ -37,6 +40,7 @@ class DispersionGunMarkersDecorator(IGunMarkerController):
         self.__serverExtendedServerController = serverExtendedServerController
 
         self._allAdditionalControllers = [
+            debugServerController,
             focusedClientController, focusedServerController,
             hybridClientController, hybridExtendedClientController,
             focusedExtendedClientController, focusedExtendedServerController,
@@ -67,7 +71,7 @@ class DispersionGunMarkersDecorator(IGunMarkerController):
         for controller in self._allAdditionalControllers:
             controller.enable()
 
-            if controller._reticle.isServerReticle():
+            if controller.isServerController():
                 controller.setPosition(self.__serverState[0])
             else:
                 controller.setPosition(self.__clientState[0])
@@ -106,7 +110,7 @@ class DispersionGunMarkersDecorator(IGunMarkerController):
                 self.__serverController.setSize(self.__clientController.getSize())
 
                 for controller in self._allAdditionalControllers:
-                    if not controller._reticle.isServerReticle():
+                    if not controller.isServerController():
                         continue
 
                     controller.setPosition(self.__clientController.getPosition())
@@ -143,30 +147,33 @@ class DispersionGunMarkersDecorator(IGunMarkerController):
                 position, direction, collData)
             if self.__gunMarkersFlags & _MARKER_FLAG.CLIENT_MODE_ENABLED:
                 self.__dualAccController.update(markerType, position, direction, size, relaxTime, collData)
-        elif markerType == ReticleRegistry.FOCUSED_CLIENT.gunMarkerType:
+        elif markerType == ReticleRegistry.DEBUG_SERVER.getGunMarkerType():
+            if self.__gunMarkersFlags & _MARKER_FLAG.SERVER_MODE_ENABLED:
+                self.__debugServerController.update(markerType, position, direction, size, relaxTime, collData)
+        elif markerType == ReticleRegistry.FOCUSED_CLIENT.getGunMarkerType():
             if self.__gunMarkersFlags & _MARKER_FLAG.CLIENT_MODE_ENABLED:
                 self.__focusedClientController.update(markerType, position, direction, size, relaxTime, collData)
-        elif markerType == ReticleRegistry.FOCUSED_SERVER.gunMarkerType:
+        elif markerType == ReticleRegistry.FOCUSED_SERVER.getGunMarkerType():
             if self.__gunMarkersFlags & _MARKER_FLAG.SERVER_MODE_ENABLED:
                 self.__focusedServerController.update(markerType, position, direction, size, relaxTime, collData)
         # those 2x elif has to be done outside controllers because we have to collect server reticle size
         # also, we will have delayed access to server size, so we need to wait
         # until GunMarkerComponent will provide server data
-        elif markerType == ReticleRegistry.HYBRID_CLIENT.gunMarkerType:
+        elif markerType == ReticleRegistry.HYBRID_CLIENT.getGunMarkerType():
             if self.__gunMarkersFlags & _MARKER_FLAG.SERVER_MODE_ENABLED:
                 self.updateHybridReticle(self.__hybridClientController,
                                          collData, direction, markerType, position, relaxTime, size)
-        elif markerType == ReticleRegistry.HYBRID_EXTENDED_CLIENT.gunMarkerType:
+        elif markerType == ReticleRegistry.HYBRID_EXTENDED_CLIENT.getGunMarkerType():
             if self.__gunMarkersFlags & _MARKER_FLAG.SERVER_MODE_ENABLED:
                 self.updateHybridReticle(self.__hybridExtendedClientController,
                                          collData, direction, markerType, position, relaxTime, size)
-        elif markerType == ReticleRegistry.FOCUSED_EXTENDED_CLIENT.gunMarkerType:
+        elif markerType == ReticleRegistry.FOCUSED_EXTENDED_CLIENT.getGunMarkerType():
             if self.__gunMarkersFlags & _MARKER_FLAG.CLIENT_MODE_ENABLED:
                 self.__focusedExtendedClientController.update(markerType, position, direction, size, relaxTime, collData)
-        elif markerType == ReticleRegistry.FOCUSED_EXTENDED_SERVER.gunMarkerType:
+        elif markerType == ReticleRegistry.FOCUSED_EXTENDED_SERVER.getGunMarkerType():
             if self.__gunMarkersFlags & _MARKER_FLAG.SERVER_MODE_ENABLED:
                 self.__focusedExtendedServerController.update(markerType, position, direction, size, relaxTime, collData)
-        elif markerType == ReticleRegistry.SERVER_EXTENDED_SERVER.gunMarkerType:
+        elif markerType == ReticleRegistry.SERVER_EXTENDED_SERVER.getGunMarkerType():
             if self.__gunMarkersFlags & _MARKER_FLAG.SERVER_MODE_ENABLED:
                 self.__serverExtendedServerController.update(markerType, position, direction, size, relaxTime, collData)
         else:

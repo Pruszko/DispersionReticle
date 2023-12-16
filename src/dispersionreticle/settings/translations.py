@@ -121,9 +121,6 @@ class Tr(object):
     FOCUSED_RETICLE_BODY = TranslationList("focusedReticle.body")
     FOCUSED_RETICLE_NOTE = TranslationList("focusedReticle.note")
 
-    FOCUSED_RETICLE_ENABLED_HEADER = TranslationElement("focusedReticle.enabled.header")
-    FOCUSED_RETICLE_ENABLED_BODY = TranslationList("focusedReticle.enabled.body")
-
     # focused reticle extended
     FOCUSED_RETICLE_EXTENDED_LABEL = TranslationElement("focusedReticleExtended.label")
     FOCUSED_RETICLE_EXTENDED_HEADER = TranslationElement("focusedReticleExtended.header")
@@ -136,9 +133,6 @@ class Tr(object):
     HYBRID_RETICLE_HEADER = TranslationElement("hybridReticle.header")
     HYBRID_RETICLE_BODY = TranslationList("hybridReticle.body")
     HYBRID_RETICLE_NOTE = TranslationList("hybridReticle.note")
-
-    HYBRID_RETICLE_ENABLED_HEADER = TranslationElement("hybridReticle.enabled.header")
-    HYBRID_RETICLE_ENABLED_BODY = TranslationList("hybridReticle.enabled.body")
 
     HYBRID_RETICLE_HIDE_STANDARD_RETICLE_HEADER = TranslationElement("hybridReticle.hideStandardReticle.header")
     HYBRID_RETICLE_HIDE_STANDARD_RETICLE_BODY = TranslationList("hybridReticle.hideStandardReticle.body")
@@ -156,19 +150,24 @@ class Tr(object):
     SERVER_RETICLE_HEADER = TranslationElement("serverReticle.header")
     SERVER_RETICLE_BODY = TranslationList("serverReticle.body")
 
-    SERVER_RETICLE_ENABLED_HEADER = TranslationElement("serverReticle.enabled.header")
-    SERVER_RETICLE_ENABLED_BODY = TranslationList("serverReticle.enabled.body")
-
     # server reticle extended
     SERVER_RETICLE_EXTENDED_LABEL = TranslationElement("serverReticleExtended.label")
     SERVER_RETICLE_EXTENDED_HEADER = TranslationElement("serverReticleExtended.header")
     SERVER_RETICLE_EXTENDED_BODY = TranslationList("serverReticleExtended.body")
     SERVER_RETICLE_EXTENDED_ATTENTION = TranslationList("serverReticleExtended.attention")
 
-    # commons for extended reticle
-    RETICLE_EXTENDED_ENABLED_HEADER = TranslationElement("reticleExtended.enabled.header")
-    RETICLE_EXTENDED_ENABLED_BODY = TranslationList("reticleExtended.enabled.body")
+    # commons for reticles
+    RETICLE_ENABLED_HEADER = TranslationElement("reticle.enabled.header")
+    RETICLE_ENABLED_BODY = TranslationList("reticle.enabled.body")
 
+    RETICLE_TYPE_HEADER = TranslationElement("reticle.type.header")
+    RETICLE_TYPE_BODY = TranslationList("reticle.type.body")
+    RETICLE_TYPE_NOTE = TranslationList("reticle.type.note")
+    RETICLE_TYPE_ATTENTION = TranslationList("reticle.type.attention")
+    RETICLE_TYPE_OPTION_DEFAULT = TranslationElement("reticle.type.option.default")
+    RETICLE_TYPE_OPTION_PURPLE = TranslationElement("reticle.type.option.purple")
+
+    # commons for extended reticle
     RETICLE_EXTENDED_SHAPE_HEADER = TranslationElement("reticleExtended.shape.header")
     RETICLE_EXTENDED_SHAPE_BODY = TranslationList("reticleExtended.shape.body")
 

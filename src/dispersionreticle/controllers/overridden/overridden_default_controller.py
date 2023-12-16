@@ -8,8 +8,9 @@ from dispersionreticle.settings.config_param import g_configParams
 # gun_marker_ctrl
 class OverriddenDefaultGunMarkerController(_DefaultGunMarkerController):
 
-    def __init__(self, gunMakerType, dataProvider, enabledFlag=_MARKER_FLAG.UNDEFINED):
+    def __init__(self, gunMakerType, dataProvider, isServer, enabledFlag=_MARKER_FLAG.UNDEFINED):
         super(OverriddenDefaultGunMarkerController, self).__init__(gunMakerType, dataProvider, enabledFlag=enabledFlag)
+        self._isServer = isServer
 
     def update(self, markerType, pos, direction, sizeVector, relaxTime, collData):
         super(_DefaultGunMarkerController, self).update(markerType, pos, direction, sizeVector, relaxTime, collData)
@@ -42,6 +43,9 @@ class OverriddenDefaultGunMarkerController(_DefaultGunMarkerController):
             self._dataProvider.updateSize(self._DefaultGunMarkerController__curSize, relaxTime)
 
         self._interceptPostUpdate(self._DefaultGunMarkerController__curSize)
+
+    def isServerController(self):
+        return self._isServer
 
     def _interceptReplayLogic(self, size):
         replayCtrl = BattleReplay.g_replayCtrl

@@ -21,6 +21,14 @@ class ConfigParams(object):
             ["focused-reticle", "enabled"],
             defaultValue=True, disabledValue=False
         )
+        self.focusedReticleType = OptionsParam(
+            ["focused-reticle", "type"],
+            [
+                Option("default", 0, "1. " + Tr.RETICLE_TYPE_OPTION_DEFAULT),
+                Option("purple", 1, "2. " + Tr.RETICLE_TYPE_OPTION_PURPLE)
+            ],
+            defaultValue="default"
+        )
 
         # focused reticle extended
         self.focusedReticleExtendedEnabled = BooleanParam(
@@ -64,6 +72,14 @@ class ConfigParams(object):
         self.hybridReticleEnabled = BooleanParam(
             ["hybrid-reticle", "enabled"],
             defaultValue=False
+        )
+        self.hybridReticleType = OptionsParam(
+            ["hybrid-reticle", "type"],
+            [
+                Option("default", 0, "1. " + Tr.RETICLE_TYPE_OPTION_DEFAULT),
+                Option("purple", 1, "2. " + Tr.RETICLE_TYPE_OPTION_PURPLE)
+            ],
+            defaultValue="default"
         )
         self.hybridReticleHideStandardReticle = BooleanParam(
             ["hybrid-reticle", "hide-standard-reticle"],
@@ -112,6 +128,14 @@ class ConfigParams(object):
         self.serverReticleEnabled = BooleanParam(
             ["server-reticle", "enabled"],
             defaultValue=False
+        )
+        self.serverReticleType = OptionsParam(
+            ["server-reticle", "type"],
+            [
+                Option("default", 0, "1. " + Tr.RETICLE_TYPE_OPTION_DEFAULT),
+                Option("purple", 1, "2. " + Tr.RETICLE_TYPE_OPTION_PURPLE)
+            ],
+            defaultValue="purple"
         )
 
         # server reticle extended

@@ -37,19 +37,17 @@
   "focusedReticle.label": "Круг разброса",
   "focusedReticle.header": "Круг разброса",
   "focusedReticle.body": [
-    "Добавляет полностью сведенный 'Круг разброса' к прицелу."
+    "Добавляет полностью сведенный 'Круг разброса' к прицелу.\n",
+    "Other mods may influence the look of this reticle."
   ],
   "focusedReticle.note": [
     "Может работать с включенным 'Cерверным прицелом' в настройках игры."
   ],
-  "focusedReticle.enabled.header": "Включить",
-  "focusedReticle.enabled.body": [
-    "Если галочка отмечена, то отображается 'Круг разброса'."
-  ],
   "focusedReticleExtended.label": "Focused reticle extended",
   "focusedReticleExtended.header": "Focused reticle extended",
   "focusedReticleExtended.body": [
-    "Adds configurable reticle displaying fully-focused dispersion to in-game reticle."
+    "Adds configurable reticle displaying fully-focused dispersion to in-game reticle.\n",
+    "Other mods does not have influence on the look of this reticle."
   ],
   "focusedReticleExtended.note": [
     "When both client-side and server-side reticles are on, it attaches to client-side reticle."
@@ -60,16 +58,13 @@
   "hybridReticle.label": "Гибридный прицел",
   "hybridReticle.header": "Гибридный прицел",
   "hybridReticle.body": [
-    "Альтернативный режим 'Cерверному прицелу' в настройках игры."
+    "Альтернативный режим 'Cерверному прицелу' в настройках игры.\n",
+    "Other mods may influence the look of this reticle."
   ],
   "hybridReticle.note": [
     "Принцип, позиция на стороне клиента, а разброс на стороне сервера.\n",
     "Таким образом, видна десинхронизация разброса на стороне клиента и на стороне сервера.\n\n",
     "Полезно, если вы хотите видеть десинхронизацию разброса на стороне сервера, но при этом иметь отзывчивость на стороне клиента."
-  ],
-  "hybridReticle.enabled.header": "Включить",
-  "hybridReticle.enabled.body": [
-    "Если галочка отмечена, то отображается 'Гибридный прицел'."
   ],
   "hybridReticle.hideStandardReticle.header": "Скрыть стандартный прицел",
   "hybridReticle.hideStandardReticle.body": [
@@ -81,7 +76,8 @@
   "hybridReticleExtended.label": "Hybrid reticle extended",
   "hybridReticleExtended.header": "Hybrid reticle extended",
   "hybridReticleExtended.body": [
-    "Adds configurable reticle displaying current server-side dispersion to client-side reticle."
+    "Adds configurable reticle displaying current server-side dispersion to client-side reticle.\n",
+    "Other mods does not have influence on the look of this reticle."
   ],
   "hybridReticleExtended.note": [
     "Basically, client-side position, but server-side dispersion.\n",
@@ -94,25 +90,37 @@
   "serverReticle.label": "Серверный прицел",
   "serverReticle.header": "Серверный прицел",
   "serverReticle.body": [
-    "Добавляет дополнительный круг 'Серверный прицел'."
-  ],
-  "serverReticle.enabled.header": "Включить",
-  "serverReticle.enabled.body": [
-    "Если галочка отмечена, то отображается 'Серверный прицел'."
+    "Добавляет дополнительный круг 'Серверный прицел'.\n",
+    "Other mods may influence the look of this reticle."
   ],
   "serverReticleExtended.label": "Настраиваемый серверный прицел",
   "serverReticleExtended.header": "Настраиваемый серверный прицел",
   "serverReticleExtended.body": [
-    "Добавляет дополнительный круг 'Настраиваемый серверный прицел', который можно настроить ниже."
+    "Добавляет дополнительный круг 'Настраиваемый серверный прицел', который можно настроить ниже.\n",
+    "Other mods does not have influence on the look of this reticle."
   ],
   "serverReticleExtended.attention": [
     "Для артиллерии будет включен 'Серверный прицел',",
     "вместо этого."
   ],
-  "reticleExtended.enabled.header": "Включить",
-  "reticleExtended.enabled.body": [
+  "reticle.enabled.header": "Включить",
+  "reticle.enabled.body": [
     "Если галочка отмечена, то отображается 'Настраиваемый серверный прицел'."
   ],
+  "reticle.type.header": "Type",
+  "reticle.type.body": [
+    "Type of this reticle."
+  ],
+  "reticle.type.note": [
+    "Default option displays reticle the way game renders it by default.\n",
+    "Purple option additionally tries to color it to purple."
+  ],
+  "reticle.type.attention": [
+    "If other mods changed colors of default reticle, then purple option may incorrectly color it.\n",
+    "This restriction is not present in extended reticles."
+  ],
+  "reticle.type.option.default": "Default",
+  "reticle.type.option.purple": "Purple",
   "reticleExtended.shape.header": "Фигура",
   "reticleExtended.shape.body": [
     "Фигура, которую будет отображать 'Настраиваемый серверный прицел'."

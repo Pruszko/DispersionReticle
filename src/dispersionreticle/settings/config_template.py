@@ -30,6 +30,8 @@ CONFIG_TEMPLATE = """{
     // Focused reticle (enabled by default)
     //
     // Adds standard reticle displaying fully-focused dispersion to in-game reticle.
+    // Other mods may influence the look of this reticle.
+    //
     // When both client-side and server-side reticles are on, it attaches to client-side reticle.
 
     "focused-reticle": {
@@ -37,12 +39,25 @@ CONFIG_TEMPLATE = """{
         // Valid values: true/false (default: true)
         //
         // If true, displays this reticle.
-        "enabled": %(focused-reticle-enabled)s
+        "enabled": %(focused-reticle-enabled)s,
+
+        // Valid values: ["default", "purple"]
+        // Default value: "default"
+        //
+        // Type of this reticle:
+        // - "default" - displays reticle the way game renders it by default,
+        // - "purple"  - same as above, but additionally tries to color it to purple.
+        //
+        // If other mods changed colors of default reticle, then purple option may incorrectly color it.
+        // This restriction is not present in extended reticles.
+        "type": %(focused-reticle-type)s
     },
 
     // Focused reticle extended
     //
     // Adds configurable reticle displaying fully-focused dispersion to in-game reticle.
+    // Other mods does not have influence on the look of this reticle.
+    //
     // When both client-side and server-side reticles are on, it attaches to client-side reticle.
     // 
     // For SPG artillery view, a standard version of this reticle will be used.
@@ -106,6 +121,8 @@ CONFIG_TEMPLATE = """{
     // Hybrid reticle
     // 
     // Adds standard reticle displaying current server-side dispersion to client-side reticle.
+    // Other mods may influence the look of this reticle.
+    //
     // Basically, client-side position, but server-side dispersion.
     // By this, client-side and server-side dispersion desynchronization is clearly visible.
     //
@@ -118,6 +135,17 @@ CONFIG_TEMPLATE = """{
         // If true, displays this reticle.
         "enabled": %(hybrid-reticle-enabled)s,
 
+        // Valid values: ["default", "purple"]
+        // Default value: "default"
+        //
+        // Type of this reticle:
+        // - "default" - displays reticle the way game renders it by default,
+        // - "purple"  - same as above, but additionally tries to color it to purple.
+        //
+        // If other mods changed colors of default reticle, then purple option may incorrectly color it.
+        // This restriction is not present in extended reticles.
+        "type": %(hybrid-reticle-type)s,
+
         // Valid values: true/false (default: false)
         //
         // If true, standard client reticle is hidden while hybrid reticle is enabled..
@@ -128,6 +156,8 @@ CONFIG_TEMPLATE = """{
     // Hybrid reticle extended
     // 
     // Adds configurable reticle displaying current server-side dispersion to client-side reticle.
+    // Other mods does not have influence on the look of this reticle.
+    //
     // Basically, client-side position, but server-side dispersion.
     // By this, client-side and server-side dispersion desynchronization is clearly visible.
     //
@@ -194,18 +224,32 @@ CONFIG_TEMPLATE = """{
     // Server reticle
     // 
     // Adds server-side standard reticle alongside with client-side reticle.
+    // Other mods may influence the look of this reticle.
 
     "server-reticle": {
 
         // Valid values: true/false (default: false)
         //
         // If true, displays this reticle.
-        "enabled": %(server-reticle-enabled)s
+        "enabled": %(server-reticle-enabled)s,
+
+        // Valid values: ["default", "purple"]
+        // Default value: "purple"
+        //
+        // Type of this reticle:
+        // - "default" - displays reticle the way game renders it by default,
+        // - "purple"  - same as above, but additionally tries to color it to purple.
+        //
+        // If other mods changed colors of default reticle, then purple option may incorrectly color it.
+        // This restriction is not present in extended reticles.
+        "type": %(server-reticle-type)s
     },
 
     // Server reticle extended
     // 
     // Adds configurable server-side reticle alongside with client-side reticle.
+    // Other mods does not have influence on the look of this reticle.
+    //
     // For SPG artillery view, a standard version of this reticle will be used.
 
     "server-reticle-extended": {

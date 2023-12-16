@@ -7,8 +7,9 @@ from dispersionreticle.settings.config_param import g_configParams
 # gun_marker_ctrl
 class OverriddenSPGGunMarkerController(_SPGGunMarkerController):
 
-    def __init__(self, gunMakerType, dataProvider, enabledFlag=_MARKER_FLAG.UNDEFINED):
+    def __init__(self, gunMakerType, dataProvider, isServer, enabledFlag=_MARKER_FLAG.UNDEFINED):
         super(OverriddenSPGGunMarkerController, self).__init__(gunMakerType, dataProvider, enabledFlag=enabledFlag)
+        self._isServer = isServer
         self._evaluatedSize = 0
 
     def update(self, markerType, position, direction, size, relaxTime, collData):
@@ -18,7 +19,7 @@ class OverriddenSPGGunMarkerController(_SPGGunMarkerController):
         self._size = size[0]
 
         sizeMultiplier = g_configParams.reticleSizeMultiplier()
-        self._evaluatedSize = self._interceptSize(size, position, direction, relaxTime, collData) * sizeMultiplier
+        self._evaluatedSize = self._interceptSize(self._size, position, direction, relaxTime, collData) * sizeMultiplier
 
         self._update()
 
@@ -42,6 +43,8 @@ class OverriddenSPGGunMarkerController(_SPGGunMarkerController):
 
         self._dataProvider.setupConicDispersion(dispersionAngle)
 
+    def isServerController(self):
+        return self._isServer
 
     def _interceptSize(self, size, pos, direction, relaxTime, collData):
         return size

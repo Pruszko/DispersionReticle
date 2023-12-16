@@ -7,8 +7,5 @@ from dispersionreticle.flash.dispersion_reticle_flash import DispersionReticleFl
 
 class ExtendedHybridDefaultGunMarkerController(HybridDefaultGunMarkerController):
 
-    def __init__(self, reticle, enabledFlag=_MARKER_FLAG.UNDEFINED):
-        super(ExtendedHybridDefaultGunMarkerController, self).__init__(reticle, enabledFlag=enabledFlag)
-
     def _interceptPostUpdate(self, size):
         DispersionReticleFlash.onReticleUpdate(self._reticle, size)

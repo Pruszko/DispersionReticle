@@ -46,12 +46,20 @@ def createGunMarker(func, isStrategic):
 def createStrategicGunMarkers():
     factory = _GunMarkersDPFactory()
 
-    clientController = OverriddenSPGGunMarkerController(_MARKER_TYPE.CLIENT, factory.getClientSPGProvider())
-    serverController = OverriddenSPGGunMarkerController(_MARKER_TYPE.SERVER, factory.getServerSPGProvider())
+    clientController = OverriddenSPGGunMarkerController(_MARKER_TYPE.CLIENT,
+                                                        factory.getClientSPGProvider(),
+                                                        False)
+    serverController = OverriddenSPGGunMarkerController(_MARKER_TYPE.SERVER,
+                                                        factory.getServerSPGProvider(),
+                                                        True)
 
     # this is what WG wrote
     # I hope it won't collapse universe or something
     dualAccController = _EmptyGunMarkerController(_MARKER_TYPE.UNDEFINED, None)
+
+    debugServerController = OverriddenSPGGunMarkerController(ReticleRegistry.DEBUG_SERVER.getGunMarkerType(),
+                                                             ReticleRegistry.DEBUG_SERVER.getSpgDataProvider(),
+                                                             True)
 
     focusedClientController = FocusedSPGGunMarkerController(ReticleRegistry.FOCUSED_CLIENT)
     focusedServerController = FocusedSPGGunMarkerController(ReticleRegistry.FOCUSED_SERVER)
@@ -65,6 +73,7 @@ def createStrategicGunMarkers():
     serverExtendedServerController = ExtendedServerSPGGunMarkerController(ReticleRegistry.SERVER_EXTENDED_SERVER)
 
     return DispersionGunMarkersDecorator(clientController, serverController, dualAccController,
+                                         debugServerController,
                                          focusedClientController, focusedServerController,
                                          hybridClientController, hybridExtendedClientController,
                                          focusedExtendedClientController, focusedExtendedServerController,
@@ -74,9 +83,21 @@ def createStrategicGunMarkers():
 def createDefaultGunMarkers():
     factory = _GunMarkersDPFactory()
 
-    clientController = OverriddenDefaultGunMarkerController(_MARKER_TYPE.CLIENT, factory.getClientProvider())
-    serverController = OverriddenDefaultGunMarkerController(_MARKER_TYPE.SERVER, factory.getServerProvider())
-    dualAccController = OverriddenDualAccGunMarkerController(_MARKER_TYPE.DUAL_ACC, factory.getDualAccuracyProvider())
+    clientController = OverriddenDefaultGunMarkerController(_MARKER_TYPE.CLIENT,
+                                                            factory.getClientProvider(), False)
+    serverController = OverriddenDefaultGunMarkerController(_MARKER_TYPE.SERVER,
+                                                            factory.getServerProvider(),
+                                                            True)
+
+    # mark DUAL_ACC as client-side reticle
+    # this is awkward, but this value for this reticle in decorator is not used anyway
+    dualAccController = OverriddenDualAccGunMarkerController(_MARKER_TYPE.DUAL_ACC,
+                                                             factory.getDualAccuracyProvider(),
+                                                             False)
+
+    debugServerController = OverriddenDefaultGunMarkerController(ReticleRegistry.DEBUG_SERVER.getGunMarkerType(),
+                                                                 ReticleRegistry.DEBUG_SERVER.getStandardDataProvider(),
+                                                                 True)
 
     focusedClientController = FocusedDefaultGunMarkerController(ReticleRegistry.FOCUSED_CLIENT)
     focusedServerController = FocusedDefaultGunMarkerController(ReticleRegistry.FOCUSED_SERVER)
@@ -90,6 +111,7 @@ def createDefaultGunMarkers():
     serverExtendedServerController = ExtendedServerDefaultGunMarkerController(ReticleRegistry.SERVER_EXTENDED_SERVER)
 
     return DispersionGunMarkersDecorator(clientController, serverController, dualAccController,
+                                         debugServerController,
                                          focusedClientController, focusedServerController,
                                          hybridClientController, hybridExtendedClientController,
                                          focusedExtendedClientController, focusedExtendedServerController,

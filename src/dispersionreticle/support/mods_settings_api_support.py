@@ -176,8 +176,14 @@ def _createFocusedReticle():
             ),
         },
         g_configParams.focusedReticleEnabled.renderParam(
-            header=Tr.FOCUSED_RETICLE_ENABLED_HEADER,
-            body=Tr.FOCUSED_RETICLE_ENABLED_BODY
+            header=Tr.RETICLE_ENABLED_HEADER,
+            body=Tr.RETICLE_ENABLED_BODY
+        ),
+        g_configParams.focusedReticleType.renderParam(
+            header=Tr.RETICLE_TYPE_HEADER,
+            body=Tr.RETICLE_TYPE_BODY + "\n",
+            note=Tr.RETICLE_TYPE_NOTE + "\n",
+            attention=Tr.RETICLE_TYPE_ATTENTION
         )
     ]
 
@@ -196,8 +202,8 @@ def _createFocusedReticleExtended():
             )
         },
         g_configParams.focusedReticleExtendedEnabled.renderParam(
-            header=Tr.RETICLE_EXTENDED_ENABLED_HEADER,
-            body=Tr.RETICLE_EXTENDED_ENABLED_BODY
+            header=Tr.RETICLE_ENABLED_HEADER,
+            body=Tr.RETICLE_ENABLED_BODY
         ),
         g_configParams.focusedReticleExtendedShape.renderParam(
             header=Tr.RETICLE_EXTENDED_SHAPE_HEADER,
@@ -242,8 +248,14 @@ def _createServerReticle():
             ),
         },
         g_configParams.serverReticleEnabled.renderParam(
-            header=Tr.SERVER_RETICLE_ENABLED_HEADER,
-            body=Tr.SERVER_RETICLE_ENABLED_BODY
+            header=Tr.RETICLE_ENABLED_HEADER,
+            body=Tr.RETICLE_ENABLED_BODY
+        ),
+        g_configParams.serverReticleType.renderParam(
+            header=Tr.RETICLE_TYPE_HEADER,
+            body=Tr.RETICLE_TYPE_BODY + "\n",
+            note=Tr.RETICLE_TYPE_NOTE + "\n",
+            attention=Tr.RETICLE_TYPE_ATTENTION
         )
     ]
 
@@ -261,8 +273,8 @@ def _createServerReticleExtended():
             )
         },
         g_configParams.serverReticleExtendedEnabled.renderParam(
-            header=Tr.RETICLE_EXTENDED_ENABLED_HEADER,
-            body=Tr.RETICLE_EXTENDED_ENABLED_BODY
+            header=Tr.RETICLE_ENABLED_HEADER,
+            body=Tr.RETICLE_ENABLED_BODY
         ),
         g_configParams.serverReticleExtendedShape.renderParam(
             header=Tr.RETICLE_EXTENDED_SHAPE_HEADER,
@@ -308,8 +320,14 @@ def _createHybridReticle():
             ),
         },
         g_configParams.hybridReticleEnabled.renderParam(
-            header=Tr.HYBRID_RETICLE_ENABLED_HEADER,
-            body=Tr.HYBRID_RETICLE_ENABLED_BODY
+            header=Tr.RETICLE_ENABLED_HEADER,
+            body=Tr.RETICLE_ENABLED_BODY
+        ),
+        g_configParams.hybridReticleType.renderParam(
+            header=Tr.RETICLE_TYPE_HEADER,
+            body=Tr.RETICLE_TYPE_BODY + "\n",
+            note=Tr.RETICLE_TYPE_NOTE + "\n",
+            attention=Tr.RETICLE_TYPE_ATTENTION
         ),
         g_configParams.hybridReticleHideStandardReticle.renderParam(
             header=Tr.HYBRID_RETICLE_HIDE_STANDARD_RETICLE_HEADER,
@@ -333,8 +351,8 @@ def _createHybridReticleExtended():
             )
         },
         g_configParams.hybridReticleExtendedEnabled.renderParam(
-            header=Tr.RETICLE_EXTENDED_ENABLED_HEADER,
-            body=Tr.RETICLE_EXTENDED_ENABLED_BODY
+            header=Tr.RETICLE_ENABLED_HEADER,
+            body=Tr.RETICLE_ENABLED_BODY
         ),
         g_configParams.hybridReticleExtendedShape.renderParam(
             header=Tr.RETICLE_EXTENDED_SHAPE_HEADER,

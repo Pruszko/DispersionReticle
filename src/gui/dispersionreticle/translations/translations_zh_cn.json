@@ -34,19 +34,17 @@
   "focusedReticle.label": "最小落弹环",
   "focusedReticle.header": "最小落弹环",
   "focusedReticle.body": [
-    "在显示标准瞄准环的同时，显示出最小的缩圈大小。\n"
+    "在显示标准瞄准环的同时，显示出最小的缩圈大小。\n",
+    "Other mods may influence the look of this reticle.\n"
   ],
   "focusedReticle.note": [
     "在打开了插件中的服务器准星选项时最小缩圈将显示在客户端准星上。\n\n"
   ],
-  "focusedReticle.enabled.header": "启用",
-  "focusedReticle.enabled.body": [
-    "如果启用则显示这个瞄准环。"
-  ],
   "focusedReticleExtended.label": "Focused reticle extended",
   "focusedReticleExtended.header": "Focused reticle extended",
   "focusedReticleExtended.body": [
-    "Adds configurable reticle displaying fully-focused dispersion to in-game reticle."
+    "Adds configurable reticle displaying fully-focused dispersion to in-game reticle.\n",
+    "Other mods does not have influence on the look of this reticle."
   ],
   "focusedReticleExtended.note": [
     "When both client-side and server-side reticles are on, it attaches to client-side reticle."
@@ -57,15 +55,12 @@
   "hybridReticle.label": "延迟瞄准环",
   "hybridReticle.header": "延迟瞄准环",
   "hybridReticle.body": [
-    "在客户端瞄准环的基础上同时显示服务端瞄准环。\n"
+    "在客户端瞄准环的基础上同时显示服务端瞄准环。\n",
+    "Other mods may influence the look of this reticle.\n"
   ],
   "hybridReticle.note": [
     "开启这个选项后客户端瞄准环和服务端瞄准环的位置差异就清楚可见。\n\n",
     "在想获知服务端准星位置， 同时又想获得客户端的快速响应速度时较为有用。\n\n"
-  ],
-  "hybridReticle.enabled.header": "启用",
-  "hybridReticle.enabled.body": [
-    "如果启用则显示这个瞄准环。"
   ],
   "hybridReticle.hideStandardReticle.header": "隐藏标准瞄准环",
   "hybridReticle.hideStandardReticle.body": [
@@ -77,7 +72,8 @@
   "hybridReticleExtended.label": "Hybrid reticle extended",
   "hybridReticleExtended.header": "Hybrid reticle extended",
   "hybridReticleExtended.body": [
-    "Adds configurable reticle displaying current server-side dispersion to client-side reticle."
+    "Adds configurable reticle displaying current server-side dispersion to client-side reticle.\n",
+    "Other mods does not have influence on the look of this reticle."
   ],
   "hybridReticleExtended.note": [
     "Basically, client-side position, but server-side dispersion.\n",
@@ -90,24 +86,36 @@
   "serverReticle.label": "服务端瞄准环",
   "serverReticle.header": "服务端瞄准环",
   "serverReticle.body": [
-    "在客户端准星显示的同时显示服务端瞄准环。\n\n"
-  ],
-  "serverReticle.enabled.header": "启用",
-  "serverReticle.enabled.body": [
-    "如果启用则显示这个瞄准环。"
+    "在客户端准星显示的同时显示服务端瞄准环。\n",
+    "Other mods may influence the look of this reticle.\n\n"
   ],
   "serverReticleExtended.label": "简单服务端瞄准环",
   "serverReticleExtended.header": "简单服务端瞄准环",
   "serverReticleExtended.body": [
-    "添加可自定义形状的服务端准星。\n"
+    "添加可自定义形状的服务端准星。\n",
+    "Other mods does not have influence on the look of this reticle.\n"
   ],
   "serverReticleExtended.attention": [
     "在火炮视角中，会在左侧默认添加服务端瞄准环而不会显示这个准星。\n\n"
   ],
-  "reticleExtended.enabled.header": "启用",
-  "reticleExtended.enabled.body": [
+  "reticle.enabled.header": "启用",
+  "reticle.enabled.body": [
     "如果启用则显示这个瞄准环。"
   ],
+  "reticle.type.header": "Type",
+  "reticle.type.body": [
+    "Type of this reticle."
+  ],
+  "reticle.type.note": [
+    "Default option displays reticle the way game renders it by default.\n",
+    "Purple option additionally tries to color it to purple."
+  ],
+  "reticle.type.attention": [
+    "If other mods changed colors of default reticle, then purple option may incorrectly color it.\n",
+    "This restriction is not present in extended reticles."
+  ],
+  "reticle.type.option.default": "Default",
+  "reticle.type.option.purple": "Purple",
   "reticleExtended.shape.header": "形状",
   "reticleExtended.shape.body": [
     "这个准星的形状\n"
