@@ -18,7 +18,7 @@ package com.github.pruszko.dispersionreticle
 		// and it isn't caused by anything (scale, screen resolution, etc.)
 		//
 		// Just scaling it by this factor is precise enough, lmao
-		private static const RETICLE_SIZE_FIX_MULTIPLIER:Number = 1.7;
+		private static const RETICLE_SIZE_FIX_MULTIPLIER:Number = 1.72;
 		
 		// Scale used for rendering screen-size-dependent shapes
 		private static const UNIT_SIZE_SCALE:Number = 0.001;
@@ -93,7 +93,7 @@ package com.github.pruszko.dispersionreticle
 			addChild(newMarker);
 		}
 		
-		public function as_updateReticle(gunMarkerType:int, reticleSize:Number) : void
+		public function as_updateReticle(gunMarkerType:int, reticleSize:Number, minReticleSize:Number) : void
 		{
 			var markers:Vector.<StatefulMarker> = getMarkersByGunMarkerType(gunMarkerType);
 			
@@ -108,6 +108,17 @@ package com.github.pruszko.dispersionreticle
 				
 				marker.resetPartial();
 				marker.reticleRadius = reticleSize * RETICLE_SIZE_FIX_MULTIPLIER / 2.0;
+				
+				// so ... calculated reticleSize by WG is for some reason
+				// smaller by RETICLE_SIZE_FIX_MULTIPLIER value than it should be,
+				// but minReticleSize is fine
+				// 
+				// ok
+				var minReticleRadius:Number = minReticleSize / 2.0;
+				if (marker.reticleRadius < minReticleRadius)
+				{
+					marker.reticleRadius = minReticleRadius;
+				}
 			}
 			
 			markers.splice(0, markers.length);

@@ -6,7 +6,7 @@ package com.github.pruszko.dispersionreticle.marker.simple
 	{
 		
 		// Purposedly add few pixels not to hide solid circle reticle while reloading
-		private static const SPACE_FOR_RELOAD:Number = 3.0;
+		private static const SPACE_FOR_RELOAD:Number = 1.0;
 		
 		private var _circleRadius:Number = 0.0;
 		

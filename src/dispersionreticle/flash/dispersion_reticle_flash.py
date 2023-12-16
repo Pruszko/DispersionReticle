@@ -23,9 +23,9 @@ class DispersionReticleFlashMeta(BaseDAAPIModule):
         if self._isDAAPIInited():
             self.flashObject.as_createMarker(gunMarkerType, markerName)
 
-    def as_updateReticle(self, gunMarkerType, reticleSize):
+    def as_updateReticle(self, gunMarkerType, reticleSize, minReticleSize):
         if self._isDAAPIInited():
-            self.flashObject.as_updateReticle(gunMarkerType, reticleSize)
+            self.flashObject.as_updateReticle(gunMarkerType, reticleSize, minReticleSize)
 
     def as_destroyMarker(self, markerName):
         if self._isDAAPIInited():
@@ -125,7 +125,8 @@ class DispersionReticleFlash(ExternalFlashComponent, DispersionReticleFlashMeta)
         # self.component.size = (1, 1)
 
     def __onReticleUpdate(self, reticle, reticleSize):
-        self.as_updateReticle(reticle.gunMarkerType, reticleSize)
+        minReticleSize = reticle.getStandardDataProvider().sizeConstraint[0]
+        self.as_updateReticle(reticle.gunMarkerType, reticleSize, minReticleSize)
 
     def __onMarkerCreate(self, markerName, reticle):
         self.as_createMarker(reticle.gunMarkerType, markerName)
