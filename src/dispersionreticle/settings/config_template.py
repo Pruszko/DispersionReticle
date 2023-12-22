@@ -97,6 +97,14 @@ CONFIG_TEMPLATE = """{
         // Useful if shape color blends with the background.
         "draw-outline": %(focused-reticle-extended-draw-outline)s,
 
+        // Valid values: ["top", "bottom"]
+        // Default value: "bottom"
+        //
+        // Chooses layer on which reticle should be displayed:
+        // - "top"    - display above standard reticles,
+        // - "bottom" - display below standard reticles.
+        "layer": %(focused-reticle-extended-layer)s,
+
         // Valid values: number between 0.0 and 1.0 (default 0.5)
         //
         // Controls, how much reticle color will blend with the background color instead of replacing it.
@@ -200,6 +208,14 @@ CONFIG_TEMPLATE = """{
         // Useful if shape color blends with the background.
         "draw-outline": %(hybrid-reticle-extended-draw-outline)s,
 
+        // Valid values: ["top", "bottom"]
+        // Default value: "bottom"
+        //
+        // Chooses layer on which reticle should be displayed:
+        // - "top"    - display above standard reticles,
+        // - "bottom" - display below standard reticles.
+        "layer": %(hybrid-reticle-extended-layer)s,
+
         // Valid values: number between 0.0 and 1.0 (default 0.5)
         //
         // Controls, how much reticle color will blend with the background color instead of replacing it.
@@ -286,6 +302,14 @@ CONFIG_TEMPLATE = """{
         // If true, shape is additionally displayed with 1 pixel black outline.
         // Useful if shape color blends with the background.
         "draw-outline": %(server-reticle-extended-draw-outline)s,
+
+        // Valid values: ["top", "bottom"]
+        // Default value: "bottom"
+        //
+        // Chooses layer on which reticle should be displayed:
+        // - "top"    - display above standard reticles,
+        // - "bottom" - display below standard reticles.
+        "layer": %(server-reticle-extended-layer)s,
 
         // Valid values: number between 0.0 and 1.0 (default 0.5)
         //

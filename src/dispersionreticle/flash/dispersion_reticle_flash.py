@@ -6,11 +6,12 @@ import logging
 
 import Event
 from AvatarInputHandler import cameras
-from gui import DEPTH_OF_GunMarker
+from gui import DEPTH_OF_Aim
 from gui.Scaleform.daapi.view.external_components import ExternalFlashComponent, ExternalFlashSettings
 from gui.Scaleform.flash_wrapper import InputKeyMode
 from gui.Scaleform.framework.entities.BaseDAAPIModule import BaseDAAPIModule
 
+from dispersionreticle.flash import Layer
 from dispersionreticle.settings.config import g_config
 from dispersionreticle.settings.config_param import g_configParams
 
@@ -51,16 +52,18 @@ class DispersionReticleFlash(ExternalFlashComponent, DispersionReticleFlashMeta)
     onMarkerDataProviderAttach = Event.Event(__eventManager)
     onMarkerDataProviderDetach = Event.Event(__eventManager)
 
-    def __init__(self):
+    def __init__(self, layer):
         super(DispersionReticleFlash, self).__init__(
             ExternalFlashSettings("DispersionReticleFlash",
                                   "DispersionReticleFlash.swf",
                                   "root", None)
         )
+        self._layer = layer
 
         self.createExternalComponent()
         self._configureApp()
 
+        self._markerPresence = []
         self._markerDataProviders = {}
 
         self.onReticleUpdate += self.__onReticleUpdate
@@ -100,7 +103,8 @@ class DispersionReticleFlash(ExternalFlashComponent, DispersionReticleFlashMeta)
         self.component.wg_inputKeyMode = InputKeyMode.NO_HANDLE
 
         # depth sorting, required to be placed properly between other apps
-        self.component.position.z = DEPTH_OF_GunMarker + 0.02
+        layerOffset = -0.02 if self._layer == Layer.TOP else 0.02
+        self.component.position.z = DEPTH_OF_Aim + layerOffset
 
         # this is *probably* to ignore any focus on our app
         self.component.focus = False
@@ -125,21 +129,39 @@ class DispersionReticleFlash(ExternalFlashComponent, DispersionReticleFlashMeta)
         # self.component.size = (1, 1)
 
     def __onReticleUpdate(self, reticle, reticleSize):
+        flashMarkerNames = reticle.getFlashMarkerNames()
+        if not any(flashMarkerName in self._markerPresence for flashMarkerName in flashMarkerNames):
+            return
+
         minReticleSize = reticle.getStandardDataProvider().sizeConstraint[0]
         self.as_updateReticle(reticle.getGunMarkerType(), reticleSize, minReticleSize)
 
     def __onMarkerCreate(self, markerName, reticle):
+        if markerName in self._markerPresence or reticle.getFlashLayer() != self._layer:
+            return
+
         self.as_createMarker(reticle.getGunMarkerType(), markerName)
+        self._markerPresence.append(markerName)
 
     def __onMarkerDestroy(self, markerName, reticle):
+        if markerName not in self._markerPresence:
+            return
+
+        self._markerPresence.remove(markerName)
         self.as_destroyMarker(markerName)
 
     def __onMarkerDataProviderAttach(self, markerName, dataProvider):
+        if markerName not in self._markerPresence:
+            return
+
         self._markerDataProviders[markerName] = dataProvider
 
         self.as_setMarkerDataProviderPresence(markerName, True)
 
     def __onMarkerDataProviderDetach(self, markerName):
+        if markerName not in self._markerPresence:
+            return
+
         self.as_setMarkerDataProviderPresence(markerName, False)
 
         if markerName in self._markerDataProviders:

@@ -2,6 +2,7 @@ import logging
 
 from gui.Scaleform.daapi.view.battle.shared.crosshair.plugins import GunMarkersInvalidatePlugin
 
+from dispersionreticle.flash import Layer
 from dispersionreticle.flash.dispersion_reticle_flash import DispersionReticleFlash
 from dispersionreticle.settings.config import g_config
 from dispersionreticle.utils import *
@@ -26,15 +27,21 @@ def invalidateGunMarkers(self):
     return
 
 
-g_dispersionReticleFlash = None
+g_TopDispersionReticleFlash = None
+g_BottomDispersionReticleFlash = None
 
 
 @overrideIn(GunMarkersInvalidatePlugin)
 def start(func, self):
-    global g_dispersionReticleFlash
-    if g_dispersionReticleFlash is None:
-        g_dispersionReticleFlash = DispersionReticleFlash()
-        g_dispersionReticleFlash.active(True)
+    global g_TopDispersionReticleFlash
+    if g_TopDispersionReticleFlash is None:
+        g_TopDispersionReticleFlash = DispersionReticleFlash(Layer.TOP)
+        g_TopDispersionReticleFlash.active(True)
+
+    global g_BottomDispersionReticleFlash
+    if g_BottomDispersionReticleFlash is None:
+        g_BottomDispersionReticleFlash = DispersionReticleFlash(Layer.BOTTOM)
+        g_BottomDispersionReticleFlash.active(True)
 
     func(self)
     g_config.onConfigReload += self.invalidateGunMarkers
@@ -42,10 +49,15 @@ def start(func, self):
 
 @overrideIn(GunMarkersInvalidatePlugin)
 def stop(func, self):
-    global g_dispersionReticleFlash
-    if g_dispersionReticleFlash is not None:
-        g_dispersionReticleFlash.close()
-        g_dispersionReticleFlash = None
+    global g_TopDispersionReticleFlash
+    if g_TopDispersionReticleFlash is not None:
+        g_TopDispersionReticleFlash.close()
+        g_TopDispersionReticleFlash = None
+
+    global g_BottomDispersionReticleFlash
+    if g_BottomDispersionReticleFlash is not None:
+        g_BottomDispersionReticleFlash.close()
+        g_BottomDispersionReticleFlash = None
 
     g_config.onConfigReload -= self.invalidateGunMarkers
     func(self)

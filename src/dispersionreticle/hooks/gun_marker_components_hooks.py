@@ -55,13 +55,13 @@ _logger = gm_components._logger
 class _ExtendedGunMarkerProxy(object):
 
     def __init__(self, gunMarkerComponent):
-        self.markerName = gunMarkerComponent.getName()
+        self._gunMarkerComponent = gunMarkerComponent
 
     def setDataProvider(self, dataProvider):
-        DispersionReticleFlash.onMarkerDataProviderAttach(self.markerName, dataProvider)
+        DispersionReticleFlash.onMarkerDataProviderAttach(self._gunMarkerComponent.getName(), dataProvider)
 
     def clearDataProvider(self):
-        DispersionReticleFlash.onMarkerDataProviderDetach(self.markerName)
+        DispersionReticleFlash.onMarkerDataProviderDetach(self._gunMarkerComponent.getName())
 
 
 # gm_components

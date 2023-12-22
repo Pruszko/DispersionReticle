@@ -94,7 +94,7 @@ package com.github.pruszko.dispersionreticle.marker.simple
 			var centerY:Number = 0.0;
 			
 			// Add few minimum pixels not to hide solid circle reticle while reloading
-			var outlineSpace:Number = _halfDashHeight > 3.0 ? _halfDashHeight : 3.0;
+			var outlineSpace:Number = _halfDashHeight > 1.0 ? _halfDashHeight : 1.0;
 			
 			outlineShape.lineStyle(1.0, 0x000000);
 			outlineShape.drawCircle(centerX, centerY, reticleRadius + outlineSpace);

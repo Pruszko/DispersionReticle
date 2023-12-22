@@ -32,7 +32,7 @@ class ReticleRegistry(object):
     # by this, we also have better control over rendering order
     #
     # this is due to WG code using same marker names for VANILLA_CLIENT and VANILLA_SERVER reticles
-    # but with different linkages depending on GunMarkerFactory type
+    # what is problematic when we want to distinguish reticles by marker names
     DEBUG_SERVER = OverriddenReticle(nameSuffix="ServerDebug", gunMarkerType=4,
                                      reticleType=ReticleType.SERVER,
                                      markerLinkagesProvider=ReticleLinkages.createParamLinkagesProvider(g_configParams.serverReticleType))
@@ -51,20 +51,24 @@ class ReticleRegistry(object):
 
     FOCUSED_EXTENDED_CLIENT = ExtendedReticle(nameSuffix="ClientFocusedExtended", gunMarkerType=8,
                                               reticleType=ReticleType.CLIENT,
-                                              markerLinkagesProvider=FOCUSED_CLIENT._markerLinkagesProvider)
+                                              markerLinkagesProvider=FOCUSED_CLIENT._markerLinkagesProvider,
+                                              layerProvider=g_configParams.focusedReticleExtendedLayer)
 
     FOCUSED_EXTENDED_SERVER = ExtendedReticle(nameSuffix="ServerFocusedExtended", gunMarkerType=9,
                                               reticleType=ReticleType.SERVER,
-                                              markerLinkagesProvider=FOCUSED_SERVER._markerLinkagesProvider)
+                                              markerLinkagesProvider=FOCUSED_SERVER._markerLinkagesProvider,
+                                              layerProvider=g_configParams.focusedReticleExtendedLayer)
 
     HYBRID_EXTENDED_CLIENT = ExtendedReticle(nameSuffix="ClientHybridExtended", gunMarkerType=10,
                                              reticleType=ReticleType.CLIENT,
-                                             markerLinkagesProvider=HYBRID_CLIENT._markerLinkagesProvider)
+                                             markerLinkagesProvider=HYBRID_CLIENT._markerLinkagesProvider,
+                                             layerProvider=g_configParams.hybridReticleExtendedLayer)
 
     # I know it sounds dumb, but it is server "server-reticle-extended", so ...
     SERVER_EXTENDED_SERVER = ExtendedReticle(nameSuffix="ServerServerExtended", gunMarkerType=11,
                                              reticleType=ReticleType.SERVER,
-                                             markerLinkagesProvider=VANILLA_SERVER._markerLinkagesProvider)
+                                             markerLinkagesProvider=VANILLA_SERVER._markerLinkagesProvider,
+                                             layerProvider=g_configParams.serverReticleExtendedLayer)
 
     OVERRIDDEN_RETICLES = [DEBUG_SERVER, FOCUSED_CLIENT, FOCUSED_SERVER, HYBRID_CLIENT]
 

@@ -57,6 +57,14 @@ class ConfigParams(object):
             ["focused-reticle-extended", "draw-outline"],
             defaultValue=False
         )
+        self.focusedReticleExtendedLayer = OptionsParam(
+            ["focused-reticle-extended", "layer"],
+            [
+                Option("top", 0, Tr.RETICLE_EXTENDED_LAYER_OPTION_TOP),
+                Option("bottom", 1, Tr.RETICLE_EXTENDED_LAYER_OPTION_BOTTOM)
+            ],
+            defaultValue="bottom"
+        )
         self.focusedReticleExtendedBlend = FloatSliderParam(
             ["focused-reticle-extended", "blend"],
             minValue=0.0, step=0.01, maxValue=1.0,
@@ -113,6 +121,14 @@ class ConfigParams(object):
             ["hybrid-reticle-extended", "draw-outline"],
             defaultValue=False
         )
+        self.hybridReticleExtendedLayer = OptionsParam(
+            ["hybrid-reticle-extended", "layer"],
+            [
+                Option("top", 0, Tr.RETICLE_EXTENDED_LAYER_OPTION_TOP),
+                Option("bottom", 1, Tr.RETICLE_EXTENDED_LAYER_OPTION_BOTTOM)
+            ],
+            defaultValue="bottom"
+        )
         self.hybridReticleExtendedBlend = FloatSliderParam(
             ["hybrid-reticle-extended", "blend"],
             minValue=0.0, step=0.01, maxValue=1.0,
@@ -164,6 +180,14 @@ class ConfigParams(object):
         self.serverReticleExtendedDrawOutline = BooleanParam(
             ["server-reticle-extended", "draw-outline"],
             defaultValue=False
+        )
+        self.serverReticleExtendedLayer = OptionsParam(
+            ["server-reticle-extended", "layer"],
+            [
+                Option("top", 0, Tr.RETICLE_EXTENDED_LAYER_OPTION_TOP),
+                Option("bottom", 1, Tr.RETICLE_EXTENDED_LAYER_OPTION_BOTTOM)
+            ],
+            defaultValue="bottom"
         )
         self.serverReticleExtendedBlend = FloatSliderParam(
             ["server-reticle-extended", "blend"],

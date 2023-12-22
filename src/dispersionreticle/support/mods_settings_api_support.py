@@ -223,6 +223,10 @@ def _createFocusedReticleExtended():
             body=Tr.RETICLE_EXTENDED_DRAW_OUTLINE_BODY + "\n",
             note=Tr.RETICLE_EXTENDED_DRAW_OUTLINE_NOTE
         ),
+        g_configParams.focusedReticleExtendedLayer.renderParam(
+            header=Tr.RETICLE_EXTENDED_LAYER_HEADER,
+            body=Tr.RETICLE_EXTENDED_LAYER_BODY
+        ),
         g_configParams.focusedReticleExtendedBlend.renderParam(
             header=Tr.RETICLE_EXTENDED_BLEND_HEADER,
             body=Tr.RETICLE_EXTENDED_BLEND_BODY + "\n",
@@ -293,6 +297,10 @@ def _createServerReticleExtended():
             header=Tr.RETICLE_EXTENDED_DRAW_OUTLINE_HEADER,
             body=Tr.RETICLE_EXTENDED_DRAW_OUTLINE_BODY + "\n",
             note=Tr.RETICLE_EXTENDED_DRAW_OUTLINE_NOTE
+        ),
+        g_configParams.serverReticleExtendedLayer.renderParam(
+            header=Tr.RETICLE_EXTENDED_LAYER_HEADER,
+            body=Tr.RETICLE_EXTENDED_LAYER_BODY
         ),
         g_configParams.serverReticleExtendedBlend.renderParam(
             header=Tr.RETICLE_EXTENDED_BLEND_HEADER,
@@ -371,6 +379,10 @@ def _createHybridReticleExtended():
             header=Tr.RETICLE_EXTENDED_DRAW_OUTLINE_HEADER,
             body=Tr.RETICLE_EXTENDED_DRAW_OUTLINE_BODY + "\n",
             note=Tr.RETICLE_EXTENDED_DRAW_OUTLINE_NOTE
+        ),
+        g_configParams.hybridReticleExtendedLayer.renderParam(
+            header=Tr.RETICLE_EXTENDED_LAYER_HEADER,
+            body=Tr.RETICLE_EXTENDED_LAYER_BODY
         ),
         g_configParams.hybridReticleExtendedBlend.renderParam(
             header=Tr.RETICLE_EXTENDED_BLEND_HEADER,

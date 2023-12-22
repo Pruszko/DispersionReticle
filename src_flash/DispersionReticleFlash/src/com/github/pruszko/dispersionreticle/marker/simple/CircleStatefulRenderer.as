@@ -5,9 +5,6 @@ package com.github.pruszko.dispersionreticle.marker.simple
 	public class CircleStatefulRenderer extends StatefulRenderer
 	{
 		
-		// Purposedly add few pixels not to hide solid circle reticle while reloading
-		private static const SPACE_FOR_RELOAD:Number = 1.0;
-		
 		private var _circleRadius:Number = 0.0;
 		
 		public function CircleStatefulRenderer(simpleMarker:CustomStatefulMarker) 
@@ -45,7 +42,7 @@ package com.github.pruszko.dispersionreticle.marker.simple
 			var centerY:Number = 0.0;
 			
 			shape.lineStyle(1.0, fillColor);
-			shape.drawCircle(centerX, centerY, reticleRadius + SPACE_FOR_RELOAD);
+			shape.drawCircle(centerX, centerY, reticleRadius);
 		}
 		
 		private function drawCenter() : void
@@ -67,7 +64,7 @@ package com.github.pruszko.dispersionreticle.marker.simple
 			var centerY:Number = 0.0;
 			
 			outlineShape.lineStyle(1.0, 0x000000);
-			outlineShape.drawCircle(centerX, centerY, reticleRadius + SPACE_FOR_RELOAD + 1.0);
+			outlineShape.drawCircle(centerX, centerY, reticleRadius + 1.0);
 		}
 		
 	}

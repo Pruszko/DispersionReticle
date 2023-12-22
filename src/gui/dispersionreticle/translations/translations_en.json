@@ -143,6 +143,14 @@
   "reticleExtended.drawOutline.note": [
     "Useful if shape color blends with the background."
   ],
+  "reticleExtended.layer.header": "Layer",
+  "reticleExtended.layer.body": [
+    "Chooses layer on which reticle should be displayed:\n",
+    "- Top - display above standard reticles,\n",
+    "- Bottom - display below standard reticles."
+  ],
+  "reticleExtended.layer.option.top": "Top",
+  "reticleExtended.layer.option.bottom": "Bottom",
   "reticleExtended.blend.header": "Blend",
   "reticleExtended.blend.body": [
     "Controls, how much reticle color will blend with the background color instead of replacing it.\n",

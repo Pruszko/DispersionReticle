@@ -5,7 +5,6 @@ from gui.Scaleform.daapi.view.battle.shared.crosshair.gm_factory import \
     _ControlMarkersFactory,\
     _OptionalMarkersFactory,\
     _EquipmentMarkersFactory
-from gui.Scaleform.genConsts.GUN_MARKER_VIEW_CONSTANTS import GUN_MARKER_VIEW_CONSTANTS as _CONSTANTS
 
 from dispersionreticle.hooks.gun_marker_components_hooks import ExtendedGunMarkerComponent
 from dispersionreticle.settings.config import g_configParams

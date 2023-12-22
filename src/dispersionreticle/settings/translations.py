@@ -186,6 +186,12 @@ class Tr(object):
     RETICLE_EXTENDED_DRAW_OUTLINE_BODY = TranslationList("reticleExtended.drawOutline.body")
     RETICLE_EXTENDED_DRAW_OUTLINE_NOTE = TranslationList("reticleExtended.drawOutline.note")
 
+    RETICLE_EXTENDED_LAYER_HEADER = TranslationElement("reticleExtended.layer.header")
+    RETICLE_EXTENDED_LAYER_BODY = TranslationList("reticleExtended.layer.body")
+
+    RETICLE_EXTENDED_LAYER_OPTION_TOP = TranslationElement("reticleExtended.layer.option.top")
+    RETICLE_EXTENDED_LAYER_OPTION_BOTTOM = TranslationElement("reticleExtended.layer.option.bottom")
+
     RETICLE_EXTENDED_BLEND_HEADER = TranslationElement("reticleExtended.blend.header")
     RETICLE_EXTENDED_BLEND_BODY = TranslationList("reticleExtended.blend.body")
     RETICLE_EXTENDED_BLEND_NOTE = TranslationList("reticleExtended.blend.note")

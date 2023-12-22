@@ -145,6 +145,14 @@
   "reticleExtended.drawOutline.note": [
     "Przydatne gdy kolor kształtu zlewa się z tłem."
   ],
+  "reticleExtended.layer.header": "Warstwa",
+  "reticleExtended.layer.body": [
+    "Wybiera warstwę, na której okrąg powinien zostać wyświetlony:\n",
+    "- Górna - wyświetlanie nad standardowymi okręgami,\n",
+    "- Dolna - wyświetlanie pod standardowymi okręgami."
+  ],
+  "reticleExtended.layer.option.top": "Górna",
+  "reticleExtended.layer.option.bottom": "Dolna",
   "reticleExtended.blend.header": "Zlewanie koloru z tłem",
   "reticleExtended.blend.body": [
     "Kontroluje, jak bardzo kolor okręgu będzie zlewać się z kolorem tła zamiast go nadpisywać.\n",

@@ -5,13 +5,23 @@ from dispersionreticle.utils.reticle_types.overridden_reticle import OverriddenR
 
 class ExtendedReticle(OverriddenReticle):
 
-    def getFlashMarkerNames(self):
-        return (
+    def __init__(self, nameSuffix, gunMarkerType, reticleType,
+                 markerLinkagesProvider, layerProvider):
+        super(ExtendedReticle, self).__init__(nameSuffix, gunMarkerType, reticleType, markerLinkagesProvider)
+
+        self._layerProvider = layerProvider
+        self._flashMarkerNames = (
             self._markerNames.arcadeGunMarkerName,
             self._markerNames.sniperGunMarkerName,
             self._markerNames.dualGunArcadeGunMarkerName,
             self._markerNames.dualGunSniperGunMarkerName
         )
+
+    def getFlashMarkerNames(self):
+        return self._flashMarkerNames
+
+    def getFlashLayer(self):
+        return self._layerProvider()
 
     # gm_factory
     def createDefaultMarkers(self, gunMarkerFactory, markerType):

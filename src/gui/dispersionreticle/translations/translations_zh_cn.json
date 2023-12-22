@@ -139,6 +139,14 @@
   "reticleExtended.drawOutline.note": [
     "可在准星颜色可能和背景颜色混淆时使用。"
   ],
+  "reticleExtended.layer.header": "Layer",
+  "reticleExtended.layer.body": [
+    "Chooses layer on which reticle should be displayed:\n",
+    "- Top - display above standard reticles,\n",
+    "- Bottom - display below standard reticles."
+  ],
+  "reticleExtended.layer.option.top": "Top",
+  "reticleExtended.layer.option.bottom": "Bottom",
   "reticleExtended.blend.header": "混色",
   "reticleExtended.blend.body": [
     "控制瞄准环与背景的融合程度 ",

@@ -144,6 +144,14 @@
   "reticleExtended.drawOutline.note": [
     "Полезно, если цвет фигуры сливается с фоном."
   ],
+  "reticleExtended.layer.header": "Layer",
+  "reticleExtended.layer.body": [
+    "Chooses layer on which reticle should be displayed:\n",
+    "- Top - display above standard reticles,\n",
+    "- Bottom - display below standard reticles."
+  ],
+  "reticleExtended.layer.option.top": "Top",
+  "reticleExtended.layer.option.bottom": "Bottom",
   "reticleExtended.blend.header": "Смешивание",
   "reticleExtended.blend.body": [
     "Регулирует, насколько цвет фигуры будет сливаться с цветом фона, а не заменять его.\n",

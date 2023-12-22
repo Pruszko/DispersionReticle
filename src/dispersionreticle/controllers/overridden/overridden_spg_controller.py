@@ -1,4 +1,4 @@
-import BigWorld, BattleReplay, Math
+import BattleReplay, Math
 from AvatarInputHandler.gun_marker_ctrl import _SPGGunMarkerController, _MARKER_FLAG, _MARKER_TYPE
 
 from dispersionreticle.settings.config_param import g_configParams
