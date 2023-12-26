@@ -2,7 +2,7 @@ package com.github.pruszko.dispersionreticle.config.marker
 {
 	import com.github.pruszko.dispersionreticle.utils.Disposable;
 	
-	public class DisposableCustomMarkerConfig implements Disposable
+	public class DisposableExtendedMarkerConfig implements Disposable
 	{
 		
 		private var _shape:String = "pentagon";
@@ -12,7 +12,7 @@ package com.github.pruszko.dispersionreticle.config.marker
 		private var _blend:Number = 0.8;
 		private var _alpha:Number = 1.0;
 		
-		public function DisposableCustomMarkerConfig() 
+		public function DisposableExtendedMarkerConfig() 
 		{
 			super();
 		}

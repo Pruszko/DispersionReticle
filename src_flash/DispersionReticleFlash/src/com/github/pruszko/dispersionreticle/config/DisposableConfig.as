@@ -1,15 +1,15 @@
 package com.github.pruszko.dispersionreticle.config 
 {
-	import com.github.pruszko.dispersionreticle.config.marker.DisposableCustomMarkerConfig;
+	import com.github.pruszko.dispersionreticle.config.marker.DisposableExtendedMarkerConfig;
 	import com.github.pruszko.dispersionreticle.utils.Disposable;
 	import com.github.pruszko.dispersionreticle.utils.GunMarkerTypes;
 	
 	public class DisposableConfig implements Disposable
 	{
 		
-		private var _focusedReticleExtended:DisposableCustomMarkerConfig = new DisposableCustomMarkerConfig();
-		private var _hybridReticleExtended:DisposableCustomMarkerConfig = new DisposableCustomMarkerConfig();
-		private var _serverReticleExtended:DisposableCustomMarkerConfig = new DisposableCustomMarkerConfig();
+		private var _focusedReticleExtended:DisposableExtendedMarkerConfig = new DisposableExtendedMarkerConfig();
+		private var _hybridReticleExtended:DisposableExtendedMarkerConfig = new DisposableExtendedMarkerConfig();
+		private var _serverReticleExtended:DisposableExtendedMarkerConfig = new DisposableExtendedMarkerConfig();
 		
 		public function DisposableConfig() 
 		{
@@ -33,7 +33,7 @@ package com.github.pruszko.dispersionreticle.config
 			this._serverReticleExtended.deserialize(serializedConfig["server-reticle-extended"]);
 		}
 		
-		public function getCustomMarkerConfig(gunMarkerType:int) : DisposableCustomMarkerConfig
+		public function getExtendedMarkerConfig(gunMarkerType:int) : DisposableExtendedMarkerConfig
 		{
 			switch (gunMarkerType)
 			{

@@ -9,7 +9,7 @@ package com.github.pruszko.dispersionreticle.utils
 		public static const HYBRID_EXTENDED_CLIENT:int = 10;
 		public static const SERVER_EXTENDED_SERVER:int = 11;
 		
-		public static function isCustomReticle(gunMarkerType:int) : Boolean
+		public static function isExtendedReticle(gunMarkerType:int) : Boolean
 		{
 			return gunMarkerType >= 8 && gunMarkerType <= 11;
 		}

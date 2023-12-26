@@ -32,10 +32,10 @@ package com.github.pruszko.dispersionreticle.marker
 		
 		public function disposeState() : void
 		{
-			_reticleRadius = null;
+			this._reticleRadius = null;
 			
-			_partial.disposeState();
-			_partial = null;
+			this._partial.disposeState();
+			this._partial = null;
 			
 			this._app = null;
 		}
@@ -62,17 +62,17 @@ package com.github.pruszko.dispersionreticle.marker
 		
 		public function get app() : DispersionReticleFlash
 		{
-			return _app;
+			return this._app;
 		}
 		
 		public function get gunMarkerType() : int
 		{
-			return _gunMarkerType;
+			return this._gunMarkerType;
 		}
 		
 		public function get reticleRadius() : Number
 		{
-			return _reticleRadius.partial;
+			return this._reticleRadius.partial;
 		}
 		
 		public function set reticleRadius(reticleRadius:Number) : void
@@ -82,7 +82,7 @@ package com.github.pruszko.dispersionreticle.marker
 		
 		public function get hasDataProvider() : Boolean
 		{
-			return _hasDataProvider;
+			return this._hasDataProvider;
 		}
 		
 		public function set hasDataProvider(dataProviderPresence:Boolean) : void
