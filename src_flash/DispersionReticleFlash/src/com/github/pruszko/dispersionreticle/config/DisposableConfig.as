@@ -18,12 +18,12 @@ package com.github.pruszko.dispersionreticle.config
 		
 		public function disposeState() : void
 		{
-			_focusedReticleExtended.disposeState();
-			_focusedReticleExtended = null;
-			_hybridReticleExtended.disposeState();
-			_hybridReticleExtended = null;
-			_serverReticleExtended.disposeState();
-			_serverReticleExtended = null;
+			this._focusedReticleExtended.disposeState();
+			this._focusedReticleExtended = null;
+			this._hybridReticleExtended.disposeState();
+			this._hybridReticleExtended = null;
+			this._serverReticleExtended.disposeState();
+			this._serverReticleExtended = null;
 		}
 		
 		public function deserialize(serializedConfig:Object) : void
@@ -39,11 +39,11 @@ package com.github.pruszko.dispersionreticle.config
 			{
 				case GunMarkerTypes.FOCUSED_EXTENDED_CLIENT:
 				case GunMarkerTypes.FOCUSED_EXTENDED_SERVER:
-					return _focusedReticleExtended;
+					return this._focusedReticleExtended;
 				case GunMarkerTypes.HYBRID_EXTENDED_CLIENT:
-					return _hybridReticleExtended;
+					return this._hybridReticleExtended;
 				case GunMarkerTypes.SERVER_EXTENDED_SERVER:
-					return _serverReticleExtended;
+					return this._serverReticleExtended;
 				default:
 					return null;
 			}

@@ -1,5 +1,6 @@
 package com.github.pruszko.dispersionreticle.config.marker 
 {
+	import com.github.pruszko.dispersionreticle.config.marker.extended.DisposableExtendedMarkerShapesConfig;
 	import com.github.pruszko.dispersionreticle.utils.Disposable;
 	
 	public class DisposableExtendedMarkerConfig implements Disposable
@@ -11,6 +12,7 @@ package com.github.pruszko.dispersionreticle.config.marker
 		private var _drawOutline:Boolean = false;
 		private var _blend:Number = 0.8;
 		private var _alpha:Number = 1.0;
+		private var _shapes:DisposableExtendedMarkerShapesConfig = new DisposableExtendedMarkerShapesConfig();
 		
 		public function DisposableExtendedMarkerConfig() 
 		{
@@ -19,7 +21,8 @@ package com.github.pruszko.dispersionreticle.config.marker
 		
 		public function disposeState() : void
 		{
-			
+			this._shapes.disposeState();
+			this._shapes = null;
 		}
 		
 		public function deserialize(serializedSection:Object) : void
@@ -30,36 +33,42 @@ package com.github.pruszko.dispersionreticle.config.marker
 			this._drawOutline = serializedSection["draw-outline"];
 			this._blend = serializedSection["blend"];
 			this._alpha = serializedSection["alpha"];
+			this._shapes.deserialize(serializedSection["shapes"]);
 		}
 		
 		public function get shape() : String
 		{
-			return _shape;
+			return this._shape;
 		}
 		
 		public function get color() : int
 		{
-			return _color;
+			return this._color;
 		}
 		
 		public function get drawCenterDot() : Boolean
 		{
-			return _drawCenterDot;
+			return this._drawCenterDot;
 		}
 		
 		public function get drawOutline() : Boolean
 		{
-			return _drawOutline;
+			return this._drawOutline;
 		}
 		
 		public function get blend() : Number
 		{
-			return _blend;
+			return this._blend;
 		}
 		
 		public function get alpha() : Number
 		{
-			return _alpha;
+			return this._alpha;
+		}
+		
+		public function get shapes() : DisposableExtendedMarkerShapesConfig
+		{
+			return this._shapes;
 		}
 		
 	}

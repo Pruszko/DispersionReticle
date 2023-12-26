@@ -14,6 +14,8 @@ modLinkage = "com.github.pruszko.dispersionreticle"
 def registerSoftDependencySupport():
     # TODO update README
     # TODO update RU and ZH_CN translations
+    # TODO update images
+    # TODO improve config error handling
     template = {
         "modDisplayName": Tr.MODNAME,
         "enabled": g_configParams.enabled.defaultMsaValue,
@@ -237,6 +239,27 @@ def _createFocusedReticleExtended():
             header=Tr.RETICLE_EXTENDED_ALPHA_HEADER,
             body=Tr.RETICLE_EXTENDED_ALPHA_BODY + "\n",
             note=Tr.RETICLE_EXTENDED_ALPHA_NOTE
+        ),
+        {
+            "type": "Label",
+            "text": Tr.RETICLE_EXTENDED_SHAPES_HEADER
+        },
+        g_configParams.focusedReticleExtendedShapesPentagonWidth.renderParam(
+            header=Tr.RETICLE_EXTENDED_SHAPES_PENTAGON_WIDTH_HEADER,
+            body=Tr.RETICLE_EXTENDED_SHAPES_PENTAGON_WIDTH_BODY,
+        ),
+        g_configParams.focusedReticleExtendedShapesPentagonHeight.renderParam(
+            header=Tr.RETICLE_EXTENDED_SHAPES_PENTAGON_HEIGHT_HEADER,
+            body=Tr.RETICLE_EXTENDED_SHAPES_PENTAGON_HEIGHT_BODY,
+        ),
+        g_configParams.focusedReticleExtendedShapesTShapeThickness.renderParam(
+            header=Tr.RETICLE_EXTENDED_SHAPES_T_SHAPE_THICKNESS_HEADER,
+            body=Tr.RETICLE_EXTENDED_SHAPES_T_SHAPE_THICKNESS_BODY,
+        ),
+        g_configParams.focusedReticleExtendedShapesTShapeLength.renderParam(
+            header=Tr.RETICLE_EXTENDED_SHAPES_T_SHAPE_LENGTH_HEADER,
+            body=Tr.RETICLE_EXTENDED_SHAPES_T_SHAPE_LENGTH_BODY + "\n",
+            note=Tr.RETICLE_EXTENDED_SHAPES_T_SHAPE_LENGTH_NOTE
         )
     ]
 
@@ -312,6 +335,27 @@ def _createServerReticleExtended():
             header=Tr.RETICLE_EXTENDED_ALPHA_HEADER,
             body=Tr.RETICLE_EXTENDED_ALPHA_BODY + "\n",
             note=Tr.RETICLE_EXTENDED_ALPHA_NOTE
+        ),
+        {
+            "type": "Label",
+            "text": Tr.RETICLE_EXTENDED_SHAPES_HEADER
+        },
+        g_configParams.serverReticleExtendedShapesPentagonWidth.renderParam(
+            header=Tr.RETICLE_EXTENDED_SHAPES_PENTAGON_WIDTH_HEADER,
+            body=Tr.RETICLE_EXTENDED_SHAPES_PENTAGON_WIDTH_BODY,
+        ),
+        g_configParams.serverReticleExtendedShapesPentagonHeight.renderParam(
+            header=Tr.RETICLE_EXTENDED_SHAPES_PENTAGON_HEIGHT_HEADER,
+            body=Tr.RETICLE_EXTENDED_SHAPES_PENTAGON_HEIGHT_BODY,
+        ),
+        g_configParams.serverReticleExtendedShapesTShapeThickness.renderParam(
+            header=Tr.RETICLE_EXTENDED_SHAPES_T_SHAPE_THICKNESS_HEADER,
+            body=Tr.RETICLE_EXTENDED_SHAPES_T_SHAPE_THICKNESS_BODY,
+        ),
+        g_configParams.serverReticleExtendedShapesTShapeLength.renderParam(
+            header=Tr.RETICLE_EXTENDED_SHAPES_T_SHAPE_LENGTH_HEADER,
+            body=Tr.RETICLE_EXTENDED_SHAPES_T_SHAPE_LENGTH_BODY + "\n",
+            note=Tr.RETICLE_EXTENDED_SHAPES_T_SHAPE_LENGTH_NOTE
         )
     ]
 
@@ -394,6 +438,27 @@ def _createHybridReticleExtended():
             header=Tr.RETICLE_EXTENDED_ALPHA_HEADER,
             body=Tr.RETICLE_EXTENDED_ALPHA_BODY + "\n",
             note=Tr.RETICLE_EXTENDED_ALPHA_NOTE
+        ),
+        {
+            "type": "Label",
+            "text": Tr.RETICLE_EXTENDED_SHAPES_HEADER
+        },
+        g_configParams.hybridReticleExtendedShapesPentagonWidth.renderParam(
+            header=Tr.RETICLE_EXTENDED_SHAPES_PENTAGON_WIDTH_HEADER,
+            body=Tr.RETICLE_EXTENDED_SHAPES_PENTAGON_WIDTH_BODY,
+        ),
+        g_configParams.hybridReticleExtendedShapesPentagonHeight.renderParam(
+            header=Tr.RETICLE_EXTENDED_SHAPES_PENTAGON_HEIGHT_HEADER,
+            body=Tr.RETICLE_EXTENDED_SHAPES_PENTAGON_HEIGHT_BODY,
+        ),
+        g_configParams.hybridReticleExtendedShapesTShapeThickness.renderParam(
+            header=Tr.RETICLE_EXTENDED_SHAPES_T_SHAPE_THICKNESS_HEADER,
+            body=Tr.RETICLE_EXTENDED_SHAPES_T_SHAPE_THICKNESS_BODY,
+        ),
+        g_configParams.hybridReticleExtendedShapesTShapeLength.renderParam(
+            header=Tr.RETICLE_EXTENDED_SHAPES_T_SHAPE_LENGTH_HEADER,
+            body=Tr.RETICLE_EXTENDED_SHAPES_T_SHAPE_LENGTH_BODY + "\n",
+            note=Tr.RETICLE_EXTENDED_SHAPES_T_SHAPE_LENGTH_NOTE
         )
     ]
 

@@ -19,8 +19,8 @@ package com.github.pruszko.dispersionreticle.marker.extended
 		{
 			super.updateState();
 			
-			this._elementWidth = this.scaleSqrtByReticleRadius(1.0);
-			this._elementHeight = this.scaleSqrtByReticleRadius(1.0);
+			this._elementWidth = this.scaleSqrtByReticleRadius(1.0 * this.config.shapes.pentagon.width);
+			this._elementHeight = this.scaleSqrtByReticleRadius(1.0 * this.config.shapes.pentagon.height);
 			
 			this._circleRadius = this.scaleSqrtByReticleRadius(0.25);
 		}

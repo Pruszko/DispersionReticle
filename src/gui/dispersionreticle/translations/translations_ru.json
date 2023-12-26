@@ -173,5 +173,25 @@
   "reticleExtended.alpha.note": [
     "Значение 1.0 соответствует полной видимости.\n",
     "Значение 0.0 соответствует нулевой видимости."
+  ],
+  "reticleExtended.shapes.header": "Shape specific configuration",
+  "reticleExtended.shapes.pentagon.width.header": "Pentagon width",
+  "reticleExtended.shapes.pentagon.width.body": [
+    "Width of pentagon."
+  ],
+  "reticleExtended.shapes.pentagon.height.header": "Pentagon height",
+  "reticleExtended.shapes.pentagon.height.body": [
+    "Height of pentagon."
+  ],
+  "reticleExtended.shapes.t-shape.thickness.header": "T-shape thickness",
+  "reticleExtended.shapes.t-shape.thickness.body": [
+    "Thickness of lines."
+  ],
+  "reticleExtended.shapes.t-shape.length.header": "T-shape length",
+  "reticleExtended.shapes.t-shape.length.body": [
+    "Length of lines coming from intersection."
+  ],
+  "reticleExtended.shapes.t-shape.length.note": [
+    "Negative values inverts direction of the line facing reticle center."
   ]
 }

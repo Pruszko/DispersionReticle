@@ -19,8 +19,10 @@ package com.github.pruszko.dispersionreticle.marker.extended
 		{
 			super.updateState();
 			
-			this._elementThickness = this.scaleSqrtByReticleRadius(0.5);
-			this._elementLength = this.scaleSqrtByReticleRadius(1.0);
+			var inversion:Number = this.config.shapes.tshape.length >= 0.0 ? 1.0 : -1.0;
+			
+			this._elementThickness = this.scaleSqrtByReticleRadius(0.5 * inversion * this.config.shapes.tshape.thickness);
+			this._elementLength = this.scaleSqrtByReticleRadius(1.0 * this.config.shapes.tshape.length);
 			
 			this._circleRadius = this.scaleSqrtByReticleRadius(0.25);
 		}

@@ -200,3 +200,18 @@ class Tr(object):
     RETICLE_EXTENDED_ALPHA_HEADER = TranslationElement("reticleExtended.alpha.header")
     RETICLE_EXTENDED_ALPHA_BODY = TranslationList("reticleExtended.alpha.body")
     RETICLE_EXTENDED_ALPHA_NOTE = TranslationList("reticleExtended.alpha.note")
+
+    RETICLE_EXTENDED_SHAPES_HEADER = TranslationElement("reticleExtended.shapes.header")
+
+    RETICLE_EXTENDED_SHAPES_PENTAGON_WIDTH_HEADER = TranslationElement("reticleExtended.shapes.pentagon.width.header")
+    RETICLE_EXTENDED_SHAPES_PENTAGON_WIDTH_BODY = TranslationList("reticleExtended.shapes.pentagon.width.body")
+
+    RETICLE_EXTENDED_SHAPES_PENTAGON_HEIGHT_HEADER = TranslationElement("reticleExtended.shapes.pentagon.height.header")
+    RETICLE_EXTENDED_SHAPES_PENTAGON_HEIGHT_BODY = TranslationList("reticleExtended.shapes.pentagon.height.body")
+
+    RETICLE_EXTENDED_SHAPES_T_SHAPE_THICKNESS_HEADER = TranslationElement("reticleExtended.shapes.t-shape.thickness.header")
+    RETICLE_EXTENDED_SHAPES_T_SHAPE_THICKNESS_BODY = TranslationList("reticleExtended.shapes.t-shape.thickness.body")
+
+    RETICLE_EXTENDED_SHAPES_T_SHAPE_LENGTH_HEADER = TranslationElement("reticleExtended.shapes.t-shape.length.header")
+    RETICLE_EXTENDED_SHAPES_T_SHAPE_LENGTH_BODY = TranslationList("reticleExtended.shapes.t-shape.length.body")
+    RETICLE_EXTENDED_SHAPES_T_SHAPE_LENGTH_NOTE = TranslationList("reticleExtended.shapes.t-shape.length.note")

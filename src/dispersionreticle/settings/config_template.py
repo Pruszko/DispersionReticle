@@ -123,7 +123,41 @@ CONFIG_TEMPLATE = """{
         // Controls transparency of displayed reticle:
         // - value 1.0 means full visibility
         // - value 0.0 means zero visibility
-        "alpha": %(focused-reticle-extended-alpha)s
+        "alpha": %(focused-reticle-extended-alpha)s,
+
+        // Shape specific configuration
+        "shapes": {
+
+            // Pentagon figure specific configuration
+            "pentagon": {
+
+                // Valid values: any number > 0.0 (for default behavior: 1.0)
+                //
+                // Width of pentagon.
+                "width": %(focused-reticle-extended-shapes-pentagon-width)s,
+
+                // Valid values: any number > 0.0 (for default behavior: 1.0)
+                //
+                // Height of pentagon.
+                "height": %(focused-reticle-extended-shapes-pentagon-height)s
+            },
+
+            // T-shape figure specific configuration
+            "t-shape": {
+
+                // Valid values: any number > 0.0 (for default behavior: 1.0)
+                //
+                // Thickness of lines.
+                "thickness": %(focused-reticle-extended-shapes-t-shape-thickness)s,
+
+                // Valid values: any number (for default behavior: 1.0)
+                //
+                // Length of lines coming from intersection.
+                //
+                // Negative values inverts direction of the line facing reticle center.
+                "length": %(focused-reticle-extended-shapes-t-shape-length)s
+            }
+        }
     },
 
     // Hybrid reticle
@@ -234,7 +268,41 @@ CONFIG_TEMPLATE = """{
         // Controls transparency of displayed reticle:
         // - value 1.0 means full visibility
         // - value 0.0 means zero visibility
-        "alpha": %(hybrid-reticle-extended-alpha)s
+        "alpha": %(hybrid-reticle-extended-alpha)s,
+
+        // Shape specific configuration
+        "shapes": {
+
+            // Pentagon figure specific configuration
+            "pentagon": {
+
+                // Valid values: any number > 0.0 (for default behavior: 1.0)
+                //
+                // Width of pentagon.
+                "width": %(hybrid-reticle-extended-shapes-pentagon-width)s,
+
+                // Valid values: any number > 0.0 (for default behavior: 1.0)
+                //
+                // Height of pentagon.
+                "height": %(hybrid-reticle-extended-shapes-pentagon-height)s
+            },
+
+            // T-shape figure specific configuration
+            "t-shape": {
+
+                // Valid values: any number > 0.0 (for default behavior: 1.0)
+                //
+                // Thickness of lines.
+                "thickness": %(hybrid-reticle-extended-shapes-t-shape-thickness)s,
+
+                // Valid values: any number (for default behavior: 1.0)
+                //
+                // Length of lines coming from intersection.
+                //
+                // Negative values inverts direction of the line facing reticle center.
+                "length": %(hybrid-reticle-extended-shapes-t-shape-length)s
+            }
+        }
     },
 
     // Server reticle
@@ -329,7 +397,41 @@ CONFIG_TEMPLATE = """{
         // Controls transparency of displayed reticle:
         // - value 1.0 means full visibility
         // - value 0.0 means zero visibility
-        "alpha": %(server-reticle-extended-alpha)s
+        "alpha": %(server-reticle-extended-alpha)s,
+
+        // Shape specific configuration
+        "shapes": {
+
+            // Pentagon figure specific configuration
+            "pentagon": {
+
+                // Valid values: any number > 0.0 (for default behavior: 1.0)
+                //
+                // Width of pentagon.
+                "width": %(server-reticle-extended-shapes-pentagon-width)s,
+
+                // Valid values: any number > 0.0 (for default behavior: 1.0)
+                //
+                // Height of pentagon.
+                "height": %(server-reticle-extended-shapes-pentagon-height)s
+            },
+
+            // T-shape figure specific configuration
+            "t-shape": {
+
+                // Valid values: any number > 0.0 (for default behavior: 1.0)
+                //
+                // Thickness of lines.
+                "thickness": %(server-reticle-extended-shapes-t-shape-thickness)s,
+
+                // Valid values: any number (for default behavior: 1.0)
+                //
+                // Length of lines coming from intersection.
+                //
+                // Negative values inverts direction of the line facing reticle center.
+                "length": %(server-reticle-extended-shapes-t-shape-length)s
+            }
+        }
     },
 
     // DO NOT touch "__version__" field

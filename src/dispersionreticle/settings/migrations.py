@@ -177,6 +177,13 @@ def v3_0_0_addNewReticlesAndNewFeatures():
     configDict["focused-reticle-extended"]["layer"] = "bottom"
     configDict["focused-reticle-extended"]["blend"] = 0.5
     configDict["focused-reticle-extended"]["alpha"] = 1.0
+    configDict["focused-reticle-extended"]["shapes"] = {}
+    configDict["focused-reticle-extended"]["shapes"]["pentagon"] = {}
+    configDict["focused-reticle-extended"]["shapes"]["pentagon"]["width"] = 1.0
+    configDict["focused-reticle-extended"]["shapes"]["pentagon"]["height"] = 1.0
+    configDict["focused-reticle-extended"]["shapes"]["t-shape"] = {}
+    configDict["focused-reticle-extended"]["shapes"]["t-shape"]["thickness"] = 1.0
+    configDict["focused-reticle-extended"]["shapes"]["t-shape"]["length"] = 1.0
 
     # hybrid reticle
     configDict["hybrid-reticle"] = {}
@@ -195,6 +202,13 @@ def v3_0_0_addNewReticlesAndNewFeatures():
     configDict["hybrid-reticle-extended"]["layer"] = "bottom"
     configDict["hybrid-reticle-extended"]["blend"] = 0.5
     configDict["hybrid-reticle-extended"]["alpha"] = 1.0
+    configDict["hybrid-reticle-extended"]["shapes"] = {}
+    configDict["hybrid-reticle-extended"]["shapes"]["pentagon"] = {}
+    configDict["hybrid-reticle-extended"]["shapes"]["pentagon"]["width"] = 1.0
+    configDict["hybrid-reticle-extended"]["shapes"]["pentagon"]["height"] = 1.0
+    configDict["hybrid-reticle-extended"]["shapes"]["t-shape"] = {}
+    configDict["hybrid-reticle-extended"]["shapes"]["t-shape"]["thickness"] = 1.0
+    configDict["hybrid-reticle-extended"]["shapes"]["t-shape"]["length"] = 1.0
 
     # server reticle
     configDict["server-reticle"]["type"] = "purple"
@@ -209,6 +223,13 @@ def v3_0_0_addNewReticlesAndNewFeatures():
     configDict["server-reticle-extended"]["layer"] = "top"
     configDict["server-reticle-extended"]["blend"] = configDict["simple-server-reticle"]["blend"]
     configDict["server-reticle-extended"]["alpha"] = configDict["simple-server-reticle"]["alpha"]
+    configDict["server-reticle-extended"]["shapes"] = {}
+    configDict["server-reticle-extended"]["shapes"]["pentagon"] = {}
+    configDict["server-reticle-extended"]["shapes"]["pentagon"]["width"] = 1.0
+    configDict["server-reticle-extended"]["shapes"]["pentagon"]["height"] = 1.0
+    configDict["server-reticle-extended"]["shapes"]["t-shape"] = {}
+    configDict["server-reticle-extended"]["shapes"]["t-shape"]["thickness"] = 1.0
+    configDict["server-reticle-extended"]["shapes"]["t-shape"]["length"] = 1.0
     del configDict["simple-server-reticle"]
 
     progressVersion(configDict)

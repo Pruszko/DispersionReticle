@@ -167,56 +167,6 @@ class DispersionReticleFlash(ExternalFlashComponent, DispersionReticleFlashMeta)
         if markerName in self._markerDataProviders:
             del self._markerDataProviders[markerName]
 
-    def __onConfigReload(self):
-        serializedConfig = {
-            "focused-reticle-extended": self.__serializeFocusedReticleExtendedSection(),
-            "hybrid-reticle-extended": self.__serializeHybridReticleExtendedSection(),
-            "server-reticle-extended": self.__serializeServerReticleExtendedSection()
-        }
-
-        self.as_onConfigReload(serializedConfig)
-
-    def __serializeFocusedReticleExtendedSection(self):
-        return {
-            "color": self.__serializeColorTuple(g_configParams.focusedReticleExtendedColor()),
-            "shape": g_configParams.focusedReticleExtendedShape(),
-            "draw-center-dot": g_configParams.focusedReticleExtendedDrawCenterDot(),
-            "draw-outline": g_configParams.focusedReticleExtendedDrawOutline(),
-            "blend": g_configParams.focusedReticleExtendedBlend(),
-            "alpha": g_configParams.focusedReticleExtendedAlpha()
-        }
-
-    def __serializeHybridReticleExtendedSection(self):
-        return {
-            "color": self.__serializeColorTuple(g_configParams.hybridReticleExtendedColor()),
-            "shape": g_configParams.hybridReticleExtendedShape(),
-            "draw-center-dot": g_configParams.hybridReticleExtendedDrawCenterDot(),
-            "draw-outline": g_configParams.hybridReticleExtendedDrawOutline(),
-            "blend": g_configParams.hybridReticleExtendedBlend(),
-            "alpha": g_configParams.hybridReticleExtendedAlpha()
-        }
-
-    def __serializeServerReticleExtendedSection(self):
-        return {
-            "color": self.__serializeColorTuple(g_configParams.serverReticleExtendedColor()),
-            "shape": g_configParams.serverReticleExtendedShape(),
-            "draw-center-dot": g_configParams.serverReticleExtendedDrawCenterDot(),
-            "draw-outline": g_configParams.serverReticleExtendedDrawOutline(),
-            "blend": g_configParams.serverReticleExtendedBlend(),
-            "alpha": g_configParams.serverReticleExtendedAlpha()
-        }
-
-    @staticmethod
-    def __serializeColorTuple(colorTuple):
-        red, green, blue = colorTuple
-
-        color = 0
-        color |= red << 16
-        color |= green << 8
-        color |= blue
-
-        return color
-
     # IMPORTANT
     # those methods are called by an swf app every frame in-between game logic
     # even on its pause in replays
@@ -261,6 +211,95 @@ class DispersionReticleFlash(ExternalFlashComponent, DispersionReticleFlashMeta)
         isPointOnScreen = isPointOnScreenInFrontOfCamera(partialPosition3d)
 
         return [normalizedPartialPositionX, normalizedPartialPositionY, isPointOnScreen]
+
+    def __onConfigReload(self):
+        serializedConfig = {
+            "focused-reticle-extended": self.__serializeFocusedReticleExtendedSection(),
+            "hybrid-reticle-extended": self.__serializeHybridReticleExtendedSection(),
+            "server-reticle-extended": self.__serializeServerReticleExtendedSection()
+        }
+
+        self.as_onConfigReload(serializedConfig)
+
+    def __serializeFocusedReticleExtendedSection(self):
+        return {
+            "color": self.__serializeColorTuple(g_configParams.focusedReticleExtendedColor()),
+            "shape": g_configParams.focusedReticleExtendedShape(),
+            "draw-center-dot": g_configParams.focusedReticleExtendedDrawCenterDot(),
+            "draw-outline": g_configParams.focusedReticleExtendedDrawOutline(),
+            "blend": g_configParams.focusedReticleExtendedBlend(),
+            "alpha": g_configParams.focusedReticleExtendedAlpha(),
+            "shapes": self.__serializeFocusedReticleShapesSection()
+        }
+
+    def __serializeFocusedReticleShapesSection(self):
+        return {
+            "pentagon": {
+                "width": g_configParams.focusedReticleExtendedShapesPentagonWidth(),
+                "height": g_configParams.focusedReticleExtendedShapesPentagonHeight()
+            },
+            "t-shape": {
+                "thickness": g_configParams.focusedReticleExtendedShapesTShapeThickness(),
+                "length": g_configParams.focusedReticleExtendedShapesTShapeLength()
+            }
+        }
+
+    def __serializeHybridReticleExtendedSection(self):
+        return {
+            "color": self.__serializeColorTuple(g_configParams.hybridReticleExtendedColor()),
+            "shape": g_configParams.hybridReticleExtendedShape(),
+            "draw-center-dot": g_configParams.hybridReticleExtendedDrawCenterDot(),
+            "draw-outline": g_configParams.hybridReticleExtendedDrawOutline(),
+            "blend": g_configParams.hybridReticleExtendedBlend(),
+            "alpha": g_configParams.hybridReticleExtendedAlpha(),
+            "shapes": self.__serializeHybridReticleShapesSection()
+        }
+
+    def __serializeHybridReticleShapesSection(self):
+        return {
+            "pentagon": {
+                "width": g_configParams.hybridReticleExtendedShapesPentagonWidth(),
+                "height": g_configParams.hybridReticleExtendedShapesPentagonHeight()
+            },
+            "t-shape": {
+                "thickness": g_configParams.hybridReticleExtendedShapesTShapeThickness(),
+                "length": g_configParams.hybridReticleExtendedShapesTShapeLength()
+            }
+        }
+
+    def __serializeServerReticleExtendedSection(self):
+        return {
+            "color": self.__serializeColorTuple(g_configParams.serverReticleExtendedColor()),
+            "shape": g_configParams.serverReticleExtendedShape(),
+            "draw-center-dot": g_configParams.serverReticleExtendedDrawCenterDot(),
+            "draw-outline": g_configParams.serverReticleExtendedDrawOutline(),
+            "blend": g_configParams.serverReticleExtendedBlend(),
+            "alpha": g_configParams.serverReticleExtendedAlpha(),
+            "shapes": self.__serializeServerReticleShapesSection()
+        }
+
+    def __serializeServerReticleShapesSection(self):
+        return {
+            "pentagon": {
+                "width": g_configParams.serverReticleExtendedShapesPentagonWidth(),
+                "height": g_configParams.serverReticleExtendedShapesPentagonHeight()
+            },
+            "t-shape": {
+                "thickness": g_configParams.serverReticleExtendedShapesTShapeThickness(),
+                "length": g_configParams.serverReticleExtendedShapesTShapeLength()
+            }
+        }
+
+    @staticmethod
+    def __serializeColorTuple(colorTuple):
+        red, green, blue = colorTuple
+
+        color = 0
+        color |= red << 16
+        color |= green << 8
+        color |= blue
+
+        return color
 
 
 ###########################################################

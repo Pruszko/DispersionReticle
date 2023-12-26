@@ -174,5 +174,25 @@
   "reticleExtended.alpha.note": [
     "Wartość 1.0 oznacza pełną widoczność\n",
     "Wartość 0.0 oznacza zerową widoczność"
+  ],
+  "reticleExtended.shapes.header": "Konfiguracja kształtów",
+  "reticleExtended.shapes.pentagon.width.header": "Szerokość pięciokąta",
+  "reticleExtended.shapes.pentagon.width.body": [
+    "Szerokość kształtu pięciokąta."
+  ],
+  "reticleExtended.shapes.pentagon.height.header": "Wysokość pięciokąta",
+  "reticleExtended.shapes.pentagon.height.body": [
+    "Wysokość kształtu pięciokąta."
+  ],
+  "reticleExtended.shapes.t-shape.thickness.header": "Grubość kształtu T",
+  "reticleExtended.shapes.t-shape.thickness.body": [
+    "Grubość linii kształtu."
+  ],
+  "reticleExtended.shapes.t-shape.length.header": "Długość kształtu T",
+  "reticleExtended.shapes.t-shape.length.body": [
+    "Długość linii wychodzących z przecięcia linii."
+  ],
+  "reticleExtended.shapes.t-shape.length.note": [
+    "Ujemne wartości odwracają kierunek linii skierowanej w centrum okręgu."
   ]
 }

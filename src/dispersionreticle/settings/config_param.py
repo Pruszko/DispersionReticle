@@ -24,8 +24,8 @@ class ConfigParams(object):
         self.focusedReticleType = OptionsParam(
             ["focused-reticle", "type"],
             [
-                Option("default", 0, "1. " + Tr.RETICLE_TYPE_OPTION_DEFAULT),
-                Option("purple", 1, "2. " + Tr.RETICLE_TYPE_OPTION_PURPLE)
+                Option("default", 0, Tr.RETICLE_TYPE_OPTION_DEFAULT),
+                Option("purple", 1, Tr.RETICLE_TYPE_OPTION_PURPLE)
             ],
             defaultValue="default"
         )
@@ -38,10 +38,10 @@ class ConfigParams(object):
         self.focusedReticleExtendedShape = OptionsParam(
             ["focused-reticle-extended", "shape"],
             [
-                Option("pentagon", 0, "1. " + Tr.RETICLE_EXTENDED_SHAPE_OPTION_PENTAGON),
-                Option("t-shape", 1, "2. " + Tr.RETICLE_EXTENDED_SHAPE_OPTION_T_SHAPE),
-                Option("circle", 2, "3. " + Tr.RETICLE_EXTENDED_SHAPE_OPTION_CIRCLE),
-                Option("dashed", 3, "4. " + Tr.RETICLE_EXTENDED_SHAPE_OPTION_DASHED)
+                Option("pentagon", 0, Tr.RETICLE_EXTENDED_SHAPE_OPTION_PENTAGON),
+                Option("t-shape", 1, Tr.RETICLE_EXTENDED_SHAPE_OPTION_T_SHAPE),
+                Option("circle", 2, Tr.RETICLE_EXTENDED_SHAPE_OPTION_CIRCLE),
+                Option("dashed", 3, Tr.RETICLE_EXTENDED_SHAPE_OPTION_DASHED)
             ],
             defaultValue="circle"
         )
@@ -75,6 +75,26 @@ class ConfigParams(object):
             minValue=0.0, step=0.01, maxValue=1.0,
             defaultValue=1.0
         )
+        self.focusedReticleExtendedShapesPentagonWidth = FloatTextParam(
+            ["focused-reticle-extended", "shapes", "pentagon", "width"],
+            minValue=0.0, maxValue=None,
+            defaultValue=1.0
+        )
+        self.focusedReticleExtendedShapesPentagonHeight = FloatTextParam(
+            ["focused-reticle-extended", "shapes", "pentagon", "height"],
+            minValue=0.0, maxValue=None,
+            defaultValue=1.0
+        )
+        self.focusedReticleExtendedShapesTShapeThickness = FloatTextParam(
+            ["focused-reticle-extended", "shapes", "t-shape", "thickness"],
+            minValue=0.0, maxValue=None,
+            defaultValue=1.0
+        )
+        self.focusedReticleExtendedShapesTShapeLength = FloatTextParam(
+            ["focused-reticle-extended", "shapes", "t-shape", "length"],
+            minValue=None, maxValue=None,
+            defaultValue=1.0
+        )
 
         # hybrid reticle
         self.hybridReticleEnabled = BooleanParam(
@@ -84,8 +104,8 @@ class ConfigParams(object):
         self.hybridReticleType = OptionsParam(
             ["hybrid-reticle", "type"],
             [
-                Option("default", 0, "1. " + Tr.RETICLE_TYPE_OPTION_DEFAULT),
-                Option("purple", 1, "2. " + Tr.RETICLE_TYPE_OPTION_PURPLE)
+                Option("default", 0, Tr.RETICLE_TYPE_OPTION_DEFAULT),
+                Option("purple", 1, Tr.RETICLE_TYPE_OPTION_PURPLE)
             ],
             defaultValue="default"
         )
@@ -102,10 +122,10 @@ class ConfigParams(object):
         self.hybridReticleExtendedShape = OptionsParam(
             ["hybrid-reticle-extended", "shape"],
             [
-                Option("pentagon", 0, "1. " + Tr.RETICLE_EXTENDED_SHAPE_OPTION_PENTAGON),
-                Option("t-shape", 1, "2. " + Tr.RETICLE_EXTENDED_SHAPE_OPTION_T_SHAPE),
-                Option("circle", 2, "3. " + Tr.RETICLE_EXTENDED_SHAPE_OPTION_CIRCLE),
-                Option("dashed", 3, "4. " + Tr.RETICLE_EXTENDED_SHAPE_OPTION_DASHED)
+                Option("pentagon", 0, Tr.RETICLE_EXTENDED_SHAPE_OPTION_PENTAGON),
+                Option("t-shape", 1, Tr.RETICLE_EXTENDED_SHAPE_OPTION_T_SHAPE),
+                Option("circle", 2, Tr.RETICLE_EXTENDED_SHAPE_OPTION_CIRCLE),
+                Option("dashed", 3, Tr.RETICLE_EXTENDED_SHAPE_OPTION_DASHED)
             ],
             defaultValue="circle"
         )
@@ -139,6 +159,26 @@ class ConfigParams(object):
             minValue=0.0, step=0.01, maxValue=1.0,
             defaultValue=1.0
         )
+        self.hybridReticleExtendedShapesPentagonWidth = FloatTextParam(
+            ["hybrid-reticle-extended", "shapes", "pentagon", "width"],
+            minValue=0.0, maxValue=None,
+            defaultValue=1.0
+        )
+        self.hybridReticleExtendedShapesPentagonHeight = FloatTextParam(
+            ["hybrid-reticle-extended", "shapes", "pentagon", "height"],
+            minValue=0.0, maxValue=None,
+            defaultValue=1.0
+        )
+        self.hybridReticleExtendedShapesTShapeThickness = FloatTextParam(
+            ["hybrid-reticle-extended", "shapes", "t-shape", "thickness"],
+            minValue=0.0, maxValue=None,
+            defaultValue=1.0
+        )
+        self.hybridReticleExtendedShapesTShapeLength = FloatTextParam(
+            ["hybrid-reticle-extended", "shapes", "t-shape", "length"],
+            minValue=None, maxValue=None,
+            defaultValue=1.0
+        )
 
         # server reticle
         self.serverReticleEnabled = BooleanParam(
@@ -148,8 +188,8 @@ class ConfigParams(object):
         self.serverReticleType = OptionsParam(
             ["server-reticle", "type"],
             [
-                Option("default", 0, "1. " + Tr.RETICLE_TYPE_OPTION_DEFAULT),
-                Option("purple", 1, "2. " + Tr.RETICLE_TYPE_OPTION_PURPLE)
+                Option("default", 0, Tr.RETICLE_TYPE_OPTION_DEFAULT),
+                Option("purple", 1, Tr.RETICLE_TYPE_OPTION_PURPLE)
             ],
             defaultValue="purple"
         )
@@ -162,10 +202,10 @@ class ConfigParams(object):
         self.serverReticleExtendedShape = OptionsParam(
             ["server-reticle-extended", "shape"],
             [
-                Option("pentagon", 0, "1. " + Tr.RETICLE_EXTENDED_SHAPE_OPTION_PENTAGON),
-                Option("t-shape", 1, "2. " + Tr.RETICLE_EXTENDED_SHAPE_OPTION_T_SHAPE),
-                Option("circle", 2, "3. " + Tr.RETICLE_EXTENDED_SHAPE_OPTION_CIRCLE),
-                Option("dashed", 3, "4. " + Tr.RETICLE_EXTENDED_SHAPE_OPTION_DASHED)
+                Option("pentagon", 0, Tr.RETICLE_EXTENDED_SHAPE_OPTION_PENTAGON),
+                Option("t-shape", 1, Tr.RETICLE_EXTENDED_SHAPE_OPTION_T_SHAPE),
+                Option("circle", 2, Tr.RETICLE_EXTENDED_SHAPE_OPTION_CIRCLE),
+                Option("dashed", 3, Tr.RETICLE_EXTENDED_SHAPE_OPTION_DASHED)
             ],
             defaultValue="pentagon"
         )
@@ -197,6 +237,26 @@ class ConfigParams(object):
         self.serverReticleExtendedAlpha = FloatSliderParam(
             ["server-reticle-extended", "alpha"],
             minValue=0.0, step=0.01, maxValue=1.0,
+            defaultValue=1.0
+        )
+        self.serverReticleExtendedShapesPentagonWidth = FloatTextParam(
+            ["server-reticle-extended", "shapes", "pentagon", "width"],
+            minValue=0.0, maxValue=None,
+            defaultValue=1.0
+        )
+        self.serverReticleExtendedShapesPentagonHeight = FloatTextParam(
+            ["server-reticle-extended", "shapes", "pentagon", "height"],
+            minValue=0.0, maxValue=None,
+            defaultValue=1.0
+        )
+        self.serverReticleExtendedShapesTShapeThickness = FloatTextParam(
+            ["server-reticle-extended", "shapes", "t-shape", "thickness"],
+            minValue=0.0, maxValue=None,
+            defaultValue=1.0
+        )
+        self.serverReticleExtendedShapesTShapeLength = FloatTextParam(
+            ["server-reticle-extended", "shapes", "t-shape", "length"],
+            minValue=None, maxValue=None,
             defaultValue=1.0
         )
 
