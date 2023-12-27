@@ -134,9 +134,13 @@
   "reticleExtended.color.body": [
     "Koloruje ten okrąg wybranym kolorem."
   ],
-  "reticleExtended.drawCenterDot.header": "Czy rysować środkową kropkę",
-  "reticleExtended.drawCenterDot.body": [
-    "Jeżeli zaznaczone, kształt będzie dodatkowo wyświetlany ze środkową kropką."
+  "reticleExtended.centerDotSize.header": "Wielkość środkowej kropki",
+  "reticleExtended.centerDotSize.body": [
+    "Wielkość kropki wyświetlanej w centrum okręgu."
+  ],
+  "reticleExtended.centerDotSize.note": [
+    "Wartość 1.0 to domyślna wielkość.\n",
+    "Wartość 0.0 wyłącza środkową kropkę."
   ],
   "reticleExtended.drawOutline.header": "Czy rysować obwódkę",
   "reticleExtended.drawOutline.body": [

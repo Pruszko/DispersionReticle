@@ -179,8 +179,9 @@ class Tr(object):
     RETICLE_EXTENDED_COLOR_HEADER = TranslationElement("reticleExtended.color.header")
     RETICLE_EXTENDED_COLOR_BODY = TranslationList("reticleExtended.color.body")
 
-    RETICLE_EXTENDED_DRAW_CENTER_DOT_HEADER = TranslationElement("reticleExtended.drawCenterDot.header")
-    RETICLE_EXTENDED_DRAW_CENTER_DOT_BODY = TranslationList("reticleExtended.drawCenterDot.body")
+    RETICLE_EXTENDED_CENTER_DOT_SIZE_HEADER = TranslationElement("reticleExtended.centerDotSize.header")
+    RETICLE_EXTENDED_CENTER_DOT_SIZE_BODY = TranslationList("reticleExtended.centerDotSize.body")
+    RETICLE_EXTENDED_CENTER_DOT_SIZE_NOTE = TranslationList("reticleExtended.centerDotSize.note")
 
     RETICLE_EXTENDED_DRAW_OUTLINE_HEADER = TranslationElement("reticleExtended.drawOutline.header")
     RETICLE_EXTENDED_DRAW_OUTLINE_BODY = TranslationList("reticleExtended.drawOutline.body")

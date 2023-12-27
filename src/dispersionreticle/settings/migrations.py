@@ -1,7 +1,7 @@
 import os
 import logging
 
-from dispersionreticle.settings import copy, deleteEmptyFolderSafely
+from dispersionreticle.settings import copy, deleteEmptyFolderSafely, toBool
 from dispersionreticle.settings.config_file import g_configFiles
 
 logger = logging.getLogger(__name__)
@@ -172,7 +172,7 @@ def v3_0_0_addNewReticlesAndNewFeatures():
     configDict["focused-reticle-extended"]["enabled"] = False
     configDict["focused-reticle-extended"]["shape"] = "circle"
     configDict["focused-reticle-extended"]["color"] = (255, 255, 0)
-    configDict["focused-reticle-extended"]["draw-center-dot"] = False
+    configDict["focused-reticle-extended"]["center-dot-size"] = 0.0
     configDict["focused-reticle-extended"]["draw-outline"] = False
     configDict["focused-reticle-extended"]["layer"] = "bottom"
     configDict["focused-reticle-extended"]["blend"] = 0.5
@@ -197,7 +197,7 @@ def v3_0_0_addNewReticlesAndNewFeatures():
     configDict["hybrid-reticle-extended"]["enabled"] = False
     configDict["hybrid-reticle-extended"]["shape"] = "circle"
     configDict["hybrid-reticle-extended"]["color"] = (0, 255, 255)
-    configDict["hybrid-reticle-extended"]["draw-center-dot"] = False
+    configDict["hybrid-reticle-extended"]["center-dot-size"] = 0.0
     configDict["hybrid-reticle-extended"]["draw-outline"] = False
     configDict["hybrid-reticle-extended"]["layer"] = "bottom"
     configDict["hybrid-reticle-extended"]["blend"] = 0.5
@@ -218,7 +218,7 @@ def v3_0_0_addNewReticlesAndNewFeatures():
     configDict["server-reticle-extended"]["enabled"] = configDict["simple-server-reticle"]["enabled"]
     configDict["server-reticle-extended"]["shape"] = configDict["simple-server-reticle"]["shape"]
     configDict["server-reticle-extended"]["color"] = configDict["simple-server-reticle"]["color"]
-    configDict["server-reticle-extended"]["draw-center-dot"] = configDict["simple-server-reticle"]["draw-center-dot"]
+    configDict["server-reticle-extended"]["center-dot-size"] = 1.0 if toBool(configDict["simple-server-reticle"]["draw-center-dot"]) else 0.0
     configDict["server-reticle-extended"]["draw-outline"] = configDict["simple-server-reticle"]["draw-outline"]
     configDict["server-reticle-extended"]["layer"] = "top"
     configDict["server-reticle-extended"]["blend"] = configDict["simple-server-reticle"]["blend"]

@@ -8,7 +8,7 @@ package com.github.pruszko.dispersionreticle.config.marker
 		
 		private var _shape:String = "pentagon";
 		private var _color:int = 0xFF00FF;
-		private var _drawCenterDot:Boolean = false;
+		private var _centerDotSize:Number = 0.0;
 		private var _drawOutline:Boolean = false;
 		private var _blend:Number = 0.8;
 		private var _alpha:Number = 1.0;
@@ -29,7 +29,7 @@ package com.github.pruszko.dispersionreticle.config.marker
 		{
 			this._shape = serializedSection["shape"];
 			this._color = serializedSection["color"];
-			this._drawCenterDot = serializedSection["draw-center-dot"];
+			this._centerDotSize = serializedSection["center-dot-size"];
 			this._drawOutline = serializedSection["draw-outline"];
 			this._blend = serializedSection["blend"];
 			this._alpha = serializedSection["alpha"];
@@ -46,9 +46,9 @@ package com.github.pruszko.dispersionreticle.config.marker
 			return this._color;
 		}
 		
-		public function get drawCenterDot() : Boolean
+		public function get centerDotSize() : Number
 		{
-			return this._drawCenterDot;
+			return this._centerDotSize;
 		}
 		
 		public function get drawOutline() : Boolean

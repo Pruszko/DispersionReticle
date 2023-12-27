@@ -216,9 +216,10 @@ def _createFocusedReticleExtended():
             header=Tr.RETICLE_EXTENDED_COLOR_HEADER,
             body=Tr.RETICLE_EXTENDED_COLOR_BODY
         ),
-        g_configParams.focusedReticleExtendedDrawCenterDot.renderParam(
-            header=Tr.RETICLE_EXTENDED_DRAW_CENTER_DOT_HEADER,
-            body=Tr.RETICLE_EXTENDED_DRAW_CENTER_DOT_BODY
+        g_configParams.focusedReticleExtendedCenterDotSize.renderParam(
+            header=Tr.RETICLE_EXTENDED_CENTER_DOT_SIZE_HEADER,
+            body=Tr.RETICLE_EXTENDED_CENTER_DOT_SIZE_BODY + "\n",
+            note=Tr.RETICLE_EXTENDED_CENTER_DOT_SIZE_NOTE
         ),
         g_configParams.focusedReticleExtendedDrawOutline.renderParam(
             header=Tr.RETICLE_EXTENDED_DRAW_OUTLINE_HEADER,
@@ -312,9 +313,10 @@ def _createServerReticleExtended():
             header=Tr.RETICLE_EXTENDED_COLOR_HEADER,
             body=Tr.RETICLE_EXTENDED_COLOR_BODY
         ),
-        g_configParams.serverReticleExtendedDrawCenterDot.renderParam(
-            header=Tr.RETICLE_EXTENDED_DRAW_CENTER_DOT_HEADER,
-            body=Tr.RETICLE_EXTENDED_DRAW_CENTER_DOT_BODY
+        g_configParams.serverReticleExtendedCenterDotSize.renderParam(
+            header=Tr.RETICLE_EXTENDED_CENTER_DOT_SIZE_HEADER,
+            body=Tr.RETICLE_EXTENDED_CENTER_DOT_SIZE_BODY + "\n",
+            note=Tr.RETICLE_EXTENDED_CENTER_DOT_SIZE_NOTE
         ),
         g_configParams.serverReticleExtendedDrawOutline.renderParam(
             header=Tr.RETICLE_EXTENDED_DRAW_OUTLINE_HEADER,
@@ -415,9 +417,10 @@ def _createHybridReticleExtended():
             header=Tr.RETICLE_EXTENDED_COLOR_HEADER,
             body=Tr.RETICLE_EXTENDED_COLOR_BODY
         ),
-        g_configParams.hybridReticleExtendedDrawCenterDot.renderParam(
-            header=Tr.RETICLE_EXTENDED_DRAW_CENTER_DOT_HEADER,
-            body=Tr.RETICLE_EXTENDED_DRAW_CENTER_DOT_BODY
+        g_configParams.hybridReticleExtendedCenterDotSize.renderParam(
+            header=Tr.RETICLE_EXTENDED_CENTER_DOT_SIZE_HEADER,
+            body=Tr.RETICLE_EXTENDED_CENTER_DOT_SIZE_BODY + "\n",
+            note=Tr.RETICLE_EXTENDED_CENTER_DOT_SIZE_NOTE
         ),
         g_configParams.hybridReticleExtendedDrawOutline.renderParam(
             header=Tr.RETICLE_EXTENDED_DRAW_OUTLINE_HEADER,

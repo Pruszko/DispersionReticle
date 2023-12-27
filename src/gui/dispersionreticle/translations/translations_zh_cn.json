@@ -128,9 +128,13 @@
   "reticleExtended.color.body": [
     "这个准星的颜色。"
   ],
-  "reticleExtended.drawCenterDot.header": "绘制中心点",
-  "reticleExtended.drawCenterDot.body": [
-    "如果选中则绘制中心点"
+  "reticleExtended.centerDotSize.header": "Center dot size",
+  "reticleExtended.centerDotSize.body": [
+    "Size of dot displayed in reticle center."
+  ],
+  "reticleExtended.centerDotSize.note": [
+    "Value 1.0 is default size.\n",
+    "Value 0.0 disables center dot."
   ],
   "reticleExtended.drawOutline.header": "绘制边框",
   "reticleExtended.drawOutline.body": [

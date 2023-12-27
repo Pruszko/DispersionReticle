@@ -132,9 +132,13 @@
   "reticleExtended.color.body": [
     "Colors this reticle using provided color."
   ],
-  "reticleExtended.drawCenterDot.header": "Draw center dot",
-  "reticleExtended.drawCenterDot.body": [
-    "If true, shape is additionally displayed with center dot."
+  "reticleExtended.centerDotSize.header": "Center dot size",
+  "reticleExtended.centerDotSize.body": [
+    "Size of dot displayed in reticle center."
+  ],
+  "reticleExtended.centerDotSize.note": [
+    "Value 1.0 is default size.\n",
+    "Value 0.0 disables center dot."
   ],
   "reticleExtended.drawOutline.header": "Draw outline",
   "reticleExtended.drawOutline.body": [

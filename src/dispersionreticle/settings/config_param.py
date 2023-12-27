@@ -49,9 +49,10 @@ class ConfigParams(object):
             ["focused-reticle-extended", "color"],
             defaultValue=(255, 255, 0)
         )
-        self.focusedReticleExtendedDrawCenterDot = BooleanParam(
-            ["focused-reticle-extended", "draw-center-dot"],
-            defaultValue=False
+        self.focusedReticleExtendedCenterDotSize = FloatTextParam(
+            ["focused-reticle-extended", "center-dot-size"],
+            minValue=0.0, maxValue=None,
+            defaultValue=0.0
         )
         self.focusedReticleExtendedDrawOutline = BooleanParam(
             ["focused-reticle-extended", "draw-outline"],
@@ -133,9 +134,10 @@ class ConfigParams(object):
             ["hybrid-reticle-extended", "color"],
             defaultValue=(0, 255, 255)
         )
-        self.hybridReticleExtendedDrawCenterDot = BooleanParam(
-            ["hybrid-reticle-extended", "draw-center-dot"],
-            defaultValue=False
+        self.hybridReticleExtendedCenterDotSize = FloatTextParam(
+            ["hybrid-reticle-extended", "center-dot-size"],
+            minValue=0.0, maxValue=None,
+            defaultValue=0.0
         )
         self.hybridReticleExtendedDrawOutline = BooleanParam(
             ["hybrid-reticle-extended", "draw-outline"],
@@ -213,9 +215,10 @@ class ConfigParams(object):
             ["server-reticle-extended", "color"],
             defaultValue=(255, 0, 255)
         )
-        self.serverReticleExtendedDrawCenterDot = BooleanParam(
-            ["server-reticle-extended", "draw-center-dot"],
-            defaultValue=False
+        self.serverReticleExtendedCenterDotSize = FloatTextParam(
+            ["server-reticle-extended", "center-dot-size"],
+            minValue=0.0, maxValue=None,
+            defaultValue=0.0
         )
         self.serverReticleExtendedDrawOutline = BooleanParam(
             ["server-reticle-extended", "draw-outline"],

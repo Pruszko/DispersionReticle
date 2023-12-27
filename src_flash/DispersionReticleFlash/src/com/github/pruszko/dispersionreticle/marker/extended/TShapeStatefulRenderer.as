@@ -24,14 +24,14 @@ package com.github.pruszko.dispersionreticle.marker.extended
 			this._elementThickness = this.scaleSqrtByReticleRadius(0.5 * inversion * this.config.shapes.tshape.thickness);
 			this._elementLength = this.scaleSqrtByReticleRadius(1.0 * this.config.shapes.tshape.length);
 			
-			this._circleRadius = this.scaleSqrtByReticleRadius(0.25);
+			this._circleRadius = this.scaleSqrtByReticleRadius(0.25 * this.config.centerDotSize);
 		}
 		
 		override public function renderState() : void
 		{
 			super.renderState();
 			
-			if (this.config.drawCenterDot)
+			if (this.config.centerDotSize > 0.01)
 			{
 				this.drawCenter();
 			}

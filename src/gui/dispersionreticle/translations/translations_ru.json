@@ -133,9 +133,13 @@
   "reticleExtended.color.body": [
     "Назначает цвет для фигуры в 'Настраиваемый серверный прицел'."
   ],
-  "reticleExtended.drawCenterDot.header": "Включить центральную точку",
-  "reticleExtended.drawCenterDot.body": [
-    "Если галочка отмечена, то у фигуры будет дополнительно отображаться точка в центре."
+  "reticleExtended.centerDotSize.header": "Center dot size",
+  "reticleExtended.centerDotSize.body": [
+    "Size of dot displayed in reticle center."
+  ],
+  "reticleExtended.centerDotSize.note": [
+    "Value 1.0 is default size.\n",
+    "Value 0.0 disables center dot."
   ],
   "reticleExtended.drawOutline.header": "Включить контур",
   "reticleExtended.drawOutline.body": [

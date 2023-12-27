@@ -16,7 +16,7 @@ package com.github.pruszko.dispersionreticle.marker.extended
 		{
 			super.updateState();
 			
-			this._circleRadius = scaleSqrtByReticleRadius(0.25);
+			this._circleRadius = scaleSqrtByReticleRadius(0.25 * this.config.centerDotSize);
 		}
 		
 		override public function renderState() : void
@@ -25,7 +25,7 @@ package com.github.pruszko.dispersionreticle.marker.extended
 			
 			this.drawReticle();
 			
-			if (this.config.drawCenterDot)
+			if (this.config.centerDotSize > 0.01)
 			{
 				this.drawCenter();
 			}

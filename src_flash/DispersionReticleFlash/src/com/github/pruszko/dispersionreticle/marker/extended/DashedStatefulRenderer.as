@@ -29,7 +29,7 @@ package com.github.pruszko.dispersionreticle.marker.extended
 			this._lineThickness = this._halfDashWidth / 2.0;
 			this._innerFillColor = Utils.multiplyColor(config.color, 0.6);
 			
-			this._circleRadius = this.scaleSqrtByReticleRadius(0.25);
+			this._circleRadius = this.scaleSqrtByReticleRadius(0.25 * this.config.centerDotSize);
 		}
 		
 		override public function renderState() : void
@@ -45,7 +45,7 @@ package com.github.pruszko.dispersionreticle.marker.extended
 				this.drawRotatedTopDash();
 			}
 			
-			if (this.config.drawCenterDot)
+			if (this.config.centerDotSize > 0.01)
 			{
 				this.drawCenter();
 			}

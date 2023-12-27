@@ -225,7 +225,7 @@ class DispersionReticleFlash(ExternalFlashComponent, DispersionReticleFlashMeta)
         return {
             "color": self.__serializeColorTuple(g_configParams.focusedReticleExtendedColor()),
             "shape": g_configParams.focusedReticleExtendedShape(),
-            "draw-center-dot": g_configParams.focusedReticleExtendedDrawCenterDot(),
+            "center-dot-size": g_configParams.focusedReticleExtendedCenterDotSize(),
             "draw-outline": g_configParams.focusedReticleExtendedDrawOutline(),
             "blend": g_configParams.focusedReticleExtendedBlend(),
             "alpha": g_configParams.focusedReticleExtendedAlpha(),
@@ -248,7 +248,7 @@ class DispersionReticleFlash(ExternalFlashComponent, DispersionReticleFlashMeta)
         return {
             "color": self.__serializeColorTuple(g_configParams.hybridReticleExtendedColor()),
             "shape": g_configParams.hybridReticleExtendedShape(),
-            "draw-center-dot": g_configParams.hybridReticleExtendedDrawCenterDot(),
+            "center-dot-size": g_configParams.hybridReticleExtendedCenterDotSize(),
             "draw-outline": g_configParams.hybridReticleExtendedDrawOutline(),
             "blend": g_configParams.hybridReticleExtendedBlend(),
             "alpha": g_configParams.hybridReticleExtendedAlpha(),
@@ -271,7 +271,7 @@ class DispersionReticleFlash(ExternalFlashComponent, DispersionReticleFlashMeta)
         return {
             "color": self.__serializeColorTuple(g_configParams.serverReticleExtendedColor()),
             "shape": g_configParams.serverReticleExtendedShape(),
-            "draw-center-dot": g_configParams.serverReticleExtendedDrawCenterDot(),
+            "center-dot-size": g_configParams.serverReticleExtendedCenterDotSize(),
             "draw-outline": g_configParams.serverReticleExtendedDrawOutline(),
             "blend": g_configParams.serverReticleExtendedBlend(),
             "alpha": g_configParams.serverReticleExtendedAlpha(),

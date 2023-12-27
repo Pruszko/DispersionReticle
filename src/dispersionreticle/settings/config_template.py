@@ -86,10 +86,13 @@ CONFIG_TEMPLATE = """{
         // You can use color picker from internet to visually choose desired color.
         "color": %(focused-reticle-extended-color)s,
 
-        // Valid values: true/false (default: false)
+        // Valid values: any number >= 0.0 (for default behavior: 0.0)
         //
-        // If true, shape is additionally displayed with center dot.
-        "draw-center-dot": %(focused-reticle-extended-draw-center-dot)s,
+        // Size of dot displayed in reticle center.
+        // 
+        // Value 1.0 is default size.
+        // Value 0.0 disables center dot.
+        "center-dot-size": %(focused-reticle-extended-center-dot-size)s,
 
         // Valid values: true/false (default: false)
         //
@@ -231,10 +234,13 @@ CONFIG_TEMPLATE = """{
         // You can use color picker from internet to visually choose desired color.
         "color": %(hybrid-reticle-extended-color)s,
 
-        // Valid values: true/false (default: false)
+        // Valid values: any number >= 0.0 (for default behavior: 0.0)
         //
-        // If true, shape is additionally displayed with center dot.
-        "draw-center-dot": %(hybrid-reticle-extended-draw-center-dot)s,
+        // Size of dot displayed in reticle center.
+        // 
+        // Value 1.0 is default size.
+        // Value 0.0 disables center dot.
+        "center-dot-size": %(hybrid-reticle-extended-center-dot-size)s,
 
         // Valid values: true/false (default: false)
         //
@@ -360,10 +366,13 @@ CONFIG_TEMPLATE = """{
         // You can use color picker from internet to visually choose desired color.
         "color": %(server-reticle-extended-color)s,
 
-        // Valid values: true/false (default: false)
+        // Valid values: any number >= 0.0 (for default behavior: 0.0)
         //
-        // If true, shape is additionally displayed with center dot.
-        "draw-center-dot": %(server-reticle-extended-draw-center-dot)s,
+        // Size of dot displayed in reticle center.
+        // 
+        // Value 1.0 is default size.
+        // Value 0.0 disables center dot.
+        "center-dot-size": %(server-reticle-extended-center-dot-size)s,
 
         // Valid values: true/false (default: false)
         //
