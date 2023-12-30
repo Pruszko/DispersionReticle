@@ -1,7 +1,7 @@
 import os
 import logging
 
-from dispersionreticle.settings import copy, deleteEmptyFolderSafely, toBool
+from dispersionreticle.settings import copy, deleteEmptyFolderSafely, toBool, ConfigException
 from dispersionreticle.settings.config_file import g_configFiles
 
 logger = logging.getLogger(__name__)
@@ -21,29 +21,33 @@ class ConfigVersion(object):
 
 
 def performConfigMigrations():
-    v2_0_2_migrateConfigFileLocation()
+    try:
+        v2_0_2_migrateConfigFileLocation()
 
-    if not g_configFiles.config.exists():
-        return
+        if not g_configFiles.config.exists():
+            return
 
-    g_configFiles.config.loadConfigDict()
-    configDict = g_configFiles.config.configDict
+        configDict = g_configFiles.config.loadConfigDict()
 
-    if configDict is None:
-        return
+        if isVersion(configDict, ConfigVersion.CURRENT):
+            return
 
-    if isVersion(configDict, ConfigVersion.CURRENT):
-        return
+        v2_1_0_addOptionLatencyReticleHideStandardReticle(configDict)
+        v2_2_0_addSimpleServerReticle(configDict)
+        v2_3_0_addNewSimpleServerReticleFeatures(configDict)
+        v2_4_0_addSupportForModsSettingsAPI(configDict)
+        v2_6_0_addDrawCenterDotToSimpleServerReticle(configDict)
 
-    v2_1_0_addOptionLatencyReticleHideStandardReticle()
-    v2_2_0_addSimpleServerReticle()
-    v2_3_0_addNewSimpleServerReticleFeatures()
-    v2_4_0_addSupportForModsSettingsAPI()
-    v2_6_0_addDrawCenterDotToSimpleServerReticle()
+        v3_0_0_addNewReticlesAndNewFeatures(configDict)
 
-    v3_0_0_addNewReticlesAndNewFeatures()
-
-    g_configFiles.writeConfigDicts()
+        g_configFiles.config.writeConfigDict(configDict)
+    except ConfigException:
+        logger.error("Failed to perform config file migration.")
+        raise
+    except Exception:
+        logger.error("Failed to perform config file migration.", exc_info=True)
+        raise ConfigException("Failed to perform config file migration due to unknown error.\n"
+                              "Contact mod developer for further support with provided logs.")
 
 
 def v2_0_2_migrateConfigFileLocation():
@@ -72,9 +76,7 @@ def v2_0_2_migrateConfigFileLocation():
     logger.info("Finished moving config file to new location.")
 
 
-def v2_1_0_addOptionLatencyReticleHideStandardReticle():
-    configDict = g_configFiles.config.configDict
-
+def v2_1_0_addOptionLatencyReticleHideStandardReticle(configDict):
     if not isVersion(configDict, ConfigVersion.V2_0_X):
         return
 
@@ -97,8 +99,7 @@ def v2_1_0_addOptionLatencyReticleHideStandardReticle():
     logger.info("Migration finished.")
 
 
-def v2_2_0_addSimpleServerReticle():
-    configDict = g_configFiles.config.configDict
+def v2_2_0_addSimpleServerReticle(configDict):
     if not isVersion(configDict, ConfigVersion.V2_1_X):
         return
 
@@ -113,8 +114,7 @@ def v2_2_0_addSimpleServerReticle():
     logger.info("Migration finished.")
 
 
-def v2_3_0_addNewSimpleServerReticleFeatures():
-    configDict = g_configFiles.config.configDict
+def v2_3_0_addNewSimpleServerReticleFeatures(configDict):
     if not isVersion(configDict, ConfigVersion.V2_2_X):
         return
 
@@ -128,8 +128,7 @@ def v2_3_0_addNewSimpleServerReticleFeatures():
     logger.info("Migration finished.")
 
 
-def v2_4_0_addSupportForModsSettingsAPI():
-    configDict = g_configFiles.config.configDict
+def v2_4_0_addSupportForModsSettingsAPI(configDict):
     if not isVersion(configDict, ConfigVersion.V2_3_X):
         return
 
@@ -141,8 +140,7 @@ def v2_4_0_addSupportForModsSettingsAPI():
     logger.info("Migration finished.")
 
 
-def v2_6_0_addDrawCenterDotToSimpleServerReticle():
-    configDict = g_configFiles.config.configDict
+def v2_6_0_addDrawCenterDotToSimpleServerReticle(configDict):
     if not isVersion(configDict, ConfigVersion.V2_4_X):
         return
 
@@ -154,8 +152,7 @@ def v2_6_0_addDrawCenterDotToSimpleServerReticle():
     logger.info("Migration finished.")
 
 
-def v3_0_0_addNewReticlesAndNewFeatures():
-    configDict = g_configFiles.config.configDict
+def v3_0_0_addNewReticlesAndNewFeatures(configDict):
     if not isVersion(configDict, ConfigVersion.V2_6_X):
         return
 

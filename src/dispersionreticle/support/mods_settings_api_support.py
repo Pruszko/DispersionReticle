@@ -3,8 +3,10 @@ import logging
 from dispersionreticle.settings.translations import Tr
 from dispersionreticle.settings.config import g_config
 from dispersionreticle.settings.config_param import g_configParams, createTooltip
+from dispersionreticle.utils import ObservingSemaphore
 
 from gui.modsSettingsApi import g_modsSettingsApi
+
 
 logger = logging.getLogger(__name__)
 
@@ -15,7 +17,6 @@ def registerSoftDependencySupport():
     # TODO update README
     # TODO update RU and ZH_CN translations
     # TODO update images
-    # TODO improve config error handling
     template = {
         "modDisplayName": Tr.MODNAME,
         "enabled": g_configParams.enabled.defaultMsaValue,
@@ -42,82 +43,50 @@ def registerSoftDependencySupport():
     # we purposely ignore ModsSettingsAPI capability of saving mod configuration
     # due to config file being "master" configuration
     #
-    # also, I don't like going against "standard setup" of ModsSettingsAPI support
-    # but we still treat it only as a GUI, not a configuration framework
+    # also, I don't like going against "standard setup" of ModsSettingsAPI support, but
+    # we still treat it only as a GUI, not a configuration framework
     #
     # so we also purposely always call setModTemplate instead of registerCallback
     # to keep always updated GUI template
     g_modsSettingsApi.setModTemplate(modLinkage, template, onModSettingsChanged)
 
-    # update settings with actual values read from config file
-    # this will purposely cause cycle like this:
-    # - onConfigFileReload - write to MSA
-    # - onModSettingsChanged - callback from MSA
-    # - onConfigFileReload - callback from config reload event
-    # - cancelled onModSettingsChanged to prevent cycle, because both mods are already synchronized
-    onConfigFileReload()
-    g_config.onConfigReload += onConfigFileReload
+
+# we cannot update ModsSettingsAPI settings without triggering onModSettingsChanged callback,
+# so we will use "semaphore" to control when we want to ignore it
+settingsChangedSemaphore = ObservingSemaphore()
 
 
-# onSettingsChanged can be called in an infinite cycle:
-# - onSettingsChanged - callback from MSA
-# - onConfigFileReload - callback from config reload event;
-#                        config file, our mod state and MSA settings are updated
-# - onSettingsChanged - unnecessary callback from MSA, because
-#                       after onConfigFileReload both mods are already synchronized
-#
-# in order to prevent this, we have to track when this event
-# is during execution of itself to cancel this cycle
-#
-# by exactly this kind of cycle, settings are synchronized in such way
-# that GUI will have actual settings that entire settings synchronization process evaluated
-# including parameters value constraints (for ex. handling abnormal values in FloatTextParam
-# or invalid values from config file in general)
-#
-# unfortunately, we cannot update ModsSettingsAPI settings without triggering this event
-# normally I would like to pass event trigger cause
-# to react differently to MSA event triggered by onConfigFileReload event
-# and actual user-triggered MSA save settings
-_IS_DURING_SETTINGS_CHANGED = False
-
-
-def onModSettingsChanged(linkage, newSettings):
-    global _IS_DURING_SETTINGS_CHANGED
-
-    if linkage != modLinkage or _IS_DURING_SETTINGS_CHANGED:
-        return
-
-    _IS_DURING_SETTINGS_CHANGED = True
-
-    try:
-        _onModSettingsChanged(newSettings)
-    except Exception as e:
-        logger.error("Error occurred while ModsSettingsAPI settings change.", exc_info=e)
-    finally:
-        _IS_DURING_SETTINGS_CHANGED = False
-
-
-def _onModSettingsChanged(newSettings):
-    serializedSettings = {}
-    for tokenName, param in g_configParams.items():
-        if tokenName not in newSettings:
-            continue
-
-        value = param.fromMsaValue(newSettings[tokenName])
-        jsonValue = param.toJsonValue(value)
-
-        serializedSettings[param.tokenName] = jsonValue
-
-    g_config.updateConfigSafely(serializedSettings)
-
-
+# this is called only on manual config reload
 def onConfigFileReload():
     msaSettings = {}
 
     for tokenName, param in g_configParams.items():
         msaSettings[tokenName] = param.msaValue
 
+    logger.info("Synchronizing config file -> ModsSettingsAPI")
     g_modsSettingsApi.updateModSettings(modLinkage, newSettings=msaSettings)
+
+
+@settingsChangedSemaphore.withIgnoringLock(returnForIgnored=None)
+def onModSettingsChanged(linkage, newSettings):
+    if linkage != modLinkage:
+        return
+
+    try:
+        serializedSettings = {}
+        for tokenName, param in g_configParams.items():
+            if tokenName not in newSettings:
+                continue
+
+            value = param.fromMsaValue(newSettings[tokenName])
+            jsonValue = param.toJsonValue(value)
+
+            serializedSettings[param.tokenName] = jsonValue
+
+        logger.info("Synchronizing ModsSettingsAPI -> config file")
+        g_config.updateConfigSafely(serializedSettings)
+    except Exception:
+        logger.error("Error occurred while ModsSettingsAPI settings change.", exc_info=True)
 
 
 def _endSection():

@@ -1,7 +1,9 @@
+import json
 import logging
 import os
+import re
 
-from dispersionreticle.settings import loadConfigDict, createFolderSafely, getDefaultConfigTokens
+from dispersionreticle.settings import createFolderSafely, getDefaultConfigTokens, ConfigException
 from dispersionreticle.settings.config_template import CONFIG_TEMPLATE
 
 
@@ -17,19 +19,36 @@ class ConfigFile(object):
         self.configTemplate = configTemplate
         self.configFilePath = configFilePath
 
-        self.configDict = {}
-
     def loadConfigDict(self):
-        self.configDict = loadConfigDict(self.configFilePath)
+        try:
+            with open(self.configFilePath, "r") as configFile:
+                jsonRawData = configFile.read()
 
-    def writeConfigDict(self):
-        configTokens = self.flattenConfigDictToTokens(self.configDict)
+            jsonData = re.sub(r"^ *//.*$", "", jsonRawData, flags=re.MULTILINE)
+            return json.loads(jsonData, encoding="UTF-8")
+        except ValueError as e:
+            logger.error("Failed to read config file because it is not a valid JSON object.", exc_info=True)
+            raise ConfigException("Failed to read config file (probably invalid JSON syntax).\n"
+                                  "Check config file content for any typos and reload it with CTRL + P.\n"
+                                  "Message: " + e.message)
+        except Exception:
+            logger.error("Unknown error occurred while loading config file.", exc_info=True)
+            raise ConfigException("Failed to read config file due to unknown error.\n"
+                                  "Contact mod developer for further support with provided logs.")
+
+    def writeConfigDict(self, configDict):
+        configTokens = self.flattenConfigDictToTokens(configDict)
         self.writeConfigTokens(configTokens)
 
     def writeConfigTokens(self, configTokens):
-        with open(self.configFilePath, "w") as configFile:
-            configContent = self.configTemplate % configTokens
-            configFile.write(configContent)
+        try:
+            with open(self.configFilePath, "w") as configFile:
+                configContent = self.configTemplate % configTokens
+                configFile.write(configContent)
+        except Exception:
+            logger.error("Failed to write to config file.", exc_info=True)
+            raise ConfigException("Failed to write to config file due to unknown error.\n"
+                                  "Contact mod developer for further support with provided logs.")
 
     def flattenConfigDictToTokens(self, configDict):
         from dispersionreticle.settings.config_param import g_configParams
@@ -53,37 +72,16 @@ class ConfigFiles(object):
     def __init__(self):
         self.config = ConfigFile(CONFIG_TEMPLATE, os.path.join(CONFIG_FILE_DIR, "config.json"))
 
-    def loadConfigDict(self):
-        self.config.loadConfigDict()
-
-    def writeConfigDicts(self):
-        self.config.writeConfigDict()
-
-    def writeConfigTokens(self, configTokens):
-        self.config.writeConfigTokens(configTokens)
-
-    def areAllExists(self):
-        return self.config.exists()
-
-    def areAllValid(self):
-        return self.config.configDict is not None
-
     def createMissingConfigFiles(self):
-        logger.info("Checking config existence ...")
-        if self.areAllExists():
-            logger.info("Config already exists.")
-            return
-
-        logger.info("Creating config directory ...")
-        createFolderSafely(CONFIG_FILE_DIR)
-
-        logger.info("Creating missing config files ...")
-
-        defaultConfigTokens = getDefaultConfigTokens()
         if self.config.exists():
             return
 
+        createFolderSafely(CONFIG_FILE_DIR)
+
+        defaultConfigTokens = getDefaultConfigTokens()
         self.config.writeConfigTokens(defaultConfigTokens)
+
+        logger.info("Created default config file.")
 
 
 g_configFiles = ConfigFiles()

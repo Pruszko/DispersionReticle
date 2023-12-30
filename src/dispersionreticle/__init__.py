@@ -3,7 +3,7 @@ import logging
 logger = logging.getLogger(__name__)
 
 
-class DispersionReticleMod:
+class DispersionReticleMod(object):
 
     @property
     def isModsSettingsApiPresent(self):
@@ -37,22 +37,22 @@ class DispersionReticleMod:
             # make sure to invoke all hooks
             import dispersionreticle.hooks
 
-            # load config
-            from dispersionreticle.settings.config import g_config
-            g_config.loadConfigSafely()
-
             # handle all soft dependencies
-            self.__resolveSoftDependencies()
+            self.__resolveSoftDependenciesSafely()
             if self.isModsSettingsApiPresent:
                 from dispersionreticle.support import mods_settings_api_support
 
                 mods_settings_api_support.registerSoftDependencySupport()
 
-            logger.info("DispersionReticle mod initialized")
-        except Exception as e:
-            logger.error("Error occurred while initializing DispersionReticle mod", exc_info=e)
+            # load config
+            from dispersionreticle.settings.config import g_config
+            g_config.reloadSafely()
 
-    def __resolveSoftDependencies(self):
+            logger.info("DispersionReticle mod initialized")
+        except Exception:
+            logger.error("Error occurred while initializing DispersionReticle mod", exc_info=True)
+
+    def __resolveSoftDependenciesSafely(self):
         try:
             from gui.modsSettingsApi import g_modsSettingsApi
 
@@ -63,8 +63,8 @@ class DispersionReticleMod:
                 logger.warn("Error probably occurred in ModsSettingsAPI because it is None, ignore its presence.")
         except ImportError:
             self.__isModsSettingsApiPresent = False
-        except Exception as e:
-            logger.warn("Error occurred in ModsSettingsAPI, ignore its presence.", exc_info=e)
+        except Exception:
+            logger.warn("Error occurred in ModsSettingsAPI, ignore its presence.", exc_info=True)
             self.__isModsSettingsApiPresent = False
 
     def fini(self):

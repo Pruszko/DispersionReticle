@@ -21,10 +21,6 @@ class Param(object):
 
         PARAM_REGISTRY[self.tokenName] = self
 
-    def readValueFromConfigFile(self):
-        from dispersionreticle.settings.config_file import g_configFiles
-        return self.readValueFromConfigDict(g_configFiles.config.configDict)
-
     def readValueFromConfigDictSafely(self, configDict):
         value = self.readValueFromConfigDict(configDict)
         return value if value is not None else self.defaultValue

@@ -1,10 +1,12 @@
 import json
 import logging
 import os
-import re
-
 
 logger = logging.getLogger(__name__)
+
+
+class ConfigException(Exception):
+    pass
 
 
 def getDefaultConfigTokens():
@@ -13,22 +15,6 @@ def getDefaultConfigTokens():
     return {
         tokenName: param.defaultJsonValue for tokenName, param in g_configParams.items()
     }
-
-
-def loadConfigDict(configPath):
-    try:
-        with open(configPath, "r") as configFile:
-            jsonRawData = configFile.read()
-
-        jsonData = re.sub(r"^\s*//.*$", "", jsonRawData, flags=re.MULTILINE)
-        return json.loads(jsonData, encoding="UTF-8")
-    except ValueError as e:
-        logger.warn("Could not read config file because it is not a valid JSON object. "
-                    "Check config file content for any typos.", exc_info=e)
-        return None
-    except Exception as e:
-        logger.warn("Error occurred while loading config dict.", exc_info=e)
-        return None
 
 
 def toJson(obj):
