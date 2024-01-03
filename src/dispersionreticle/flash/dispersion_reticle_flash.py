@@ -12,6 +12,7 @@ from gui.Scaleform.flash_wrapper import InputKeyMode
 from gui.Scaleform.framework.entities.BaseDAAPIModule import BaseDAAPIModule
 
 from dispersionreticle.flash import Layer
+from dispersionreticle.settings import clamp
 from dispersionreticle.settings.config import g_config
 from dispersionreticle.settings.config_param import g_configParams
 
@@ -24,9 +25,9 @@ class DispersionReticleFlashMeta(BaseDAAPIModule):
         if self._isDAAPIInited():
             self.flashObject.as_createMarker(gunMarkerType, markerName)
 
-    def as_updateReticle(self, gunMarkerType, reticleSize, minReticleSize):
+    def as_updateReticle(self, gunMarkerType, reticleSize):
         if self._isDAAPIInited():
-            self.flashObject.as_updateReticle(gunMarkerType, reticleSize, minReticleSize)
+            self.flashObject.as_updateReticle(gunMarkerType, reticleSize)
 
     def as_destroyMarker(self, markerName):
         if self._isDAAPIInited():
@@ -99,14 +100,13 @@ class DispersionReticleFlash(ExternalFlashComponent, DispersionReticleFlashMeta)
         self.movie.scaleMode = SCALEFORM.eMovieScaleMode.NO_SCALE
 
         # this does something
-        # I guess it makes app not capture any user inputs
         self.component.wg_inputKeyMode = InputKeyMode.NO_HANDLE
 
         # depth sorting, required to be placed properly between other apps
         layerOffset = -0.02 if self._layer == Layer.TOP else 0.02
         self.component.position.z = DEPTH_OF_Aim + layerOffset
 
-        # this is *probably* to ignore any focus on our app
+        # this also does something
         self.component.focus = False
         self.component.moveFocus = False
 
@@ -133,8 +133,48 @@ class DispersionReticleFlash(ExternalFlashComponent, DispersionReticleFlashMeta)
         if not any(flashMarkerName in self._markerPresence for flashMarkerName in flashMarkerNames):
             return
 
-        minReticleSize = reticle.getStandardDataProvider().sizeConstraint[0]
-        self.as_updateReticle(reticle.getGunMarkerType(), reticleSize, minReticleSize)
+        sizeConstraint = reticle.getStandardDataProvider().sizeConstraint
+        minReticleSize = sizeConstraint[0]
+        maxReticleSize = sizeConstraint[1]
+
+        # fun note
+        #
+        # reticleSize is fully correctly calculated by controllers and my SWF app displays it perfectly
+        # confirmed it by:
+        # - debugging gun dispersion and reticleSize to logs
+        # - displaying it in my SWF app (which have disabled scalling, so it matches screen pixels 1:1)
+        # - comparing logged reticleSize with screenshots of reticle diameter displayed in-game
+        #
+        # however, for some reason, my reticle is visually way smaller than vanilla reticle
+        # despite having exact same size (for example: fully focused vanilla reticle vs my extended focused reticle)
+        #
+        # and GUI.WGGunMarkerDataProvider is THE ONLY bridge in code
+        # connecting controllers and GUI.WGCrosshairFlash wrapping reticle in CrosshairPanelContainer
+        #
+        # something in WG's GUI classes mess up it's size
+        # so it's probably broken by hidden WG code either in GUI.WGCrosshairFlash or GUI.WGGunMarkerDataProvider
+        #
+        # sizeConstraints (min size and max size in pixels) are not affected by this bug
+        # so reticle size alone is directly broken somewhere in hidden classes
+        #
+        # this means that
+        # in order to properly match extended reticles to vanilla reticles
+        # we have to deliberately mess up reticle size by the same factor that WG hidden classes do
+        #
+        # multiplier x1.72 matches it pixel-perfect
+        #
+        # I have no clue how that multiplier originated
+        # it's not even close to some values like screen proportions, SWF app scale, interface scale,
+        # square root of 3 (???) which is a little too big
+        # or anything other
+        #
+        # lmao
+        deliberatelyMessedUpReticleSize = reticleSize * 1.72
+        deliberatelyMessedUpReticleSize = clamp(minReticleSize,
+                                                deliberatelyMessedUpReticleSize,
+                                                maxReticleSize)
+
+        self.as_updateReticle(reticle.getGunMarkerType(), deliberatelyMessedUpReticleSize)
 
     def __onMarkerCreate(self, markerName, reticle):
         if markerName in self._markerPresence or reticle.getFlashLayer() != self._layer:
@@ -175,7 +215,7 @@ class DispersionReticleFlash(ExternalFlashComponent, DispersionReticleFlashMeta)
     # because it accesses data providers
     #
     # I generally didn't see in WG code any special synchronization in such cases, so I assume
-    # that game engine and AVM handle it for us to some extend
+    # that game engine and AVM handle it for us to some extent
     # or maybe those calls are not fully parallel?
 
     def py_warn(self, message):

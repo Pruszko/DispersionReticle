@@ -52,6 +52,10 @@ class DispersionReticleMod(object):
         except Exception:
             logger.error("Error occurred while initializing DispersionReticle mod", exc_info=True)
 
+            from dispersionreticle.utils import displayDialog
+            displayDialog("Error occurred while initializing DispersionReticle mod.\n"
+                          "Contact mod developer with error logs for further support.")
+
     def __resolveSoftDependenciesSafely(self):
         try:
             from gui.modsSettingsApi import g_modsSettingsApi

@@ -14,9 +14,6 @@ modLinkage = "com.github.pruszko.dispersionreticle"
 
 
 def registerSoftDependencySupport():
-    # TODO update README
-    # TODO update RU and ZH_CN translations
-    # TODO update images
     template = {
         "modDisplayName": Tr.MODNAME,
         "enabled": g_configParams.enabled.defaultMsaValue,
@@ -25,17 +22,17 @@ def registerSoftDependencySupport():
             _emptyLine(3) +
             _endSection() +
             _createFocusedReticle() +
-            _endSection() +
+            _innerSectionSeparator() +
             _createFocusedReticleExtended() +
             _endSection() +
             _createHybridReticle() +
-            _endSection() +
+            _innerSectionSeparator() +
             _createHybridReticleExtended(),
         "column2":
             _createCommon() +
             _endSection() +
             _createServerReticle() +
-            _endSection() +
+            _innerSectionSeparator() +
             _createServerReticleExtended() +
             _endSection()
     }
@@ -93,6 +90,10 @@ def _endSection():
     return _emptyLine() + _horizontalLine()
 
 
+def _innerSectionSeparator():
+    return _emptyLine(4)
+
+
 def _emptyLine(count=1):
     return [
         {
@@ -139,11 +140,11 @@ def _createFocusedReticle():
     return [
         {
             "type": "Label",
-            "text": "1. " + Tr.FOCUSED_RETICLE_LABEL,
+            "text": Tr.FOCUSED_RETICLE_LABEL,
             "tooltip": createTooltip(
                 header="1. " + Tr.FOCUSED_RETICLE_HEADER,
                 body=Tr.FOCUSED_RETICLE_BODY + "\n",
-                note=Tr.FOCUSED_RETICLE_NOTE + "\n\n" + _createImg(src="imgs/all.jpg", width=475, height=428)
+                note=Tr.FOCUSED_RETICLE_NOTE + "\n\n" + _createImg(src="imgs/all.jpg", width=427, height=324)
             ),
         },
         g_configParams.focusedReticleEnabled.renderParam(
@@ -163,13 +164,13 @@ def _createFocusedReticleExtended():
     return [
         {
             "type": "Label",
-            "text": "2. " + Tr.FOCUSED_RETICLE_EXTENDED_LABEL,
+            "text": Tr.FOCUSED_RETICLE_EXTENDED_LABEL,
             "tooltip": createTooltip(
-                header="2. " + Tr.FOCUSED_RETICLE_EXTENDED_HEADER,
+                header="1. " + Tr.FOCUSED_RETICLE_EXTENDED_HEADER,
                 body=Tr.FOCUSED_RETICLE_EXTENDED_BODY + "\n",
                 note=Tr.FOCUSED_RETICLE_EXTENDED_NOTE + "\n",
                 attention=Tr.FOCUSED_RETICLE_EXTENDED_ATTENTION + "\n\n" +
-                          _createImg(src="imgs/all.jpg", width=475, height=428)
+                          _createImg(src="imgs/all-extended.jpg", width=602, height=352)
             )
         },
         g_configParams.focusedReticleExtendedEnabled.renderParam(
@@ -179,7 +180,7 @@ def _createFocusedReticleExtended():
         g_configParams.focusedReticleExtendedShape.renderParam(
             header=Tr.RETICLE_EXTENDED_SHAPE_HEADER,
             body=Tr.RETICLE_EXTENDED_SHAPE_BODY + "\n",
-            note=_createImg(src="imgs/simple_server.jpg", width=402, height=412)
+            note=_createImg(src="imgs/shapes-extended.jpg", width=402, height=412)
         ),
         g_configParams.focusedReticleExtendedColor.renderParam(
             header=Tr.RETICLE_EXTENDED_COLOR_HEADER,
@@ -238,10 +239,10 @@ def _createServerReticle():
     return [
         {
             "type": "Label",
-            "text": "3. " + Tr.SERVER_RETICLE_LABEL,
+            "text": Tr.SERVER_RETICLE_LABEL,
             "tooltip": createTooltip(
-                header="3. " + Tr.SERVER_RETICLE_HEADER,
-                body=Tr.SERVER_RETICLE_BODY + "\n\n" + _createImg(src="imgs/all.jpg", width=475, height=428)
+                header="2. " + Tr.SERVER_RETICLE_HEADER,
+                body=Tr.SERVER_RETICLE_BODY + "\n\n" + _createImg(src="imgs/all.jpg", width=427, height=324)
             ),
         },
         g_configParams.serverReticleEnabled.renderParam(
@@ -261,12 +262,12 @@ def _createServerReticleExtended():
     return [
         {
             "type": "Label",
-            "text": "4. " + Tr.SERVER_RETICLE_EXTENDED_LABEL,
+            "text": Tr.SERVER_RETICLE_EXTENDED_LABEL,
             "tooltip": createTooltip(
-                header="4. " + Tr.SERVER_RETICLE_EXTENDED_HEADER,
+                header="2. " + Tr.SERVER_RETICLE_EXTENDED_HEADER,
                 body=Tr.SERVER_RETICLE_EXTENDED_BODY + "\n",
                 attention=Tr.SERVER_RETICLE_EXTENDED_ATTENTION + "\n\n" +
-                          _createImg(src="imgs/all.jpg", width=475, height=428)
+                          _createImg(src="imgs/all-extended.jpg", width=602, height=352)
             )
         },
         g_configParams.serverReticleExtendedEnabled.renderParam(
@@ -276,7 +277,7 @@ def _createServerReticleExtended():
         g_configParams.serverReticleExtendedShape.renderParam(
             header=Tr.RETICLE_EXTENDED_SHAPE_HEADER,
             body=Tr.RETICLE_EXTENDED_SHAPE_BODY + "\n",
-            note=_createImg(src="imgs/simple_server.jpg", width=402, height=412)
+            note=_createImg(src="imgs/shapes-extended.jpg", width=402, height=412)
         ),
         g_configParams.serverReticleExtendedColor.renderParam(
             header=Tr.RETICLE_EXTENDED_COLOR_HEADER,
@@ -335,11 +336,11 @@ def _createHybridReticle():
     return [
         {
             "type": "Label",
-            "text": "5. " + Tr.HYBRID_RETICLE_LABEL,
+            "text": Tr.HYBRID_RETICLE_LABEL,
             "tooltip": createTooltip(
-                header="5. " + Tr.HYBRID_RETICLE_HEADER,
+                header="3. " + Tr.HYBRID_RETICLE_HEADER,
                 body=Tr.HYBRID_RETICLE_BODY + "\n",
-                note=Tr.HYBRID_RETICLE_NOTE + "\n\n" + _createImg(src="imgs/all.jpg", width=475, height=428)
+                note=Tr.HYBRID_RETICLE_NOTE + "\n\n" + _createImg(src="imgs/all.jpg", width=427, height=324)
             ),
         },
         g_configParams.hybridReticleEnabled.renderParam(
@@ -364,13 +365,13 @@ def _createHybridReticleExtended():
     return [
         {
             "type": "Label",
-            "text": "6. " + Tr.HYBRID_RETICLE_EXTENDED_LABEL,
+            "text": Tr.HYBRID_RETICLE_EXTENDED_LABEL,
             "tooltip": createTooltip(
-                header="6. " + Tr.HYBRID_RETICLE_EXTENDED_HEADER,
+                header="3. " + Tr.HYBRID_RETICLE_EXTENDED_HEADER,
                 body=Tr.HYBRID_RETICLE_EXTENDED_BODY + "\n",
                 note=Tr.HYBRID_RETICLE_EXTENDED_NOTE + "\n",
                 attention=Tr.HYBRID_RETICLE_EXTENDED_ATTENTION + "\n\n" +
-                          _createImg(src="imgs/all.jpg", width=475, height=428)
+                          _createImg(src="imgs/all-extended.jpg", width=602, height=352)
             )
         },
         g_configParams.hybridReticleExtendedEnabled.renderParam(
@@ -380,7 +381,7 @@ def _createHybridReticleExtended():
         g_configParams.hybridReticleExtendedShape.renderParam(
             header=Tr.RETICLE_EXTENDED_SHAPE_HEADER,
             body=Tr.RETICLE_EXTENDED_SHAPE_BODY + "\n",
-            note=_createImg(src="imgs/simple_server.jpg", width=402, height=412)
+            note=_createImg(src="imgs/shapes-extended.jpg", width=402, height=412)
         ),
         g_configParams.hybridReticleExtendedColor.renderParam(
             header=Tr.RETICLE_EXTENDED_COLOR_HEADER,

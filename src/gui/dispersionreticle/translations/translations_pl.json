@@ -31,14 +31,15 @@
     "Tym ustawieniem możesz przeskalować go do prawdziwego wyświetlanego rozrzutu.\n\n",
     "Dobre znane wartości:\n",
     "- 1.0 (domyślny \"niepoprawny\" rozrzut od WG)\n",
-    "- 0.6 (mnożnik wyznaczony przeze mnie)\n",
+    "- 0.5814 (mnożnik wyznaczony przeze mnie)\n",
     "- 0.5848 (mnożnik wyznaczony przez Jak_Attackka, StranikS_Scan oraz innych)"
   ],
   "focusedReticle.label": "Okrąg skupienia",
   "focusedReticle.header": "Okrąg skupienia",
   "focusedReticle.body": [
-    "Dodaje standardowy okrąg wyświetlający w pełni skupiony rozrzut działa do okręgu w grze.\n",
-    "Inne mody mogą wpłynąć na wygląd tego okręgu."
+    "Dodaje okrąg wyświetlający w pełni skupiony rozrzut działa do okręgu w grze.\n",
+    "Używa wbudowanej logiki gry by tego dokonać.\n",
+    "Inne mody mogą potencjalnie wpłynąć na wygląd tego okręgu."
   ],
   "focusedReticle.note": [
     "Gdy oba rodzaje okręgów - klienckie oraz serwerowe - są uruchomione, to okrąg dołączany jest ",
@@ -60,8 +61,9 @@
   "hybridReticle.label": "Okrąg hybrydowy",
   "hybridReticle.header": "Okrąg hybrydowy",
   "hybridReticle.body": [
-    "Dodaje standardowy okrąg wyświetlający obecny serwerowy rozrzut do klienckiego okręgu.\n",
-    "Inne mody mogą wpłynąć na wygląd tego okręgu."
+    "Dodaje okrąg wyświetlający obecny serwerowy rozrzut do klienckiego okręgu.\n",
+    "Używa wbudowanej logiki gry by tego dokonać.\n",
+    "Inne mody mogą potencjalnie wpłynąć na wygląd tego okręgu."
   ],
   "hybridReticle.note": [
     "Innymi słowy, pozycja po stronie klienta, ale rozrzut serwerowy.\n",
@@ -92,8 +94,9 @@
   "serverReticle.label": "Okrąg serwerowy",
   "serverReticle.header": "Okrąg serwerowy",
   "serverReticle.body": [
-    "Dodaje standardowy serwerowy okrąg oprócz obecnego klienckiego okręgu.\n",
-    "Inne mody mogą wpłynąć na wygląd tego okręgu."
+    "Dodaje serwerowy okrąg oprócz obecnego klienckiego okręgu.\n",
+    "Używa wbudowanej logiki gry by tego dokonać.\n",
+    "Inne mody mogą potencjalnie wpłynąć na wygląd tego okręgu."
   ],
   "serverReticleExtended.label": "Okrąg serwerowy rozszerzony",
   "serverReticleExtended.header": "Okrąg serwerowy rozszerzony",

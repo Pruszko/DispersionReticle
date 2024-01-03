@@ -31,14 +31,15 @@
     "С помощью этой настройки, вы можете масштабировать до реального отображаемого рассеивания.\n\n",
     "Известные значения:\n",
     "- 1.0 (по умолчанию \"неправильная\" WG рассеивание)\n",
-    "- 0.6 (коэффициент, определённый мной)\n",
+    "- 0.5814 (коэффициент, определённый мной)\n",
     "- 0.5848 (коэффициент, определённый Jak_Attackka, StranikS_Scan и другими)"
   ],
   "focusedReticle.label": "Круг разброса",
   "focusedReticle.header": "Круг разброса",
   "focusedReticle.body": [
     "Добавляет полностью сведенный 'Круг разброса' к прицелу.\n",
-    "Other mods may influence the look of this reticle."
+    "Uses builtin game logic to do so.\n",
+    "Other mods might influence the look of this reticle."
   ],
   "focusedReticle.note": [
     "Может работать с включенным 'Cерверным прицелом' в настройках игры."
@@ -59,7 +60,8 @@
   "hybridReticle.header": "Гибридный прицел",
   "hybridReticle.body": [
     "Альтернативный режим 'Cерверному прицелу' в настройках игры.\n",
-    "Other mods may influence the look of this reticle."
+    "Uses builtin game logic to do so.\n",
+    "Other mods might influence the look of this reticle."
   ],
   "hybridReticle.note": [
     "Принцип, позиция на стороне клиента, а разброс на стороне сервера.\n",
@@ -91,7 +93,8 @@
   "serverReticle.header": "Серверный прицел",
   "serverReticle.body": [
     "Добавляет дополнительный круг 'Серверный прицел'.\n",
-    "Other mods may influence the look of this reticle."
+    "Uses builtin game logic to do so.\n",
+    "Other mods might influence the look of this reticle."
   ],
   "serverReticleExtended.label": "Настраиваемый серверный прицел",
   "serverReticleExtended.header": "Настраиваемый серверный прицел",

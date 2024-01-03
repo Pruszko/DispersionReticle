@@ -28,14 +28,15 @@
     "使用这个因子你可以吧瞄准环缩放到实际大小。\n\n",
     "较为合理的数值:\n",
     "- 1.0 (默认的 \"不正确\"的WG散布大小)\n",
-    "- 0.6 (作者使用的大小)\n",
+    "- 0.5814 (作者使用的大小)\n",
     "- 0.5848 (这个问题的发现者们使用的大小)"
   ],
   "focusedReticle.label": "最小落弹环",
   "focusedReticle.header": "最小落弹环",
   "focusedReticle.body": [
     "在显示标准瞄准环的同时，显示出最小的缩圈大小。\n",
-    "Other mods may influence the look of this reticle.\n"
+    "Uses builtin game logic to do so.\n",
+    "Other mods might influence the look of this reticle.\n"
   ],
   "focusedReticle.note": [
     "在打开了插件中的服务器准星选项时最小缩圈将显示在客户端准星上。\n\n"
@@ -56,7 +57,8 @@
   "hybridReticle.header": "延迟瞄准环",
   "hybridReticle.body": [
     "在客户端瞄准环的基础上同时显示服务端瞄准环。\n",
-    "Other mods may influence the look of this reticle.\n"
+    "Uses builtin game logic to do so.\n",
+    "Other mods might influence the look of this reticle.\n"
   ],
   "hybridReticle.note": [
     "开启这个选项后客户端瞄准环和服务端瞄准环的位置差异就清楚可见。\n\n",
@@ -87,7 +89,8 @@
   "serverReticle.header": "服务端瞄准环",
   "serverReticle.body": [
     "在客户端准星显示的同时显示服务端瞄准环。\n",
-    "Other mods may influence the look of this reticle.\n\n"
+    "Uses builtin game logic to do so.\n",
+    "Other mods might influence the look of this reticle.\n\n"
   ],
   "serverReticleExtended.label": "简单服务端瞄准环",
   "serverReticleExtended.header": "简单服务端瞄准环",

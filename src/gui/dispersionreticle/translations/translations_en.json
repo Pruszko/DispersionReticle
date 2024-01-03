@@ -31,14 +31,15 @@
     "By this setting you can scale it to actual displayed dispersion.\n\n",
     "Good known values:\n",
     "- 1.0 (default \"wrong\" WG dispersion)\n",
-    "- 0.6 (factor determined by me)\n",
+    "- 0.5814 (factor determined by me)\n",
     "- 0.5848 (factor determined by Jak_Attackka, StranikS_Scan and others)"
   ],
   "focusedReticle.label": "Focused reticle",
   "focusedReticle.header": "Focused reticle",
   "focusedReticle.body": [
-    "Adds standard reticle displaying fully-focused dispersion to in-game reticle.\n",
-    "Other mods may influence the look of this reticle."
+    "Adds reticle displaying fully-focused dispersion to in-game reticle.\n",
+    "Uses builtin game logic to do so.\n",
+    "Other mods might influence the look of this reticle."
   ],
   "focusedReticle.note": [
     "When both client-side and server-side reticles are on, it attaches to client-side reticle."
@@ -58,8 +59,9 @@
   "hybridReticle.label": "Hybrid reticle",
   "hybridReticle.header": "Hybrid reticle",
   "hybridReticle.body": [
-    "Adds standard reticle displaying current server-side dispersion to client-side reticle.\n",
-    "Other mods may influence the look of this reticle."
+    "Adds reticle displaying current server-side dispersion to client-side reticle.\n",
+    "Uses builtin game logic to do so.\n",
+    "Other mods might influence the look of this reticle."
   ],
   "hybridReticle.note": [
     "Basically, client-side position, but server-side dispersion.\n",
@@ -90,8 +92,9 @@
   "serverReticle.label": "Server reticle",
   "serverReticle.header": "Server reticle",
   "serverReticle.body": [
-    "Adds standard server-side reticle alongside with client-side reticle.\n",
-    "Other mods may influence the look of this reticle."
+    "Adds server-side reticle alongside with client-side reticle.\n",
+    "Uses builtin game logic to do so.\n",
+    "Other mods might influence the look of this reticle."
   ],
   "serverReticleExtended.label": "Server reticle extended",
   "serverReticleExtended.header": "Server reticle extended",

@@ -29,7 +29,7 @@ class ConfigFile(object):
         except ValueError as e:
             logger.error("Failed to read config file because it is not a valid JSON object.", exc_info=True)
             raise ConfigException("Failed to read config file (probably invalid JSON syntax).\n"
-                                  "Check config file content for any typos and reload it with CTRL + P.\n"
+                                  "Check config file content for any typos and reload it by using CTRL + P.\n"
                                   "Message: " + e.message)
         except Exception:
             logger.error("Unknown error occurred while loading config file.", exc_info=True)
