@@ -35,33 +35,33 @@
   "focusedReticle.header": "最小落弹环",
   "focusedReticle.body": [
     "在显示标准瞄准环的同时，显示出最小的缩圈大小。\n",
-    "Uses builtin game logic to do so.\n",
-    "Other mods might influence the look of this reticle.\n"
+    "使用游戏机制实现。\n",
+    "同时使用其他类似模组可能影响显示效果。\n"
   ],
   "focusedReticle.note": [
     "在打开了插件中的服务器准星选项时最小缩圈将显示在客户端准星上。\n\n"
   ],
-  "focusedReticleExtended.label": "Focused reticle extended",
-  "focusedReticleExtended.header": "Focused reticle extended",
+  "focusedReticleExtended.label": "最小落弹环外观配置",
+  "focusedReticleExtended.header": "最小落弹环外观配置",
   "focusedReticleExtended.body": [
-    "Adds configurable reticle displaying fully-focused dispersion to in-game reticle.\n",
-    "Other mods does not have influence on the look of this reticle."
+    "这里可以配置最小落弹环的外观。\n",
+    "同时使用其他类似模组可能影响显示效果。"
   ],
   "focusedReticleExtended.note": [
-    "When both client-side and server-side reticles are on, it attaches to client-side reticle."
+    "当同时启用了模组中的客户端准星和服务端准星时，最小落弹环将出现在客客户端准星上。"
   ],
   "focusedReticleExtended.attention": [
-    "For SPG artillery view, a standard version of this reticle will be used."
+    "火炮视角中最小落弹环将按游戏默认形式显示。"
   ],
   "hybridReticle.label": "延迟瞄准环",
   "hybridReticle.header": "延迟瞄准环",
   "hybridReticle.body": [
-    "在客户端瞄准环的基础上同时显示服务端瞄准环。\n",
-    "Uses builtin game logic to do so.\n",
-    "Other mods might influence the look of this reticle.\n"
+    "在客户端瞄准环的基础上同时显示网络延时影响后的瞄准环。\n",
+    "使用游戏机制实现。\n",
+    "同时使用其他类似模组可能影响显示效果。\n"
   ],
   "hybridReticle.note": [
-    "开启这个选项后客户端瞄准环和服务端瞄准环的位置差异就清楚可见。\n\n",
+    "开启这个选项后客户端瞄准环和服务端实际收到的瞄准环位置差异就清晰可见。\n\n",
     "在想获知服务端准星位置， 同时又想获得客户端的快速响应速度时较为有用。\n\n"
   ],
   "hybridReticle.hideStandardReticle.header": "隐藏标准瞄准环",
@@ -71,54 +71,54 @@
   "hybridReticle.hideStandardReticle.note": [
     "在您仅想使用服务端准星时有用。"
   ],
-  "hybridReticleExtended.label": "Hybrid reticle extended",
-  "hybridReticleExtended.header": "Hybrid reticle extended",
+  "hybridReticleExtended.label": "延时瞄准环外观配置",
+  "hybridReticleExtended.header": "延时瞄准环外观配置",
   "hybridReticleExtended.body": [
-    "Adds configurable reticle displaying current server-side dispersion to client-side reticle.\n",
-    "Other mods does not have influence on the look of this reticle."
+    "指定延时标准环的外观显示效果。\n",
+    "同时使用其他类似模组可能影响显示效果。"
   ],
   "hybridReticleExtended.note": [
-    "Basically, client-side position, but server-side dispersion.\n",
-    "By this, client-side and server-side dispersion desynchronization is clearly visible.\n\n",
-    "Useful if you want to know server-side dispersion, but still want client-side responsiveness."
+    "同时显示客户端瞄准环和服务器实际收到的瞄准环位置。\n",
+    "开启这个选项后客户端瞄准环和服务端实际收到的瞄准环位置差异就清晰可见。\n\n",
+    "在想获知服务端准星位置， 同时又想获得客户端的快速响应速度时较为有用。"
   ],
   "hybridReticleExtended.attention": [
-    "For SPG artillery view, a standard version of this reticle will be used."
+    "火炮视角中此瞄准环将按游戏默认形式显示。"
   ],
   "serverReticle.label": "服务端瞄准环",
   "serverReticle.header": "服务端瞄准环",
   "serverReticle.body": [
     "在客户端准星显示的同时显示服务端瞄准环。\n",
-    "Uses builtin game logic to do so.\n",
+    "使用游戏机制实现。\n",
     "Other mods might influence the look of this reticle.\n\n"
   ],
   "serverReticleExtended.label": "简单服务端瞄准环",
   "serverReticleExtended.header": "简单服务端瞄准环",
   "serverReticleExtended.body": [
     "添加可自定义形状的服务端准星。\n",
-    "Other mods does not have influence on the look of this reticle.\n"
+    "同时使用其他类似模组可能影响显示效果。\n"
   ],
   "serverReticleExtended.attention": [
-    "在火炮视角中，会在左侧默认添加服务端瞄准环而不会显示这个准星。\n\n"
+    "火炮视角中此瞄准环将按游戏默认形式显示。\n\n"
   ],
   "reticle.enabled.header": "启用",
   "reticle.enabled.body": [
     "如果启用则显示这个瞄准环。"
   ],
-  "reticle.type.header": "Type",
+  "reticle.type.header": "瞄准环类型",
   "reticle.type.body": [
-    "Type of this reticle."
+    "瞄准环类型。"
   ],
   "reticle.type.note": [
-    "Default option displays reticle the way game renders it by default.\n",
-    "Purple option additionally tries to color it to purple."
+    "默认-和游戏内其他瞄准环一致。\n",
+    "紫色-用紫色绘制瞄准环。"
   ],
   "reticle.type.attention": [
-    "If other mods changed colors of default reticle, then purple option may incorrectly color it.\n",
-    "This restriction is not present in extended reticles."
+    "如果其他模组改变了瞄准环的默认颜色， 则“紫色”模式可能会以不正确的颜色绘制。\n",
+    "此限制不会影响瞄准环的外观配置。"
   ],
-  "reticle.type.option.default": "Default",
-  "reticle.type.option.purple": "Purple",
+  "reticle.type.option.default": "默认",
+  "reticle.type.option.purple": "紫色",
   "reticleExtended.shape.header": "形状",
   "reticleExtended.shape.body": [
     "这个准星的形状\n"
@@ -131,13 +131,13 @@
   "reticleExtended.color.body": [
     "这个准星的颜色。"
   ],
-  "reticleExtended.centerDotSize.header": "Center dot size",
+  "reticleExtended.centerDotSize.header": "中央标记点大小",
   "reticleExtended.centerDotSize.body": [
-    "Size of dot displayed in reticle center."
+    "控制显示在准星中央的圆点大小。"
   ],
   "reticleExtended.centerDotSize.note": [
-    "Value 1.0 is default size.\n",
-    "Value 0.0 disables center dot."
+    "1.0 是默认大小。\n",
+    "0.0 则隐藏中央圆点。"
   ],
   "reticleExtended.drawOutline.header": "绘制边框",
   "reticleExtended.drawOutline.body": [
@@ -146,18 +146,18 @@
   "reticleExtended.drawOutline.note": [
     "可在准星颜色可能和背景颜色混淆时使用。"
   ],
-  "reticleExtended.layer.header": "Layer",
+  "reticleExtended.layer.header": "层级",
   "reticleExtended.layer.body": [
-    "Chooses layer on which reticle should be displayed:\n",
-    "- Top - display above standard reticles,\n",
-    "- Bottom - display below standard reticles."
+    "选择准星显示的层级：\n",
+    "- 最上 - 显示在标准瞄准环之上,\n",
+    "- 底部 - 显示在标准瞄准环下方。"
   ],
-  "reticleExtended.layer.option.top": "Top",
-  "reticleExtended.layer.option.bottom": "Bottom",
+  "reticleExtended.layer.option.top": "最上",
+  "reticleExtended.layer.option.bottom": "底部",
   "reticleExtended.blend.header": "混色",
   "reticleExtended.blend.body": [
     "控制瞄准环与背景的融合程度 ",
-    "选择 \"dashed\" 形状的瞄准环时 ， 这里选择 1.0 且不选择显示边框可以使得瞄准环更加自然。\n"
+    "选择 \"虚线落弹环\" 形状的瞄准环时 ， 这里选择 1.0 且不选择显示边框可以使得瞄准环更加自然。\n"
   ],
   "reticleExtended.blend.note": [
     "设置为1.0将完全将瞄准环的颜色叠加到背景之上。\n",
@@ -174,24 +174,24 @@
     "1.0 表示完全可见\n",
     "0.0 则表示完全消隐"
   ],
-  "reticleExtended.shapes.header": "Shape specific configuration",
-  "reticleExtended.shapes.pentagon.width.header": "Pentagon width",
+  "reticleExtended.shapes.header": "更改落弹环的形状",
+  "reticleExtended.shapes.pentagon.width.header": "角标落弹环宽度",
   "reticleExtended.shapes.pentagon.width.body": [
-    "Width of pentagon."
+    "角标宽度。"
   ],
-  "reticleExtended.shapes.pentagon.height.header": "Pentagon height",
+  "reticleExtended.shapes.pentagon.height.header": "角标落弹环高度",
   "reticleExtended.shapes.pentagon.height.body": [
-    "Height of pentagon."
+    "角标高度。"
   ],
-  "reticleExtended.shapes.t-shape.thickness.header": "T-shape thickness",
+  "reticleExtended.shapes.t-shape.thickness.header": "T标落弹环粗细",
   "reticleExtended.shapes.t-shape.thickness.body": [
-    "Thickness of lines."
+    "T标落弹环的粗细。"
   ],
-  "reticleExtended.shapes.t-shape.length.header": "T-shape length",
+  "reticleExtended.shapes.t-shape.length.header": "T标落弹环长度",
   "reticleExtended.shapes.t-shape.length.body": [
-    "Length of lines coming from intersection."
+    "T标落弹环交叉线的长度。"
   ],
   "reticleExtended.shapes.t-shape.length.note": [
-    "Negative values inverts direction of the line facing reticle center."
+    "负值将反转落弹环的方向。"
   ]
 }
