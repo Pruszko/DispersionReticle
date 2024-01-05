@@ -92,8 +92,8 @@
     "使用游戏机制实现。\n",
     "同时使用其他类似模组可能影响显示效果。\n\n"
   ],
-  "serverReticleExtended.label": "服务端瞄准环",
-  "serverReticleExtended.header": "服务端瞄准环",
+  "serverReticleExtended.label": "服务端瞄准环外观配置",
+  "serverReticleExtended.header": "服务端瞄准环外观配置",
   "serverReticleExtended.body": [
     "添加可自定义形状的服务端准星。\n",
     "同时使用其他类似模组将不会影响显示效果。\n"

@@ -18,7 +18,7 @@ All of those features can be enabled/adjusted **independently**.
 They are also compatible with "Use server aim" from in-game option.
 
 **Focused reticle** (enabled by default):
-- adds green reticle displaying **fully focused dispersion** to **vanilla reticle**
+- adds green reticle displaying **fully focused dispersion** alongside others reticles
 
 **Server reticle**
 - adds purple **server-side reticle** alongside with **client-side reticle**
@@ -44,8 +44,11 @@ They are also compatible with "Use server aim" from in-game option.
 ![Extended reticle shapes](images/shapes-extended.png)
 
 ## Feedback
-Forum feedback is located in [this thread on forum](http://forum.worldoftanks.eu/index.php?/topic/801552-12200-dispersionreticle-feedback-thread),
-but you can also PM me on forum, in game on EU server or GitHub issues.
+Forum feedback is located in [this thread on forum](http://forum.worldoftanks.eu/index.php?/topic/801552-12200-dispersionreticle-feedback-thread).
+You can also:
+- PM me on forum: Pruszko,
+- in game on EU server: Pruszko
+- or [GitHub issues here](https://github.com/Pruszko/DispersionReticle/issues).
 
 ## Configuration
 All features from config file **are reloadable on-the-fly** using **CTRL + P** hotkey in the game **anywhere**.
@@ -54,7 +57,7 @@ This mod also supports **Mod Configurator by IzeBerg** allowing for configuring
 this mod using its GUI in garage.
 
 ## Resource
-Those are uploaded directly by me:
+Websites where mod is uploaded directly by me:
 - [GitHub Releases Page](https://github.com/Pruszko/DispersionReticle/releases) (direct and fastest)
 - [WGMods](https://wgmods.net/5251/) (WG approved)
 - [CurseForge](https://www.curseforge.com/worldoftanks/wot-mods/dispersionreticle-reworked) (curseforge approved)

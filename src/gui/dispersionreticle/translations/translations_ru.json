@@ -30,7 +30,7 @@
     "Это было обнаружено людьми Jak_Attackka, StranikS_Scan и другими.\n",
     "С помощью этой настройки, вы можете масштабировать до реального отображаемого рассеивания.\n\n",
     "Известные значения:\n",
-    "- 1.0 (по умолчанию \"неправильная\" WG рассеивание)\n",
+    "- 1.0 (по умолчанию - \"неправильная\" WG рассеивание)\n",
     "- 0.5814 (коэффициент, определённый мной)\n",
     "- 0.5848 (коэффициент, определённый Jak_Attackka, StranikS_Scan и другими)"
   ],
@@ -38,30 +38,30 @@
   "focusedReticle.header": "Круг разброса",
   "focusedReticle.body": [
     "Добавляет полностью сведенный 'Круг разброса' к прицелу.\n",
-    "Uses builtin game logic to do so.\n",
-    "Other mods might influence the look of this reticle."
+    "Использует встроенную игровую логику для этого.\n",
+    "Другие моды могут влиять на внешний вид этого прицела."
   ],
   "focusedReticle.note": [
     "Может работать с включенным 'Cерверным прицелом' в настройках игры."
   ],
-  "focusedReticleExtended.label": "Focused reticle extended",
-  "focusedReticleExtended.header": "Focused reticle extended",
+  "focusedReticleExtended.label": "Настраиваемый 'Круг разброса'",
+  "focusedReticleExtended.header": "Настраиваемый 'Круг разброса'",
   "focusedReticleExtended.body": [
-    "Adds configurable reticle displaying fully-focused dispersion to in-game reticle.\n",
-    "Other mods does not have influence on the look of this reticle."
+    "Добавляет настраиваемый 'Круг разброса', который можно настроить ниже.\n",
+    "Другие моды не могут влиять на внешний вид этого прицела."
   ],
   "focusedReticleExtended.note": [
-    "When both client-side and server-side reticles are on, it attaches to client-side reticle."
+    "Может работать с включенным 'Cерверным прицелом' в настройках игры."
   ],
   "focusedReticleExtended.attention": [
-    "For SPG artillery view, a standard version of this reticle will be used."
+    "Для артиллерии, используется не настраиваемый 'Круг разброса'."
   ],
   "hybridReticle.label": "Гибридный прицел",
   "hybridReticle.header": "Гибридный прицел",
   "hybridReticle.body": [
     "Альтернативный режим 'Cерверному прицелу' в настройках игры.\n",
-    "Uses builtin game logic to do so.\n",
-    "Other mods might influence the look of this reticle."
+    "Использует встроенную игровую логику для этого.\n",
+    "Другие моды могут влиять на внешний вид этого прицела."
   ],
   "hybridReticle.note": [
     "Принцип, позиция на стороне клиента, а разброс на стороне сервера.\n",
@@ -75,74 +75,73 @@
   "hybridReticle.hideStandardReticle.note": [
     "Полезно, если вы хотите использовать 'Гибридный прицел' как основной круг."
   ],
-  "hybridReticleExtended.label": "Hybrid reticle extended",
-  "hybridReticleExtended.header": "Hybrid reticle extended",
+  "hybridReticleExtended.label": "Настраиваемый 'Гибридный прицел'",
+  "hybridReticleExtended.header": "Настраиваемый 'Гибридный прицел'",
   "hybridReticleExtended.body": [
-    "Adds configurable reticle displaying current server-side dispersion to client-side reticle.\n",
-    "Other mods does not have influence on the look of this reticle."
+    "Добавляет настраиваемый 'Гибридный прицел', который можно настроить ниже.\n",
+    "Другие моды не могут влиять на внешний вид этого прицела."
   ],
   "hybridReticleExtended.note": [
-    "Basically, client-side position, but server-side dispersion.\n",
-    "By this, client-side and server-side dispersion desynchronization is clearly visible.\n\n",
-    "Useful if you want to know server-side dispersion, but still want client-side responsiveness."
+    "Принцип, позиция на стороне клиента, а разброс на стороне сервера.\n",
+    "Таким образом, видна десинхронизация разброса на стороне клиента и на стороне сервера.\n\n",
+    "Полезно, если вы хотите видеть десинхронизацию разброса на стороне сервера, но при этом иметь отзывчивость на стороне клиента."
   ],
   "hybridReticleExtended.attention": [
-    "For SPG artillery view, a standard version of this reticle will be used."
+    "Для артиллерии, используется не настраиваемый 'Гибридный прицел'."
   ],
   "serverReticle.label": "Серверный прицел",
   "serverReticle.header": "Серверный прицел",
   "serverReticle.body": [
-    "Добавляет дополнительный круг 'Серверный прицел'.\n",
-    "Uses builtin game logic to do so.\n",
-    "Other mods might influence the look of this reticle."
+    "Добавляет дополнительный круг 'Серверного прицела'.\n",
+    "Использует встроенную игровую логику для этого.\n",
+    "Другие моды могут влиять на внешний вид этого прицела."
   ],
-  "serverReticleExtended.label": "Настраиваемый серверный прицел",
-  "serverReticleExtended.header": "Настраиваемый серверный прицел",
+  "serverReticleExtended.label": "Настраиваемый 'Серверный прицел'",
+  "serverReticleExtended.header": "Настраиваемый 'Серверный прицел'",
   "serverReticleExtended.body": [
-    "Добавляет дополнительный круг 'Настраиваемый серверный прицел', который можно настроить ниже.\n",
-    "Other mods does not have influence on the look of this reticle."
+    "Добавляет настраиваемый 'Серверный прицел', который можно настроить ниже.\n",
+    "Другие моды не могут влиять на внешний вид этого прицела."
   ],
   "serverReticleExtended.attention": [
-    "Для артиллерии будет включен 'Серверный прицел',",
-    "вместо этого."
+    "Для артиллерии, используется не настраиваемый 'Серверный прицел'."
   ],
   "reticle.enabled.header": "Включить",
   "reticle.enabled.body": [
-    "Если галочка отмечена, то отображается 'Настраиваемый серверный прицел'."
+    "Если галочка отмечена, то отображается прицел."
   ],
-  "reticle.type.header": "Type",
+  "reticle.type.header": "Вид",
   "reticle.type.body": [
-    "Type of this reticle."
+    "Вид прицела."
   ],
   "reticle.type.note": [
-    "Default option displays reticle the way game renders it by default.\n",
-    "Purple option additionally tries to color it to purple."
+    "Стандартный - отображает прицел так, как игра отображает его по умолчанию.\n",
+    "Фиолетовый - дополнительно пытается окрасить его в фиолетовый цвет."
   ],
   "reticle.type.attention": [
-    "If other mods changed colors of default reticle, then purple option may incorrectly color it.\n",
-    "This restriction is not present in extended reticles."
+    "Если другие моды изменили цвет прицела по умолчанию, то фиолетовый вариант может неправильно его окрасить.\n",
+    "Это не распространяется на 'Настраиваемые' прицелы."
   ],
-  "reticle.type.option.default": "Default",
-  "reticle.type.option.purple": "Purple",
+  "reticle.type.option.default": "Стандартный",
+  "reticle.type.option.purple": "Фиолетовый",
   "reticleExtended.shape.header": "Фигура",
   "reticleExtended.shape.body": [
-    "Фигура, которую будет отображать 'Настраиваемый серверный прицел'."
+    "Фигура, которую будет отображать 'Настраиваемый' прицел."
   ],
-  "reticleExtended.shape.option.pentagon": "Pentagon",
-  "reticleExtended.shape.option.t-shape": "T-shape",
-  "reticleExtended.shape.option.circle": "Circle",
-  "reticleExtended.shape.option.dashed": "Dashed",
+  "reticleExtended.shape.option.pentagon": "Пятиугольник",
+  "reticleExtended.shape.option.t-shape": "Т-образная",
+  "reticleExtended.shape.option.circle": "Круг",
+  "reticleExtended.shape.option.dashed": "Пунктир",
   "reticleExtended.color.header": "Цвет",
   "reticleExtended.color.body": [
-    "Назначает цвет для фигуры в 'Настраиваемый серверный прицел'."
+    "Назначает цвет для фигуры в 'Настраиваемом' прицеле."
   ],
-  "reticleExtended.centerDotSize.header": "Center dot size",
+  "reticleExtended.centerDotSize.header": "Размер центральной точки",
   "reticleExtended.centerDotSize.body": [
-    "Size of dot displayed in reticle center."
+    "Размер точки, отображаемой в центре прицела."
   ],
   "reticleExtended.centerDotSize.note": [
-    "Value 1.0 is default size.\n",
-    "Value 0.0 disables center dot."
+    "Значение 1.0 - стандартный размер.\n",
+    "Значение 0.0 - отключает центральную точку."
   ],
   "reticleExtended.drawOutline.header": "Включить контур",
   "reticleExtended.drawOutline.body": [
@@ -151,22 +150,22 @@
   "reticleExtended.drawOutline.note": [
     "Полезно, если цвет фигуры сливается с фоном."
   ],
-  "reticleExtended.layer.header": "Layer",
+  "reticleExtended.layer.header": "Слой",
   "reticleExtended.layer.body": [
-    "Chooses layer on which reticle should be displayed:\n",
-    "- Top - display above standard reticles,\n",
-    "- Bottom - display below standard reticles."
+    "Выбор слоя, на котором будет отображаться прицел:\n",
+    "- Вверху - отображение выше стандартных прицелов,\n",
+    "- Внизу - отображение ниже стандартных прицелов."
   ],
-  "reticleExtended.layer.option.top": "Top",
-  "reticleExtended.layer.option.bottom": "Bottom",
+  "reticleExtended.layer.option.top": "Вверху",
+  "reticleExtended.layer.option.bottom": "Внизу",
   "reticleExtended.blend.header": "Смешивание",
   "reticleExtended.blend.body": [
     "Регулирует, насколько цвет фигуры будет сливаться с цветом фона, а не заменять его.\n",
-    "Стандартная \"dashed / пунктир\" фигура использует этот параметр со значением 1.0 без контура, чтобы фигура выглядела более органично."
+    "Стандартная \"Пунктир\" фигура использует этот параметр со значением 1.0 без контура, чтобы фигура выглядела более органично."
   ],
   "reticleExtended.blend.note": [
-    "При значении 1.0, цвет полностью дополняет цвет фона.\n",
-    "При значении 0.0, цвет полностью заменяет цвет фона.\n",
+    "Значение 1.0 - цвет полностью дополняет цвет фона.\n",
+    "Значение 0.0 - цвет полностью заменяет цвет фона.\n",
     "Значения между ними настраивают силу этих эффектов между друг другом."
   ],
   "reticleExtended.blend.attention": [
@@ -175,30 +174,30 @@
   ],
   "reticleExtended.alpha.header": "Прозрачность",
   "reticleExtended.alpha.body": [
-    "Настройка прозрачности для 'Обычный серверный прицел'."
+    "Регулирует прозрачность отображаемого прицела."
   ],
   "reticleExtended.alpha.note": [
-    "Значение 1.0 соответствует полной видимости.\n",
-    "Значение 0.0 соответствует нулевой видимости."
+    "Значение 1.0 - полная видимости.\n",
+    "Значение 0.0 - нулевая видимости."
   ],
-  "reticleExtended.shapes.header": "Shape specific configuration",
-  "reticleExtended.shapes.pentagon.width.header": "Pentagon width",
+  "reticleExtended.shapes.header": "Особая конфигурация фигур",
+  "reticleExtended.shapes.pentagon.width.header": "Пятиугольник",
   "reticleExtended.shapes.pentagon.width.body": [
-    "Width of pentagon."
+    "Ширина пятиугольника."
   ],
-  "reticleExtended.shapes.pentagon.height.header": "Pentagon height",
+  "reticleExtended.shapes.pentagon.height.header": "Пятиугольник",
   "reticleExtended.shapes.pentagon.height.body": [
-    "Height of pentagon."
+    "Высота пятиугольника."
   ],
-  "reticleExtended.shapes.t-shape.thickness.header": "T-shape thickness",
+  "reticleExtended.shapes.t-shape.thickness.header": "Т-образная",
   "reticleExtended.shapes.t-shape.thickness.body": [
-    "Thickness of lines."
+    "Толщина линий."
   ],
-  "reticleExtended.shapes.t-shape.length.header": "T-shape length",
+  "reticleExtended.shapes.t-shape.length.header": "Т-образная",
   "reticleExtended.shapes.t-shape.length.body": [
-    "Length of lines coming from intersection."
+    "Длина линий, исходящих из пересечения."
   ],
   "reticleExtended.shapes.t-shape.length.note": [
-    "Negative values inverts direction of the line facing reticle center."
+    "Отрицательные значения инвертируют направление линий, направленных к центру прицела."
   ]
 }
