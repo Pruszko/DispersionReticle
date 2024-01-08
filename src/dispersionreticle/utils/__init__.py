@@ -1,5 +1,4 @@
 import logging
-from functools import wraps
 
 from BWUtil import AsyncReturn
 from gui import DialogsInterface
@@ -35,7 +34,6 @@ def overrideIn(cls, clientType=None, onlyWhenDebugging=False):
 
         old = getattr(cls, funcName)
 
-        @wraps(old)
         def wrapper(*args, **kwargs):
             return func(old, *args, **kwargs)
 
@@ -134,7 +132,7 @@ class ObservingSemaphore(object):
     def withIgnoringLock(self, returnForIgnored):
 
         def _withIgnoringLock(func):
-            @wraps(func)
+
             def wrapper(*args, **kwargs):
                 if self:
                     return returnForIgnored
@@ -149,8 +147,8 @@ class ObservingSemaphore(object):
     def withAsyncIgnoringLock(self, returnForIgnored):
 
         def _withAsyncIgnoringLock(func):
+
             @wg_async
-            @wraps(func)
             def wrapper(*args, **kwargs):
                 if self:
                     raise AsyncReturn(returnForIgnored)
