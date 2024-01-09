@@ -1,5 +1,6 @@
 import BigWorld
 from AvatarInputHandler import AimingSystems
+from DualAccuracy import getPlayerVehicleDualAccuracy
 
 
 def getFocusedDispersionSize(targetPos):
@@ -30,6 +31,10 @@ def getFocusedDispersionSize(targetPos):
 
     # actual dispersion per 1m unit
     dispersionAngle = gunDispersionAngle * shotDispMultiplierFactor
+
+    dualAccuracy = getPlayerVehicleDualAccuracy()
+    if dualAccuracy is not None:
+        dispersionAngle *= dualAccuracy.getCurrentDualAccuracyFactor()
 
     # size is diameter that scales with distance
     return 2.0 * shotDist * dispersionAngle
