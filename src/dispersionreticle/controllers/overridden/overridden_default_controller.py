@@ -1,4 +1,5 @@
 import BigWorld, Math, BattleReplay
+from AvatarInputHandler import gun_marker_ctrl
 from AvatarInputHandler.gun_marker_ctrl import _DefaultGunMarkerController, _makeWorldMatrix, _MARKER_FLAG
 from aih_constants import GUN_MARKER_TYPE
 
@@ -54,10 +55,21 @@ class OverriddenDefaultGunMarkerController(_DefaultGunMarkerController):
             if s != -1.0:
                 size = s
         elif replayCtrl.isRecording:
-            if replayCtrl.isServerAim and self._gunMarkerType == GUN_MARKER_TYPE.SERVER:
-                self._replayWriter(replayCtrl)(size)
-            elif self._gunMarkerType in (GUN_MARKER_TYPE.CLIENT, GUN_MARKER_TYPE.DUAL_ACC):
-                self._replayWriter(replayCtrl)(size)
+            if gun_marker_ctrl.useClientGunMarker() and gun_marker_ctrl.useServerGunMarker():
+                # IMPORTANT
+                # when both client-side and server-side reticles are enabled
+                # we MUST write only server-side data, because
+                # VehicleGunRotator in that state writes server data to replays
+                if replayCtrl.isServerAim and self._gunMarkerType == GUN_MARKER_TYPE.SERVER:
+                    self._replayWriter(replayCtrl)(size)
+            else:
+                # vanilla behavior, normally only one of "if" triggers
+                # but when both reticles are enabled, both of them would be used
+                # which is bad
+                if replayCtrl.isServerAim and self._gunMarkerType == GUN_MARKER_TYPE.SERVER:
+                    self._replayWriter(replayCtrl)(size)
+                elif self._gunMarkerType in (GUN_MARKER_TYPE.CLIENT, GUN_MARKER_TYPE.DUAL_ACC):
+                    self._replayWriter(replayCtrl)(size)
         return size
 
     def _interceptPostUpdate(self, size):

@@ -1,4 +1,5 @@
 import BattleReplay, Math
+from AvatarInputHandler import gun_marker_ctrl
 from AvatarInputHandler.gun_marker_ctrl import _SPGGunMarkerController, _MARKER_FLAG, _MARKER_TYPE
 
 from dispersionreticle.settings.config_param import g_configParams
@@ -60,10 +61,21 @@ class OverriddenSPGGunMarkerController(_SPGGunMarkerController):
             if d != -1.0 and s != -1.0:
                 dispersionAngle = d
         elif replayCtrl.isRecording:
-            if replayCtrl.isServerAim and isServerAim:
-                replayCtrl.setSPGGunMarkerParams(dispersionAngle, 0.0)
-            elif not isServerAim:
-                replayCtrl.setSPGGunMarkerParams(dispersionAngle, 0.0)
+            # IMPORTANT
+            # when both client-side and server-side reticles are enabled
+            # we MUST write only server-side data, because
+            # VehicleGunRotator in that state writes server data to replays
+            if gun_marker_ctrl.useClientGunMarker() and gun_marker_ctrl.useServerGunMarker():
+                if replayCtrl.isServerAim and isServerAim:
+                    replayCtrl.setSPGGunMarkerParams(dispersionAngle, 0.0)
+            else:
+                # vanilla behavior, normally only one of "if" triggers
+                # but when both reticles are enabled, both of them would be used
+                # which is bad
+                if replayCtrl.isServerAim and isServerAim:
+                    replayCtrl.setSPGGunMarkerParams(dispersionAngle, 0.0)
+                elif not isServerAim:
+                    replayCtrl.setSPGGunMarkerParams(dispersionAngle, 0.0)
 
         return dispersionAngle
 

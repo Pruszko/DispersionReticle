@@ -67,7 +67,7 @@ class ReticleRegistry(object):
     # I know it sounds dumb, but it is server "server-reticle-extended", so ...
     SERVER_EXTENDED_SERVER = ExtendedReticle(nameSuffix="ServerServerExtended", gunMarkerType=11,
                                              reticleType=ReticleType.SERVER,
-                                             markerLinkagesProvider=VANILLA_SERVER._markerLinkagesProvider,
+                                             markerLinkagesProvider=DEBUG_SERVER._markerLinkagesProvider,
                                              layerProvider=g_configParams.serverReticleExtendedLayer)
 
     OVERRIDDEN_RETICLES = [DEBUG_SERVER, FOCUSED_CLIENT, FOCUSED_SERVER, HYBRID_CLIENT]

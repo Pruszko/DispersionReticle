@@ -16,16 +16,9 @@ from dispersionreticle.utils.reticle_registry import ReticleRegistry
 #
 # Basically, gun marker controllers and factories uses them.
 #
-# Controllers provides data (positionMatrix, startSize, maybe something more)
+# Controllers provides data (positionMatrix, size, etc.)
 # and factories assigns providers of them to GUI.WGCrosshairFlash object
-# that uses them to update it's position and size.
-#
-# Can't tell exactly why crosshair flash components can't share
-# certain data provider (exception message isn't precise
-# and code of GUI modules isn't accessible), however
-# an easy workaround is just providing unique data provider
-# for each reticle type and just mimic data of vanilla data providers
-# to the new ones.
+# that uses them to update its position and size.
 #
 # To do this:
 # - register IDs of new data providers
