@@ -62,3 +62,18 @@ def _getSPGDataProvider(func, self, markerType):
     for reticle in ReticleRegistry.ADDITIONAL_RETICLES:
         if markerType == reticle.getGunMarkerType():
             return reticle.getSpgDataProvider()
+
+
+# Lesta specific
+# it won't be called on WG client
+@overrideIn(_GunMarkersFactory, clientType=ClientType.LESTA)
+def _getAssaultSPGDataProvider(func, self, markerType):
+    if markerType is GUN_MARKER_TYPE.SERVER:
+        return self._markersInfo.serverAssaultSPGMarkerDataProvider
+    else:
+        if markerType is GUN_MARKER_TYPE.CLIENT:
+            return self._markersInfo.clientAssaultSPGMarkerDataProvider
+
+    for reticle in ReticleRegistry.ADDITIONAL_RETICLES:
+        if markerType == reticle.getGunMarkerType():
+            return reticle.getAssaultSpgDataProvider()

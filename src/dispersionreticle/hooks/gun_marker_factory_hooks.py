@@ -158,12 +158,6 @@ class _NewControlMarkersFactory(_ControlMarkersFactory):
 
         return result
 
-    # Lesta specific
-    # on WG client it simply won't be called, because call to it doesn't exist
-    # should be exactly the same as for SPGs
-    def _createFlamethrowerMarkers(self):
-        return self._createSPGMarkers()
-
     def _createDualGunMarkers(self):
         markerType = self._getMarkerType()
 
@@ -195,6 +189,71 @@ class _NewControlMarkersFactory(_ControlMarkersFactory):
                 result += toFocusedReticleExtended(markerType).createDualGunMarkers(self, markerType)
 
             result += toVanillaReticle(markerType).createDualGunMarkers(self, markerType)
+
+        return result
+
+    # Lesta specific
+    # it won't be called on WG client
+    # should be exactly the same as for SPGs
+    def _createFlamethrowerMarkers(self):
+        return self._createSPGMarkers()
+
+    # Lesta specific
+    # it won't be called on WG client
+    # should be very similar to SPG markers, but must use different spg marker factory method
+    def _createAssaultSPGMarkers(self):
+        markerType = self._getMarkerType()
+
+        result = ()
+
+        if self.areBothMarkersEnabled():
+            # IMPORTANT
+            # account for spg NOT TO create additional SPG marker when both reticles
+            # of some type are enabled
+
+            # server reticles
+            if g_configParams.serverReticleExtendedEnabled() and g_configParams.serverReticleEnabled():
+                result += ReticleRegistry.SERVER_EXTENDED_SERVER.createArcadeOnlySPGMarkers(self, markerType)
+                result += ReticleRegistry.DEBUG_SERVER.createAssaultSPGMarkers(self, markerType)
+            else:
+                if g_configParams.serverReticleExtendedEnabled():
+                    result += ReticleRegistry.SERVER_EXTENDED_SERVER.createAssaultSPGMarkers(self, markerType)
+                if g_configParams.serverReticleEnabled():
+                    result += ReticleRegistry.DEBUG_SERVER.createAssaultSPGMarkers(self, markerType)
+
+            # hybrid reticles
+            if g_configParams.hybridReticleExtendedEnabled() and g_configParams.hybridReticleEnabled():
+                result += ReticleRegistry.HYBRID_EXTENDED_CLIENT.createArcadeOnlySPGMarkers(self, markerType)
+                result += ReticleRegistry.HYBRID_CLIENT.createAssaultSPGMarkers(self, markerType)
+            else:
+                if g_configParams.hybridReticleExtendedEnabled():
+                    result += ReticleRegistry.HYBRID_EXTENDED_CLIENT.createAssaultSPGMarkers(self, markerType)
+                if g_configParams.hybridReticleEnabled():
+                    result += ReticleRegistry.HYBRID_CLIENT.createAssaultSPGMarkers(self, markerType)
+
+            # focused reticles
+            if g_configParams.focusedReticleExtendedEnabled() and g_configParams.focusedReticleEnabled():
+                result += ReticleRegistry.FOCUSED_EXTENDED_CLIENT.createArcadeOnlySPGMarkers(self, markerType)
+                result += ReticleRegistry.FOCUSED_CLIENT.createAssaultSPGMarkers(self, markerType)
+            else:
+                if g_configParams.focusedReticleExtendedEnabled():
+                    result += ReticleRegistry.FOCUSED_EXTENDED_CLIENT.createAssaultSPGMarkers(self, markerType)
+                if g_configParams.focusedReticleEnabled():
+                    result += ReticleRegistry.FOCUSED_CLIENT.createAssaultSPGMarkers(self, markerType)
+
+            if not shouldHideStandardReticle():
+                result += ReticleRegistry.VANILLA_CLIENT.createAssaultSPGMarkers(self, markerType)
+        else:
+            if g_configParams.focusedReticleExtendedEnabled() and g_configParams.focusedReticleEnabled():
+                result += toFocusedReticleExtended(markerType).createArcadeOnlySPGMarkers(self, markerType)
+                result += toFocusedReticle(markerType).createAssaultSPGMarkers(self, markerType)
+            else:
+                if g_configParams.focusedReticleExtendedEnabled():
+                    result += toFocusedReticleExtended(markerType).createAssaultSPGMarkers(self, markerType)
+                if g_configParams.focusedReticleEnabled():
+                    result += toFocusedReticle(markerType).createAssaultSPGMarkers(self, markerType)
+
+            result += toVanillaReticle(markerType).createAssaultSPGMarkers(self, markerType)
 
         return result
 

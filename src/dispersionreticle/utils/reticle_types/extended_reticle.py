@@ -42,6 +42,20 @@ class ExtendedReticle(OverriddenReticle):
         return (gunMarkerFactory._createExtendedArcadeMarker(GUN_MARKER_TYPE.UNDEFINED, self._markerNames.arcadeGunMarkerName),
                 gunMarkerFactory._createSPGMarker(GUN_MARKER_TYPE.UNDEFINED, self._markerNames.spgGunMarkerName))
 
+    # Lesta specific
+    # gm_factory
+    #
+    # it won't be called on WG client
+    def createAssaultSPGMarkers(self, gunMarkerFactory, markerType):
+        # important
+        # here we avoid spawning AS3 marker for assault tanks
+        # because it will simply "not work normally"
+        if markerType != GUN_MARKER_TYPE.UNDEFINED:
+            return (gunMarkerFactory._createExtendedArcadeMarker(self._gunMarkerType, self._markerNames.arcadeGunMarkerName),
+                    gunMarkerFactory._createAssaultSPGMarker(self._gunMarkerType, self._markerNames.spgGunMarkerName))
+        return (gunMarkerFactory._createExtendedArcadeMarker(GUN_MARKER_TYPE.UNDEFINED, self._markerNames.arcadeGunMarkerName),
+                gunMarkerFactory._createAssaultSPGMarker(GUN_MARKER_TYPE.UNDEFINED, self._markerNames.spgGunMarkerName))
+
     # gm_factory
     def createArcadeOnlySPGMarkers(self, gunMarkerFactory, markerType):
         if markerType != GUN_MARKER_TYPE.UNDEFINED:

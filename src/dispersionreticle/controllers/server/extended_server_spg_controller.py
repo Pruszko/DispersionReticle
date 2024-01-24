@@ -7,9 +7,9 @@ from dispersionreticle.flash.dispersion_reticle_flash import DispersionReticleFl
 # gun_marker_ctrl
 class ExtendedServerSPGGunMarkerController(OverriddenSPGGunMarkerController):
 
-    def __init__(self, reticle, enabledFlag=_MARKER_FLAG.UNDEFINED):
+    def __init__(self, reticle, dataProvider, enabledFlag=_MARKER_FLAG.UNDEFINED):
         super(ExtendedServerSPGGunMarkerController, self).__init__(reticle.getGunMarkerType(),
-                                                                   reticle.getSpgDataProvider(),
+                                                                   dataProvider,
                                                                    reticle.isServerReticle(),
                                                                    enabledFlag=enabledFlag)
         self._reticle = reticle

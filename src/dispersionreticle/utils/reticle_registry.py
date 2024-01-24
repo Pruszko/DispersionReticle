@@ -1,10 +1,22 @@
 from AvatarInputHandler.aih_global_binding import BINDING_ID
 
 from dispersionreticle.settings.config_param import g_configParams
+from dispersionreticle.utils import isClientLesta
 from dispersionreticle.utils.reticle_properties import ReticleType, ReticleLinkages, MarkerNames
 from dispersionreticle.utils.reticle_types.vanilla_reticle import VanillaReticle
 from dispersionreticle.utils.reticle_types.extended_reticle import ExtendedReticle
 from dispersionreticle.utils.reticle_types.overridden_reticle import OverriddenReticle
+
+
+# Lesta specific
+# avoid accessing Lesta bindings on WG client
+# also, reticle classes are prepared to ignore them in such case
+if isClientLesta():
+    clientAssaultSpgDataProviderID = BINDING_ID.CLIENT_ASSAULT_SPG_GUN_MARKER_DATA_PROVIDER
+    serverAssaultSpgDataProviderID = BINDING_ID.SERVER_ASSAULT_SPG_GUN_MARKER_DATA_PROVIDER
+else:
+    clientAssaultSpgDataProviderID = None
+    serverAssaultSpgDataProviderID = None
 
 
 class ReticleRegistry(object):
@@ -14,13 +26,15 @@ class ReticleRegistry(object):
                                     reticleType=ReticleType.CLIENT,
                                     markerLinkagesProvider=ReticleLinkages.greenLinkagesProvider,
                                     standardDataProviderID=BINDING_ID.CLIENT_GUN_MARKER_DATA_PROVIDER,
-                                    spgDataProviderID=BINDING_ID.CLIENT_SPG_GUN_MARKER_DATA_PROVIDER)
+                                    spgDataProviderID=BINDING_ID.CLIENT_SPG_GUN_MARKER_DATA_PROVIDER,
+                                    assaultSpgDataProviderID=clientAssaultSpgDataProviderID)  # Lesta specific
 
     VANILLA_SERVER = VanillaReticle(markerNames=MarkerNames.createStandardMarkerNames(), gunMarkerType=2,
                                     reticleType=ReticleType.SERVER,
                                     markerLinkagesProvider=ReticleLinkages.greenLinkagesProvider,
                                     standardDataProviderID=BINDING_ID.SERVER_GUN_MARKER_DATA_PROVIDER,
-                                    spgDataProviderID=BINDING_ID.SERVER_SPG_GUN_MARKER_DATA_PROVIDER)
+                                    spgDataProviderID=BINDING_ID.SERVER_SPG_GUN_MARKER_DATA_PROVIDER,
+                                    assaultSpgDataProviderID=serverAssaultSpgDataProviderID)  # Lesta specific
 
     # purposely not using DUAL_ACC here because it's ... special
     # we don't need it anyway

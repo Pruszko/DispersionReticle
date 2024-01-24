@@ -37,13 +37,17 @@ from dispersionreticle.utils.reticle_registry import ReticleRegistry
 # additional controllers for new reticles.
 ###########################################################
 
-# gun_marker_ctrl
-@overrideIn(gun_marker_ctrl)
+@overrideIn(gun_marker_ctrl, clientType=ClientType.WG)
 def createGunMarker(func, isStrategic):
-    return createStrategicGunMarkers() if isStrategic else createDefaultGunMarkers()
+    return createStrategicGunMarker() if isStrategic else createDefaultGunMarker()
 
 
-def createStrategicGunMarkers():
+# Lesta specific
+#
+# on WG client it will only be called as standard "helper" method
+# on Lesta client it will become an override
+@overrideIn(gun_marker_ctrl, clientType=ClientType.LESTA)
+def createStrategicGunMarker(func=None):
     factory = _GunMarkersDPFactory()
 
     clientController = OverriddenSPGGunMarkerController(_MARKER_TYPE.CLIENT,
@@ -61,16 +65,23 @@ def createStrategicGunMarkers():
                                                              ReticleRegistry.DEBUG_SERVER.getSpgDataProvider(),
                                                              True)
 
-    focusedClientController = FocusedSPGGunMarkerController(ReticleRegistry.FOCUSED_CLIENT)
-    focusedServerController = FocusedSPGGunMarkerController(ReticleRegistry.FOCUSED_SERVER)
+    focusedClientController = FocusedSPGGunMarkerController(ReticleRegistry.FOCUSED_CLIENT,
+                                                            ReticleRegistry.FOCUSED_CLIENT.getSpgDataProvider())
+    focusedServerController = FocusedSPGGunMarkerController(ReticleRegistry.FOCUSED_SERVER,
+                                                            ReticleRegistry.FOCUSED_SERVER.getSpgDataProvider())
 
-    hybridClientController = HybridSPGGunMarkerController(ReticleRegistry.HYBRID_CLIENT)
-    hybridExtendedClientController = ExtendedHybridSPGGunMarkerController(ReticleRegistry.HYBRID_EXTENDED_CLIENT)
+    hybridClientController = HybridSPGGunMarkerController(ReticleRegistry.HYBRID_CLIENT,
+                                                          ReticleRegistry.HYBRID_CLIENT.getSpgDataProvider())
+    hybridExtendedClientController = ExtendedHybridSPGGunMarkerController(ReticleRegistry.HYBRID_EXTENDED_CLIENT,
+                                                                          ReticleRegistry.HYBRID_EXTENDED_CLIENT.getSpgDataProvider())
 
-    focusedExtendedClientController = ExtendedFocusedSPGGunMarkerController(ReticleRegistry.FOCUSED_EXTENDED_CLIENT)
-    focusedExtendedServerController = ExtendedFocusedSPGGunMarkerController(ReticleRegistry.FOCUSED_EXTENDED_SERVER)
+    focusedExtendedClientController = ExtendedFocusedSPGGunMarkerController(ReticleRegistry.FOCUSED_EXTENDED_CLIENT,
+                                                                            ReticleRegistry.FOCUSED_EXTENDED_CLIENT.getSpgDataProvider())
+    focusedExtendedServerController = ExtendedFocusedSPGGunMarkerController(ReticleRegistry.FOCUSED_EXTENDED_SERVER,
+                                                                            ReticleRegistry.FOCUSED_EXTENDED_SERVER.getSpgDataProvider())
 
-    serverExtendedServerController = ExtendedServerSPGGunMarkerController(ReticleRegistry.SERVER_EXTENDED_SERVER)
+    serverExtendedServerController = ExtendedServerSPGGunMarkerController(ReticleRegistry.SERVER_EXTENDED_SERVER,
+                                                                          ReticleRegistry.SERVER_EXTENDED_SERVER.getSpgDataProvider())
 
     return DispersionGunMarkersDecorator(clientController, serverController, dualAccController,
                                          debugServerController,
@@ -80,11 +91,17 @@ def createStrategicGunMarkers():
                                          serverExtendedServerController)
 
 
-def createDefaultGunMarkers():
+# Lesta specific
+#
+# on WG client it will only be called as standard "helper" method
+# on Lesta client it will become an override
+@overrideIn(gun_marker_ctrl, clientType=ClientType.LESTA)
+def createDefaultGunMarker(func=None):
     factory = _GunMarkersDPFactory()
 
     clientController = OverriddenDefaultGunMarkerController(_MARKER_TYPE.CLIENT,
-                                                            factory.getClientProvider(), False)
+                                                            factory.getClientProvider(),
+                                                            False)
     serverController = OverriddenDefaultGunMarkerController(_MARKER_TYPE.SERVER,
                                                             factory.getServerProvider(),
                                                             True)
@@ -99,16 +116,73 @@ def createDefaultGunMarkers():
                                                                  ReticleRegistry.DEBUG_SERVER.getStandardDataProvider(),
                                                                  True)
 
-    focusedClientController = FocusedDefaultGunMarkerController(ReticleRegistry.FOCUSED_CLIENT)
-    focusedServerController = FocusedDefaultGunMarkerController(ReticleRegistry.FOCUSED_SERVER)
+    focusedClientController = FocusedDefaultGunMarkerController(ReticleRegistry.FOCUSED_CLIENT,
+                                                                ReticleRegistry.FOCUSED_CLIENT.getStandardDataProvider())
+    focusedServerController = FocusedDefaultGunMarkerController(ReticleRegistry.FOCUSED_SERVER,
+                                                                ReticleRegistry.FOCUSED_SERVER.getStandardDataProvider())
 
-    hybridClientController = HybridDefaultGunMarkerController(ReticleRegistry.HYBRID_CLIENT)
-    hybridExtendedClientController = ExtendedHybridDefaultGunMarkerController(ReticleRegistry.HYBRID_EXTENDED_CLIENT)
+    hybridClientController = HybridDefaultGunMarkerController(ReticleRegistry.HYBRID_CLIENT,
+                                                              ReticleRegistry.HYBRID_CLIENT.getStandardDataProvider())
+    hybridExtendedClientController = ExtendedHybridDefaultGunMarkerController(ReticleRegistry.HYBRID_EXTENDED_CLIENT,
+                                                                              ReticleRegistry.HYBRID_EXTENDED_CLIENT.getStandardDataProvider())
 
-    focusedExtendedClientController = ExtendedFocusedDefaultGunMarkerController(ReticleRegistry.FOCUSED_EXTENDED_CLIENT)
-    focusedExtendedServerController = ExtendedFocusedDefaultGunMarkerController(ReticleRegistry.FOCUSED_EXTENDED_SERVER)
+    focusedExtendedClientController = ExtendedFocusedDefaultGunMarkerController(ReticleRegistry.FOCUSED_EXTENDED_CLIENT,
+                                                                                ReticleRegistry.FOCUSED_EXTENDED_CLIENT.getStandardDataProvider())
+    focusedExtendedServerController = ExtendedFocusedDefaultGunMarkerController(ReticleRegistry.FOCUSED_EXTENDED_SERVER,
+                                                                                ReticleRegistry.FOCUSED_EXTENDED_SERVER.getStandardDataProvider())
 
-    serverExtendedServerController = ExtendedServerDefaultGunMarkerController(ReticleRegistry.SERVER_EXTENDED_SERVER)
+    serverExtendedServerController = ExtendedServerDefaultGunMarkerController(ReticleRegistry.SERVER_EXTENDED_SERVER,
+                                                                              ReticleRegistry.SERVER_EXTENDED_SERVER.getStandardDataProvider())
+
+    return DispersionGunMarkersDecorator(clientController, serverController, dualAccController,
+                                         debugServerController,
+                                         focusedClientController, focusedServerController,
+                                         hybridClientController, hybridExtendedClientController,
+                                         focusedExtendedClientController, focusedExtendedServerController,
+                                         serverExtendedServerController)
+
+
+# Lesta specific
+#
+# on WG client it doesn't exist and won't be called
+# on Lesta client it should be very similar to createStrategicGunMarker(), except
+# it should use different data providers
+@overrideIn(gun_marker_ctrl, clientType=ClientType.LESTA)
+def createAssaultSpgGunMarker(func=None):
+    factory = _GunMarkersDPFactory()
+
+    clientController = OverriddenSPGGunMarkerController(_MARKER_TYPE.CLIENT,
+                                                        factory.getClientAssaultSPGProvider(),
+                                                        False)
+    serverController = OverriddenSPGGunMarkerController(_MARKER_TYPE.SERVER,
+                                                        factory.getServerAssaultSPGProvider(),
+                                                        True)
+
+    # this is what WG wrote
+    # I hope it won't collapse universe or something
+    dualAccController = _EmptyGunMarkerController(_MARKER_TYPE.UNDEFINED, None)
+
+    debugServerController = OverriddenSPGGunMarkerController(ReticleRegistry.DEBUG_SERVER.getGunMarkerType(),
+                                                             ReticleRegistry.DEBUG_SERVER.getAssaultSpgDataProvider(),
+                                                             True)
+
+    focusedClientController = FocusedSPGGunMarkerController(ReticleRegistry.FOCUSED_CLIENT,
+                                                            ReticleRegistry.FOCUSED_CLIENT.getAssaultSpgDataProvider())
+    focusedServerController = FocusedSPGGunMarkerController(ReticleRegistry.FOCUSED_SERVER,
+                                                            ReticleRegistry.FOCUSED_SERVER.getAssaultSpgDataProvider())
+
+    hybridClientController = HybridSPGGunMarkerController(ReticleRegistry.HYBRID_CLIENT,
+                                                          ReticleRegistry.HYBRID_CLIENT.getAssaultSpgDataProvider())
+    hybridExtendedClientController = ExtendedHybridSPGGunMarkerController(ReticleRegistry.HYBRID_EXTENDED_CLIENT,
+                                                                          ReticleRegistry.HYBRID_EXTENDED_CLIENT.getAssaultSpgDataProvider())
+
+    focusedExtendedClientController = ExtendedFocusedSPGGunMarkerController(ReticleRegistry.FOCUSED_EXTENDED_CLIENT,
+                                                                            ReticleRegistry.FOCUSED_EXTENDED_CLIENT.getAssaultSpgDataProvider())
+    focusedExtendedServerController = ExtendedFocusedSPGGunMarkerController(ReticleRegistry.FOCUSED_EXTENDED_SERVER,
+                                                                            ReticleRegistry.FOCUSED_EXTENDED_SERVER.getAssaultSpgDataProvider())
+
+    serverExtendedServerController = ExtendedServerSPGGunMarkerController(ReticleRegistry.SERVER_EXTENDED_SERVER,
+                                                                          ReticleRegistry.SERVER_EXTENDED_SERVER.getAssaultSpgDataProvider())
 
     return DispersionGunMarkersDecorator(clientController, serverController, dualAccController,
                                          debugServerController,
