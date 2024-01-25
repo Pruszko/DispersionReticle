@@ -37,7 +37,7 @@ from dispersionreticle.utils.reticle_registry import ReticleRegistry
 # additional controllers for new reticles.
 ###########################################################
 
-@overrideIn(gun_marker_ctrl, clientType=ClientType.WG)
+@overrideIn(gun_marker_ctrl, condition=isClientWG)
 def createGunMarker(func, isStrategic):
     return createStrategicGunMarker() if isStrategic else createDefaultGunMarker()
 
@@ -46,7 +46,7 @@ def createGunMarker(func, isStrategic):
 #
 # on WG client it will only be called as standard "helper" method
 # on Lesta client it will become an override
-@overrideIn(gun_marker_ctrl, clientType=ClientType.LESTA)
+@overrideIn(gun_marker_ctrl, condition=isClientLesta)
 def createStrategicGunMarker(func=None):
     factory = _GunMarkersDPFactory()
 
@@ -95,7 +95,7 @@ def createStrategicGunMarker(func=None):
 #
 # on WG client it will only be called as standard "helper" method
 # on Lesta client it will become an override
-@overrideIn(gun_marker_ctrl, clientType=ClientType.LESTA)
+@overrideIn(gun_marker_ctrl, condition=isClientLesta)
 def createDefaultGunMarker(func=None):
     factory = _GunMarkersDPFactory()
 
@@ -147,7 +147,7 @@ def createDefaultGunMarker(func=None):
 # on WG client it doesn't exist and won't be called
 # on Lesta client it should be very similar to createStrategicGunMarker(), except
 # it should use different data providers
-@overrideIn(gun_marker_ctrl, clientType=ClientType.LESTA)
+@overrideIn(gun_marker_ctrl, condition=isClientLesta)
 def createAssaultSpgGunMarker(func=None):
     factory = _GunMarkersDPFactory()
 

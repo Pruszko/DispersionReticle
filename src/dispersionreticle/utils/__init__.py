@@ -12,19 +12,21 @@ from dispersionreticle.settings.translations import Tr
 logger = logging.getLogger(__name__)
 
 
-class ClientType(object):
-    WG = "EU"
+class _ClientType(object):
+    EU = "EU"
+    CN = "CN"
+    ASIA = "ASIA"
     LESTA = "RU"
 
 
-def overrideIn(cls, clientType=None, onlyWhenDebugging=False):
+def overrideIn(cls, condition=lambda: True, onlyWhenDebugging=False):
     from dispersionreticle.utils import debug_state
 
     def _overrideMethod(func):
         if onlyWhenDebugging and not debug_state.IS_DEBUGGING:
             return func
 
-        if clientType is not None and clientType != CURRENT_REALM:
+        if not condition():
             return func
 
         funcName = func.__name__
@@ -43,11 +45,11 @@ def overrideIn(cls, clientType=None, onlyWhenDebugging=False):
 
 
 # Utility decorator to add new function in certain class/module
-def addMethodTo(cls, onlyWhenDebugging=False):
+def addMethodTo(cls, condition=lambda: True):
     from dispersionreticle.utils import debug_state
 
     def _overrideMethod(func):
-        if onlyWhenDebugging and not debug_state.IS_DEBUGGING:
+        if not condition():
             return func
 
         setattr(cls, func.__name__, func)
@@ -60,11 +62,13 @@ def getClientType():
 
 
 def isClientWG():
-    return CURRENT_REALM == ClientType.WG
+    return CURRENT_REALM == _ClientType.EU \
+        or CURRENT_REALM == _ClientType.ASIA \
+        or CURRENT_REALM == _ClientType.CN
 
 
 def isClientLesta():
-    return CURRENT_REALM == ClientType.LESTA
+    return CURRENT_REALM == _ClientType.LESTA
 
 
 @wg_async

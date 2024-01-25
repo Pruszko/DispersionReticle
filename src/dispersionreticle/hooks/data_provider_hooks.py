@@ -66,7 +66,7 @@ def _getSPGDataProvider(func, self, markerType):
 
 # Lesta specific
 # it won't be called on WG client
-@overrideIn(_GunMarkersFactory, clientType=ClientType.LESTA)
+@overrideIn(_GunMarkersFactory, condition=isClientLesta)
 def _getAssaultSPGDataProvider(func, self, markerType):
     if markerType is GUN_MARKER_TYPE.SERVER:
         return self._markersInfo.serverAssaultSPGMarkerDataProvider

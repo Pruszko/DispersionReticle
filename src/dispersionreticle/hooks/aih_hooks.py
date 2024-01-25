@@ -57,14 +57,14 @@ def updateServerGunMarker(func, self, pos, direction, size, relaxTime, collData)
 # I don't even know how it will be used
 
 
-@overrideIn(AvatarInputHandler.AvatarInputHandler, clientType=ClientType.WG)
+@overrideIn(AvatarInputHandler.AvatarInputHandler, condition=isClientWG)
 def __onArenaStarted(func, self, period, *args):
     common_onArenaStarted(func, self, period, *args)
 
 
 # Lesta specific
 # changed method name
-@overrideIn(AvatarInputHandler.AvatarInputHandler, clientType=ClientType.LESTA)
+@overrideIn(AvatarInputHandler.AvatarInputHandler, condition=isClientLesta)
 def _onArenaStarted(func, self, period, *args):
     common_onArenaStarted(func, self, period, *args)
 
