@@ -12,13 +12,6 @@ from dispersionreticle.settings.translations import Tr
 logger = logging.getLogger(__name__)
 
 
-class _ClientType(object):
-    EU = "EU"
-    CN = "CN"
-    ASIA = "ASIA"
-    LESTA = "RU"
-
-
 def overrideIn(cls, condition=lambda: True, onlyWhenDebugging=False):
     from dispersionreticle.utils import debug_state
 
@@ -62,13 +55,11 @@ def getClientType():
 
 
 def isClientWG():
-    return CURRENT_REALM == _ClientType.EU \
-        or CURRENT_REALM == _ClientType.ASIA \
-        or CURRENT_REALM == _ClientType.CN
+    return not isClientLesta()
 
 
 def isClientLesta():
-    return CURRENT_REALM == _ClientType.LESTA
+    return CURRENT_REALM == "RU"
 
 
 @wg_async
