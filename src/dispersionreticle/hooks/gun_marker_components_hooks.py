@@ -1,9 +1,10 @@
 from gui.Scaleform.daapi.view.battle.shared.crosshair import gm_components
-from gui.Scaleform.daapi.view.battle.shared.crosshair.gm_components import GunMarkersComponents, GunMarkerComponent
+from gui.Scaleform.daapi.view.battle.shared.crosshair.gm_components import GunMarkersComponents, GunMarkerComponent, \
+    DefaultGunMarkerComponent
 from gui.Scaleform.genConsts.GUN_MARKER_VIEW_CONSTANTS import GUN_MARKER_VIEW_CONSTANTS as _CONSTANTS
 
 from dispersionreticle.flash.dispersion_reticle_flash import DispersionReticleFlash
-from dispersionreticle.utils import overrideIn
+from dispersionreticle.utils import *
 from dispersionreticle.utils.reticle_registry import ReticleRegistry
 
 
@@ -141,3 +142,88 @@ def getViewSettings(func, self):
     viewSettings = func(self)
     viewSettings.sort(key=positionInPriorityList, reverse=True)
     return viewSettings
+
+
+# WG specific
+# AimDamageUI is not present on Lesta -> avoid fixing it there
+@overrideIn(DefaultGunMarkerComponent, condition=isClientWG)
+def _createView(func, self, container):
+    wgCrosshairFlash = func(self, container)
+
+    # EU WoT 1.25.1.0 added AimDamageUI object to GunMarker (and variants)
+    # which holds ZoomingAimDamageUI with alpha == 1.0
+    # which fades from 1.0 to 0.0 in around 0.5 second
+    # (fading is probably done in invisible code in GUI.WGCrosshairFlash, because that logic is nowhere)
+    #
+    # this causes displaying a "yellow cross marker" of this object for that 0.5 second
+    # immediately after gun marker is instantiated
+    # and because markers are destroyed/created on auto-aiming in this mod, this yellow cross marker
+    # would always be displayed on auto-aim clicking (which it shouldn't)
+    #
+    # in vanilla WoT it doesn't happen, because gun markers
+    # are created ONLY ONCE and ONLY at the start of 30 sec battle countdown
+    # and during that period they are invisible anyway, so bug is not displayed as well
+    #
+    # by this hacky override, we will forcefully set alpha = 0.0 to this object python-side
+    # to immediately stop it from displaying after gun marker instantiation
+    immediatelyFadeOutZoomingAimDamageUI(self._name, wgCrosshairFlash)
+
+    return wgCrosshairFlash
+
+
+def immediatelyFadeOutZoomingAimDamageUI(gunMarkerName, anyCrosshairFlash):
+    # all paths taken from CROSSHAIR_ROOT_PATH and CROSSHAIR_ITEM_PATH_FORMAT
+    # and battleCrosshairsApp.swf itself
+    battleCrosshairsApp = anyCrosshairFlash.movie._level0.root
+
+    # I don't believe that I would ever feel obligated
+    # to explain 4 lines of code WITH 40 LINES of comments
+    # because of how abnormal crosshairs app is
+    #
+    # those below commented lines of code at first might look like they work on gun markers
+    # HOWEVER, nothing changes, it's like they exist there, changes are applied,
+    # but "something" other is actually displayed, but not our changes
+    #
+    # I don't know why, I don't want to know why, and I don't want to know what is actually happening
+    # but it initially took me like 3 days to partially find out
+    # probably GUI.WGCrosshairFlash internally messes "main" prop
+    # and magically CrosshairPanelContainer IS ACTUALLY there with ALL MARKERS
+    # but in some fucking superposition or something
+    # for some reason it is not the same as actual child of BattleCrosshairsApp (???)
+    #
+    # also, interesting fact, there are probably MANY CrosshairPanelContainer
+    # however, in app's children, there exists only one
+    # I don't know where the heck are the other panels and where they actually are in hierarchy, but
+    # one of them (who knows which) is in "main" prop of BattleCrosshairsApp
+    # with NOT SHOWING dispersion reticles BUT SOMEHOW displaying crosshair interface of the other panel (?????)
+    # and the proper one holding dispersion reticles is in app's children probably with invisible panel (???????)
+    #
+    # what? why? or how? what happened?
+    # the answer is - I don't know
+    # I accidentally noticed that as "a little bit more transparent" crosshair interface
+    # than it was before replay rewind when I was doing coloring tests with like 300 attempts of finding issue
+    # those "redundant" panels are probably invisible or something
+    # or visible?, I don't know what's happening to them
+
+    # NOT WORKING SAMPLE CODE (changes are not applied, but gun markers and all its objects are magically present)
+    # crosshairPanelContainer = battleCrosshairsApp.main
+    #
+    # gunMarker = getattr(crosshairPanelContainer, gunMarkerName)
+    # gunMarker.aimDamage.zoomingAim.alpha = 0.0
+
+    # A WORKAROUND WORKING CODE
+    # instead of using "main" prop, we will access CrosshairPanelContainer
+    # by simple loop of BattleCrosshairsApp children
+    # again I don't know why and I don't want to know why this works
+    # because "battleCrosshairsApp.numChildren" actually equals 1
+    # "it just works"
+    for childrenIndex in range(0, battleCrosshairsApp.numChildren):
+        childCrosshairPanelContainer = battleCrosshairsApp.getChildAt(childrenIndex)
+
+        # interesting DAAPI feature
+        # you can access named DisplayObject added to containers by "prop request" call
+        # GUI.WGCrosshairFlash uses it to access GunMarker instances in CrosshairPanelContainer
+        # took me a longer time to actually notice that nuance
+        gunMarker = getattr(childCrosshairPanelContainer, gunMarkerName)
+
+        gunMarker.aimDamage.zoomingAim.alpha = 0.0
