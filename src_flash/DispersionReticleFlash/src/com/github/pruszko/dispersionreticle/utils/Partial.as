@@ -2,17 +2,17 @@ package com.github.pruszko.dispersionreticle.utils
 {
 	import flash.utils.getTimer;
 	
-	public class DisposablePartial implements Disposable
+	public class Partial implements Disposable
 	{
 		
-		private var _partialValues:Vector.<DisposablePartialValue> = new Vector.<DisposablePartialValue>();
+		private var _partialValues:Vector.<PartialValue> = new Vector.<PartialValue>();
 		
 		private var _lastTimeMilliseconds:int = getTimer();
 		private var _tickMilliseconds:Number;
 		
 		private var _partialScale:Number = 1.0;
 		
-		public function DisposablePartial(tickMilliseconds:Number) 
+		public function Partial(tickMilliseconds:Number) 
 		{
 			super();
 			
@@ -21,16 +21,16 @@ package com.github.pruszko.dispersionreticle.utils
 		
 		public function disposeState() : void
 		{
-			for (var i:int = 0; i < _partialValues.length; ++i)
+			for (var i:int = 0; i < this._partialValues.length; ++i)
 			{
-				_partialValues[i].disposeState();
+				this._partialValues[i].disposeState();
 			}
 			
-			_partialValues.splice(0, _partialValues.length);
-			_partialValues = null;
+			this._partialValues.splice(0, this._partialValues.length);
+			this._partialValues = null;
 		}
 		
-		internal function append(partialValue:DisposablePartialValue) : void
+		internal function append(partialValue:PartialValue) : void
 		{
 			this._partialValues.push(partialValue);
 		}
@@ -58,7 +58,7 @@ package com.github.pruszko.dispersionreticle.utils
 		
 		public function interpolate(prevValue:Number, value:Number) : Number
 		{
-			return prevValue + value * _partialScale - prevValue * _partialScale;
+			return prevValue + value * this._partialScale - prevValue * this._partialScale;
 		}
 		
 	}

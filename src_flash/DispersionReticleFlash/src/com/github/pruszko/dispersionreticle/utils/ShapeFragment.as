@@ -2,7 +2,7 @@ package com.github.pruszko.dispersionreticle.utils
 {
 	import flash.display.Shape;
 	
-	public class DisposableShapeFragment implements Disposable
+	public class ShapeFragment implements Disposable
 	{
 		
 		private var _shape:Shape;
@@ -13,7 +13,7 @@ package com.github.pruszko.dispersionreticle.utils
 		private var _angleSin:Number = 0.0;
 		private var _angleCos:Number = 1.0;
 		
-		public function DisposableShapeFragment(shape:Shape) 
+		public function ShapeFragment(shape:Shape) 
 		{
 			super();
 			this._shape = shape;
@@ -23,7 +23,7 @@ package com.github.pruszko.dispersionreticle.utils
 		
 		public function disposeState() : void
 		{
-			_shape = null;
+			this._shape = null;
 		}
 		
 		public function setAnchor(anchorX:Number, anchorY:Number) : void
@@ -34,7 +34,7 @@ package com.github.pruszko.dispersionreticle.utils
 		
 		public function setAngleDeg(angleDeg:Number) : void
 		{
-			setAngleRad(Math.PI * angleDeg / 180.0);
+			this.setAngleRad(Math.PI * angleDeg / 180.0);
 		}
 		
 		public function setAngleRad(angleRad:Number) : void
@@ -45,44 +45,44 @@ package com.github.pruszko.dispersionreticle.utils
 		
 		public function moveTo(x:Number, y:Number) : void
 		{
-			x -= _anchorX;
-			y -= _anchorY;
+			x -= this._anchorX;
+			y -= this._anchorY;
 			
-			var newX:Number = x * _angleCos - y * _angleSin;
-			var newY:Number = x * _angleSin + y * _angleCos;
+			var newX:Number = x * this._angleCos - y * this._angleSin;
+			var newY:Number = x * this._angleSin + y * this._angleCos;
 			
-			x = _anchorX + newX;
-			y = _anchorY + newY;
+			x = this._anchorX + newX;
+			y = this._anchorY + newY;
 			
-			_shape.graphics.moveTo(x, y);
+			this._shape.graphics.moveTo(x, y);
 		}
 		
 		public function lineTo(x:Number, y:Number) : void
 		{
-			x -= _anchorX;
-			y -= _anchorY;
+			x -= this._anchorX;
+			y -= this._anchorY;
 			
-			var newX:Number = x * _angleCos - y * _angleSin;
-			var newY:Number = x * _angleSin + y * _angleCos;
+			var newX:Number = x * this._angleCos - y * this._angleSin;
+			var newY:Number = x * this._angleSin + y * this._angleCos;
 			
-			x = _anchorX + newX;
-			y = _anchorY + newY;
+			x = this._anchorX + newX;
+			y = this._anchorY + newY;
 			
-			_shape.graphics.lineTo(x, y);
+			this._shape.graphics.lineTo(x, y);
 		}
 		
 		public function drawCircle(x:Number, y:Number, radius:Number) : void
 		{
-			x -= _anchorX;
-			y -= _anchorY;
+			x -= this._anchorX;
+			y -= this._anchorY;
 			
-			var newX:Number = x * _angleCos - y * _angleSin;
-			var newY:Number = x * _angleSin + y * _angleCos;
+			var newX:Number = x * this._angleCos - y * this._angleSin;
+			var newY:Number = x * this._angleSin + y * this._angleCos;
 			
-			x = _anchorX + newX;
-			y = _anchorY + newY;
+			x = this._anchorX + newX;
+			y = this._anchorY + newY;
 			
-			_shape.graphics.drawCircle(x, y, radius);
+			this._shape.graphics.drawCircle(x, y, radius);
 		}
 		
 	}

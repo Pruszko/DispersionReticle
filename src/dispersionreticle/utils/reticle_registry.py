@@ -1,8 +1,7 @@
 from AvatarInputHandler.aih_global_binding import BINDING_ID
 
-from dispersionreticle.settings.config_param import g_configParams
 from dispersionreticle.utils import isClientLesta
-from dispersionreticle.utils.reticle_properties import ReticleType, ReticleLinkages, MarkerNames
+from dispersionreticle.utils.reticle_types import ReticleSide, ReticleTypes
 from dispersionreticle.utils.reticle_types.vanilla_reticle import VanillaReticle
 from dispersionreticle.utils.reticle_types.extended_reticle import ExtendedReticle
 from dispersionreticle.utils.reticle_types.overridden_reticle import OverriddenReticle
@@ -19,19 +18,66 @@ else:
     serverAssaultSpgDataProviderID = None
 
 
+# Relations between reticles, reticle types, gun marker types, gun marker names, marker linkages and data providers are:
+# - each reticle type has one or two reticles (gun marker type): client and/or server ones
+# - each gun marker type has one data provider
+# - client and server gun marker types of one reticle type have one shared set of gun marker names (in vanilla game)
+# - each gun marker name is bound to one marker linkage
+# - marker linkage can be used multiple times and determines properties of vanilla reticle
+#
+# For us, there must be 2 reticles (or at least one client-side) for each reticle type (one gun marker names set),
+# because vanilla reticles does this trick:
+# - when we start auto-aiming, vanilla server reticle (if "Use server aim" is checked) becomes client reticle
+#     but still uses same gun marker names
+#     in result, it "inherits" server reticle markers, without recreating it
+# - vanilla simple _DevControlMarkersFactory (the one displaying both client and server reticles) violates this
+#     by assigning its one set of gun marker names to client reticle
+#     and use separate gun marker names for vanilla server reticle
+#     but this results in server reticle being destroyed/created on auto-aiming
+#     due to gunMarkerFlag.serverMode becoming False
+#     which is undesirable for us
+#
+# We don't want to destroy/create markers for several reasons (written at the end)
+# so to avoid this, following code contract is made:
+# - all server reticles (vanilla or our custom ones) must have client reticle counterpart
+#     and become those client reticles on auto-aiming by sharing same gun marker names
+#     so when auto-aiming (gunMarkerFlags.serverMode becomes False), they will "inherit" those gun markers
+#     from server reticle, without recreating it
+#     this is done by DispersionGunMarkersDecorator
+# - all necessary reticle instances selected in config MUST be present all the time
+#     to maintain exact rendering order, even if gunMarkerFlags.serverMode becomes False to avoid destroying them
+# - when config is changed, all markers MUST be fully destroyed and created again in our defined rendering order
+# - standard gun marker invalidation process MUST NOT be changed
+#     but also MUST result in unchanged gun markers set (at least for reticles that are important for us)
+#
+# Marker destroy/create approach has several drawbacks:
+# - (noticeable, unfixable) when playing Czech light tanks, yellow cross marker would be temporarily displayed
+#     on marker creation with alpha 1.0
+#     and we CANNOT fix this, because WG.CrosshairFlash has its script object (BW::ScriptObject)
+#     inside BigWorld engine and that yellow cross marker fading logic is somewhere there, inaccessible
+#     if we try to instantly fade its alpha externally (by using DAAPI's MovieClip and accessing it via public props)
+#     then BW::ScriptObject for some reason loses control over it, resulting in absent yellow marker permanently
+# - (big, awkward to fix) when auto-aiming, server reticles would have to be destroyed without client-side counterpart
+#     because in DispersionGunMarkersDecorator we cannot easily distinguish client-side update from server-side one
+#     without different gun marker type passed as parameter
+# - (small, partially fixable) when aiming at vehicle and clicking auto-aim, penetration indicator becomes red
+#     it is fixable by invalidating its cache, but will still result in one rendering frame of invalid state
+# - (small, unfixable) when auto-aiming, full destroy/create of markers would blink for one rendering frame
+#     because during one frame they wouldn't be present yet
+# - (small, unfixable) game rarely randomly invalidates gun marker set (saw that sometimes, but don't know the reason)
+#     which would result in random destroy/create of markers what can be perceived as blinking reticle
+
 class ReticleRegistry(object):
 
     # used only as reference
-    VANILLA_CLIENT = VanillaReticle(markerNames=MarkerNames.createStandardMarkerNames(), gunMarkerType=1,
-                                    reticleType=ReticleType.CLIENT,
-                                    markerLinkagesProvider=ReticleLinkages.greenLinkagesProvider,
+    VANILLA_CLIENT = VanillaReticle(reticleType=ReticleTypes.VANILLA, gunMarkerType=1,
+                                    reticleSide=ReticleSide.CLIENT,
                                     standardDataProviderID=BINDING_ID.CLIENT_GUN_MARKER_DATA_PROVIDER,
                                     spgDataProviderID=BINDING_ID.CLIENT_SPG_GUN_MARKER_DATA_PROVIDER,
                                     assaultSpgDataProviderID=clientAssaultSpgDataProviderID)  # Lesta specific
 
-    VANILLA_SERVER = VanillaReticle(markerNames=MarkerNames.createStandardMarkerNames(), gunMarkerType=2,
-                                    reticleType=ReticleType.SERVER,
-                                    markerLinkagesProvider=ReticleLinkages.greenLinkagesProvider,
+    VANILLA_SERVER = VanillaReticle(reticleType=ReticleTypes.VANILLA, gunMarkerType=2,
+                                    reticleSide=ReticleSide.SERVER,
                                     standardDataProviderID=BINDING_ID.SERVER_GUN_MARKER_DATA_PROVIDER,
                                     spgDataProviderID=BINDING_ID.SERVER_SPG_GUN_MARKER_DATA_PROVIDER,
                                     assaultSpgDataProviderID=serverAssaultSpgDataProviderID)  # Lesta specific
@@ -44,59 +90,42 @@ class ReticleRegistry(object):
     # from in-game settings would be purple (it should be always green)
     #
     # by this, we also have better control over rendering order
-    #
-    # this is due to WG code using same marker names for VANILLA_CLIENT and VANILLA_SERVER reticles
-    # what is problematic when we want to distinguish reticles by marker names
-    DEBUG_SERVER = OverriddenReticle(nameSuffix="ServerDebug", gunMarkerType=4,
-                                     reticleType=ReticleType.SERVER,
-                                     markerLinkagesProvider=ReticleLinkages.createParamLinkagesProvider(g_configParams.serverReticleType))
+    DEBUG_CLIENT = OverriddenReticle(reticleType=ReticleTypes.DEBUG_SERVER, gunMarkerType=4,
+                                     reticleSide=ReticleSide.CLIENT)
 
-    FOCUSED_CLIENT = OverriddenReticle(nameSuffix="ClientFocused", gunMarkerType=5,
-                                       reticleType=ReticleType.CLIENT,
-                                       markerLinkagesProvider=ReticleLinkages.createParamLinkagesProvider(g_configParams.focusedReticleType))
+    DEBUG_SERVER = OverriddenReticle(reticleType=ReticleTypes.DEBUG_SERVER, gunMarkerType=5,
+                                     reticleSide=ReticleSide.SERVER)
 
-    FOCUSED_SERVER = OverriddenReticle(nameSuffix="ServerFocused", gunMarkerType=6,
-                                       reticleType=ReticleType.SERVER,
-                                       markerLinkagesProvider=ReticleLinkages.createParamLinkagesProvider(g_configParams.focusedReticleType))
+    FOCUSED_CLIENT = OverriddenReticle(reticleType=ReticleTypes.FOCUSED, gunMarkerType=6,
+                                       reticleSide=ReticleSide.CLIENT)
 
-    HYBRID_CLIENT = OverriddenReticle(nameSuffix="ClientHybrid", gunMarkerType=7,
-                                      reticleType=ReticleType.CLIENT,
-                                      markerLinkagesProvider=ReticleLinkages.createParamLinkagesProvider(g_configParams.hybridReticleType))
+    FOCUSED_SERVER = OverriddenReticle(reticleType=ReticleTypes.FOCUSED, gunMarkerType=7,
+                                       reticleSide=ReticleSide.SERVER)
 
-    FOCUSED_EXTENDED_CLIENT = ExtendedReticle(nameSuffix="ClientFocusedExtended", gunMarkerType=8,
-                                              reticleType=ReticleType.CLIENT,
-                                              markerLinkagesProvider=FOCUSED_CLIENT._markerLinkagesProvider,
-                                              layerProvider=g_configParams.focusedReticleExtendedLayer)
+    HYBRID_CLIENT = OverriddenReticle(reticleType=ReticleTypes.HYBRID, gunMarkerType=8,
+                                      reticleSide=ReticleSide.CLIENT)
 
-    FOCUSED_EXTENDED_SERVER = ExtendedReticle(nameSuffix="ServerFocusedExtended", gunMarkerType=9,
-                                              reticleType=ReticleType.SERVER,
-                                              markerLinkagesProvider=FOCUSED_SERVER._markerLinkagesProvider,
-                                              layerProvider=g_configParams.focusedReticleExtendedLayer)
+    FOCUSED_EXTENDED_CLIENT = ExtendedReticle(reticleType=ReticleTypes.FOCUSED_EXTENDED, gunMarkerType=9,
+                                              reticleSide=ReticleSide.CLIENT)
 
-    HYBRID_EXTENDED_CLIENT = ExtendedReticle(nameSuffix="ClientHybridExtended", gunMarkerType=10,
-                                             reticleType=ReticleType.CLIENT,
-                                             markerLinkagesProvider=HYBRID_CLIENT._markerLinkagesProvider,
-                                             layerProvider=g_configParams.hybridReticleExtendedLayer)
+    FOCUSED_EXTENDED_SERVER = ExtendedReticle(reticleType=ReticleTypes.FOCUSED_EXTENDED, gunMarkerType=10,
+                                              reticleSide=ReticleSide.SERVER)
 
-    # I know it sounds dumb, but it is server "server-reticle-extended", so ...
-    SERVER_EXTENDED_SERVER = ExtendedReticle(nameSuffix="ServerServerExtended", gunMarkerType=11,
-                                             reticleType=ReticleType.SERVER,
-                                             markerLinkagesProvider=DEBUG_SERVER._markerLinkagesProvider,
-                                             layerProvider=g_configParams.serverReticleExtendedLayer)
+    HYBRID_EXTENDED_CLIENT = ExtendedReticle(reticleType=ReticleTypes.HYBRID_EXTENDED, gunMarkerType=11,
+                                             reticleSide=ReticleSide.CLIENT)
 
-    OVERRIDDEN_RETICLES = [DEBUG_SERVER, FOCUSED_CLIENT, FOCUSED_SERVER, HYBRID_CLIENT]
+    # I know it sounds dumb, but it is client/server "server-reticle-extended", so ...
+    SERVER_EXTENDED_CLIENT = ExtendedReticle(reticleType=ReticleTypes.SERVER_EXTENDED, gunMarkerType=12,
+                                             reticleSide=ReticleSide.CLIENT)
+
+    SERVER_EXTENDED_SERVER = ExtendedReticle(reticleType=ReticleTypes.SERVER_EXTENDED, gunMarkerType=13,
+                                             reticleSide=ReticleSide.SERVER)
+
+    OVERRIDDEN_RETICLES = [DEBUG_CLIENT, DEBUG_SERVER, FOCUSED_CLIENT, FOCUSED_SERVER, HYBRID_CLIENT]
 
     EXTENDED_RETICLES = [FOCUSED_EXTENDED_CLIENT, FOCUSED_EXTENDED_SERVER, HYBRID_EXTENDED_CLIENT,
-                         SERVER_EXTENDED_SERVER]
+                         SERVER_EXTENDED_CLIENT, SERVER_EXTENDED_SERVER]
 
     ADDITIONAL_RETICLES = OVERRIDDEN_RETICLES + EXTENDED_RETICLES
 
     ALL_RETICLES = [VANILLA_CLIENT, VANILLA_SERVER] + ADDITIONAL_RETICLES
-
-    @staticmethod
-    def getReticleByFlashMarkerName(markerName):
-        for reticle in ReticleRegistry.EXTENDED_RETICLES:
-            if markerName in reticle.getFlashMarkerNames():
-                return reticle
-
-        return None

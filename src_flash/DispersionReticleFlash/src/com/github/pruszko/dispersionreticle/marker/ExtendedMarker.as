@@ -1,43 +1,43 @@
 package com.github.pruszko.dispersionreticle.marker 
 {
 	import com.github.pruszko.dispersionreticle.DispersionReticleFlash;
-	import com.github.pruszko.dispersionreticle.config.marker.DisposableExtendedMarkerConfig;
-	import com.github.pruszko.dispersionreticle.marker.extended.CircleStatefulRenderer;
-	import com.github.pruszko.dispersionreticle.marker.extended.DashedStatefulRenderer;
-	import com.github.pruszko.dispersionreticle.marker.extended.PentagonStatefulRenderer;
-	import com.github.pruszko.dispersionreticle.marker.extended.StatefulRenderer;
-	import com.github.pruszko.dispersionreticle.marker.extended.TShapeStatefulRenderer;
-	import com.github.pruszko.dispersionreticle.utils.DisposableCustomShape;
+	import com.github.pruszko.dispersionreticle.config.marker.ExtendedMarkerConfig;
+	import com.github.pruszko.dispersionreticle.marker.extended.CircleMarkerRenderer;
+	import com.github.pruszko.dispersionreticle.marker.extended.DashedMarkerRenderer;
+	import com.github.pruszko.dispersionreticle.marker.extended.PentagonMarkerRenderer;
+	import com.github.pruszko.dispersionreticle.marker.extended.MarkerRenderer;
+	import com.github.pruszko.dispersionreticle.marker.extended.TShapeMarkerRenderer;
+	import com.github.pruszko.dispersionreticle.utils.CustomShape;
 	import flash.display.Sprite;
 	import flash.display.BlendMode;
 	import flash.display.LineScaleMode;
 	
-	public class ExtendedStatefulMarker extends StatefulMarker
+	public class ExtendedMarker extends Marker
 	{
 		
-		private var _config:DisposableExtendedMarkerConfig;
+		private var _config:ExtendedMarkerConfig;
 		
-		private var _shape:DisposableCustomShape;
-		private var _outlineShape:DisposableCustomShape;
+		private var _shape:CustomShape;
+		private var _outlineShape:CustomShape;
 		private var _statefulRenderers:Object;
 		
-		public function ExtendedStatefulMarker(app:DispersionReticleFlash, gunMarkerType:int, extendedMarkerConfig:DisposableExtendedMarkerConfig)
+		public function ExtendedMarker(app:DispersionReticleFlash, reticleId:int, extendedMarkerConfig:ExtendedMarkerConfig)
 		{
-			super(app, gunMarkerType);
+			super(app, reticleId);
 			
 			this._config = extendedMarkerConfig;
 			
-			this._shape = new DisposableCustomShape()
+			this._shape = new CustomShape()
 			this.addChild(_shape);
 			
-			this._outlineShape = new DisposableCustomShape();
+			this._outlineShape = new CustomShape();
 			this.addChild(_outlineShape);
 			
 			this._statefulRenderers = {
-				"pentagon": new PentagonStatefulRenderer(this),
-				"t-shape": new TShapeStatefulRenderer(this),
-				"circle": new CircleStatefulRenderer(this),
-				"dashed": new DashedStatefulRenderer(this)
+				"pentagon": new PentagonMarkerRenderer(this),
+				"t-shape": new TShapeMarkerRenderer(this),
+				"circle": new CircleMarkerRenderer(this),
+				"dashed": new DashedMarkerRenderer(this)
 			};
 		}
 		
@@ -83,7 +83,7 @@ package com.github.pruszko.dispersionreticle.marker
 			this.currentRenderer.renderState();
 		}
 		
-		private function get currentRenderer() : StatefulRenderer
+		private function get currentRenderer() : MarkerRenderer
 		{
 			if (this._statefulRenderers.hasOwnProperty(this._config.shape))
 			{
@@ -94,17 +94,17 @@ package com.github.pruszko.dispersionreticle.marker
 			return this._statefulRenderers["pentagon"];
 		}
 		
-		public function get shape() : DisposableCustomShape
+		public function get shape() : CustomShape
 		{
 			return this._shape;
 		}
 		
-		public function get outlineShape() : DisposableCustomShape
+		public function get outlineShape() : CustomShape
 		{
 			return this._outlineShape;
 		}
 		
-		public function get config() : DisposableExtendedMarkerConfig
+		public function get config() :ExtendedMarkerConfig
 		{
 			return this._config;
 		}

@@ -31,4 +31,4 @@ def __setGunMarkerState(func, self, markerType, value):
 
     for reticle in ReticleRegistry.ADDITIONAL_RETICLES:
         if reticle.isServerReticle() == isServerMarkerStateUpdate:
-            self.onGunMarkerStateChanged(reticle.getGunMarkerType(), *value)
+            self.onGunMarkerStateChanged(reticle.gunMarkerType, *value)

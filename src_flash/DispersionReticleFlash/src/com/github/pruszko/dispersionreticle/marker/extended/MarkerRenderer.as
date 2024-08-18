@@ -1,19 +1,19 @@
 package com.github.pruszko.dispersionreticle.marker.extended 
 {
 	import com.github.pruszko.dispersionreticle.DispersionReticleFlash;
-	import com.github.pruszko.dispersionreticle.config.marker.DisposableExtendedMarkerConfig;
-	import com.github.pruszko.dispersionreticle.marker.ExtendedStatefulMarker;
-	import com.github.pruszko.dispersionreticle.utils.DisposableCustomShape;
+	import com.github.pruszko.dispersionreticle.config.marker.ExtendedMarkerConfig;
+	import com.github.pruszko.dispersionreticle.marker.ExtendedMarker;
+	import com.github.pruszko.dispersionreticle.utils.CustomShape;
 	import com.github.pruszko.dispersionreticle.utils.Stateful;
 	import com.github.pruszko.dispersionreticle.utils.Utils;
 	
 	
-	public class StatefulRenderer implements Stateful
+	public class MarkerRenderer implements Stateful
 	{
 		
-		private var _extendedMarker:ExtendedStatefulMarker;
+		private var _extendedMarker:ExtendedMarker;
 		
-		public function StatefulRenderer(extendedMarker:ExtendedStatefulMarker) 
+		public function MarkerRenderer(extendedMarker:ExtendedMarker) 
 		{
 			this._extendedMarker = extendedMarker;
 		}
@@ -33,7 +33,7 @@ package com.github.pruszko.dispersionreticle.marker.extended
 			
 		}
 		
-		protected function get extendedMarker() : ExtendedStatefulMarker
+		protected function get extendedMarker() : ExtendedMarker
 		{
 			return this._extendedMarker;
 		}
@@ -43,12 +43,12 @@ package com.github.pruszko.dispersionreticle.marker.extended
 			return this.extendedMarker.app;
 		}
 		
-		protected function get shape() : DisposableCustomShape
+		protected function get shape() : CustomShape
 		{
 			return this.extendedMarker.shape;
 		}
 		
-		protected function get outlineShape() : DisposableCustomShape
+		protected function get outlineShape() : CustomShape
 		{
 			return this.extendedMarker.outlineShape;
 		}
@@ -57,7 +57,7 @@ package com.github.pruszko.dispersionreticle.marker.extended
 		// this scalling for figure-based shapes
 		// and exactly this function works perfectly.
 		//
-		// At first there was something resembling "logarithmic fuction" (no, it wasn't):
+		// At first there was something resembling "logarithmic function" (no, it wasn't):
 		// Y = value * (100.0 + reticleSize) / 100.0
 		// however, when reticleSize was small, shape was too big
 		// covering most part of default reticles due to quite large initial size.
@@ -82,7 +82,7 @@ package com.github.pruszko.dispersionreticle.marker.extended
 			return this.extendedMarker.reticleRadius;
 		}
 		
-		protected function get config() : DisposableExtendedMarkerConfig
+		protected function get config() : ExtendedMarkerConfig
 		{
 			return this.extendedMarker.config;
 		}

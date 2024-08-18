@@ -11,7 +11,7 @@ from dispersionreticle.settings.migrations import performConfigMigrations
 from dispersionreticle.utils import *
 from dispersionreticle.utils import debug_state
 from dispersionreticle.utils.debug_state import g_debugStateCollector
-from dispersionreticle.utils.reticle_registry import ReticleRegistry
+from dispersionreticle.utils.reticle_types import ReticleTypes
 
 logger = logging.getLogger(__name__)
 
@@ -97,8 +97,8 @@ class Config(object):
                           "Contact mod developer for further support with provided logs.")
 
     def refreshGameState(self):
-        for reticle in ReticleRegistry.ADDITIONAL_RETICLES:
-            reticle.refreshLinkages()
+        for reticleType in ReticleTypes.ADDITIONAL_RETICLE_TYPES:
+            reticleType.refreshLinkages()
 
         self.onConfigReload()
 

@@ -1,16 +1,16 @@
 package com.github.pruszko.dispersionreticle.marker 
 {
 	import com.github.pruszko.dispersionreticle.DispersionReticleFlash;
-	import com.github.pruszko.dispersionreticle.utils.DisposablePartial;
-	import com.github.pruszko.dispersionreticle.utils.DisposablePartialValue;
+	import com.github.pruszko.dispersionreticle.utils.Partial;
+	import com.github.pruszko.dispersionreticle.utils.PartialValue;
 	import com.github.pruszko.dispersionreticle.utils.Stateful;
 	import flash.display.Sprite;
 	
-	public class StatefulMarker extends Sprite implements Stateful
+	public class Marker extends Sprite implements Stateful
 	{
 		
 		private var _app:DispersionReticleFlash;
-		private var _gunMarkerType:int;
+		private var _reticleId:int;
 		
 		private var _hasDataProvider:Boolean = false;
 		
@@ -20,14 +20,14 @@ package com.github.pruszko.dispersionreticle.marker
 		// However, other reticle variables are being updated in controllers every 100 ms
 		// so we have to interpolate them to render smoothly
 		// between controller updates
-		private var _partial:DisposablePartial = new DisposablePartial(100.0);
-		private var _reticleRadius:DisposablePartialValue = new DisposablePartialValue(_partial, 0.0);
+		private var _partial:Partial = new Partial(100.0);
+		private var _reticleRadius:PartialValue = new PartialValue(_partial, 0.0);
 		
-		public function StatefulMarker(app:DispersionReticleFlash, gunMarkerType:int) 
+		public function Marker(app:DispersionReticleFlash, reticleId:int) 
 		{
 			super();
 			this._app = app;
-			this._gunMarkerType = gunMarkerType;
+			this._reticleId = reticleId;
 		}
 		
 		public function disposeState() : void
@@ -65,9 +65,9 @@ package com.github.pruszko.dispersionreticle.marker
 			return this._app;
 		}
 		
-		public function get gunMarkerType() : int
+		public function get reticleId() : int
 		{
-			return this._gunMarkerType;
+			return this._reticleId;
 		}
 		
 		public function get reticleRadius() : Number

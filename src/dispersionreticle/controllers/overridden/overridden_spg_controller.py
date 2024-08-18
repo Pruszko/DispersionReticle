@@ -81,3 +81,15 @@ class OverriddenSPGGunMarkerController(_SPGGunMarkerController):
 
     def _interceptAngle(self, dispersionAngle):
         return dispersionAngle
+
+    def _isAnyModeEnabled(self):
+        return self._isClientModeEnabled() or self._isServerModeEnabled()
+
+    def _areBothModesEnabled(self):
+        return self._isClientModeEnabled() and self._isServerModeEnabled()
+
+    def _isClientModeEnabled(self):
+        return self._gunMarkersFlags & _MARKER_FLAG.CLIENT_MODE_ENABLED
+
+    def _isServerModeEnabled(self):
+        return self._gunMarkersFlags & _MARKER_FLAG.SERVER_MODE_ENABLED

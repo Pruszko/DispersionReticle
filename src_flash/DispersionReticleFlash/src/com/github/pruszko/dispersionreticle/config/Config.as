@@ -1,17 +1,17 @@
 package com.github.pruszko.dispersionreticle.config 
 {
-	import com.github.pruszko.dispersionreticle.config.marker.DisposableExtendedMarkerConfig;
+	import com.github.pruszko.dispersionreticle.config.marker.ExtendedMarkerConfig;
 	import com.github.pruszko.dispersionreticle.utils.Disposable;
-	import com.github.pruszko.dispersionreticle.utils.GunMarkerTypes;
+	import com.github.pruszko.dispersionreticle.utils.ReticleTypes;
 	
-	public class DisposableConfig implements Disposable
+	public class Config implements Disposable
 	{
 		
-		private var _focusedReticleExtended:DisposableExtendedMarkerConfig = new DisposableExtendedMarkerConfig();
-		private var _hybridReticleExtended:DisposableExtendedMarkerConfig = new DisposableExtendedMarkerConfig();
-		private var _serverReticleExtended:DisposableExtendedMarkerConfig = new DisposableExtendedMarkerConfig();
+		private var _focusedReticleExtended:ExtendedMarkerConfig = new ExtendedMarkerConfig();
+		private var _hybridReticleExtended:ExtendedMarkerConfig = new ExtendedMarkerConfig();
+		private var _serverReticleExtended:ExtendedMarkerConfig = new ExtendedMarkerConfig();
 		
-		public function DisposableConfig() 
+		public function Config() 
 		{
 			super();
 		}
@@ -33,22 +33,20 @@ package com.github.pruszko.dispersionreticle.config
 			this._serverReticleExtended.deserialize(serializedConfig["server-reticle-extended"]);
 		}
 		
-		public function getExtendedMarkerConfig(gunMarkerType:int) : DisposableExtendedMarkerConfig
+		public function getExtendedMarkerConfig(reticleId:int) : ExtendedMarkerConfig
 		{
-			switch (gunMarkerType)
+			switch (reticleId)
 			{
-				case GunMarkerTypes.FOCUSED_EXTENDED_CLIENT:
-				case GunMarkerTypes.FOCUSED_EXTENDED_SERVER:
+				case ReticleTypes.FOCUSED_EXTENDED:
 					return this._focusedReticleExtended;
-				case GunMarkerTypes.HYBRID_EXTENDED_CLIENT:
+				case ReticleTypes.HYBRID_EXTENDED:
 					return this._hybridReticleExtended;
-				case GunMarkerTypes.SERVER_EXTENDED_SERVER:
+				case ReticleTypes.SERVER_EXTENDED:
 					return this._serverReticleExtended;
 				default:
 					return null;
 			}
 		}
-	
 		
 	}
 

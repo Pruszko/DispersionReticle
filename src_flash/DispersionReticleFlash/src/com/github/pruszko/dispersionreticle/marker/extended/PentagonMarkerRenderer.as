@@ -1,8 +1,8 @@
 package com.github.pruszko.dispersionreticle.marker.extended 
 {
-	import com.github.pruszko.dispersionreticle.marker.ExtendedStatefulMarker;
+	import com.github.pruszko.dispersionreticle.marker.ExtendedMarker;
 	
-	public class PentagonStatefulRenderer extends StatefulRenderer
+	public class PentagonMarkerRenderer extends MarkerRenderer
 	{
 		
 		private var _elementWidth:Number = 0.0;
@@ -10,7 +10,7 @@ package com.github.pruszko.dispersionreticle.marker.extended
 				
 		private var _circleRadius:Number = 0.0;
 		
-		public function PentagonStatefulRenderer(extendedMarker:ExtendedStatefulMarker) 
+		public function PentagonMarkerRenderer(extendedMarker:ExtendedMarker) 
 		{
 			super(extendedMarker);
 		}

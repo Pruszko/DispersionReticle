@@ -1,9 +1,9 @@
 package com.github.pruszko.dispersionreticle.marker.extended 
 {
-	import com.github.pruszko.dispersionreticle.marker.ExtendedStatefulMarker;
+	import com.github.pruszko.dispersionreticle.marker.ExtendedMarker;
 	import com.github.pruszko.dispersionreticle.utils.Utils;
 	
-	public class DashedStatefulRenderer extends StatefulRenderer
+	public class DashedMarkerRenderer extends MarkerRenderer
 	{
 		
 		private var _halfDashWidth:Number = 0.0;
@@ -13,7 +13,7 @@ package com.github.pruszko.dispersionreticle.marker.extended
 		
 		private var _circleRadius:Number = 0.0;
 		
-		public function DashedStatefulRenderer(extendedMarker:ExtendedStatefulMarker) 
+		public function DashedMarkerRenderer(extendedMarker:ExtendedMarker) 
 		{
 			super(extendedMarker);
 		}

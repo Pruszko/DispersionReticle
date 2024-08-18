@@ -39,7 +39,7 @@ def updateClientGunMarker(func, self, pos, direction, size, relaxTime, collData)
 
     for reticle in ReticleRegistry.ADDITIONAL_RETICLES:
         if not reticle.isServerReticle():
-            self._AvatarInputHandler__curCtrl.updateGunMarker(reticle.getGunMarkerType(),
+            self._AvatarInputHandler__curCtrl.updateGunMarker(reticle.gunMarkerType,
                                                               pos, direction, size, relaxTime, collData)
 
 
@@ -49,7 +49,7 @@ def updateServerGunMarker(func, self, pos, direction, size, relaxTime, collData)
 
     for reticle in ReticleRegistry.ADDITIONAL_RETICLES:
         if reticle.isServerReticle():
-            self._AvatarInputHandler__curCtrl.updateGunMarker(reticle.getGunMarkerType(),
+            self._AvatarInputHandler__curCtrl.updateGunMarker(reticle.gunMarkerType,
                                                               pos, direction, size, relaxTime, collData)
 
 

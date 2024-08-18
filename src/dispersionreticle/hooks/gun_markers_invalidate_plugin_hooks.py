@@ -16,14 +16,14 @@ logger = logging.getLogger(__name__)
 ###########################################################
 
 @addMethodTo(GunMarkersInvalidatePlugin)
-def invalidateGunMarkers(self):
+def fullyInvalidateGunMarkers(self):
     ctrl = self.sessionProvider.shared.crosshair
     if ctrl is not None:
         markersInfo = ctrl.getGunMarkersSetInfo()
         vehicleInfo = self._GunMarkersInvalidatePlugin__getVehicleInfo()
 
-        logger.info("Invalidating gun markers plugin")
-        self._parentObj.invalidateGunMarkers(markersInfo, vehicleInfo)
+        # provided by us by crosshair_panel_container_hooks.py
+        self._parentObj.fullyInvalidateGunMarkers(markersInfo, vehicleInfo)
     return
 
 
@@ -44,7 +44,7 @@ def start(func, self):
         g_BottomDispersionReticleFlash.active(True)
 
     func(self)
-    g_config.onConfigReload += self.invalidateGunMarkers
+    g_config.onConfigReload += self.fullyInvalidateGunMarkers
 
 
 @overrideIn(GunMarkersInvalidatePlugin)
@@ -59,5 +59,5 @@ def stop(func, self):
         g_BottomDispersionReticleFlash.close()
         g_BottomDispersionReticleFlash = None
 
-    g_config.onConfigReload -= self.invalidateGunMarkers
+    g_config.onConfigReload -= self.fullyInvalidateGunMarkers
     func(self)

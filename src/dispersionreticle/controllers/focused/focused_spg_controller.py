@@ -8,7 +8,7 @@ from dispersionreticle.controllers.overridden.overridden_spg_controller import O
 class FocusedSPGGunMarkerController(OverriddenSPGGunMarkerController):
 
     def __init__(self, reticle, dataProvider, enabledFlag=_MARKER_FLAG.UNDEFINED):
-        super(FocusedSPGGunMarkerController, self).__init__(reticle.getGunMarkerType(),
+        super(FocusedSPGGunMarkerController, self).__init__(reticle.gunMarkerType,
                                                             dataProvider,
                                                             reticle.isServerReticle(),
                                                             enabledFlag=enabledFlag)

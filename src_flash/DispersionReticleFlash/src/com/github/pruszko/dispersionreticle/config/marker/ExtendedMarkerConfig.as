@@ -1,9 +1,9 @@
 package com.github.pruszko.dispersionreticle.config.marker 
 {
-	import com.github.pruszko.dispersionreticle.config.marker.extended.DisposableExtendedMarkerShapesConfig;
+	import com.github.pruszko.dispersionreticle.config.marker.extended.ExtendedMarkerShapesConfig;
 	import com.github.pruszko.dispersionreticle.utils.Disposable;
 	
-	public class DisposableExtendedMarkerConfig implements Disposable
+	public class ExtendedMarkerConfig implements Disposable
 	{
 		
 		private var _shape:String = "pentagon";
@@ -12,9 +12,9 @@ package com.github.pruszko.dispersionreticle.config.marker
 		private var _drawOutline:Boolean = false;
 		private var _blend:Number = 0.8;
 		private var _alpha:Number = 1.0;
-		private var _shapes:DisposableExtendedMarkerShapesConfig = new DisposableExtendedMarkerShapesConfig();
+		private var _shapes:ExtendedMarkerShapesConfig = new ExtendedMarkerShapesConfig();
 		
-		public function DisposableExtendedMarkerConfig() 
+		public function ExtendedMarkerConfig() 
 		{
 			super();
 		}
@@ -66,7 +66,7 @@ package com.github.pruszko.dispersionreticle.config.marker
 			return this._alpha;
 		}
 		
-		public function get shapes() : DisposableExtendedMarkerShapesConfig
+		public function get shapes() : ExtendedMarkerShapesConfig
 		{
 			return this._shapes;
 		}

@@ -7,7 +7,7 @@ from dispersionreticle.controllers.overridden.overridden_default_controller impo
 class HybridDefaultGunMarkerController(OverriddenDefaultGunMarkerController):
 
     def __init__(self, reticle, dataProvider, enabledFlag=_MARKER_FLAG.UNDEFINED):
-        super(HybridDefaultGunMarkerController, self).__init__(reticle.getGunMarkerType(),
+        super(HybridDefaultGunMarkerController, self).__init__(reticle.gunMarkerType,
                                                                dataProvider,
                                                                reticle.isServerReticle(),
                                                                enabledFlag=enabledFlag)

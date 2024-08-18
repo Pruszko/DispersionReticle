@@ -1,16 +1,16 @@
 package com.github.pruszko.dispersionreticle.utils 
 {
-	import com.github.pruszko.dispersionreticle.utils.DisposablePartial;
+	import com.github.pruszko.dispersionreticle.utils.Partial;
 	
-	public class DisposablePartialValue implements Disposable 
+	public class PartialValue implements Disposable 
 	{
 
-		private var _parentPartial:DisposablePartial;
+		private var _parentPartial:Partial;
 		
 		private var _prevValue:Number;
 		public var value:Number;
 		
-		public function DisposablePartialValue(parentPartial:DisposablePartial, value:Number = 0.0)
+		public function PartialValue(parentPartial:Partial, value:Number = 0.0)
 		{
 			super();
 			
@@ -18,7 +18,7 @@ package com.github.pruszko.dispersionreticle.utils
 			this._prevValue = value;
 			this.value = value;
 			
-			parentPartial.append(this);
+			this._parentPartial.append(this);
 		}
 		
 		public function disposeState() : void
@@ -33,7 +33,7 @@ package com.github.pruszko.dispersionreticle.utils
 		
 		public function get partial() : Number
 		{
-			return _parentPartial.interpolate(_prevValue, value);
+			return this._parentPartial.interpolate(this._prevValue, this.value);
 		}
 		
 	}

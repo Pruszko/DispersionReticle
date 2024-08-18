@@ -1,4 +1,5 @@
 import BattleReplay
+from AvatarInputHandler import gun_marker_ctrl
 from aih_constants import GUN_MARKER_TYPE
 from gui.battle_control.battle_constants import CROSSHAIR_VIEW_ID as _VIEW_ID
 from gui.Scaleform.daapi.view.battle.shared.crosshair import gm_factory
@@ -61,7 +62,7 @@ class _NewControlMarkersFactory(_ControlMarkersFactory):
         # this in result means, that replays would not display DUAL_ACC in replays,
         # and IT CAN'T, because standard reticle is server-side and DUAL_ACC is client-side
         # it would be messed up
-        if self.areBothMarkersEnabled():
+        if self.areBothClientAndServerAimEnabled():
             isClientMarkers = True
             shouldWriteDualAccToReplay = True
 
@@ -73,16 +74,22 @@ class _NewControlMarkersFactory(_ControlMarkersFactory):
 
         result = ()
 
-        if self.areBothMarkersEnabled():
+        if self.areBothClientAndServerAimEnabled():
             if g_configParams.serverReticleExtendedEnabled():
-                result += ReticleRegistry.SERVER_EXTENDED_SERVER.createDefaultMarkers(self, markerType)
+                if self.areBothFlagsEnabled():
+                    result += ReticleRegistry.SERVER_EXTENDED_SERVER.createDefaultMarkers(self, markerType)
+                else:
+                    result += ReticleRegistry.SERVER_EXTENDED_CLIENT.createDefaultMarkers(self, markerType)
             if g_configParams.hybridReticleExtendedEnabled():
                 result += ReticleRegistry.HYBRID_EXTENDED_CLIENT.createDefaultMarkers(self, markerType)
             if g_configParams.focusedReticleExtendedEnabled():
                 result += ReticleRegistry.FOCUSED_EXTENDED_CLIENT.createDefaultMarkers(self, markerType)
 
             if g_configParams.serverReticleEnabled():
-                result += ReticleRegistry.DEBUG_SERVER.createDefaultMarkers(self, markerType)
+                if self.areBothFlagsEnabled():
+                    result += ReticleRegistry.DEBUG_SERVER.createDefaultMarkers(self, markerType)
+                else:
+                    result += ReticleRegistry.DEBUG_CLIENT.createDefaultMarkers(self, markerType)
 
             if g_configParams.hybridReticleEnabled():
                 result += ReticleRegistry.HYBRID_CLIENT.createDefaultMarkers(self, markerType)
@@ -107,20 +114,30 @@ class _NewControlMarkersFactory(_ControlMarkersFactory):
 
         result = ()
 
-        if self.areBothMarkersEnabled():
+        if self.areBothClientAndServerAimEnabled():
             # IMPORTANT
             # account for spg NOT TO create additional SPG marker when both reticles
             # of some type are enabled
 
             # server reticles
             if g_configParams.serverReticleExtendedEnabled() and g_configParams.serverReticleEnabled():
-                result += ReticleRegistry.SERVER_EXTENDED_SERVER.createArcadeOnlySPGMarkers(self, markerType)
-                result += ReticleRegistry.DEBUG_SERVER.createSPGMarkers(self, markerType)
+                if self.areBothFlagsEnabled():
+                    result += ReticleRegistry.SERVER_EXTENDED_SERVER.createArcadeOnlySPGMarkers(self, markerType)
+                    result += ReticleRegistry.DEBUG_SERVER.createSPGMarkers(self, markerType)
+                else:
+                    result += ReticleRegistry.SERVER_EXTENDED_CLIENT.createArcadeOnlySPGMarkers(self, markerType)
+                    result += ReticleRegistry.DEBUG_CLIENT.createSPGMarkers(self, markerType)
             else:
                 if g_configParams.serverReticleExtendedEnabled():
-                    result += ReticleRegistry.SERVER_EXTENDED_SERVER.createSPGMarkers(self, markerType)
+                    if self.areBothFlagsEnabled():
+                        result += ReticleRegistry.SERVER_EXTENDED_SERVER.createSPGMarkers(self, markerType)
+                    else:
+                        result += ReticleRegistry.SERVER_EXTENDED_CLIENT.createSPGMarkers(self, markerType)
                 if g_configParams.serverReticleEnabled():
-                    result += ReticleRegistry.DEBUG_SERVER.createSPGMarkers(self, markerType)
+                    if self.areBothFlagsEnabled():
+                        result += ReticleRegistry.DEBUG_SERVER.createSPGMarkers(self, markerType)
+                    else:
+                        result += ReticleRegistry.DEBUG_CLIENT.createSPGMarkers(self, markerType)
 
             # hybrid reticles
             if g_configParams.hybridReticleExtendedEnabled() and g_configParams.hybridReticleEnabled():
@@ -163,16 +180,22 @@ class _NewControlMarkersFactory(_ControlMarkersFactory):
 
         result = ()
 
-        if self.areBothMarkersEnabled():
+        if self.areBothClientAndServerAimEnabled():
             if g_configParams.serverReticleExtendedEnabled():
-                result += ReticleRegistry.SERVER_EXTENDED_SERVER.createDualGunMarkers(self, markerType)
+                if self.areBothFlagsEnabled():
+                    result += ReticleRegistry.SERVER_EXTENDED_SERVER.createDualGunMarkers(self, markerType)
+                else:
+                    result += ReticleRegistry.SERVER_EXTENDED_CLIENT.createDualGunMarkers(self, markerType)
             if g_configParams.hybridReticleExtendedEnabled():
                 result += ReticleRegistry.HYBRID_EXTENDED_CLIENT.createDualGunMarkers(self, markerType)
             if g_configParams.focusedReticleExtendedEnabled():
                 result += ReticleRegistry.FOCUSED_EXTENDED_CLIENT.createDualGunMarkers(self, markerType)
 
             if g_configParams.serverReticleEnabled():
-                result += ReticleRegistry.DEBUG_SERVER.createDualGunMarkers(self, markerType)
+                if self.areBothFlagsEnabled():
+                    result += ReticleRegistry.DEBUG_SERVER.createDualGunMarkers(self, markerType)
+                else:
+                    result += ReticleRegistry.DEBUG_CLIENT.createDualGunMarkers(self, markerType)
 
             if g_configParams.hybridReticleEnabled():
                 result += ReticleRegistry.HYBRID_CLIENT.createDualGunMarkers(self, markerType)
@@ -206,20 +229,30 @@ class _NewControlMarkersFactory(_ControlMarkersFactory):
 
         result = ()
 
-        if self.areBothMarkersEnabled():
+        if self.areBothClientAndServerAimEnabled():
             # IMPORTANT
             # account for spg NOT TO create additional SPG marker when both reticles
             # of some type are enabled
 
             # server reticles
             if g_configParams.serverReticleExtendedEnabled() and g_configParams.serverReticleEnabled():
-                result += ReticleRegistry.SERVER_EXTENDED_SERVER.createArcadeOnlySPGMarkers(self, markerType)
-                result += ReticleRegistry.DEBUG_SERVER.createAssaultSPGMarkers(self, markerType)
+                if self.areBothFlagsEnabled():
+                    result += ReticleRegistry.SERVER_EXTENDED_SERVER.createArcadeOnlySPGMarkers(self, markerType)
+                    result += ReticleRegistry.DEBUG_SERVER.createAssaultSPGMarkers(self, markerType)
+                else:
+                    result += ReticleRegistry.SERVER_EXTENDED_CLIENT.createArcadeOnlySPGMarkers(self, markerType)
+                    result += ReticleRegistry.DEBUG_CLIENT.createAssaultSPGMarkers(self, markerType)
             else:
                 if g_configParams.serverReticleExtendedEnabled():
-                    result += ReticleRegistry.SERVER_EXTENDED_SERVER.createAssaultSPGMarkers(self, markerType)
+                    if self.areBothFlagsEnabled():
+                        result += ReticleRegistry.SERVER_EXTENDED_SERVER.createAssaultSPGMarkers(self, markerType)
+                    else:
+                        result += ReticleRegistry.SERVER_EXTENDED_CLIENT.createAssaultSPGMarkers(self, markerType)
                 if g_configParams.serverReticleEnabled():
-                    result += ReticleRegistry.DEBUG_SERVER.createAssaultSPGMarkers(self, markerType)
+                    if self.areBothFlagsEnabled():
+                        result += ReticleRegistry.DEBUG_SERVER.createAssaultSPGMarkers(self, markerType)
+                    else:
+                        result += ReticleRegistry.DEBUG_CLIENT.createAssaultSPGMarkers(self, markerType)
 
             # hybrid reticles
             if g_configParams.hybridReticleExtendedEnabled() and g_configParams.hybridReticleEnabled():
@@ -257,7 +290,11 @@ class _NewControlMarkersFactory(_ControlMarkersFactory):
 
         return result
 
-    def areBothMarkersEnabled(self):
+    @staticmethod
+    def areBothClientAndServerAimEnabled():
+        return gun_marker_ctrl.useClientGunMarker() and gun_marker_ctrl.useServerGunMarker()
+
+    def areBothFlagsEnabled(self):
         return self._markersInfo.isClientMarkerActivated and self._markersInfo.isServerMarkerActivated
 
     def _createExtendedArcadeMarker(self, markerType, name):

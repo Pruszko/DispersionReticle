@@ -21,13 +21,13 @@ logger = logging.getLogger(__name__)
 
 class DispersionReticleFlashMeta(BaseDAAPIModule):
 
-    def as_createMarker(self, gunMarkerType, markerName):
+    def as_createMarker(self, reticleId, markerName):
         if self._isDAAPIInited():
-            self.flashObject.as_createMarker(gunMarkerType, markerName)
+            self.flashObject.as_createMarker(reticleId, markerName)
 
-    def as_updateReticle(self, gunMarkerType, reticleSize):
+    def as_updateReticle(self, reticleId, reticleSize):
         if self._isDAAPIInited():
-            self.flashObject.as_updateReticle(gunMarkerType, reticleSize)
+            self.flashObject.as_updateReticle(reticleId, reticleSize)
 
     def as_destroyMarker(self, markerName):
         if self._isDAAPIInited():
@@ -129,7 +129,7 @@ class DispersionReticleFlash(ExternalFlashComponent, DispersionReticleFlashMeta)
         # self.component.size = (1, 1)
 
     def __onReticleUpdate(self, reticle, reticleSize):
-        flashMarkerNames = reticle.getFlashMarkerNames()
+        flashMarkerNames = reticle.reticleType.flashMarkerNames
         if not any(flashMarkerName in self._markerPresence for flashMarkerName in flashMarkerNames):
             return
 
@@ -174,16 +174,16 @@ class DispersionReticleFlash(ExternalFlashComponent, DispersionReticleFlashMeta)
                                                 deliberatelyMessedUpReticleSize,
                                                 maxReticleSize)
 
-        self.as_updateReticle(reticle.getGunMarkerType(), deliberatelyMessedUpReticleSize)
+        self.as_updateReticle(reticle.reticleType.reticleId, deliberatelyMessedUpReticleSize)
 
-    def __onMarkerCreate(self, markerName, reticle):
-        if markerName in self._markerPresence or reticle.getFlashLayer() != self._layer:
+    def __onMarkerCreate(self, markerName, reticleType):
+        if markerName in self._markerPresence or reticleType.flashLayer != self._layer:
             return
 
-        self.as_createMarker(reticle.getGunMarkerType(), markerName)
+        self.as_createMarker(reticleType.reticleId, markerName)
         self._markerPresence.append(markerName)
 
-    def __onMarkerDestroy(self, markerName, reticle):
+    def __onMarkerDestroy(self, markerName, reticleType):
         if markerName not in self._markerPresence:
             return
 

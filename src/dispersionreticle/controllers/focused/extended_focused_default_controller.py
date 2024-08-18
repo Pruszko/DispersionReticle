@@ -1,5 +1,4 @@
-from dispersionreticle.controllers.focused.focused_default_controller import \
-    FocusedDefaultGunMarkerController
+from dispersionreticle.controllers.focused.focused_default_controller import FocusedDefaultGunMarkerController
 from dispersionreticle.flash.dispersion_reticle_flash import DispersionReticleFlash
 
 

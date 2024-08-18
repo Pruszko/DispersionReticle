@@ -46,7 +46,7 @@ def _getMarkerDataProvider(func, self, markerType):
             return self._markersInfo.dualAccMarkerDataProvider
 
     for reticle in ReticleRegistry.ADDITIONAL_RETICLES:
-        if markerType == reticle.getGunMarkerType():
+        if markerType == reticle.gunMarkerType:
             return reticle.getStandardDataProvider()
 
 
@@ -60,7 +60,7 @@ def _getSPGDataProvider(func, self, markerType):
             return self._markersInfo.clientSPGMarkerDataProvider
 
     for reticle in ReticleRegistry.ADDITIONAL_RETICLES:
-        if markerType == reticle.getGunMarkerType():
+        if markerType == reticle.gunMarkerType:
             return reticle.getSpgDataProvider()
 
 
@@ -75,5 +75,5 @@ def _getAssaultSPGDataProvider(func, self, markerType):
             return self._markersInfo.clientAssaultSPGMarkerDataProvider
 
     for reticle in ReticleRegistry.ADDITIONAL_RETICLES:
-        if markerType == reticle.getGunMarkerType():
+        if markerType == reticle.gunMarkerType:
             return reticle.getAssaultSpgDataProvider()

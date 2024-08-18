@@ -2,7 +2,6 @@ from AvatarInputHandler.aih_global_binding import BINDING_ID, _Observable, _DEFA
 from gui.battle_control.controllers import crosshair_proxy
 
 from dispersionreticle.utils import isClientLesta
-from dispersionreticle.utils.reticle_properties import MarkerNames
 from dispersionreticle.utils.reticle_types.vanilla_reticle import VanillaReticle
 
 
@@ -10,7 +9,7 @@ class OverriddenReticle(VanillaReticle):
 
     NEXT_DATA_PROVIDER_ID = 6114
 
-    def __init__(self, nameSuffix, gunMarkerType, reticleType, markerLinkagesProvider):
+    def __init__(self, reticleType, gunMarkerType, reticleSide):
         nextStandardDataProviderID = OverriddenReticle.NEXT_DATA_PROVIDER_ID
         OverriddenReticle.NEXT_DATA_PROVIDER_ID += 1
 
@@ -51,12 +50,9 @@ class OverriddenReticle(VanillaReticle):
         if isClientLesta():
             crosshair_proxy._GUN_MARKERS_SET_IDS += (nextAssaultSpgDataProviderID,)
 
-        super(OverriddenReticle, self).__init__(markerNames=MarkerNames.createMarkerNames(nameSuffix),
+        super(OverriddenReticle, self).__init__(reticleType=reticleType,
                                                 gunMarkerType=gunMarkerType,
-                                                reticleType=reticleType,
-                                                markerLinkagesProvider=markerLinkagesProvider,
+                                                reticleSide=reticleSide,
                                                 standardDataProviderID=nextStandardDataProviderID,
                                                 spgDataProviderID=nextSpgDataProviderID,
                                                 assaultSpgDataProviderID=nextAssaultSpgDataProviderID)  # Lesta specific
-
-        self.refreshLinkages()

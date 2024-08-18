@@ -1,8 +1,8 @@
 package com.github.pruszko.dispersionreticle.marker.extended 
 {
-	import com.github.pruszko.dispersionreticle.marker.ExtendedStatefulMarker;
+	import com.github.pruszko.dispersionreticle.marker.ExtendedMarker;
 	
-	public class TShapeStatefulRenderer extends StatefulRenderer
+	public class TShapeMarkerRenderer extends MarkerRenderer
 	{
 		
 		private var _elementThickness:Number = 0.0;
@@ -10,7 +10,7 @@ package com.github.pruszko.dispersionreticle.marker.extended
 		
 		private var _circleRadius:Number = 0.0;
 		
-		public function TShapeStatefulRenderer(extendedMarker:ExtendedStatefulMarker) 
+		public function TShapeMarkerRenderer(extendedMarker:ExtendedMarker) 
 		{
 			super(extendedMarker);
 		}

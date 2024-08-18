@@ -1,13 +1,13 @@
 package com.github.pruszko.dispersionreticle.marker.extended 
 {
-	import com.github.pruszko.dispersionreticle.marker.ExtendedStatefulMarker;
+	import com.github.pruszko.dispersionreticle.marker.ExtendedMarker;
 	
-	public class CircleStatefulRenderer extends StatefulRenderer
+	public class CircleMarkerRenderer extends MarkerRenderer
 	{
 		
 		private var _circleRadius:Number = 0.0;
 		
-		public function CircleStatefulRenderer(extendedMarker:ExtendedStatefulMarker) 
+		public function CircleMarkerRenderer(extendedMarker:ExtendedMarker) 
 		{
 			super(extendedMarker);
 		}

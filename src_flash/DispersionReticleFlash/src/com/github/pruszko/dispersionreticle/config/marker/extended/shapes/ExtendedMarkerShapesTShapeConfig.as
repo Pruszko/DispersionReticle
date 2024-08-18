@@ -1,13 +1,13 @@
 package com.github.pruszko.dispersionreticle.config.marker.extended.shapes 
 {
 	
-	public class DisposableExtendedMarkerShapesTShapeConfig 
+	public class ExtendedMarkerShapesTShapeConfig
 	{
 		
 		private var _thickness:Number = 1.0;
 		private var _length:Number = 1.0;
 		
-		public function DisposableExtendedMarkerShapesTShapeConfig() 
+		public function ExtendedMarkerShapesTShapeConfig() 
 		{
 			super();
 		}

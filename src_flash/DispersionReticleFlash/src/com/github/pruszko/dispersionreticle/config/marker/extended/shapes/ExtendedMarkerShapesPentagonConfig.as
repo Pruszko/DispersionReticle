@@ -1,13 +1,13 @@
 package com.github.pruszko.dispersionreticle.config.marker.extended.shapes 
 {
 	
-	public class DisposableExtendedMarkerShapesPentagonConfig 
+	public class ExtendedMarkerShapesPentagonConfig
 	{
 		
 		private var _width:Number = 1.0;
 		private var _height:Number = 1.0;
 		
-		public function DisposableExtendedMarkerShapesPentagonConfig() 
+		public function ExtendedMarkerShapesPentagonConfig() 
 		{
 			super();
 		}

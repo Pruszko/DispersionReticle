@@ -1,10 +1,10 @@
 package com.github.pruszko.dispersionreticle
 {
-	import com.github.pruszko.dispersionreticle.config.DisposableConfig;
-	import com.github.pruszko.dispersionreticle.config.marker.DisposableExtendedMarkerConfig;
-	import com.github.pruszko.dispersionreticle.marker.StatefulMarker;
-	import com.github.pruszko.dispersionreticle.marker.ExtendedStatefulMarker;
-	import com.github.pruszko.dispersionreticle.utils.GunMarkerTypes;
+	import com.github.pruszko.dispersionreticle.config.Config;
+	import com.github.pruszko.dispersionreticle.config.marker.ExtendedMarkerConfig;
+	import com.github.pruszko.dispersionreticle.marker.Marker;
+	import com.github.pruszko.dispersionreticle.marker.ExtendedMarker;
+	import com.github.pruszko.dispersionreticle.utils.ReticleTypes;
 	import flash.display.Sprite;
 	import flash.events.Event;
 	
@@ -14,9 +14,6 @@ package com.github.pruszko.dispersionreticle
 		private static const SWF_HALF_WIDTH:Number = 400;
 		private static const SWF_HALF_HEIGHT:Number = 300;
 		
-		// Scale used for rendering screen-size-dependent shapes
-		private static const UNIT_SIZE_SCALE:Number = 0.001;
-		
 		// Python-side methods required for in-between game state updates
 		public var py_warn:Function;
 		public var py_getScreenResolution:Function;
@@ -24,9 +21,8 @@ package com.github.pruszko.dispersionreticle
 		
 		private var _appWidth:Number = 0.0;
 		private var _appHeight:Number = 0.0;
-		private var _unitSize:Number = 0.0;
 		
-		private var _config:DisposableConfig = new DisposableConfig();
+		private var _config:Config = new Config();
 						
 		public function DispersionReticleFlash() 
 		{
@@ -42,8 +38,8 @@ package com.github.pruszko.dispersionreticle
 		{
 			this.removeEventListener(Event.ENTER_FRAME, this.onEnterFrame);
 			
-			for (var i:int = 0; i < numChildren; ++i) {
-				var marker:StatefulMarker = getMarkerAt(i);
+			for (var i:int = 0; i < this.numChildren; ++i) {
+				var marker:Marker = this.getMarkerAt(i);
 				marker.disposeState();
 			}
 			
@@ -53,32 +49,31 @@ package com.github.pruszko.dispersionreticle
 			this._config = null;
 		}
 		
-		public function as_createMarker(gunMarkerType:int, markerName:String) : void
+		public function as_createMarker(reticleId:int, markerName:String) : void
 		{
-			var foundMarker:StatefulMarker = getMarkerByName(markerName);
+			var foundMarker:Marker = this.getMarkerByName(markerName);
 			if (foundMarker != null) {
 				this.warn("Present marker " + markerName + " was attempted to be spawned more than once");
 				return;
 			}
 			
-			var newMarker:StatefulMarker = null;
+			var newMarker:Marker = null;
 			
-			// Gun marker types are present in python-side ReticleRegistry
-			if (GunMarkerTypes.isExtendedReticle(gunMarkerType))
+			// Reticle types are present in python-side ReticleTypes
+			if (ReticleTypes.isExtendedReticle(reticleId))
 			{
-				var extendedMarkerConfig:DisposableExtendedMarkerConfig = this._config.getExtendedMarkerConfig(gunMarkerType);
-				
+				var extendedMarkerConfig:ExtendedMarkerConfig = this._config.getExtendedMarkerConfig(reticleId);
 				if (extendedMarkerConfig == null)
 				{
-					warn("Could not find extended marker config for marker " + markerName + ".");
+					this.warn("Could not find extended marker config for marker " + markerName + ".");
 					return;
 				}
 				
-				newMarker = new ExtendedStatefulMarker(this, gunMarkerType, extendedMarkerConfig);
+				newMarker = new ExtendedMarker(this, reticleId, extendedMarkerConfig);
 			}
 			else
 			{
-				warn("Unknown gun marker type received in as_createMarker: " +  + gunMarkerType);
+				this.warn("Unknown reticle id received in as_createMarker: " +  + reticleId);
 				return;
 			}
 			
@@ -87,15 +82,13 @@ package com.github.pruszko.dispersionreticle
 			this.addChild(newMarker);
 		}
 		
-		public function as_updateReticle(gunMarkerType:int, reticleSize:Number) : void
-		{
-			var markers:Vector.<StatefulMarker> = this.getMarkersByGunMarkerType(gunMarkerType);
-			
-			for (var i:int = 0; i < markers.length; ++i)
+		public function as_updateReticle(reticleId:int, reticleSize:Number) : void
+		{			
+			for (var i:int = 0; i < this.numChildren; ++i)
 			{
-				var marker:StatefulMarker = markers[i];
+				var marker:Marker = this.getMarkerAt(i);
 				
-				if (marker.gunMarkerType != gunMarkerType)
+				if (marker.reticleId != reticleId)
 				{
 					continue;
 				}
@@ -103,16 +96,14 @@ package com.github.pruszko.dispersionreticle
 				marker.resetPartial();
 				marker.reticleRadius = reticleSize / 2.0;
 			}
-			
-			markers.splice(0, markers.length);
 		}
 		
 		public function as_destroyMarker(markerName:String) : void
 		{
-			var foundMarker:StatefulMarker = this.getMarkerByName(markerName);
+			var foundMarker:Marker = this.getMarkerByName(markerName);
 			if (foundMarker == null)
 			{
-				warn("Absent marker " + markerName + " were attempted to be removed");
+				this.warn("Absent marker " + markerName + " were attempted to be removed");
 				return;
 			}
 			
@@ -123,7 +114,7 @@ package com.github.pruszko.dispersionreticle
 		
 		public function as_setMarkerDataProviderPresence(markerName:String, dataProviderPresence:Boolean) : void
 		{
-			var foundMarker:StatefulMarker = getMarkerByName(markerName);
+			var foundMarker:Marker = this.getMarkerByName(markerName);
 			if (foundMarker == null)
 			{
 				// clearDataProvider() on our proxy can also be called when marker
@@ -179,12 +170,6 @@ package com.github.pruszko.dispersionreticle
 			// Those changes MUST be done on flash object itself, not on GUI.Flash component
 			this.x = SWF_HALF_WIDTH - (this.appWidth / 2.0);
 			this.y = SWF_HALF_HEIGHT - (this.appHeight / 2.0);
-			
-			this._unitSize = 0.001 * this.appHeight;
-			if (this.appWidth < this.appHeight)
-			{
-				this._unitSize = 0.001 * this.appWidth;
-			}
 		}
 		
 		private function updateMarkersPositionAndVisibility() : void
@@ -198,7 +183,7 @@ package com.github.pruszko.dispersionreticle
 			// also update their visibility in screen
 			for (var i:int = 0; i < this.numChildren; ++i)
 			{
-				var marker:StatefulMarker = this.getMarkerAt(i);
+				var marker:Marker = this.getMarkerAt(i);
 				
 				// General contract between this app and its python-side bridge is that
 				// marker position access should occur only when marker has attached data provider
@@ -222,7 +207,7 @@ package com.github.pruszko.dispersionreticle
 		private function updateMarkers() : void
 		{
 			var i:Number;
-			var marker:StatefulMarker;
+			var marker:Marker;
 			
 			// used for in-between reticle updates variables interpolation
 			for (i = 0; i < this.numChildren; ++i)
@@ -231,7 +216,7 @@ package com.github.pruszko.dispersionreticle
 				marker.tickPartial();
 			}
 			
-			for (i = 0; i < numChildren; ++i)
+			for (i = 0; i < this.numChildren; ++i)
 			{
 				marker = this.getMarkerAt(i);
 				
@@ -248,7 +233,7 @@ package com.github.pruszko.dispersionreticle
 		{
 			for (var i:int = 0; i < this.numChildren; ++i)
 			{
-				var marker:StatefulMarker = getMarkerAt(i);
+				var marker:Marker = getMarkerAt(i);
 				
 				if (!marker.hasDataProvider)
 				{
@@ -259,30 +244,14 @@ package com.github.pruszko.dispersionreticle
 			}
 		}
 		
-		public function getMarkerAt(index:int) : StatefulMarker
+		public function getMarkerAt(index:int) : Marker
 		{
-			return this.getChildAt(index) as StatefulMarker;
+			return this.getChildAt(index) as Marker;
 		}
 		
-		public function getMarkerByName(markerName:String) : StatefulMarker
+		public function getMarkerByName(markerName:String) : Marker
 		{
-			return this.getChildByName(markerName) as StatefulMarker;
-		}
-		
-		public function getMarkersByGunMarkerType(gunMarkerType:int) : Vector.<StatefulMarker>
-		{
-			var markers:Vector.<StatefulMarker> = new Vector.<StatefulMarker>();
-			for (var i:int = 0; i < this.numChildren; ++i)
-			{
-				var marker:StatefulMarker = this.getMarkerAt(i);
-				
-				if (marker.gunMarkerType == gunMarkerType)
-				{
-					markers.push(marker);
-				}
-			}
-			
-			return markers;
+			return this.getChildByName(markerName) as Marker;
 		}
 		
 		public function warn(message:String) : void
@@ -303,18 +272,7 @@ package com.github.pruszko.dispersionreticle
 			return this._appHeight;
 		}
 		
-		public function get unitSize() : Number
-		{
-			return this._unitSize;
-		}
-		
-		public function scaled(value:Number) : Number
-		{
-			var scaledValue:Number = value * this._unitSize;
-			return scaledValue > 1.0 ? scaledValue : 1.0;
-		}
-		
-		public function get config() : DisposableConfig
+		public function get config() : Config
 		{
 			return this._config;
 		}
