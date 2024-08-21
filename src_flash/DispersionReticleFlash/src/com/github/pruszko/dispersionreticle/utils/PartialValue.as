@@ -28,7 +28,7 @@ package com.github.pruszko.dispersionreticle.utils
 		
 		internal function reset() : void
 		{
-			this._prevValue = this.value;
+			this._prevValue = this.partial;
 		}
 		
 		public function get partial() : Number

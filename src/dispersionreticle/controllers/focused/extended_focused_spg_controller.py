@@ -5,4 +5,5 @@ from dispersionreticle.flash.dispersion_reticle_flash import DispersionReticleFl
 class ExtendedFocusedSPGGunMarkerController(FocusedSPGGunMarkerController):
 
     def _interceptPostUpdate(self, size):
-        DispersionReticleFlash.onReticleUpdate(self._reticle, size)
+        if self.isClientController():
+            DispersionReticleFlash.onReticleUpdate(self._reticle, size)

@@ -38,7 +38,7 @@ from dispersionreticle.utils.reticle_registry import ReticleRegistry
 ###########################################################
 
 # gm_factory
-class _NewControlMarkersFactory(_ControlMarkersFactory):
+class _DispersionControlMarkersFactory(_ControlMarkersFactory):
 
     def _hasDualAccuracyMarkers(self):
         isClientMarkers = self._getMarkerType() == GUN_MARKER_TYPE.CLIENT
@@ -366,4 +366,4 @@ def shouldHideStandardReticle():
 
 # It is needed to be overridden manually.
 # Especially, first one in tuple is responsible for marker's instantiation.
-gm_factory._FACTORIES_COLLECTION = (_NewControlMarkersFactory, _OptionalMarkersFactory, _EquipmentMarkersFactory)
+gm_factory._FACTORIES_COLLECTION = (_DispersionControlMarkersFactory, _OptionalMarkersFactory, _EquipmentMarkersFactory)

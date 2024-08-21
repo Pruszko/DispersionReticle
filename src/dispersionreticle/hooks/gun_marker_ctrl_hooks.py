@@ -19,6 +19,8 @@ from dispersionreticle.controllers.focused.focused_default_controller import Foc
 from dispersionreticle.controllers.focused.focused_spg_controller import FocusedSPGGunMarkerController
 from dispersionreticle.controllers.hybrid.hybrid_default_controller import HybridDefaultGunMarkerController
 from dispersionreticle.controllers.hybrid.hybrid_spg_controller import HybridSPGGunMarkerController
+from dispersionreticle.controllers.server.server_default_controller import ServerDefaultGunMarkerController
+from dispersionreticle.controllers.server.server_spg_controller import ServerSPGGunMarkerController
 
 from dispersionreticle.settings.config_param import g_configParams
 from dispersionreticle.utils import *
@@ -61,12 +63,10 @@ def createStrategicGunMarker(func=None):
     # I hope it won't collapse universe or something
     dualAccController = _EmptyGunMarkerController(_MARKER_TYPE.UNDEFINED, None)
 
-    debugClientController = OverriddenSPGGunMarkerController(ReticleRegistry.DEBUG_CLIENT.gunMarkerType,
-                                                             ReticleRegistry.DEBUG_CLIENT.getSpgDataProvider(),
-                                                             isServer=False)
-    debugServerController = OverriddenSPGGunMarkerController(ReticleRegistry.DEBUG_SERVER.gunMarkerType,
-                                                             ReticleRegistry.DEBUG_SERVER.getSpgDataProvider(),
-                                                             isServer=True)
+    debugClientController = ServerSPGGunMarkerController(ReticleRegistry.DEBUG_CLIENT,
+                                                         ReticleRegistry.DEBUG_CLIENT.getSpgDataProvider())
+    debugServerController = ServerSPGGunMarkerController(ReticleRegistry.DEBUG_SERVER,
+                                                         ReticleRegistry.DEBUG_SERVER.getSpgDataProvider())
 
     focusedClientController = FocusedSPGGunMarkerController(ReticleRegistry.FOCUSED_CLIENT,
                                                             ReticleRegistry.FOCUSED_CLIENT.getSpgDataProvider())
@@ -117,12 +117,10 @@ def createDefaultGunMarker(func=None):
                                                              factory.getDualAccuracyProvider(),
                                                              isServer=False)
 
-    debugClientController = OverriddenDefaultGunMarkerController(ReticleRegistry.DEBUG_CLIENT.gunMarkerType,
-                                                                 ReticleRegistry.DEBUG_CLIENT.getStandardDataProvider(),
-                                                                 isServer=False)
-    debugServerController = OverriddenDefaultGunMarkerController(ReticleRegistry.DEBUG_SERVER.gunMarkerType,
-                                                                 ReticleRegistry.DEBUG_SERVER.getStandardDataProvider(),
-                                                                 isServer=True)
+    debugClientController = ServerDefaultGunMarkerController(ReticleRegistry.DEBUG_CLIENT,
+                                                             ReticleRegistry.DEBUG_CLIENT.getStandardDataProvider())
+    debugServerController = ServerDefaultGunMarkerController(ReticleRegistry.DEBUG_SERVER,
+                                                             ReticleRegistry.DEBUG_SERVER.getStandardDataProvider())
 
     focusedClientController = FocusedDefaultGunMarkerController(ReticleRegistry.FOCUSED_CLIENT,
                                                                 ReticleRegistry.FOCUSED_CLIENT.getStandardDataProvider())
@@ -172,12 +170,10 @@ def createAssaultSpgGunMarker(func=None):
     # I hope it won't collapse universe or something
     dualAccController = _EmptyGunMarkerController(_MARKER_TYPE.UNDEFINED, None)
 
-    debugClientController = OverriddenSPGGunMarkerController(ReticleRegistry.DEBUG_CLIENT.gunMarkerType,
-                                                             ReticleRegistry.DEBUG_CLIENT.getAssaultSpgDataProvider(),
-                                                             isServer=False)
-    debugServerController = OverriddenSPGGunMarkerController(ReticleRegistry.DEBUG_SERVER.gunMarkerType,
-                                                             ReticleRegistry.DEBUG_SERVER.getAssaultSpgDataProvider(),
-                                                             isServer=True)
+    debugClientController = ServerSPGGunMarkerController(ReticleRegistry.DEBUG_CLIENT,
+                                                         ReticleRegistry.DEBUG_CLIENT.getAssaultSpgDataProvider())
+    debugServerController = ServerSPGGunMarkerController(ReticleRegistry.DEBUG_SERVER,
+                                                         ReticleRegistry.DEBUG_SERVER.getAssaultSpgDataProvider())
 
     focusedClientController = FocusedSPGGunMarkerController(ReticleRegistry.FOCUSED_CLIENT,
                                                             ReticleRegistry.FOCUSED_CLIENT.getAssaultSpgDataProvider())

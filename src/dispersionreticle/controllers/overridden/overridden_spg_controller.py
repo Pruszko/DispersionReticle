@@ -44,6 +44,9 @@ class OverriddenSPGGunMarkerController(_SPGGunMarkerController):
 
         self._dataProvider.setupConicDispersion(dispersionAngle)
 
+    def isClientController(self):
+        return not self._isServer
+
     def isServerController(self):
         return self._isServer
 
@@ -65,16 +68,14 @@ class OverriddenSPGGunMarkerController(_SPGGunMarkerController):
             # when both client-side and server-side reticles are enabled
             # we MUST write only server-side data, because
             # VehicleGunRotator in that state writes server data to replays
-            if gun_marker_ctrl.useClientGunMarker() and gun_marker_ctrl.useServerGunMarker():
+            if self._areBothModesEnabled():
                 if replayCtrl.isServerAim and isServerAim:
                     replayCtrl.setSPGGunMarkerParams(dispersionAngle, 0.0)
             else:
-                # vanilla behavior, normally only one of "if" triggers
-                # but when both reticles are enabled, both of them would be used
-                # which is bad
-                if replayCtrl.isServerAim and isServerAim:
-                    replayCtrl.setSPGGunMarkerParams(dispersionAngle, 0.0)
-                elif not isServerAim:
+                # update is always done for all reticles,
+                # so we can use any reticle to write data to replay
+                # but for simplicity, use client reticle
+                if not isServerAim:
                     replayCtrl.setSPGGunMarkerParams(dispersionAngle, 0.0)
 
         return dispersionAngle

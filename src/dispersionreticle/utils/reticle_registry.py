@@ -36,6 +36,7 @@ else:
 #     but this results in server reticle being destroyed/created on auto-aiming
 #     due to gunMarkerFlag.serverMode becoming False
 #     which is undesirable for us
+#     this also causes server reticle to be placed on top of standard reticles, making it harder to read
 #
 # We don't want to destroy/create markers for several reasons (written at the end)
 # so to avoid this, following code contract is made:
@@ -43,7 +44,7 @@ else:
 #     and become those client reticles on auto-aiming by sharing same gun marker names
 #     so when auto-aiming (gunMarkerFlags.serverMode becomes False), they will "inherit" those gun markers
 #     from server reticle, without recreating it
-#     this is done by DispersionGunMarkersDecorator
+#     this is done by _DispersionControlMarkersFactory and DispersionGunMarkersDecorator
 # - all necessary reticle instances selected in config MUST be present all the time
 #     to maintain exact rendering order, even if gunMarkerFlags.serverMode becomes False to avoid destroying them
 # - when config is changed, all markers MUST be fully destroyed and created again in our defined rendering order
@@ -57,9 +58,8 @@ else:
 #     inside BigWorld engine and that yellow cross marker fading logic is somewhere there, inaccessible
 #     if we try to instantly fade its alpha externally (by using DAAPI's MovieClip and accessing it via public props)
 #     then BW::ScriptObject for some reason loses control over it, resulting in absent yellow marker permanently
-# - (big, awkward to fix) when auto-aiming, server reticles would have to be destroyed without client-side counterpart
-#     because in DispersionGunMarkersDecorator we cannot easily distinguish client-side update from server-side one
-#     without different gun marker type passed as parameter
+# - (big, awkward to fix) when auto-aiming is finished, server reticle would be destroyed, created,
+#     and by this placed on top of client reticles, making them harder to read
 # - (small, partially fixable) when aiming at vehicle and clicking auto-aim, penetration indicator becomes red
 #     it is fixable by invalidating its cache, but will still result in one rendering frame of invalid state
 # - (small, unfixable) when auto-aiming, full destroy/create of markers would blink for one rendering frame

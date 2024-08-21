@@ -2,7 +2,8 @@ import logging
 
 import BigWorld
 import AvatarInputHandler
-from AvatarInputHandler import gun_marker_ctrl
+from AvatarInputHandler import gun_marker_ctrl, aih_global_binding
+from aih_constants import GUN_MARKER_FLAG
 from constants import ARENA_PERIOD
 
 from dispersionreticle.utils import *
@@ -16,41 +17,65 @@ if debug_state.IS_DEBUGGING:
     logger.setLevel(logging.DEBUG)
 
 
-###########################################################
-# AvatarInputHandler hooks
-# Needed to invoke update method on gun markers of new markerType
-#
-# Basically, AvatarInputHandler invokes updateGunMarker
-# method on currently selected control mode (control_modes.py)
-# which then invokes update on gun marker decorator (gun_marker_ctrl.py)
-# that manages individual markers.
-#
-# Without this override, client and server focus gun markers
-# wouldn't be updated.
-#
-# Notes:
-# - Every control mode related to gun markers (there are few of them) has their own gun marker decorator.
-###########################################################
+class _Descriptors(object):
+    gunMarkersFlags = aih_global_binding.bindRO(AvatarInputHandler._BINDING_ID.GUN_MARKERS_FLAGS)
+    clientState = aih_global_binding.bindRW(AvatarInputHandler._BINDING_ID.CLIENT_GUN_MARKER_STATE)
+    serverState = aih_global_binding.bindRW(AvatarInputHandler._BINDING_ID.SERVER_GUN_MARKER_STATE)
 
+
+_descriptors = _Descriptors()
+
+
+# moved state flags updates from DispersionGunMarkersDecorator to here,
+# because now, we won't update reticles if they don't have matching mode flag enabled
+# which would not update state flags as well
+#
+# just update it here and now decorator don't have to worry about flag mode anymore
 
 @overrideIn(AvatarInputHandler.AvatarInputHandler)
 def updateClientGunMarker(func, self, pos, direction, size, relaxTime, collData):
-    func(self, pos, direction, size, relaxTime, collData)
+    _descriptors.clientState = (pos, direction, collData)
 
-    for reticle in ReticleRegistry.ADDITIONAL_RETICLES:
-        if not reticle.isServerReticle():
+    if not _isClientModeEnabled():
+        return
+
+    for reticle in ReticleRegistry.ALL_RETICLES:
+        # if both modes are enabled, update only client reticle
+        # otherwise update all reticles
+        if not _areBothModesEnabled() or not reticle.isServerReticle():
             self._AvatarInputHandler__curCtrl.updateGunMarker(reticle.gunMarkerType,
                                                               pos, direction, size, relaxTime, collData)
 
 
 @overrideIn(AvatarInputHandler.AvatarInputHandler)
 def updateServerGunMarker(func, self, pos, direction, size, relaxTime, collData):
-    func(self, pos, direction, size, relaxTime, collData)
+    _descriptors.serverState = (pos, direction, collData)
 
-    for reticle in ReticleRegistry.ADDITIONAL_RETICLES:
-        if reticle.isServerReticle():
+    if not _isServerModeEnabled():
+        return
+
+    for reticle in ReticleRegistry.ALL_RETICLES:
+        # if both modes are enabled, update only server reticle
+        # otherwise update all reticles
+        if not _areBothModesEnabled() or reticle.isServerReticle():
             self._AvatarInputHandler__curCtrl.updateGunMarker(reticle.gunMarkerType,
                                                               pos, direction, size, relaxTime, collData)
+
+
+def _areBothModesEnabled():
+    return _isClientModeEnabled() and _isServerModeEnabled()
+
+
+def _isAnyModeEnabled():
+    return _isClientModeEnabled() or _isServerModeEnabled()
+
+
+def _isClientModeEnabled():
+    return _descriptors.gunMarkersFlags & GUN_MARKER_FLAG.CLIENT_MODE_ENABLED
+
+
+def _isServerModeEnabled():
+    return _descriptors.gunMarkersFlags & GUN_MARKER_FLAG.SERVER_MODE_ENABLED
 
 
 # I think we don't have to bother with DUAL_ACC overrides yet

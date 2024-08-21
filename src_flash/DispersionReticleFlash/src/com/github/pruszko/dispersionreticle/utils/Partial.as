@@ -37,12 +37,12 @@ package com.github.pruszko.dispersionreticle.utils
 		
 		public function reset() : void
 		{
-			this._lastTimeMilliseconds = getTimer();
-			
 			for (var i:int = 0; i < this._partialValues.length; i++)
 			{
 				this._partialValues[i].reset();
 			}
+			
+			this._lastTimeMilliseconds = getTimer();
 		}
 		
 		public function tick() : void

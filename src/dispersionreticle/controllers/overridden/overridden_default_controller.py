@@ -45,6 +45,9 @@ class OverriddenDefaultGunMarkerController(_DefaultGunMarkerController):
 
         self._interceptPostUpdate(self._DefaultGunMarkerController__curSize)
 
+    def isClientController(self):
+        return not self._isServer
+
     def isServerController(self):
         return self._isServer
 
@@ -55,7 +58,7 @@ class OverriddenDefaultGunMarkerController(_DefaultGunMarkerController):
             if s != -1.0:
                 size = s
         elif replayCtrl.isRecording:
-            if gun_marker_ctrl.useClientGunMarker() and gun_marker_ctrl.useServerGunMarker():
+            if self._areBothModesEnabled():
                 # IMPORTANT
                 # when both client-side and server-side reticles are enabled
                 # we MUST write only server-side data, because
@@ -63,12 +66,10 @@ class OverriddenDefaultGunMarkerController(_DefaultGunMarkerController):
                 if replayCtrl.isServerAim and self._gunMarkerType == GUN_MARKER_TYPE.SERVER:
                     self._replayWriter(replayCtrl)(size)
             else:
-                # vanilla behavior, normally only one of "if" triggers
-                # but when both reticles are enabled, both of them would be used
-                # which is bad
-                if replayCtrl.isServerAim and self._gunMarkerType == GUN_MARKER_TYPE.SERVER:
-                    self._replayWriter(replayCtrl)(size)
-                elif self._gunMarkerType in (GUN_MARKER_TYPE.CLIENT, GUN_MARKER_TYPE.DUAL_ACC):
+                # update is always done for all reticles,
+                # so we can use any reticle to write data to replay
+                # but for simplicity, use client and dual acc reticle
+                if self._gunMarkerType in (GUN_MARKER_TYPE.CLIENT, GUN_MARKER_TYPE.DUAL_ACC):
                     self._replayWriter(replayCtrl)(size)
         return size
 
