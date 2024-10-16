@@ -2,6 +2,7 @@ from gui.Scaleform.daapi.view.battle.shared.crosshair import gm_factory
 from gui.Scaleform.genConsts.GUN_MARKER_VIEW_CONSTANTS import GUN_MARKER_VIEW_CONSTANTS as _CONSTANTS
 
 from dispersionreticle.settings.config_param import g_configParams
+from dispersionreticle.utils import isClientWG
 
 
 class ReticleSide(object):
@@ -13,21 +14,35 @@ class ReticleLinkages(object):
 
     @staticmethod
     def greenLinkagesProvider(markerNames):
+        # WG specific
+        # handle absent marker linkages gracefully in Lesta
+        twinGunArcadeGunMarkerLinkage = _CONSTANTS.TWIN_GUN_MARKER_LINKAGE if isClientWG() else None
+        twinGunSniperGunMarkerLinkage = _CONSTANTS.TWIN_GUN_MARKER_LINKAGE if isClientWG() else None
+
         return {
             markerNames.arcadeGunMarkerName: _CONSTANTS.GUN_MARKER_LINKAGE,
             markerNames.sniperGunMarkerName: _CONSTANTS.GUN_MARKER_LINKAGE,
             markerNames.dualGunArcadeGunMarkerName: _CONSTANTS.DUAL_GUN_ARCADE_MARKER_LINKAGE,
             markerNames.dualGunSniperGunMarkerName: _CONSTANTS.DUAL_GUN_SNIPER_MARKER_LINKAGE,
+            markerNames.twinGunArcadeGunMarkerName: twinGunArcadeGunMarkerLinkage,
+            markerNames.twinGunSniperGunMarkerName: twinGunSniperGunMarkerLinkage,
             markerNames.spgGunMarkerName: _CONSTANTS.GUN_MARKER_SPG_LINKAGE
         }
 
     @staticmethod
     def purpleLinkagesProvider(markerNames):
+        # WG specific
+        # handle absent marker linkages gracefully in Lesta
+        twinGunArcadeGunMarkerLinkage = _CONSTANTS.TWIN_GUN_MARKER_DEBUG_LINKAGE if isClientWG() else None
+        twinGunSniperGunMarkerLinkage = _CONSTANTS.TWIN_GUN_MARKER_DEBUG_LINKAGE if isClientWG() else None
+
         return {
             markerNames.arcadeGunMarkerName: _CONSTANTS.GUN_MARKER_DEBUG_LINKAGE,
             markerNames.sniperGunMarkerName: _CONSTANTS.GUN_MARKER_DEBUG_LINKAGE,
             markerNames.dualGunArcadeGunMarkerName: _CONSTANTS.DUAL_GUN_ARCADE_MARKER_DEBUG_LINKAGE,
             markerNames.dualGunSniperGunMarkerName: _CONSTANTS.DUAL_GUN_SNIPER_MARKER_DEBUG_LINKAGE,
+            markerNames.twinGunArcadeGunMarkerName: twinGunArcadeGunMarkerLinkage,
+            markerNames.twinGunSniperGunMarkerName: twinGunSniperGunMarkerLinkage,
             markerNames.spgGunMarkerName: _CONSTANTS.GUN_MARKER_SPG_DEBUG_LINKAGE
         }
 
@@ -47,12 +62,16 @@ class MarkerNames(object):
 
     def __init__(self, arcadeGunMarkerName, sniperGunMarkerName,
                  dualGunArcadeGunMarkerName, dualGunSniperGunMarkerName,
+                 twinGunArcadeGunMarkerName, twinGunSniperGunMarkerName,
                  spgGunMarkerName):
         self.arcadeGunMarkerName = arcadeGunMarkerName
         self.sniperGunMarkerName = sniperGunMarkerName
 
         self.dualGunArcadeGunMarkerName = dualGunArcadeGunMarkerName
         self.dualGunSniperGunMarkerName = dualGunSniperGunMarkerName
+
+        self.twinGunArcadeGunMarkerName = twinGunArcadeGunMarkerName
+        self.twinGunSniperGunMarkerName = twinGunSniperGunMarkerName
 
         self.spgGunMarkerName = spgGunMarkerName
 
@@ -62,26 +81,42 @@ class MarkerNames(object):
             self.sniperGunMarkerName,
             self.dualGunArcadeGunMarkerName,
             self.dualGunSniperGunMarkerName,
+            self.twinGunArcadeGunMarkerName,
+            self.twinGunSniperGunMarkerName,
             self.spgGunMarkerName
         )
 
     @staticmethod
     def createStandardMarkerNames():
+        # WG specific
+        # handle absent marker names gracefully in Lesta
+        twinGunArcadeGunMarkerName = _CONSTANTS.TWIN_GUN_ARCADE_MARKER_NAME if isClientWG() else None
+        twinGunSniperGunMarkerName = _CONSTANTS.TWIN_GUN_SNIPER_MARKER_NAME if isClientWG() else None
+
         return MarkerNames(
             arcadeGunMarkerName=_CONSTANTS.ARCADE_GUN_MARKER_NAME,
             sniperGunMarkerName=_CONSTANTS.SNIPER_GUN_MARKER_NAME,
             dualGunArcadeGunMarkerName=_CONSTANTS.DUAL_GUN_ARCADE_MARKER_NAME,
             dualGunSniperGunMarkerName=_CONSTANTS.DUAL_GUN_SNIPER_MARKER_NAME,
+            twinGunArcadeGunMarkerName=twinGunArcadeGunMarkerName,
+            twinGunSniperGunMarkerName=twinGunSniperGunMarkerName,
             spgGunMarkerName=_CONSTANTS.SPG_GUN_MARKER_NAME
         )
 
     @staticmethod
     def createDebugMarkerNames():
+        # WG specific
+        # handle absent marker names gracefully in Lesta
+        twinGunArcadeGunMarkerName = _CONSTANTS.DEBUG_TWIN_GUN_ARCADE_MARKER_NAME if isClientWG() else None
+        twinGunSniperGunMarkerName = _CONSTANTS.DEBUG_TWIN_GUN_SNIPER_MARKER_NAME if isClientWG() else None
+
         return MarkerNames(
             arcadeGunMarkerName=_CONSTANTS.DEBUG_ARCADE_GUN_MARKER_NAME,
             sniperGunMarkerName=_CONSTANTS.DEBUG_SNIPER_GUN_MARKER_NAME,
             dualGunArcadeGunMarkerName=_CONSTANTS.DEBUG_DUAL_GUN_ARCADE_MARKER_NAME,
             dualGunSniperGunMarkerName=_CONSTANTS.DEBUG_DUAL_GUN_SNIPER_MARKER_NAME,
+            twinGunArcadeGunMarkerName=twinGunArcadeGunMarkerName,
+            twinGunSniperGunMarkerName=twinGunSniperGunMarkerName,
             spgGunMarkerName=_CONSTANTS.DEBUG_SPG_GUN_MARKER_NAME
         )
 
@@ -92,6 +127,8 @@ class MarkerNames(object):
             sniperGunMarkerName='sniperGunMarker' + suffix,
             dualGunArcadeGunMarkerName='arcadeDualGunMarker' + suffix,
             dualGunSniperGunMarkerName='sniperDualGunMarker' + suffix,
+            twinGunArcadeGunMarkerName='arcadeTwinGunMarker' + suffix,
+            twinGunSniperGunMarkerName='sniperTwinGunMarker' + suffix,
             spgGunMarkerName='spgGunMarker' + suffix
         )
 
@@ -135,7 +172,9 @@ class ExtendedReticleType(ReticleType):
             self.markerNames.arcadeGunMarkerName,
             self.markerNames.sniperGunMarkerName,
             self.markerNames.dualGunArcadeGunMarkerName,
-            self.markerNames.dualGunSniperGunMarkerName
+            self.markerNames.dualGunSniperGunMarkerName,
+            self.markerNames.twinGunArcadeGunMarkerName,
+            self.markerNames.twinGunSniperGunMarkerName
         )
 
     @property

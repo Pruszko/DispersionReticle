@@ -13,11 +13,11 @@ class OverriddenSPGGunMarkerController(_SPGGunMarkerController):
         self._isServer = isServer
         self._evaluatedSize = 0
 
-    def update(self, markerType, position, direction, size, relaxTime, collData):
-        super(_SPGGunMarkerController, self).update(markerType, position, direction, size, relaxTime, collData)
+    def update(self, markerType, position, direction, size, sizeOffset, relaxTime, collData):
+        super(_SPGGunMarkerController, self).update(markerType, position, direction, size, sizeOffset, relaxTime, collData)
         positionMatrix = Math.createTranslationMatrix(position)
         self._updateMatrixProvider(positionMatrix, relaxTime)
-        self._size = size[0]
+        self._size = size + sizeOffset
 
         sizeMultiplier = g_configParams.reticleSizeMultiplier()
         self._evaluatedSize = self._interceptSize(self._size, position, direction, relaxTime, collData) * sizeMultiplier

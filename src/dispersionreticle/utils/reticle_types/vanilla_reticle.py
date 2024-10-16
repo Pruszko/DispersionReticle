@@ -103,3 +103,11 @@ class VanillaReticle(object):
                     gunMarkerFactory._createSniperMarker(self._gunMarkerType, self.markerNames.dualGunSniperGunMarkerName))
         return (gunMarkerFactory._createArcadeMarker(GUN_MARKER_TYPE.UNDEFINED, self.markerNames.dualGunArcadeGunMarkerName),
                 gunMarkerFactory._createSniperMarker(GUN_MARKER_TYPE.UNDEFINED, self.markerNames.dualGunSniperGunMarkerName))
+
+    # gm_factory
+    def createTwinGunMarkers(self, gunMarkerFactory, markerType):
+        if markerType != GUN_MARKER_TYPE.UNDEFINED:
+            return (gunMarkerFactory._createArcadeMarker(self._gunMarkerType, self.markerNames.twinGunArcadeGunMarkerName),
+                    gunMarkerFactory._createSniperMarker(self._gunMarkerType, self.markerNames.twinGunSniperGunMarkerName))
+        return (gunMarkerFactory._createArcadeMarker(GUN_MARKER_TYPE.UNDEFINED, self.markerNames.twinGunArcadeGunMarkerName),
+                gunMarkerFactory._createSniperMarker(GUN_MARKER_TYPE.UNDEFINED, self.markerNames.twinGunSniperGunMarkerName))

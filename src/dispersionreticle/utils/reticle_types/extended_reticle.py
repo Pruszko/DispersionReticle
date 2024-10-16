@@ -51,3 +51,14 @@ class ExtendedReticle(OverriddenReticle):
                     gunMarkerFactory._createExtendedSniperMarker(self._gunMarkerType, self.markerNames.dualGunSniperGunMarkerName))
         return (gunMarkerFactory._createExtendedArcadeMarker(GUN_MARKER_TYPE.UNDEFINED, self.markerNames.dualGunArcadeGunMarkerName),
                 gunMarkerFactory._createExtendedSniperMarker(GUN_MARKER_TYPE.UNDEFINED, self.markerNames.dualGunSniperGunMarkerName))
+
+    # WG specific
+    # gm_factory
+    #
+    # it won't be called on Lesta client
+    def createTwinGunMarkers(self, gunMarkerFactory, markerType):
+        if markerType != GUN_MARKER_TYPE.UNDEFINED:
+            return (gunMarkerFactory._createExtendedArcadeMarker(self._gunMarkerType, self.markerNames.twinGunArcadeGunMarkerName),
+                    gunMarkerFactory._createExtendedSniperMarker(self._gunMarkerType, self.markerNames.twinGunSniperGunMarkerName))
+        return (gunMarkerFactory._createExtendedArcadeMarker(GUN_MARKER_TYPE.UNDEFINED, self.markerNames.twinGunArcadeGunMarkerName),
+                gunMarkerFactory._createExtendedSniperMarker(GUN_MARKER_TYPE.UNDEFINED, self.markerNames.twinGunSniperGunMarkerName))

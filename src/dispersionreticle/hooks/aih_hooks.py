@@ -33,7 +33,7 @@ _descriptors = _Descriptors()
 # just update it here and now decorator don't have to worry about flag mode anymore
 
 @overrideIn(AvatarInputHandler.AvatarInputHandler)
-def updateClientGunMarker(func, self, pos, direction, size, relaxTime, collData):
+def updateClientGunMarker(func, self, pos, direction, size, sizeOffset, relaxTime, collData):
     _descriptors.clientState = (pos, direction, collData)
 
     if not _isClientModeEnabled():
@@ -44,11 +44,11 @@ def updateClientGunMarker(func, self, pos, direction, size, relaxTime, collData)
         # otherwise update all reticles
         if not _areBothModesEnabled() or not reticle.isServerReticle():
             self._AvatarInputHandler__curCtrl.updateGunMarker(reticle.gunMarkerType,
-                                                              pos, direction, size, relaxTime, collData)
+                                                              pos, direction, size, sizeOffset, relaxTime, collData)
 
 
 @overrideIn(AvatarInputHandler.AvatarInputHandler)
-def updateServerGunMarker(func, self, pos, direction, size, relaxTime, collData):
+def updateServerGunMarker(func, self, pos, direction, size, sizeOffset, relaxTime, collData):
     _descriptors.serverState = (pos, direction, collData)
 
     if not _isServerModeEnabled():
@@ -59,7 +59,7 @@ def updateServerGunMarker(func, self, pos, direction, size, relaxTime, collData)
         # otherwise update all reticles
         if not _areBothModesEnabled() or reticle.isServerReticle():
             self._AvatarInputHandler__curCtrl.updateGunMarker(reticle.gunMarkerType,
-                                                              pos, direction, size, relaxTime, collData)
+                                                              pos, direction, size, sizeOffset, relaxTime, collData)
 
 
 def _areBothModesEnabled():

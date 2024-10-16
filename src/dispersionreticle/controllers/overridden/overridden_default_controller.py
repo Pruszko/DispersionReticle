@@ -13,15 +13,12 @@ class OverriddenDefaultGunMarkerController(_DefaultGunMarkerController):
         super(OverriddenDefaultGunMarkerController, self).__init__(gunMakerType, dataProvider, enabledFlag=enabledFlag)
         self._isServer = isServer
 
-    def update(self, markerType, pos, direction, sizeVector, relaxTime, collData):
-        super(_DefaultGunMarkerController, self).update(markerType, pos, direction, sizeVector, relaxTime, collData)
+    def update(self, markerType, pos, direction, size, sizeOffset, relaxTime, collData):
+        super(_DefaultGunMarkerController, self).update(markerType, pos, direction, size, sizeOffset, relaxTime, collData)
 
         positionMatrix = Math.Matrix()
         positionMatrix.setTranslate(pos)
         self._updateMatrixProvider(positionMatrix, relaxTime)
-
-        size = sizeVector[0]
-        idealSize = sizeVector[1]
 
         size = self._interceptReplayLogic(size)
 
@@ -29,21 +26,19 @@ class OverriddenDefaultGunMarkerController(_DefaultGunMarkerController):
         sizeMultiplier = g_configParams.reticleSizeMultiplier()
 
         size = self._interceptSize(size, pos, direction, relaxTime, collData) * sizeMultiplier
-        idealSize *= self._interceptSize(idealSize, pos, direction, relaxTime, collData) * sizeMultiplier
 
         positionMatrixForScale = BigWorld.checkAndRecalculateIfPositionInExtremeProjection(positionMatrix)
         worldMatrix = _makeWorldMatrix(positionMatrixForScale)
-        currentSize = BigWorld.markerHelperScale(worldMatrix, size) * self._DefaultGunMarkerController__screenRatio
-        idealSize = BigWorld.markerHelperScale(worldMatrix, idealSize) * self._DefaultGunMarkerController__screenRatio
-        self._DefaultGunMarkerController__sizeFilter.update(currentSize, idealSize)
-        self._DefaultGunMarkerController__curSize = self._DefaultGunMarkerController__sizeFilter.getSize()
-        if self._DefaultGunMarkerController__replSwitchTime > 0.0:
-            self._DefaultGunMarkerController__replSwitchTime -= relaxTime
-            self._dataProvider.updateSize(self._DefaultGunMarkerController__curSize, 0.0)
-        else:
-            self._dataProvider.updateSize(self._DefaultGunMarkerController__curSize, relaxTime)
+        self._DefaultGunMarkerController__currentSize = BigWorld.markerHelperScale(worldMatrix, size) * self._DefaultGunMarkerController__screenRatio
+        self._DefaultGunMarkerController__currentSizeOffset = BigWorld.markerHelperScale(worldMatrix, sizeOffset) * self._DefaultGunMarkerController__screenRatio
+        self._dataProvider.updateSizes(self._DefaultGunMarkerController__currentSize,
+                                       self._DefaultGunMarkerController__currentSizeOffset,
+                                       relaxTime,
+                                       self._DefaultGunMarkerController__offsetInertness)
+        if self._DefaultGunMarkerController__offsetInertness == self._OFFSET_DEFAULT_INERTNESS:
+            self._DefaultGunMarkerController__offsetInertness = self._OFFSET_SLOWDOWN_INERTNESS
 
-        self._interceptPostUpdate(self._DefaultGunMarkerController__curSize)
+        self._interceptPostUpdate(self._DefaultGunMarkerController__currentSize)
 
     def isClientController(self):
         return not self._isServer

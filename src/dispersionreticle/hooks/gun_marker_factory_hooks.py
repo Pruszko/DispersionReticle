@@ -215,6 +215,49 @@ class _DispersionControlMarkersFactory(_ControlMarkersFactory):
 
         return result
 
+    # WG specific
+    # it won't be called on Lesta client
+    # should be very similar to dual gun markers
+    def _createTwinGunMarkers(self):
+        markerType = self._getMarkerType()
+
+        result = ()
+
+        if self.areBothClientAndServerAimEnabled():
+            if g_configParams.serverReticleExtendedEnabled():
+                if self.areBothFlagsEnabled():
+                    result += ReticleRegistry.SERVER_EXTENDED_SERVER.createTwinGunMarkers(self, markerType)
+                else:
+                    result += ReticleRegistry.SERVER_EXTENDED_CLIENT.createTwinGunMarkers(self, markerType)
+            if g_configParams.hybridReticleExtendedEnabled():
+                result += ReticleRegistry.HYBRID_EXTENDED_CLIENT.createTwinGunMarkers(self, markerType)
+            if g_configParams.focusedReticleExtendedEnabled():
+                result += ReticleRegistry.FOCUSED_EXTENDED_CLIENT.createTwinGunMarkers(self, markerType)
+
+            if g_configParams.serverReticleEnabled():
+                if self.areBothFlagsEnabled():
+                    result += ReticleRegistry.DEBUG_SERVER.createTwinGunMarkers(self, markerType)
+                else:
+                    result += ReticleRegistry.DEBUG_CLIENT.createTwinGunMarkers(self, markerType)
+
+            if g_configParams.hybridReticleEnabled():
+                result += ReticleRegistry.HYBRID_CLIENT.createTwinGunMarkers(self, markerType)
+
+            if g_configParams.focusedReticleEnabled():
+                result += ReticleRegistry.FOCUSED_CLIENT.createTwinGunMarkers(self, markerType)
+
+            if not shouldHideStandardReticle():
+                result += ReticleRegistry.VANILLA_CLIENT.createTwinGunMarkers(self, markerType)
+        else:
+            if g_configParams.focusedReticleEnabled():
+                result += toFocusedReticle(markerType).createTwinGunMarkers(self, markerType)
+            if g_configParams.focusedReticleExtendedEnabled():
+                result += toFocusedReticleExtended(markerType).createTwinGunMarkers(self, markerType)
+
+            result += toVanillaReticle(markerType).createTwinGunMarkers(self, markerType)
+
+        return result
+
     # Lesta specific
     # it won't be called on WG client
     # should be exactly the same as for SPGs
