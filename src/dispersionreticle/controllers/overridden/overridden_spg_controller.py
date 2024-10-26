@@ -3,6 +3,7 @@ from AvatarInputHandler import gun_marker_ctrl
 from AvatarInputHandler.gun_marker_ctrl import _SPGGunMarkerController, _MARKER_FLAG, _MARKER_TYPE
 
 from dispersionreticle.settings.config_param import g_configParams
+from dispersionreticle.utils import isClientWG
 
 
 # gun_marker_ctrl
@@ -13,11 +14,32 @@ class OverriddenSPGGunMarkerController(_SPGGunMarkerController):
         self._isServer = isServer
         self._evaluatedSize = 0
 
-    def update(self, markerType, position, direction, size, sizeOffset, relaxTime, collData):
+    # WG specific
+    # Lesta specific
+    #
+    # differences in method signatures and code
+    def update(self, *args, **kwargs):
+        if isClientWG():
+            self.wg_update(*args, **kwargs)
+        else:
+            self.lesta_update(*args, **kwargs)
+
+    def wg_update(self, markerType, position, direction, size, sizeOffset, relaxTime, collData):
         super(_SPGGunMarkerController, self).update(markerType, position, direction, size, sizeOffset, relaxTime, collData)
         positionMatrix = Math.createTranslationMatrix(position)
         self._updateMatrixProvider(positionMatrix, relaxTime)
         self._size = size + sizeOffset
+
+        sizeMultiplier = g_configParams.reticleSizeMultiplier()
+        self._evaluatedSize = self._interceptSize(self._size, position, direction, relaxTime, collData) * sizeMultiplier
+
+        self._update()
+
+    def lesta_update(self, markerType, position, direction, size, relaxTime, collData):
+        super(_SPGGunMarkerController, self).update(markerType, position, direction, size, relaxTime, collData)
+        positionMatrix = Math.createTranslationMatrix(position)
+        self._updateMatrixProvider(positionMatrix, relaxTime)
+        self._size = size[0]
 
         sizeMultiplier = g_configParams.reticleSizeMultiplier()
         self._evaluatedSize = self._interceptSize(self._size, position, direction, relaxTime, collData) * sizeMultiplier

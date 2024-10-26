@@ -7,7 +7,6 @@ from skeletons.account_helpers.settings_core import ISettingsCore
 from dispersionreticle.controllers.focused.extended_focused_default_controller import \
     ExtendedFocusedDefaultGunMarkerController
 from dispersionreticle.controllers.focused.extended_focused_spg_controller import ExtendedFocusedSPGGunMarkerController
-from dispersionreticle.controllers.gun_marker_decorator import DispersionGunMarkersDecorator
 from dispersionreticle.controllers.hybrid.extended_hybrid_default_controller import ExtendedHybridDefaultGunMarkerController
 from dispersionreticle.controllers.hybrid.extended_hybrid_spg_controller import ExtendedHybridSPGGunMarkerController
 from dispersionreticle.controllers.server.extended_server_default_controller import ExtendedServerDefaultGunMarkerController
@@ -88,12 +87,12 @@ def createStrategicGunMarker(func=None):
     serverExtendedServerController = ExtendedServerSPGGunMarkerController(ReticleRegistry.SERVER_EXTENDED_SERVER,
                                                                           ReticleRegistry.SERVER_EXTENDED_SERVER.getSpgDataProvider())
 
-    return DispersionGunMarkersDecorator(clientController, serverController, dualAccController,
-                                         debugClientController, debugServerController,
-                                         focusedClientController, focusedServerController,
-                                         hybridClientController, hybridExtendedClientController,
-                                         focusedExtendedClientController, focusedExtendedServerController,
-                                         serverExtendedClientController, serverExtendedServerController)
+    return createGunMarkerDecorator(clientController, serverController, dualAccController,
+                                    debugClientController, debugServerController,
+                                    focusedClientController, focusedServerController,
+                                    hybridClientController, hybridExtendedClientController,
+                                    focusedExtendedClientController, focusedExtendedServerController,
+                                    serverExtendedClientController, serverExtendedServerController)
 
 
 # Lesta specific
@@ -142,12 +141,12 @@ def createDefaultGunMarker(func=None):
     serverExtendedServerController = ExtendedServerDefaultGunMarkerController(ReticleRegistry.SERVER_EXTENDED_SERVER,
                                                                               ReticleRegistry.SERVER_EXTENDED_SERVER.getStandardDataProvider())
 
-    return DispersionGunMarkersDecorator(clientController, serverController, dualAccController,
-                                         debugClientController, debugServerController,
-                                         focusedClientController, focusedServerController,
-                                         hybridClientController, hybridExtendedClientController,
-                                         focusedExtendedClientController, focusedExtendedServerController,
-                                         serverExtendedClientController, serverExtendedServerController)
+    return createGunMarkerDecorator(clientController, serverController, dualAccController,
+                                    debugClientController, debugServerController,
+                                    focusedClientController, focusedServerController,
+                                    hybridClientController, hybridExtendedClientController,
+                                    focusedExtendedClientController, focusedExtendedServerController,
+                                    serverExtendedClientController, serverExtendedServerController)
 
 
 # Lesta specific
@@ -195,12 +194,41 @@ def createAssaultSpgGunMarker(func=None):
     serverExtendedServerController = ExtendedServerSPGGunMarkerController(ReticleRegistry.SERVER_EXTENDED_SERVER,
                                                                           ReticleRegistry.SERVER_EXTENDED_SERVER.getAssaultSpgDataProvider())
 
-    return DispersionGunMarkersDecorator(clientController, serverController, dualAccController,
-                                         debugClientController, debugServerController,
-                                         focusedClientController, focusedServerController,
-                                         hybridClientController, hybridExtendedClientController,
-                                         focusedExtendedClientController, focusedExtendedServerController,
-                                         serverExtendedClientController, serverExtendedServerController)
+    return createGunMarkerDecorator(clientController, serverController, dualAccController,
+                                    debugClientController, debugServerController,
+                                    focusedClientController, focusedServerController,
+                                    hybridClientController, hybridExtendedClientController,
+                                    focusedExtendedClientController, focusedExtendedServerController,
+                                    serverExtendedClientController, serverExtendedServerController)
+
+
+# WG specific
+# Lesta specific
+#
+# differences in decorator implementation
+def createGunMarkerDecorator(clientController, serverController, dualAccController,
+                             debugClientController, debugServerController,
+                             focusedClientController, focusedServerController,
+                             hybridClientController, hybridExtendedClientController,
+                             focusedExtendedClientController, focusedExtendedServerController,
+                             serverExtendedClientController, serverExtendedServerController):
+    # this is horrible, but let it be
+    if isClientWG():
+        from dispersionreticle.controllers.wg_gun_marker_decorator import WgDispersionGunMarkersDecorator
+        return WgDispersionGunMarkersDecorator(clientController, serverController, dualAccController,
+                                               debugClientController, debugServerController,
+                                               focusedClientController, focusedServerController,
+                                               hybridClientController, hybridExtendedClientController,
+                                               focusedExtendedClientController, focusedExtendedServerController,
+                                               serverExtendedClientController, serverExtendedServerController)
+    else:
+        from dispersionreticle.controllers.lesta_gun_marker_decorator import LestaDispersionGunMarkersDecorator
+        return LestaDispersionGunMarkersDecorator(clientController, serverController, dualAccController,
+                                                  debugClientController, debugServerController,
+                                                  focusedClientController, focusedServerController,
+                                                  hybridClientController, hybridExtendedClientController,
+                                                  focusedExtendedClientController, focusedExtendedServerController,
+                                                  serverExtendedClientController, serverExtendedServerController)
 
 
 @overrideIn(gun_marker_ctrl)

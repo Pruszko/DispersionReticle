@@ -4,6 +4,7 @@ from AvatarInputHandler.gun_marker_ctrl import _DefaultGunMarkerController, _mak
 from aih_constants import GUN_MARKER_TYPE
 
 from dispersionreticle.settings.config_param import g_configParams
+from dispersionreticle.utils import isClientWG
 
 
 # gun_marker_ctrl
@@ -13,7 +14,17 @@ class OverriddenDefaultGunMarkerController(_DefaultGunMarkerController):
         super(OverriddenDefaultGunMarkerController, self).__init__(gunMakerType, dataProvider, enabledFlag=enabledFlag)
         self._isServer = isServer
 
-    def update(self, markerType, pos, direction, size, sizeOffset, relaxTime, collData):
+    # WG specific
+    # Lesta specific
+    #
+    # differences in method signatures and code
+    def update(self, *args, **kwargs):
+        if isClientWG():
+            self.wg_update(*args, **kwargs)
+        else:
+            self.lesta_update(*args, **kwargs)
+
+    def wg_update(self, markerType, pos, direction, size, sizeOffset, relaxTime, collData):
         super(_DefaultGunMarkerController, self).update(markerType, pos, direction, size, sizeOffset, relaxTime, collData)
 
         positionMatrix = Math.Matrix()
@@ -39,6 +50,38 @@ class OverriddenDefaultGunMarkerController(_DefaultGunMarkerController):
             self._DefaultGunMarkerController__offsetInertness = self._OFFSET_SLOWDOWN_INERTNESS
 
         self._interceptPostUpdate(self._DefaultGunMarkerController__currentSize)
+
+    def lesta_update(self, markerType, pos, direction, sizeVector, relaxTime, collData):
+        super(_DefaultGunMarkerController, self).update(markerType, pos, direction, sizeVector, relaxTime, collData)
+
+        positionMatrix = Math.Matrix()
+        positionMatrix.setTranslate(pos)
+        self._updateMatrixProvider(positionMatrix, relaxTime)
+
+        size = sizeVector[0]
+        idealSize = sizeVector[1]
+
+        size = self._interceptReplayLogic(size)
+
+        # this have to be here, we don't want to corrupt replays
+        sizeMultiplier = g_configParams.reticleSizeMultiplier()
+
+        size = self._interceptSize(size, pos, direction, relaxTime, collData) * sizeMultiplier
+        idealSize *= self._interceptSize(idealSize, pos, direction, relaxTime, collData) * sizeMultiplier
+
+        positionMatrixForScale = BigWorld.checkAndRecalculateIfPositionInExtremeProjection(positionMatrix)
+        worldMatrix = _makeWorldMatrix(positionMatrixForScale)
+        currentSize = BigWorld.markerHelperScale(worldMatrix, size) * self._DefaultGunMarkerController__screenRatio
+        idealSize = BigWorld.markerHelperScale(worldMatrix, idealSize) * self._DefaultGunMarkerController__screenRatio
+        self._DefaultGunMarkerController__sizeFilter.update(currentSize, idealSize)
+        self._DefaultGunMarkerController__curSize = self._DefaultGunMarkerController__sizeFilter.getSize()
+        if self._DefaultGunMarkerController__replSwitchTime > 0.0:
+            self._DefaultGunMarkerController__replSwitchTime -= relaxTime
+            self._dataProvider.updateSize(self._DefaultGunMarkerController__curSize, 0.0)
+        else:
+            self._dataProvider.updateSize(self._DefaultGunMarkerController__curSize, relaxTime)
+
+        self._interceptPostUpdate(self._DefaultGunMarkerController__curSize)
 
     def isClientController(self):
         return not self._isServer

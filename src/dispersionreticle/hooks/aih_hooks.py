@@ -32,8 +32,20 @@ _descriptors = _Descriptors()
 #
 # just update it here and now decorator don't have to worry about flag mode anymore
 
+
+# WG specific
+# Lesta specific
+#
+# differences in method signatures and code
 @overrideIn(AvatarInputHandler.AvatarInputHandler)
-def updateClientGunMarker(func, self, pos, direction, size, sizeOffset, relaxTime, collData):
+def updateClientGunMarker(*args, **kwargs):
+    if isClientWG():
+        wg_updateClientGunMarker(*args, **kwargs)
+    else:
+        lesta_updateClientGunMarker(*args, **kwargs)
+
+
+def wg_updateClientGunMarker(func, self, pos, direction, size, sizeOffset, relaxTime, collData):
     _descriptors.clientState = (pos, direction, collData)
 
     if not _isClientModeEnabled():
@@ -47,8 +59,33 @@ def updateClientGunMarker(func, self, pos, direction, size, sizeOffset, relaxTim
                                                               pos, direction, size, sizeOffset, relaxTime, collData)
 
 
+def lesta_updateClientGunMarker(func, self, pos, direction, size, relaxTime, collData):
+    _descriptors.clientState = (pos, direction, collData)
+
+    if not _isClientModeEnabled():
+        return
+
+    for reticle in ReticleRegistry.ALL_RETICLES:
+        # if both modes are enabled, update only client reticle
+        # otherwise update all reticles
+        if not _areBothModesEnabled() or not reticle.isServerReticle():
+            self._AvatarInputHandler__curCtrl.updateGunMarker(reticle.gunMarkerType,
+                                                              pos, direction, size, relaxTime, collData)
+
+
+# WG specific
+# Lesta specific
+#
+# differences in method signatures and code
 @overrideIn(AvatarInputHandler.AvatarInputHandler)
-def updateServerGunMarker(func, self, pos, direction, size, sizeOffset, relaxTime, collData):
+def updateServerGunMarker(*args, **kwargs):
+    if isClientWG():
+        wg_updateServerGunMarker(*args, **kwargs)
+    else:
+        lesta_updateServerGunMarker(*args, **kwargs)
+
+
+def wg_updateServerGunMarker(func, self, pos, direction, size, sizeOffset, relaxTime, collData):
     _descriptors.serverState = (pos, direction, collData)
 
     if not _isServerModeEnabled():
@@ -60,6 +97,20 @@ def updateServerGunMarker(func, self, pos, direction, size, sizeOffset, relaxTim
         if not _areBothModesEnabled() or reticle.isServerReticle():
             self._AvatarInputHandler__curCtrl.updateGunMarker(reticle.gunMarkerType,
                                                               pos, direction, size, sizeOffset, relaxTime, collData)
+
+
+def lesta_updateServerGunMarker(func, self, pos, direction, size, relaxTime, collData):
+    _descriptors.serverState = (pos, direction, collData)
+
+    if not _isServerModeEnabled():
+        return
+
+    for reticle in ReticleRegistry.ALL_RETICLES:
+        # if both modes are enabled, update only server reticle
+        # otherwise update all reticles
+        if not _areBothModesEnabled() or reticle.isServerReticle():
+            self._AvatarInputHandler__curCtrl.updateGunMarker(reticle.gunMarkerType,
+                                                              pos, direction, size, relaxTime, collData)
 
 
 def _areBothModesEnabled():
@@ -76,10 +127,6 @@ def _isClientModeEnabled():
 
 def _isServerModeEnabled():
     return _descriptors.gunMarkersFlags & GUN_MARKER_FLAG.SERVER_MODE_ENABLED
-
-
-# I think we don't have to bother with DUAL_ACC overrides yet
-# I don't even know how it will be used
 
 
 @overrideIn(AvatarInputHandler.AvatarInputHandler, condition=isClientWG)
