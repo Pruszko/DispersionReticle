@@ -259,10 +259,7 @@ class _DispersionControlMarkersFactory(_ControlMarkersFactory):
         return result
 
     # Lesta specific
-    # it won't be called on WG client
-    # should be exactly the same as for SPGs
-    def _createFlamethrowerMarkers(self):
-        return self._createSPGMarkers()
+    # _createFlamethrowerMarkers() calls our methods, so here we don't have to do anything
 
     # Lesta specific
     # it won't be called on WG client
