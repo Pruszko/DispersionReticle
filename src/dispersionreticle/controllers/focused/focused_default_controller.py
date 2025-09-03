@@ -14,7 +14,7 @@ class FocusedDefaultGunMarkerController(OverriddenDefaultGunMarkerController):
                                                                 enabledFlag=enabledFlag)
         self._reticle = reticle
 
-    def _interceptSize(self, size, pos, direction, relaxTime, collData):
+    def _interceptSize(self, size, pos):
         return getFocusedDispersionSize(pos)
 
     def _interceptReplayLogic(self, size):

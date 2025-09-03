@@ -1,6 +1,8 @@
 import logging
 
 import BigWorld, Math
+from VehicleGunRotator import GunMarkerInfo
+from aih_constants import GunMarkerState
 from AvatarInputHandler import gun_marker_ctrl, aih_global_binding, AimingSystems
 from AvatarInputHandler.gun_marker_ctrl import IGunMarkerController, _BINDING_ID, _MARKER_TYPE, _MARKER_FLAG
 
@@ -69,19 +71,19 @@ class WgDispersionGunMarkersDecorator(IGunMarkerController):
 
     def enable(self):
         self.__clientController.enable()
-        self.__clientController.setPosition(self.__clientState[0])
+        self.__clientController.setPosition(self.__clientState[0].position)
         self.__serverController.enable()
-        self.__serverController.setPosition(self.__serverState[0])
+        self.__serverController.setPosition(self.__serverState[0].position)
         self.__dualAccController.enable()
-        self.__dualAccController.setPosition(self.__dualAccState[0])
+        self.__dualAccController.setPosition(self.__dualAccState[0].position)
 
         for controller in self._allAdditionalControllers:
             controller.enable()
 
             if controller.isServerController():
-                controller.setPosition(self.__serverState[0])
+                controller.setPosition(self.__serverState[0].position)
             else:
-                controller.setPosition(self.__clientState[0])
+                controller.setPosition(self.__clientState[0].position)
 
     def disable(self):
         for controller in self._allControllers:
@@ -125,7 +127,7 @@ class WgDispersionGunMarkersDecorator(IGunMarkerController):
         else:
             self.__gunMarkersFlags &= ~bit
 
-    def update(self, markerType, position, direction, size, sizeOffset, relaxTime, collData):
+    def update(self, markerType, gunMarkerInfo, supportMarkersInfo, relaxTime):
         if debug_state.IS_DEBUGGING:
             g_debugStateCollector.collectStateBeforeGunMarkersUpdate()
 
@@ -158,57 +160,82 @@ class WgDispersionGunMarkersDecorator(IGunMarkerController):
             self.__serverSizeDispersion = None
             self.__serverDispersionAngle = None
 
+        # normally data provider updates are done only, if certain mode (client or server)
+        # is enabled depending on reticle type (client or server)
+        #
+        # we have to change that to ANY mode, so aih_hooks can trigger server reticle updates with client-side data
+        # and vice versa, when both modes ARE NOT enabled concurrently
+        # this can cause self.__clientState to be updated with server-side data (and vice versa)
+        # but it shouldn't cause any issues (even better - I think they should be in-sync with data providers)
         if markerType == _MARKER_TYPE.CLIENT:
-            self.__clientController.update(markerType, position, direction, size, sizeOffset, relaxTime, collData)
+            size = gunMarkerInfo.size
+            if self._isAnyModeEnabled():
+                self.__clientController.update(markerType, gunMarkerInfo, supportMarkersInfo, relaxTime)
+                size = self.__clientController.getSizes()[0]
+            self.__clientState = (GunMarkerState.fromGunMarkerInfo(gunMarkerInfo, size), supportMarkersInfo)
         elif markerType == _MARKER_TYPE.SERVER:
-            self.__serverController.update(markerType, position, direction, size, sizeOffset, relaxTime, collData)
+            size = gunMarkerInfo.size
+            if self._isAnyModeEnabled():
+                self.__serverController.update(markerType, gunMarkerInfo, supportMarkersInfo, relaxTime)
+                size = self.__serverController.getSizes()[0]
+            self.__serverState = (GunMarkerState.fromGunMarkerInfo(gunMarkerInfo, size), supportMarkersInfo)
         elif markerType == _MARKER_TYPE.DUAL_ACC:
-            # this still have to stay here
-            # because dual acc IS NOT updated by our hooks
-            # leave it as it is
-            if self._isClientModeEnabled():
-                self.__dualAccState = (position, direction, collData)
-            self.__dualAccController.update(markerType, position, direction, size, sizeOffset, relaxTime, collData)
+            self.__dualAccState = (GunMarkerState.fromGunMarkerInfo(gunMarkerInfo), supportMarkersInfo)
+            # don't touch mode here - vanilla code handles it normally
+            if self._isAnyModeEnabled():
+                self.__dualAccController.update(markerType, gunMarkerInfo, supportMarkersInfo, relaxTime)
         elif markerType == ReticleRegistry.DEBUG_CLIENT.gunMarkerType:
-            self.__debugClientController.update(markerType, position, direction, size, sizeOffset, relaxTime, collData)
+            if self._isAnyModeEnabled():
+                self.__debugClientController.update(markerType, gunMarkerInfo, supportMarkersInfo, relaxTime)
         elif markerType == ReticleRegistry.DEBUG_SERVER.gunMarkerType:
-            self.__debugServerController.update(markerType, position, direction, size, sizeOffset, relaxTime, collData)
+            if self._isAnyModeEnabled():
+                self.__debugServerController.update(markerType, gunMarkerInfo, supportMarkersInfo, relaxTime)
 
             # collect server size dispersion for hybrid reticle
             # this will be called even, if server reticle is not instantiated
-            self.__serverSizeDispersion = size
+            self.__serverSizeDispersion = gunMarkerInfo.size
             if BigWorld.player() and BigWorld.player().gunRotator:
                 self.__serverDispersionAngle = BigWorld.player().gunRotator.dispersionAngle
 
             # scale it down to dispersion per 1m unit
-            distance = getDistanceFromSniperViewport(position)
+            distance = getDistanceFromSniperViewport(gunMarkerInfo.position)
             if distance > 0.0:
-                self.__serverSizeDispersion = size / distance
+                self.__serverSizeDispersion = gunMarkerInfo.size / distance
         elif markerType == ReticleRegistry.FOCUSED_CLIENT.gunMarkerType:
-            self.__focusedClientController.update(markerType, position, direction, size, sizeOffset, relaxTime, collData)
+            if self._isAnyModeEnabled():
+                self.__focusedClientController.update(markerType, gunMarkerInfo, supportMarkersInfo, relaxTime)
         elif markerType == ReticleRegistry.FOCUSED_SERVER.gunMarkerType:
-            self.__focusedServerController.update(markerType, position, direction, size, sizeOffset, relaxTime, collData)
+            if self._isAnyModeEnabled():
+                self.__focusedServerController.update(markerType, gunMarkerInfo, supportMarkersInfo, relaxTime)
         # those 2x elif has to be done outside controllers because we have to collect server reticle size
         # also, we will have delayed access to server size, so we need to wait
         # until GunMarkerComponent will provide server data
         elif markerType == ReticleRegistry.HYBRID_CLIENT.gunMarkerType:
-            self._updateHybridReticle(self.__hybridClientController,
-                                      collData, direction, markerType, position, relaxTime, size, sizeOffset)
+            if self._isAnyModeEnabled():
+                self._updateHybridReticle(self.__hybridClientController,
+                                          markerType, gunMarkerInfo, supportMarkersInfo, relaxTime)
         elif markerType == ReticleRegistry.HYBRID_EXTENDED_CLIENT.gunMarkerType:
-            self._updateHybridReticle(self.__hybridExtendedClientController,
-                                      collData, direction, markerType, position, relaxTime, size, sizeOffset)
+            if self._isAnyModeEnabled():
+                self._updateHybridReticle(self.__hybridExtendedClientController,
+                                          markerType, gunMarkerInfo, supportMarkersInfo, relaxTime)
         elif markerType == ReticleRegistry.FOCUSED_EXTENDED_CLIENT.gunMarkerType:
-            self.__focusedExtendedClientController.update(markerType, position, direction, size, sizeOffset, relaxTime, collData)
+            if self._isAnyModeEnabled():
+                self.__focusedExtendedClientController.update(markerType, gunMarkerInfo, supportMarkersInfo, relaxTime)
         elif markerType == ReticleRegistry.FOCUSED_EXTENDED_SERVER.gunMarkerType:
-            self.__focusedExtendedServerController.update(markerType, position, direction, size, sizeOffset, relaxTime, collData)
+            if self._isAnyModeEnabled():
+                self.__focusedExtendedServerController.update(markerType, gunMarkerInfo, supportMarkersInfo, relaxTime)
         elif markerType == ReticleRegistry.SERVER_EXTENDED_CLIENT.gunMarkerType:
-            self.__serverExtendedClientController.update(markerType, position, direction, size, sizeOffset, relaxTime, collData)
+            if self._isAnyModeEnabled():
+                self.__serverExtendedClientController.update(markerType, gunMarkerInfo, supportMarkersInfo, relaxTime)
         elif markerType == ReticleRegistry.SERVER_EXTENDED_SERVER.gunMarkerType:
-            self.__serverExtendedServerController.update(markerType, position, direction, size, sizeOffset, relaxTime, collData)
+            if self._isAnyModeEnabled():
+                self.__serverExtendedServerController.update(markerType, gunMarkerInfo, supportMarkersInfo, relaxTime)
         else:
             gun_marker_ctrl._logger.warning('Gun maker control is not found by type: %d', markerType)
 
-    def _updateHybridReticle(self, controller, collData, direction, markerType, position, relaxTime, size, sizeOffset):
+    def _updateHybridReticle(self, controller, markerType, gunMarkerInfo, supportMarkersInfo, relaxTime):
+        gunMarkerInfo = gunMarkerInfo  # type: GunMarkerInfo
+
         # when auto-aiming, use client-side data
         #
         # also, first calls won't have ready server data yet
@@ -217,14 +244,16 @@ class WgDispersionGunMarkersDecorator(IGunMarkerController):
                 and self.__serverSizeDispersion is not None \
                 and self.__serverDispersionAngle is not None:
             # scale server size dispersion by distance for hybrid reticle
-            distance = getDistanceFromSniperViewport(position)
+            distance = getDistanceFromSniperViewport(gunMarkerInfo.position)
             serverSize = self.__serverSizeDispersion * distance
 
             controller.setServerDispersionAngle(self.__serverDispersionAngle)
-            controller.update(markerType, position, direction, serverSize, sizeOffset, relaxTime, collData)
+            gunMarkerInfo = gunMarkerInfo._replace(size=serverSize)
+
+            controller.update(markerType, gunMarkerInfo, supportMarkersInfo, relaxTime)
         else:
             controller.setServerDispersionAngle(None)
-            controller.update(markerType, position, direction, size, sizeOffset, relaxTime, collData)
+            controller.update(markerType, gunMarkerInfo, supportMarkersInfo, relaxTime)
 
     def _areBothModesEnabled(self):
         return self._isClientModeEnabled() and self._isServerModeEnabled()

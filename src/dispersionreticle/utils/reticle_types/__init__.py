@@ -19,6 +19,12 @@ class ReticleLinkages(object):
         twinGunArcadeGunMarkerLinkage = _CONSTANTS.TWIN_GUN_MARKER_LINKAGE if isClientWG() else None
         twinGunSniperGunMarkerLinkage = _CONSTANTS.TWIN_GUN_MARKER_LINKAGE if isClientWG() else None
 
+        accuracyGunArcadeGunMarkerLinkage = _CONSTANTS.ACCURACY_GUN_MARKER_LINKAGE if isClientWG() else None
+        accuracyGunSniperGunMarkerLinkage = _CONSTANTS.ACCURACY_GUN_MARKER_LINKAGE if isClientWG() else None
+
+        chargeGunArcadeGunMarkerLinkage = _CONSTANTS.CHARGE_GUN_MARKER_LINKAGE if isClientWG() else None
+        chargeGunSniperGunMarkerLinkage = _CONSTANTS.CHARGE_GUN_MARKER_LINKAGE if isClientWG() else None
+
         return {
             markerNames.arcadeGunMarkerName: _CONSTANTS.GUN_MARKER_LINKAGE,
             markerNames.sniperGunMarkerName: _CONSTANTS.GUN_MARKER_LINKAGE,
@@ -26,6 +32,10 @@ class ReticleLinkages(object):
             markerNames.dualGunSniperGunMarkerName: _CONSTANTS.DUAL_GUN_SNIPER_MARKER_LINKAGE,
             markerNames.twinGunArcadeGunMarkerName: twinGunArcadeGunMarkerLinkage,
             markerNames.twinGunSniperGunMarkerName: twinGunSniperGunMarkerLinkage,
+            markerNames.accuracyGunArcadeGunMarkerName: accuracyGunArcadeGunMarkerLinkage,
+            markerNames.accuracyGunSniperGunMarkerName: accuracyGunSniperGunMarkerLinkage,
+            markerNames.chargeGunArcadeGunMarkerName: chargeGunArcadeGunMarkerLinkage,
+            markerNames.chargeGunSniperGunMarkerName: chargeGunSniperGunMarkerLinkage,
             markerNames.spgGunMarkerName: _CONSTANTS.GUN_MARKER_SPG_LINKAGE
         }
 
@@ -36,6 +46,12 @@ class ReticleLinkages(object):
         twinGunArcadeGunMarkerLinkage = _CONSTANTS.TWIN_GUN_MARKER_DEBUG_LINKAGE if isClientWG() else None
         twinGunSniperGunMarkerLinkage = _CONSTANTS.TWIN_GUN_MARKER_DEBUG_LINKAGE if isClientWG() else None
 
+        accuracyGunArcadeGunMarkerLinkage = _CONSTANTS.ACCURACY_GUN_MARKER_DEBUG_LINKAGE if isClientWG() else None
+        accuracyGunSniperGunMarkerLinkage = _CONSTANTS.ACCURACY_GUN_MARKER_DEBUG_LINKAGE if isClientWG() else None
+
+        chargeGunArcadeGunMarkerLinkage = _CONSTANTS.CHARGE_GUN_MARKER_DEBUG_LINKAGE if isClientWG() else None
+        chargeGunSniperGunMarkerLinkage = _CONSTANTS.CHARGE_GUN_MARKER_DEBUG_LINKAGE if isClientWG() else None
+
         return {
             markerNames.arcadeGunMarkerName: _CONSTANTS.GUN_MARKER_DEBUG_LINKAGE,
             markerNames.sniperGunMarkerName: _CONSTANTS.GUN_MARKER_DEBUG_LINKAGE,
@@ -43,6 +59,10 @@ class ReticleLinkages(object):
             markerNames.dualGunSniperGunMarkerName: _CONSTANTS.DUAL_GUN_SNIPER_MARKER_DEBUG_LINKAGE,
             markerNames.twinGunArcadeGunMarkerName: twinGunArcadeGunMarkerLinkage,
             markerNames.twinGunSniperGunMarkerName: twinGunSniperGunMarkerLinkage,
+            markerNames.accuracyGunArcadeGunMarkerName: accuracyGunArcadeGunMarkerLinkage,
+            markerNames.accuracyGunSniperGunMarkerName: accuracyGunSniperGunMarkerLinkage,
+            markerNames.chargeGunArcadeGunMarkerName: chargeGunArcadeGunMarkerLinkage,
+            markerNames.chargeGunSniperGunMarkerName: chargeGunSniperGunMarkerLinkage,
             markerNames.spgGunMarkerName: _CONSTANTS.GUN_MARKER_SPG_DEBUG_LINKAGE
         }
 
@@ -63,6 +83,8 @@ class MarkerNames(object):
     def __init__(self, arcadeGunMarkerName, sniperGunMarkerName,
                  dualGunArcadeGunMarkerName, dualGunSniperGunMarkerName,
                  twinGunArcadeGunMarkerName, twinGunSniperGunMarkerName,
+                 accuracyGunArcadeGunMarkerName, accuracyGunSniperGunMarkerName,
+                 chargeGunArcadeGunMarkerName, chargeGunSniperGunMarkerName,
                  spgGunMarkerName):
         self.arcadeGunMarkerName = arcadeGunMarkerName
         self.sniperGunMarkerName = sniperGunMarkerName
@@ -72,6 +94,12 @@ class MarkerNames(object):
 
         self.twinGunArcadeGunMarkerName = twinGunArcadeGunMarkerName
         self.twinGunSniperGunMarkerName = twinGunSniperGunMarkerName
+
+        self.accuracyGunArcadeGunMarkerName = accuracyGunArcadeGunMarkerName
+        self.accuracyGunSniperGunMarkerName = accuracyGunSniperGunMarkerName
+
+        self.chargeGunArcadeGunMarkerName = chargeGunArcadeGunMarkerName
+        self.chargeGunSniperGunMarkerName = chargeGunSniperGunMarkerName
 
         self.spgGunMarkerName = spgGunMarkerName
 
@@ -83,6 +111,10 @@ class MarkerNames(object):
             self.dualGunSniperGunMarkerName,
             self.twinGunArcadeGunMarkerName,
             self.twinGunSniperGunMarkerName,
+            self.accuracyGunArcadeGunMarkerName,
+            self.accuracyGunSniperGunMarkerName,
+            self.chargeGunArcadeGunMarkerName,
+            self.chargeGunSniperGunMarkerName,
             self.spgGunMarkerName
         )
 
@@ -93,6 +125,12 @@ class MarkerNames(object):
         twinGunArcadeGunMarkerName = _CONSTANTS.TWIN_GUN_ARCADE_MARKER_NAME if isClientWG() else None
         twinGunSniperGunMarkerName = _CONSTANTS.TWIN_GUN_SNIPER_MARKER_NAME if isClientWG() else None
 
+        accuracyGunArcadeGunMarkerName = _CONSTANTS.ACCURACY_GUN_ARCADE_MARKER_NAME if isClientWG() else None
+        accuracyGunSniperGunMarkerName = _CONSTANTS.ACCURACY_GUN_SNIPER_MARKER_NAME if isClientWG() else None
+
+        chargeGunArcadeGunMarkerName = _CONSTANTS.CHARGE_GUN_ARCADE_MARKER_NAME if isClientWG() else None
+        chargeGunSniperGunMarkerName = _CONSTANTS.CHARGE_GUN_SNIPER_MARKER_NAME if isClientWG() else None
+
         return MarkerNames(
             arcadeGunMarkerName=_CONSTANTS.ARCADE_GUN_MARKER_NAME,
             sniperGunMarkerName=_CONSTANTS.SNIPER_GUN_MARKER_NAME,
@@ -100,15 +138,28 @@ class MarkerNames(object):
             dualGunSniperGunMarkerName=_CONSTANTS.DUAL_GUN_SNIPER_MARKER_NAME,
             twinGunArcadeGunMarkerName=twinGunArcadeGunMarkerName,
             twinGunSniperGunMarkerName=twinGunSniperGunMarkerName,
+            accuracyGunArcadeGunMarkerName=accuracyGunArcadeGunMarkerName,
+            accuracyGunSniperGunMarkerName=accuracyGunSniperGunMarkerName,
+            chargeGunArcadeGunMarkerName=chargeGunArcadeGunMarkerName,
+            chargeGunSniperGunMarkerName=chargeGunSniperGunMarkerName,
             spgGunMarkerName=_CONSTANTS.SPG_GUN_MARKER_NAME
         )
 
+    # this method is not used anywhere
+    # but it feels like a waste to delete it, because it might be useful in future
+    # lmao
     @staticmethod
     def createDebugMarkerNames():
         # WG specific
         # handle absent marker names gracefully in Lesta
         twinGunArcadeGunMarkerName = _CONSTANTS.DEBUG_TWIN_GUN_ARCADE_MARKER_NAME if isClientWG() else None
         twinGunSniperGunMarkerName = _CONSTANTS.DEBUG_TWIN_GUN_SNIPER_MARKER_NAME if isClientWG() else None
+
+        accuracyGunArcadeGunMarkerName = _CONSTANTS.DEBUG_ACCURACY_GUN_ARCADE_MARKER_NAME if isClientWG() else None
+        accuracyGunSniperGunMarkerName = _CONSTANTS.DEBUG_ACCURACY_GUN_SNIPER_MARKER_NAME if isClientWG() else None
+
+        chargeGunArcadeGunMarkerName = _CONSTANTS.DEBUG_CHARGE_GUN_ARCADE_MARKER_NAME if isClientWG() else None
+        chargeGunSniperGunMarkerName = _CONSTANTS.DEBUG_CHARGE_GUN_SNIPER_MARKER_NAME if isClientWG() else None
 
         return MarkerNames(
             arcadeGunMarkerName=_CONSTANTS.DEBUG_ARCADE_GUN_MARKER_NAME,
@@ -117,6 +168,10 @@ class MarkerNames(object):
             dualGunSniperGunMarkerName=_CONSTANTS.DEBUG_DUAL_GUN_SNIPER_MARKER_NAME,
             twinGunArcadeGunMarkerName=twinGunArcadeGunMarkerName,
             twinGunSniperGunMarkerName=twinGunSniperGunMarkerName,
+            accuracyGunArcadeGunMarkerName=accuracyGunArcadeGunMarkerName,
+            accuracyGunSniperGunMarkerName=accuracyGunSniperGunMarkerName,
+            chargeGunArcadeGunMarkerName=chargeGunArcadeGunMarkerName,
+            chargeGunSniperGunMarkerName=chargeGunSniperGunMarkerName,
             spgGunMarkerName=_CONSTANTS.DEBUG_SPG_GUN_MARKER_NAME
         )
 
@@ -129,6 +184,10 @@ class MarkerNames(object):
             dualGunSniperGunMarkerName='sniperDualGunMarker' + suffix,
             twinGunArcadeGunMarkerName='arcadeTwinGunMarker' + suffix,
             twinGunSniperGunMarkerName='sniperTwinGunMarker' + suffix,
+            accuracyGunArcadeGunMarkerName='arcadeAccuracyGunMarker' + suffix,
+            accuracyGunSniperGunMarkerName='sniperAccuracyGunMarker' + suffix,
+            chargeGunArcadeGunMarkerName='arcadeChargeGunMarker' + suffix,
+            chargeGunSniperGunMarkerName='sniperChargeGunMarker' + suffix,
             spgGunMarkerName='spgGunMarker' + suffix
         )
 
@@ -174,7 +233,11 @@ class ExtendedReticleType(ReticleType):
             self.markerNames.dualGunArcadeGunMarkerName,
             self.markerNames.dualGunSniperGunMarkerName,
             self.markerNames.twinGunArcadeGunMarkerName,
-            self.markerNames.twinGunSniperGunMarkerName
+            self.markerNames.twinGunSniperGunMarkerName,
+            self.markerNames.accuracyGunArcadeGunMarkerName,
+            self.markerNames.accuracyGunSniperGunMarkerName,
+            self.markerNames.chargeGunArcadeGunMarkerName,
+            self.markerNames.chargeGunSniperGunMarkerName,
         )
 
     @property

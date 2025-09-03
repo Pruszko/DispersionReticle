@@ -59,7 +59,8 @@ def getFocusedDispersionAngle():
     # dispersionInfo[1] = gunShotDispersionFactorsTurretRotation
     # dispersionInfo[2] = chassisShotDispersionFactorsMovement
     # dispersionInfo[3] = chassisShotDispersionFactorsRotation
-    # dispersionInfo[4] = aimingTime
+    # dispersionInfo[4] = gunShotDispersionFactorsAfterShot
+    # dispersionInfo[5] = aimingTime
     shotDispMultiplierFactor = playerAvatar._PlayerAvatar__dispersionInfo[0]
 
     # just return actual angle for conic dispersion

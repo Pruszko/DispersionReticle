@@ -1,5 +1,4 @@
 import BigWorld, Math, BattleReplay
-from AvatarInputHandler import gun_marker_ctrl
 from AvatarInputHandler.gun_marker_ctrl import _DefaultGunMarkerController, _makeWorldMatrix, _MARKER_FLAG
 from aih_constants import GUN_MARKER_TYPE
 
@@ -24,24 +23,28 @@ class OverriddenDefaultGunMarkerController(_DefaultGunMarkerController):
         else:
             self.lesta_update(*args, **kwargs)
 
-    def wg_update(self, markerType, pos, direction, size, sizeOffset, relaxTime, collData):
-        super(_DefaultGunMarkerController, self).update(markerType, pos, direction, size, sizeOffset, relaxTime, collData)
+    def wg_update(self, markerType, gunMarkerInfo, supportMarkersInfo, relaxTime):
+        from VehicleGunRotator import GunMarkerInfo
+        gunMarkerInfo = gunMarkerInfo  # type: GunMarkerInfo
+        super(_DefaultGunMarkerController, self).update(markerType, gunMarkerInfo, supportMarkersInfo, relaxTime)
 
         positionMatrix = Math.Matrix()
-        positionMatrix.setTranslate(pos)
+        positionMatrix.setTranslate(gunMarkerInfo.position)
         self._updateMatrixProvider(positionMatrix, relaxTime)
 
+        size = self._getMarkerSize(gunMarkerInfo)
         size = self._interceptReplayLogic(size)
 
         # this have to be here, we don't want to corrupt replays
         sizeMultiplier = g_configParams.reticleSizeMultiplier()
 
-        size = self._interceptSize(size, pos, direction, relaxTime, collData) * sizeMultiplier
+        size = self._interceptSize(size, gunMarkerInfo.position) * sizeMultiplier
 
         positionMatrixForScale = BigWorld.checkAndRecalculateIfPositionInExtremeProjection(positionMatrix)
         worldMatrix = _makeWorldMatrix(positionMatrixForScale)
-        self._DefaultGunMarkerController__currentSize = BigWorld.markerHelperScale(worldMatrix, size) * self._DefaultGunMarkerController__screenRatio
-        self._DefaultGunMarkerController__currentSizeOffset = BigWorld.markerHelperScale(worldMatrix, sizeOffset) * self._DefaultGunMarkerController__screenRatio
+        markerHelperScale = BigWorld.markerHelperScale
+        self._DefaultGunMarkerController__currentSize = markerHelperScale(worldMatrix, size) * self._DefaultGunMarkerController__screenRatio
+        self._DefaultGunMarkerController__currentSizeOffset = markerHelperScale(worldMatrix, gunMarkerInfo.sizeOffset) * self._DefaultGunMarkerController__screenRatio
         self._dataProvider.updateSizes(self._DefaultGunMarkerController__currentSize,
                                        self._DefaultGunMarkerController__currentSizeOffset,
                                        relaxTime,
@@ -66,8 +69,8 @@ class OverriddenDefaultGunMarkerController(_DefaultGunMarkerController):
         # this have to be here, we don't want to corrupt replays
         sizeMultiplier = g_configParams.reticleSizeMultiplier()
 
-        size = self._interceptSize(size, pos, direction, relaxTime, collData) * sizeMultiplier
-        idealSize *= self._interceptSize(idealSize, pos, direction, relaxTime, collData) * sizeMultiplier
+        size = self._interceptSize(size, pos) * sizeMultiplier
+        idealSize *= self._interceptSize(idealSize, pos) * sizeMultiplier
 
         positionMatrixForScale = BigWorld.checkAndRecalculateIfPositionInExtremeProjection(positionMatrix)
         worldMatrix = _makeWorldMatrix(positionMatrixForScale)
@@ -114,7 +117,7 @@ class OverriddenDefaultGunMarkerController(_DefaultGunMarkerController):
     def _interceptPostUpdate(self, size):
         pass
 
-    def _interceptSize(self, size, pos, direction, relaxTime, collData):
+    def _interceptSize(self, size, pos):
         return size
 
     def _isAnyModeEnabled(self):

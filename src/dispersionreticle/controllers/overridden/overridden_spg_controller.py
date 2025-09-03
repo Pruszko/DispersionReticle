@@ -1,5 +1,4 @@
 import BattleReplay, Math
-from AvatarInputHandler import gun_marker_ctrl
 from AvatarInputHandler.gun_marker_ctrl import _SPGGunMarkerController, _MARKER_FLAG, _MARKER_TYPE
 
 from dispersionreticle.settings.config_param import g_configParams
@@ -24,14 +23,17 @@ class OverriddenSPGGunMarkerController(_SPGGunMarkerController):
         else:
             self.lesta_update(*args, **kwargs)
 
-    def wg_update(self, markerType, position, direction, size, sizeOffset, relaxTime, collData):
-        super(_SPGGunMarkerController, self).update(markerType, position, direction, size, sizeOffset, relaxTime, collData)
-        positionMatrix = Math.createTranslationMatrix(position)
+    def wg_update(self, markerType, gunMarkerInfo, supportMarkersInfo, relaxTime):
+        from VehicleGunRotator import GunMarkerInfo
+        gunMarkerInfo = gunMarkerInfo  # type: GunMarkerInfo
+
+        super(_SPGGunMarkerController, self).update(markerType, gunMarkerInfo, supportMarkersInfo, relaxTime)
+        positionMatrix = Math.createTranslationMatrix(gunMarkerInfo.position)
         self._updateMatrixProvider(positionMatrix, relaxTime)
-        self._size = size + sizeOffset
+        self._size = gunMarkerInfo.size + gunMarkerInfo.sizeOffset
 
         sizeMultiplier = g_configParams.reticleSizeMultiplier()
-        self._evaluatedSize = self._interceptSize(self._size, position, direction, relaxTime, collData) * sizeMultiplier
+        self._evaluatedSize = self._interceptSize(self._size, gunMarkerInfo.position) * sizeMultiplier
 
         self._update()
 
@@ -72,7 +74,7 @@ class OverriddenSPGGunMarkerController(_SPGGunMarkerController):
     def isServerController(self):
         return self._isServer
 
-    def _interceptSize(self, size, pos, direction, relaxTime, collData):
+    def _interceptSize(self, size, pos):
         return size
 
     def _interceptPostUpdate(self, size):

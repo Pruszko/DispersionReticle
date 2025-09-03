@@ -15,6 +15,7 @@ from dispersionreticle.flash import Layer
 from dispersionreticle.settings import clamp
 from dispersionreticle.settings.config import g_config
 from dispersionreticle.settings.config_param import g_configParams
+from dispersionreticle.utils import isClientWG, isClientLesta
 
 logger = logging.getLogger(__name__)
 
@@ -100,7 +101,12 @@ class DispersionReticleFlash(ExternalFlashComponent, DispersionReticleFlashMeta)
         self.movie.scaleMode = SCALEFORM.eMovieScaleMode.NO_SCALE
 
         # this does something
-        self.component.wg_inputKeyMode = InputKeyMode.NO_HANDLE
+        if isClientWG():
+            self.component.wg_inputKeyMode = InputKeyMode.NO_HANDLE
+        else:
+            # Lesta started to rename stuff with wg_ prefix
+            # I'm not sure if it is needed here, but let it be
+            self.component.inputKeyMode = InputKeyMode.NO_HANDLE
 
         # depth sorting, required to be placed properly between other apps
         layerOffset = -0.02 if self._layer == Layer.TOP else 0.02

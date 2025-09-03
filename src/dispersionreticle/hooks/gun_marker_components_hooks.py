@@ -1,6 +1,5 @@
 from gui.Scaleform.daapi.view.battle.shared.crosshair import gm_components
-from gui.Scaleform.daapi.view.battle.shared.crosshair.gm_components import GunMarkersComponents, GunMarkerComponent, \
-    DefaultGunMarkerComponent
+from gui.Scaleform.daapi.view.battle.shared.crosshair.gm_components import GunMarkersComponents, GunMarkerComponent
 from gui.Scaleform.genConsts.GUN_MARKER_VIEW_CONSTANTS import GUN_MARKER_VIEW_CONSTANTS as _CONSTANTS
 
 from dispersionreticle.flash.dispersion_reticle_flash import DispersionReticleFlash

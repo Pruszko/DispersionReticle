@@ -214,6 +214,9 @@ def createGunMarkerDecorator(clientController, serverController, dualAccControll
                              serverExtendedClientController, serverExtendedServerController):
     # this is horrible, but let it be
     if isClientWG():
+        # WG here conditionally instantiates _DebugGunMarkersDecorator, but its flag is always false
+        # ignore it in this code, because why the heck not
+        # and I don't want to create debug version of this decorator when user will never see it anyway
         from dispersionreticle.controllers.wg_gun_marker_decorator import WgDispersionGunMarkersDecorator
         return WgDispersionGunMarkersDecorator(clientController, serverController, dualAccController,
                                                debugClientController, debugServerController,

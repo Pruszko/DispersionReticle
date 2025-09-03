@@ -62,3 +62,25 @@ class ExtendedReticle(OverriddenReticle):
                     gunMarkerFactory._createExtendedSniperMarker(self._gunMarkerType, self.markerNames.twinGunSniperGunMarkerName))
         return (gunMarkerFactory._createExtendedArcadeMarker(GUN_MARKER_TYPE.UNDEFINED, self.markerNames.twinGunArcadeGunMarkerName),
                 gunMarkerFactory._createExtendedSniperMarker(GUN_MARKER_TYPE.UNDEFINED, self.markerNames.twinGunSniperGunMarkerName))
+
+    # WG specific
+    # gm_factory
+    #
+    # it won't be called on Lesta client
+    def createAccuracyGunMarkers(self, gunMarkerFactory, markerType):
+        if markerType != GUN_MARKER_TYPE.UNDEFINED:
+            return (gunMarkerFactory._createExtendedArcadeMarker(self._gunMarkerType, self.markerNames.accuracyGunArcadeGunMarkerName),
+                    gunMarkerFactory._createExtendedSniperMarker(self._gunMarkerType, self.markerNames.accuracyGunSniperGunMarkerName))
+        return (gunMarkerFactory._createExtendedArcadeMarker(GUN_MARKER_TYPE.UNDEFINED, self.markerNames.accuracyGunArcadeGunMarkerName),
+                gunMarkerFactory._createExtendedSniperMarker(GUN_MARKER_TYPE.UNDEFINED, self.markerNames.accuracyGunSniperGunMarkerName))
+
+    # WG specific
+    # gm_factory
+    #
+    # it won't be called on Lesta client
+    def createChargeGunMarkers(self, gunMarkerFactory, markerType):
+        if markerType != GUN_MARKER_TYPE.UNDEFINED:
+            return (gunMarkerFactory._createExtendedArcadeMarker(self._gunMarkerType, self.markerNames.chargeGunArcadeGunMarkerName),
+                    gunMarkerFactory._createExtendedSniperMarker(self._gunMarkerType, self.markerNames.chargeGunSniperGunMarkerName))
+        return (gunMarkerFactory._createExtendedArcadeMarker(GUN_MARKER_TYPE.UNDEFINED, self.markerNames.chargeGunArcadeGunMarkerName),
+                gunMarkerFactory._createExtendedSniperMarker(GUN_MARKER_TYPE.UNDEFINED, self.markerNames.chargeGunSniperGunMarkerName))

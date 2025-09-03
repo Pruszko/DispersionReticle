@@ -4,7 +4,6 @@ from BWUtil import AsyncReturn
 from gui import DialogsInterface
 from gui.Scaleform.daapi.view.dialogs import SimpleDialogMeta, I18nInfoDialogButtons
 from realm import CURRENT_REALM
-from wg_async import wg_async, _Promise, wg_await, BrokenPromiseError, delay
 
 from dispersionreticle.settings.translations import Tr
 
@@ -62,7 +61,22 @@ def isClientLesta():
     return CURRENT_REALM == "RU"
 
 
-@wg_async
+# WG specific
+# Lesta specific
+#
+# Lesta started to prefix async methods differently than WG
+# use common variables to hold prefixed references
+if isClientWG():
+    from wg_async import wg_async, _Promise, wg_await, BrokenPromiseError, delay
+    util_async = wg_async
+    util_await = wg_await
+else:
+    from th_async import th_async, _Promise, th_await, BrokenPromiseError, delay
+    util_async = th_async
+    util_await = th_await
+
+
+@util_async
 def displayDialog(message):
     while True:
         try:
@@ -82,7 +96,7 @@ def displayDialog(message):
             # when that happens, wait until there is "something" we can display it to
             # I'd rather perform simple waiting than hooking into something when any app is initialized
             logger.warning("Cannot display dialog yet, try next second")
-            yield wg_await(delay(1.0))
+            yield util_await(delay(1.0))
             continue
         except Exception:
             logger.warning("Failed to display warning dialog window.", exc_info=True)
@@ -105,7 +119,7 @@ def await_callback_param(func, timeout=None, callbackParamName="callback"):
 
         kwargs[callbackParamName] = callback
         func(*args, **kwargs)
-        return wg_await(promise.get_future(), timeout)
+        return util_await(promise.get_future(), timeout)
 
     return wrapper
 
@@ -142,14 +156,13 @@ class ObservingSemaphore(object):
     def withAsyncIgnoringLock(self, returnForIgnored):
 
         def _withAsyncIgnoringLock(func):
-
-            @wg_async
+            @util_async
             def wrapper(*args, **kwargs):
                 if self:
                     raise AsyncReturn(returnForIgnored)
 
                 with self:
-                    result = yield wg_await(func(*args, **kwargs))
+                    result = yield util_await(func(*args, **kwargs))
                     raise AsyncReturn(result)
 
             return wrapper

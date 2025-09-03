@@ -26,11 +26,12 @@ class _Descriptors(object):
 _descriptors = _Descriptors()
 
 
-# moved state flags updates from DispersionGunMarkersDecorator to here,
-# because now, we won't update reticles if they don't have matching mode flag enabled
-# which would not update state flags as well
+# note to future myself
 #
-# just update it here and now decorator don't have to worry about flag mode anymore
+# don't try to be clever by slightly moving around vanilla logic
+# because it can backfire, when WG start to use return values of local-scope method invocations
+# and you cannot access them from outer method to which you moved said logic
+# ouch!
 
 
 # WG specific
@@ -45,32 +46,32 @@ def updateClientGunMarker(*args, **kwargs):
         lesta_updateClientGunMarker(*args, **kwargs)
 
 
-def wg_updateClientGunMarker(func, self, pos, direction, size, sizeOffset, relaxTime, collData):
-    _descriptors.clientState = (pos, direction, collData)
-
-    if not _isClientModeEnabled():
-        return
-
-    for reticle in ReticleRegistry.ALL_RETICLES:
-        # if both modes are enabled, update only client reticle
-        # otherwise update all reticles
-        if not _areBothModesEnabled() or not reticle.isServerReticle():
-            self._AvatarInputHandler__curCtrl.updateGunMarker(reticle.gunMarkerType,
-                                                              pos, direction, size, sizeOffset, relaxTime, collData)
+def wg_updateClientGunMarker(func, self, gunMarkerInfo, supportMarkersInfo, relaxTime):
+    if _areBothModesEnabled():
+        for reticle in ReticleRegistry.ALL_RETICLES:
+            if not reticle.isServerReticle():
+                self._AvatarInputHandler__curCtrl.updateGunMarker(
+                    reticle.gunMarkerType, gunMarkerInfo, supportMarkersInfo, relaxTime
+                )
+    else:
+        for reticle in ReticleRegistry.ALL_RETICLES:
+            self._AvatarInputHandler__curCtrl.updateGunMarker(
+                reticle.gunMarkerType, gunMarkerInfo, supportMarkersInfo, relaxTime
+            )
 
 
 def lesta_updateClientGunMarker(func, self, pos, direction, size, relaxTime, collData):
-    _descriptors.clientState = (pos, direction, collData)
-
-    if not _isClientModeEnabled():
-        return
-
-    for reticle in ReticleRegistry.ALL_RETICLES:
-        # if both modes are enabled, update only client reticle
-        # otherwise update all reticles
-        if not _areBothModesEnabled() or not reticle.isServerReticle():
-            self._AvatarInputHandler__curCtrl.updateGunMarker(reticle.gunMarkerType,
-                                                              pos, direction, size, relaxTime, collData)
+    if _areBothModesEnabled():
+        for reticle in ReticleRegistry.ALL_RETICLES:
+            if not reticle.isServerReticle():
+                self._AvatarInputHandler__curCtrl.updateGunMarker(
+                    reticle.gunMarkerType, pos, direction, size, relaxTime, collData
+                )
+    else:
+        for reticle in ReticleRegistry.ALL_RETICLES:
+            self._AvatarInputHandler__curCtrl.updateGunMarker(
+                reticle.gunMarkerType, pos, direction, size, relaxTime, collData
+            )
 
 
 # WG specific
@@ -85,40 +86,36 @@ def updateServerGunMarker(*args, **kwargs):
         lesta_updateServerGunMarker(*args, **kwargs)
 
 
-def wg_updateServerGunMarker(func, self, pos, direction, size, sizeOffset, relaxTime, collData):
-    _descriptors.serverState = (pos, direction, collData)
-
-    if not _isServerModeEnabled():
-        return
-
-    for reticle in ReticleRegistry.ALL_RETICLES:
-        # if both modes are enabled, update only server reticle
-        # otherwise update all reticles
-        if not _areBothModesEnabled() or reticle.isServerReticle():
-            self._AvatarInputHandler__curCtrl.updateGunMarker(reticle.gunMarkerType,
-                                                              pos, direction, size, sizeOffset, relaxTime, collData)
+def wg_updateServerGunMarker(func, self, gunMarkerInfo, supportMarkersInfo, relaxTime):
+    if _areBothModesEnabled():
+        for reticle in ReticleRegistry.ALL_RETICLES:
+            if reticle.isServerReticle():
+                self._AvatarInputHandler__curCtrl.updateGunMarker(
+                    reticle.gunMarkerType, gunMarkerInfo, supportMarkersInfo, relaxTime
+                )
+    else:
+        for reticle in ReticleRegistry.ALL_RETICLES:
+            self._AvatarInputHandler__curCtrl.updateGunMarker(
+                reticle.gunMarkerType, gunMarkerInfo, supportMarkersInfo, relaxTime
+            )
 
 
 def lesta_updateServerGunMarker(func, self, pos, direction, size, relaxTime, collData):
-    _descriptors.serverState = (pos, direction, collData)
-
-    if not _isServerModeEnabled():
-        return
-
-    for reticle in ReticleRegistry.ALL_RETICLES:
-        # if both modes are enabled, update only server reticle
-        # otherwise update all reticles
-        if not _areBothModesEnabled() or reticle.isServerReticle():
-            self._AvatarInputHandler__curCtrl.updateGunMarker(reticle.gunMarkerType,
-                                                              pos, direction, size, relaxTime, collData)
+    if _areBothModesEnabled():
+        for reticle in ReticleRegistry.ALL_RETICLES:
+            if reticle.isServerReticle():
+                self._AvatarInputHandler__curCtrl.updateGunMarker(
+                    reticle.gunMarkerType, pos, direction, size, relaxTime, collData
+                )
+    else:
+        for reticle in ReticleRegistry.ALL_RETICLES:
+            self._AvatarInputHandler__curCtrl.updateGunMarker(
+                reticle.gunMarkerType, pos, direction, size, relaxTime, collData
+            )
 
 
 def _areBothModesEnabled():
     return _isClientModeEnabled() and _isServerModeEnabled()
-
-
-def _isAnyModeEnabled():
-    return _isClientModeEnabled() or _isServerModeEnabled()
 
 
 def _isClientModeEnabled():

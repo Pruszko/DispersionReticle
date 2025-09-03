@@ -258,6 +258,92 @@ class _DispersionControlMarkersFactory(_ControlMarkersFactory):
 
         return result
 
+    # WG specific
+    # it won't be called on Lesta client
+    # should be very similar to dual gun markers
+    def _createAccuracyGunMarkers(self):
+        markerType = self._getMarkerType()
+
+        result = ()
+
+        if self.areBothClientAndServerAimEnabled():
+            if g_configParams.serverReticleExtendedEnabled():
+                if self.areBothFlagsEnabled():
+                    result += ReticleRegistry.SERVER_EXTENDED_SERVER.createAccuracyGunMarkers(self, markerType)
+                else:
+                    result += ReticleRegistry.SERVER_EXTENDED_CLIENT.createAccuracyGunMarkers(self, markerType)
+            if g_configParams.hybridReticleExtendedEnabled():
+                result += ReticleRegistry.HYBRID_EXTENDED_CLIENT.createAccuracyGunMarkers(self, markerType)
+            if g_configParams.focusedReticleExtendedEnabled():
+                result += ReticleRegistry.FOCUSED_EXTENDED_CLIENT.createAccuracyGunMarkers(self, markerType)
+
+            if g_configParams.serverReticleEnabled():
+                if self.areBothFlagsEnabled():
+                    result += ReticleRegistry.DEBUG_SERVER.createAccuracyGunMarkers(self, markerType)
+                else:
+                    result += ReticleRegistry.DEBUG_CLIENT.createAccuracyGunMarkers(self, markerType)
+
+            if g_configParams.hybridReticleEnabled():
+                result += ReticleRegistry.HYBRID_CLIENT.createAccuracyGunMarkers(self, markerType)
+
+            if g_configParams.focusedReticleEnabled():
+                result += ReticleRegistry.FOCUSED_CLIENT.createAccuracyGunMarkers(self, markerType)
+
+            if not shouldHideStandardReticle():
+                result += ReticleRegistry.VANILLA_CLIENT.createAccuracyGunMarkers(self, markerType)
+        else:
+            if g_configParams.focusedReticleEnabled():
+                result += toFocusedReticle(markerType).createAccuracyGunMarkers(self, markerType)
+            if g_configParams.focusedReticleExtendedEnabled():
+                result += toFocusedReticleExtended(markerType).createAccuracyGunMarkers(self, markerType)
+
+            result += toVanillaReticle(markerType).createAccuracyGunMarkers(self, markerType)
+
+        return result
+
+    # WG specific
+    # it won't be called on Lesta client
+    # should be very similar to dual gun markers
+    def _createChargeGunMarkers(self):
+        markerType = self._getMarkerType()
+
+        result = ()
+
+        if self.areBothClientAndServerAimEnabled():
+            if g_configParams.serverReticleExtendedEnabled():
+                if self.areBothFlagsEnabled():
+                    result += ReticleRegistry.SERVER_EXTENDED_SERVER.createChargeGunMarkers(self, markerType)
+                else:
+                    result += ReticleRegistry.SERVER_EXTENDED_CLIENT.createChargeGunMarkers(self, markerType)
+            if g_configParams.hybridReticleExtendedEnabled():
+                result += ReticleRegistry.HYBRID_EXTENDED_CLIENT.createChargeGunMarkers(self, markerType)
+            if g_configParams.focusedReticleExtendedEnabled():
+                result += ReticleRegistry.FOCUSED_EXTENDED_CLIENT.createChargeGunMarkers(self, markerType)
+
+            if g_configParams.serverReticleEnabled():
+                if self.areBothFlagsEnabled():
+                    result += ReticleRegistry.DEBUG_SERVER.createChargeGunMarkers(self, markerType)
+                else:
+                    result += ReticleRegistry.DEBUG_CLIENT.createChargeGunMarkers(self, markerType)
+
+            if g_configParams.hybridReticleEnabled():
+                result += ReticleRegistry.HYBRID_CLIENT.createChargeGunMarkers(self, markerType)
+
+            if g_configParams.focusedReticleEnabled():
+                result += ReticleRegistry.FOCUSED_CLIENT.createChargeGunMarkers(self, markerType)
+
+            if not shouldHideStandardReticle():
+                result += ReticleRegistry.VANILLA_CLIENT.createChargeGunMarkers(self, markerType)
+        else:
+            if g_configParams.focusedReticleEnabled():
+                result += toFocusedReticle(markerType).createChargeGunMarkers(self, markerType)
+            if g_configParams.focusedReticleExtendedEnabled():
+                result += toFocusedReticleExtended(markerType).createChargeGunMarkers(self, markerType)
+
+            result += toVanillaReticle(markerType).createChargeGunMarkers(self, markerType)
+
+        return result
+
     # Lesta specific
     # _createFlamethrowerMarkers() calls our methods, so here we don't have to do anything
 

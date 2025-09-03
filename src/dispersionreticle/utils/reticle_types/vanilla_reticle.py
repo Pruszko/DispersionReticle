@@ -104,6 +104,8 @@ class VanillaReticle(object):
         return (gunMarkerFactory._createArcadeMarker(GUN_MARKER_TYPE.UNDEFINED, self.markerNames.dualGunArcadeGunMarkerName),
                 gunMarkerFactory._createSniperMarker(GUN_MARKER_TYPE.UNDEFINED, self.markerNames.dualGunSniperGunMarkerName))
 
+    # WG specific
+    # it won't be called on Lesta client
     # gm_factory
     def createTwinGunMarkers(self, gunMarkerFactory, markerType):
         if markerType != GUN_MARKER_TYPE.UNDEFINED:
@@ -111,3 +113,23 @@ class VanillaReticle(object):
                     gunMarkerFactory._createSniperMarker(self._gunMarkerType, self.markerNames.twinGunSniperGunMarkerName))
         return (gunMarkerFactory._createArcadeMarker(GUN_MARKER_TYPE.UNDEFINED, self.markerNames.twinGunArcadeGunMarkerName),
                 gunMarkerFactory._createSniperMarker(GUN_MARKER_TYPE.UNDEFINED, self.markerNames.twinGunSniperGunMarkerName))
+
+    # WG specific
+    # it won't be called on Lesta client
+    # gm_factory
+    def createAccuracyGunMarkers(self, gunMarkerFactory, markerType):
+        if markerType != GUN_MARKER_TYPE.UNDEFINED:
+            return (gunMarkerFactory._createArcadeMarker(self._gunMarkerType, self.markerNames.accuracyGunArcadeGunMarkerName),
+                    gunMarkerFactory._createSniperMarker(self._gunMarkerType, self.markerNames.accuracyGunSniperGunMarkerName))
+        return (gunMarkerFactory._createArcadeMarker(GUN_MARKER_TYPE.UNDEFINED, self.markerNames.accuracyGunArcadeGunMarkerName),
+                gunMarkerFactory._createSniperMarker(GUN_MARKER_TYPE.UNDEFINED, self.markerNames.accuracyGunSniperGunMarkerName))
+
+    # WG specific
+    # it won't be called on Lesta client
+    # gm_factory
+    def createChargeGunMarkers(self, gunMarkerFactory, markerType):
+        if markerType != GUN_MARKER_TYPE.UNDEFINED:
+            return (gunMarkerFactory._createArcadeMarker(self._gunMarkerType, self.markerNames.chargeGunArcadeGunMarkerName),
+                    gunMarkerFactory._createSniperMarker(self._gunMarkerType, self.markerNames.chargeGunSniperGunMarkerName))
+        return (gunMarkerFactory._createArcadeMarker(GUN_MARKER_TYPE.UNDEFINED, self.markerNames.chargeGunArcadeGunMarkerName),
+                gunMarkerFactory._createSniperMarker(GUN_MARKER_TYPE.UNDEFINED, self.markerNames.chargeGunSniperGunMarkerName))
