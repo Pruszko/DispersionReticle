@@ -44,7 +44,7 @@ class OverriddenSPGGunMarkerController(_SPGGunMarkerController):
         self._size = size[0]
 
         sizeMultiplier = g_configParams.reticleSizeMultiplier()
-        self._evaluatedSize = self._interceptSize(self._size, position, direction, relaxTime, collData) * sizeMultiplier
+        self._evaluatedSize = self._interceptSize(self._size, position) * sizeMultiplier
 
         self._update()
 

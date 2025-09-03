@@ -6,6 +6,7 @@ from AvatarInputHandler import gun_marker_ctrl, aih_global_binding
 from aih_constants import GUN_MARKER_FLAG
 from constants import ARENA_PERIOD
 
+from dispersionreticle.controllers import AihUpdateType
 from dispersionreticle.utils import *
 from dispersionreticle.utils import debug_state
 from dispersionreticle.utils.reticle_registry import ReticleRegistry
@@ -47,6 +48,9 @@ def updateClientGunMarker(*args, **kwargs):
 
 
 def wg_updateClientGunMarker(func, self, gunMarkerInfo, supportMarkersInfo, relaxTime):
+    from dispersionreticle.controllers.wg_gun_marker_decorator import WgDispersionGunMarkersDecorator
+    WgDispersionGunMarkersDecorator.currentUpdateType = AihUpdateType.CLIENT
+
     if _areBothModesEnabled():
         for reticle in ReticleRegistry.ALL_RETICLES:
             if not reticle.isServerReticle():
@@ -61,6 +65,9 @@ def wg_updateClientGunMarker(func, self, gunMarkerInfo, supportMarkersInfo, rela
 
 
 def lesta_updateClientGunMarker(func, self, pos, direction, size, relaxTime, collData):
+    from dispersionreticle.controllers.lesta_gun_marker_decorator import LestaDispersionGunMarkersDecorator
+    LestaDispersionGunMarkersDecorator.currentUpdateType = AihUpdateType.CLIENT
+
     if _areBothModesEnabled():
         for reticle in ReticleRegistry.ALL_RETICLES:
             if not reticle.isServerReticle():
@@ -87,6 +94,9 @@ def updateServerGunMarker(*args, **kwargs):
 
 
 def wg_updateServerGunMarker(func, self, gunMarkerInfo, supportMarkersInfo, relaxTime):
+    from dispersionreticle.controllers.wg_gun_marker_decorator import WgDispersionGunMarkersDecorator
+    WgDispersionGunMarkersDecorator.currentUpdateType = AihUpdateType.SERVER
+
     if _areBothModesEnabled():
         for reticle in ReticleRegistry.ALL_RETICLES:
             if reticle.isServerReticle():
@@ -101,6 +111,9 @@ def wg_updateServerGunMarker(func, self, gunMarkerInfo, supportMarkersInfo, rela
 
 
 def lesta_updateServerGunMarker(func, self, pos, direction, size, relaxTime, collData):
+    from dispersionreticle.controllers.lesta_gun_marker_decorator import LestaDispersionGunMarkersDecorator
+    LestaDispersionGunMarkersDecorator.currentUpdateType = AihUpdateType.SERVER
+
     if _areBothModesEnabled():
         for reticle in ReticleRegistry.ALL_RETICLES:
             if reticle.isServerReticle():

@@ -4,6 +4,7 @@ import BigWorld, Math
 from AvatarInputHandler import gun_marker_ctrl, aih_global_binding, AimingSystems
 from AvatarInputHandler.gun_marker_ctrl import IGunMarkerController, _BINDING_ID, _MARKER_TYPE, _MARKER_FLAG
 
+from dispersionreticle.controllers import AihUpdateType
 from dispersionreticle.utils import debug_state
 from dispersionreticle.utils.debug_state import g_debugStateCollector
 from dispersionreticle.utils.reticle_registry import ReticleRegistry
@@ -18,6 +19,21 @@ class LestaDispersionGunMarkersDecorator(IGunMarkerController):
     __clientState = aih_global_binding.bindRW(_BINDING_ID.CLIENT_GUN_MARKER_STATE)
     __serverState = aih_global_binding.bindRW(_BINDING_ID.SERVER_GUN_MARKER_STATE)
     __dualAccState = aih_global_binding.bindRW(_BINDING_ID.DUAL_ACC_GUN_MARKER_STATE)
+
+    # very dirty hack
+    # this is really messed up
+    # but this is my responsibility for willing to fix myself annoying WoT vanilla bug
+    #
+    # when "Use server aim" is enabled and at most Focused Reticles are used:
+    # when update method is being invoked by our aih_hooks, we are not guaranteed that control mode = update type
+    # this is due to both aih_hooks.updateClientGunMarker and aih_hooks.updateServerGunMarker being invoked
+    # when ONLY server mode is enabled, which in result will call ALL reticles TWICE with DIFFERENT source data
+    # resulting in jagged reticle movement
+    #
+    # we MUST somehow pass this information from aih_hooks to update method to properly delegate update calls
+    # and to separate update calls of only one, desirable "AihUpdateType"
+    # ... and this dirty hack is the easiest way, because game logic is single threaded
+    currentUpdateType = AihUpdateType.CLIENT
 
     def __init__(self,
                  clientController, serverController, dualAccController,
@@ -158,20 +174,15 @@ class LestaDispersionGunMarkersDecorator(IGunMarkerController):
             self.__serverSizeDispersion = None
             self.__serverDispersionAngle = None
 
-        # normally data provider updates are done only, if certain mode (client or server)
-        # is enabled depending on reticle type (client or server)
-        #
-        # we have to change that to ANY mode, so aih_hooks can trigger server reticle updates with client-side data
-        # and vice versa, when both modes ARE NOT enabled concurrently
-        # this can cause self.__clientState to be updated with server-side data (and vice versa)
-        # but it shouldn't cause any issues (even better - I think they should be in-sync with data providers)
         if markerType == _MARKER_TYPE.CLIENT:
-            self.__clientState = (position, direction, collData)
-            if self._isAnyModeEnabled():
+            if self.currentUpdateType == AihUpdateType.CLIENT:
+                self.__clientState = (position, direction, collData)
+            if self._shouldUpdateController():
                 self.__clientController.update(markerType, position, direction, size, relaxTime, collData)
         elif markerType == _MARKER_TYPE.SERVER:
-            self.__serverState = (position, direction, collData)
-            if self._isAnyModeEnabled():
+            if self.currentUpdateType == AihUpdateType.SERVER:
+                self.__serverState = (position, direction, collData)
+            if self._shouldUpdateController():
                 self.__serverController.update(markerType, position, direction, size, relaxTime, collData)
         elif markerType == _MARKER_TYPE.DUAL_ACC:
             # don't touch mode here - vanilla code handles it normally
@@ -179,10 +190,10 @@ class LestaDispersionGunMarkersDecorator(IGunMarkerController):
             if self._isClientModeEnabled():
                 self.__dualAccController.update(markerType, position, direction, size, relaxTime, collData)
         elif markerType == ReticleRegistry.DEBUG_CLIENT.gunMarkerType:
-            if self._isAnyModeEnabled():
+            if self._shouldUpdateController():
                 self.__debugClientController.update(markerType, position, direction, size, relaxTime, collData)
         elif markerType == ReticleRegistry.DEBUG_SERVER.gunMarkerType:
-            if self._isAnyModeEnabled():
+            if self._shouldUpdateController():
                 self.__debugServerController.update(markerType, position, direction, size, relaxTime, collData)
 
             # collect server size dispersion for hybrid reticle
@@ -196,33 +207,33 @@ class LestaDispersionGunMarkersDecorator(IGunMarkerController):
             if distance > 0.0:
                 self.__serverSizeDispersion = tuple(i / distance for i in size)
         elif markerType == ReticleRegistry.FOCUSED_CLIENT.gunMarkerType:
-            if self._isAnyModeEnabled():
+            if self._shouldUpdateController():
                 self.__focusedClientController.update(markerType, position, direction, size, relaxTime, collData)
         elif markerType == ReticleRegistry.FOCUSED_SERVER.gunMarkerType:
-            if self._isAnyModeEnabled():
+            if self._shouldUpdateController():
                 self.__focusedServerController.update(markerType, position, direction, size, relaxTime, collData)
         # those 2x elif has to be done outside controllers because we have to collect server reticle size
         # also, we will have delayed access to server size, so we need to wait
         # until GunMarkerComponent will provide server data
         elif markerType == ReticleRegistry.HYBRID_CLIENT.gunMarkerType:
-            if self._isAnyModeEnabled():
+            if self._shouldUpdateController():
                 self._updateHybridReticle(self.__hybridClientController,
                                           collData, direction, markerType, position, relaxTime, size)
         elif markerType == ReticleRegistry.HYBRID_EXTENDED_CLIENT.gunMarkerType:
-            if self._isAnyModeEnabled():
+            if self._shouldUpdateController():
                 self._updateHybridReticle(self.__hybridExtendedClientController,
                                           collData, direction, markerType, position, relaxTime, size)
         elif markerType == ReticleRegistry.FOCUSED_EXTENDED_CLIENT.gunMarkerType:
-            if self._isAnyModeEnabled():
+            if self._shouldUpdateController():
                 self.__focusedExtendedClientController.update(markerType, position, direction, size, relaxTime, collData)
         elif markerType == ReticleRegistry.FOCUSED_EXTENDED_SERVER.gunMarkerType:
-            if self._isAnyModeEnabled():
+            if self._shouldUpdateController():
                 self.__focusedExtendedServerController.update(markerType, position, direction, size, relaxTime, collData)
         elif markerType == ReticleRegistry.SERVER_EXTENDED_CLIENT.gunMarkerType:
-            if self._isAnyModeEnabled():
+            if self._shouldUpdateController():
                 self.__serverExtendedClientController.update(markerType, position, direction, size, relaxTime, collData)
         elif markerType == ReticleRegistry.SERVER_EXTENDED_SERVER.gunMarkerType:
-            if self._isAnyModeEnabled():
+            if self._shouldUpdateController():
                 self.__serverExtendedServerController.update(markerType, position, direction, size, relaxTime, collData)
         else:
             gun_marker_ctrl._logger.warning('Gun maker control is not found by type: %d', markerType)
@@ -244,6 +255,11 @@ class LestaDispersionGunMarkersDecorator(IGunMarkerController):
         else:
             controller.setServerDispersionAngle(None)
             controller.update(markerType, position, direction, size, relaxTime, collData)
+
+    def _shouldUpdateController(self):
+        return self._areBothModesEnabled() \
+            or (self._isClientModeEnabled() and self.currentUpdateType == AihUpdateType.CLIENT) \
+            or (self._isServerModeEnabled() and self.currentUpdateType == AihUpdateType.SERVER)
 
     def _areBothModesEnabled(self):
         return self._isClientModeEnabled() and self._isServerModeEnabled()
