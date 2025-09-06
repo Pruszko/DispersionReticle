@@ -44,10 +44,9 @@ They are also compatible with "Use server aim" from in-game option.
 ![Extended reticle shapes](images/shapes-extended.png)
 
 ## Feedback
-Forum feedback is located in [this thread on forum](http://forum.worldoftanks.eu/index.php?/topic/801552-12200-dispersionreticle-feedback-thread).
-You can also:
-- PM me on forum: Pruszko,
-- in game on EU server: Pruszko
+You can:
+- PM me on discord: **fierioziy** (nick: **Pruszko \[EU\]** on [WoT official discord](https://discord.gg/world-of-tanks))
+- in game on EU server: **Pruszko**
 - or [GitHub issues here](https://github.com/Pruszko/DispersionReticle/issues).
 
 ## Configuration
@@ -77,7 +76,7 @@ Use some text editor (preferably **Notepad++**) to edit config file.
 ## Contributions
 Thanks to:
 * **IzeBerg** - for cool GUI configuration API
-* **POLIROID** - for ModsListAPI
+* **POLIROID** - for ModsListAPI and GamefaceAPI
 * **shuxue** - for Russian translations
 * **yinx2002** - for Chinese translations
 * **Kurzdor** - for occasional help
