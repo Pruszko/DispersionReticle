@@ -2,6 +2,7 @@ import AvatarInputHandler
 from AvatarInputHandler import aih_global_binding
 from aih_constants import GUN_MARKER_TYPE, GUN_MARKER_FLAG
 
+from dispersionreticle.settings.config_param import g_configParams
 from dispersionreticle.utils import overrideIn, isClientWG
 
 
@@ -38,9 +39,14 @@ if isClientWG():
     # - "Use server aim" is unchecked and some server reticle is enabled -> armor flashlight starts flickering
     #    but only during aim focusing - after aim focused, it stops flickering
 
-
     @overrideIn(ArmorFlashlightBattleController)
     def updateVisibilityState(func, self, markerType, hitPoint, direction, collision, gunAimingCircleSize):
+        # revert gunAimingCircleSize to original form, before being altered in gun marker decorator
+        # by reticleSizeMultiplier, so armor flashlight stays independent of it
+        reticleSizeMultiplier = g_configParams.reticleSizeMultiplier()
+        if reticleSizeMultiplier >= 0.001:
+            gunAimingCircleSize /= reticleSizeMultiplier
+
         if _areBothModesEnabled():
             if markerType == GUN_MARKER_TYPE.SERVER:
                 func(self, markerType, hitPoint, direction, collision, gunAimingCircleSize)
