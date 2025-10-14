@@ -27,6 +27,7 @@ def _isServerModeEnabled():
 
 if isClientWG():
     from gui.armor_flashlight.battle_controller import ArmorFlashlightBattleController
+    from aih_constants import GunMarkerState
 
     # make sure to invoke armor flashlight state update only for vanilla client/server reticle
     # and only for server reticle, when both client and server reticles are displayed
@@ -40,16 +41,19 @@ if isClientWG():
     #    but only during aim focusing - after aim focused, it stops flickering
 
     @overrideIn(ArmorFlashlightBattleController)
-    def updateVisibilityState(func, self, markerType, hitPoint, direction, collision, gunAimingCircleSize):
+    def _updateVisibilityState(func, self, markerType, gunMarkerState, *args, **kwargs):
         # revert gunAimingCircleSize to original form, before being altered in gun marker decorator
         # by reticleSizeMultiplier, so armor flashlight stays independent of it
         reticleSizeMultiplier = g_configParams.reticleSizeMultiplier()
         if reticleSizeMultiplier >= 0.001:
-            gunAimingCircleSize /= reticleSizeMultiplier
+            gunMarkerState = gunMarkerState  # type: GunMarkerState
+
+            initialSize = gunMarkerState.size / reticleSizeMultiplier
+            gunMarkerState = gunMarkerState._replace(size=initialSize)
 
         if _areBothModesEnabled():
             if markerType == GUN_MARKER_TYPE.SERVER:
-                func(self, markerType, hitPoint, direction, collision, gunAimingCircleSize)
+                func(self, markerType, gunMarkerState, *args, **kwargs)
         else:
             if markerType == GUN_MARKER_TYPE.CLIENT or markerType == GUN_MARKER_TYPE.SERVER:
-                func(self, markerType, hitPoint, direction, collision, gunAimingCircleSize)
+                func(self, markerType, gunMarkerState, *args, **kwargs)

@@ -9,4 +9,4 @@
 /versions/*
 /**/*.swf
 src_flash/*/obj/*
-DispersionReticle/**
+target/**
