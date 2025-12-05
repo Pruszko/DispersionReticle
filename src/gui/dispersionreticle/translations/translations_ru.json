@@ -21,11 +21,12 @@
     "Не используйте сочетание клавиш CTRL + P с открытым интерфейсом 'Настройка модификаций'.\n",
     "Интерфейс 'Настройка модификаций' не заметит изменений, если его не открыть заново."
   ],
-  "reticleSizeMultiplier.header": "Множитель размера круга",
-  "reticleSizeMultiplier.body": [
+  "reticleSize.label": "Размер круга",
+  "reticleSize.multiplier.header": "Множитель",
+  "reticleSize.multiplier.body": [
     "Масштабирует размеры всех 'Кругов разброса', кроме артиллерии."
   ],
-  "reticleSizeMultiplier.note": [
+  "reticleSize.multiplier.note": [
     "Отображаемая WG рассеивание - 'Круг разброса', заметно больше реального рассеивания.\n",
     "Это было обнаружено людьми Jak_Attackka, StranikS_Scan и другими.\n",
     "С помощью этой настройки, вы можете масштабировать до реального отображаемого рассеивания.\n\n",
@@ -33,6 +34,13 @@
     "- 1.0 (по умолчанию - \"неправильная\" WG рассеивание)\n",
     "- 0.5814 (коэффициент, определённый мной)\n",
     "- 0.5848 (коэффициент, определённый Jak_Attackka, StranikS_Scan и другими)"
+  ],
+  "reticleSize.scale-only-server-reticles.header": "Scale only server reticles",
+  "reticleSize.scale-only-server-reticles.body": [
+    "If checked, reticle size multiplier is applied only to server reticles."
+  ],
+  "reticleSize.scale-only-server-reticles.note": [
+    "Vanilla, focused and hybrid reticle will maintain default size."
   ],
   "focusedReticle.label": "Круг разброса",
   "focusedReticle.header": "Круг разброса",

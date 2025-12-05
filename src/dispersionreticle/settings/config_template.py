@@ -12,20 +12,32 @@ CONFIG_TEMPLATE = """{
     "enabled": %(enabled)s,
 
     // Reticle size
-    // Valid values: any number > 0.0 (for default behavior: 1.0)
     //
-    // Scales all reticles size by factor, except SPG top-view reticle.
-    //
-    // WG's displayed reticle dispersion is noticeably bigger than actual gun dispersion.
-    // It was discovered by Jak_Attackka, StranikS_Scan and others.
-    // By this setting you can scale it to actual displayed dispersion.
-    //
-    // Good known values:
-    // - 1.0    (default "wrong" WG dispersion)
-    // - 0.5814 (factor determined by me)
-    // - 0.5848 (factor determined by Jak_Attackka, StranikS_Scan and others)
+    // Settings related to reticle size scaling.
 
-    "reticle-size-multiplier": %(reticle-size-multiplier)s,
+    "reticle-size": {
+
+        // Valid values: any number > 0.0 (for default behavior: 1.0)
+        //
+        // Scales all reticles size by factor, except SPG top-view reticle.
+        //
+        // WG's displayed reticle dispersion is noticeably bigger than actual gun dispersion.
+        // It was discovered by Jak_Attackka, StranikS_Scan and others.
+        // By this setting you can scale it to actual displayed dispersion.
+        //
+        // Good known values:
+        // - 1.0    (default "wrong" WG dispersion)
+        // - 0.5814 (factor determined by me)
+        // - 0.5848 (factor determined by Jak_Attackka, StranikS_Scan and others)
+
+        "multiplier": %(reticle-size-multiplier)s,
+
+        // Valid values: true/false (default: false)
+        //
+        // If true, reticle size multiplier is applied only to server reticles.
+        // Vanilla, focused and hybrid reticle will maintain default size.
+        "scale-only-server-reticles": %(reticle-size-scale-only-server-reticles)s
+    },
 
     // Focused reticle (enabled by default)
     //
@@ -448,5 +460,5 @@ CONFIG_TEMPLATE = """{
 
     // DO NOT touch "__version__" field
     // It is used by me to seamlessly update config file :)
-    "__version__": 6
+    "__version__": 7
 }"""

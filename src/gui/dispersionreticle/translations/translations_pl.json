@@ -21,11 +21,12 @@
     "Nie używaj skrótu klawiszowego CTRL + P z otwartym oknem konfiguratora moda.\n",
     "Ten interfejs nie uwidoczni zmian dopóki nie zostanie otwarty ponownie."
   ],
-  "reticleSizeMultiplier.header": "Mnożnik wielkości okręgu",
-  "reticleSizeMultiplier.body": [
+  "reticleSize.label": "Wielkość okręgu",
+  "reticleSize.multiplier.header": "Mnożnik",
+  "reticleSize.multiplier.body": [
     "Skaluje średnicę wszystkich okręgów z użyciem mnożnika, z wyjątkiem okręgu w widoku artyleryjskim."
   ],
-  "reticleSizeMultiplier.note": [
+  "reticleSize.multiplier.note": [
     "Rozrzut okręgów wyświetlany przez WG jest wyraźnie większy niż prawdziwy rozrzut działa.\n",
     "Zostało to odkrytę przez Jak_Attackka, StranikS_Scan oraz innych.\n",
     "Tym ustawieniem możesz przeskalować go do prawdziwego wyświetlanego rozrzutu.\n\n",
@@ -33,6 +34,13 @@
     "- 1.0 (domyślny \"niepoprawny\" rozrzut od WG)\n",
     "- 0.5814 (mnożnik wyznaczony przeze mnie)\n",
     "- 0.5848 (mnożnik wyznaczony przez Jak_Attackka, StranikS_Scan oraz innych)"
+  ],
+  "reticleSize.scale-only-server-reticles.header": "Skaluj tylko okręgi serwerowe",
+  "reticleSize.scale-only-server-reticles.body": [
+    "Jeżeli zaznaczone, mnożnik wielkości okręgu jest aplikowany tylko do okręgów serwerowych."
+  ],
+  "reticleSize.scale-only-server-reticles.note": [
+    "Standardowy, skupiony i hybrydowy okrąg będą miały domyślny rozmiar."
   ],
   "focusedReticle.label": "Okrąg skupienia",
   "focusedReticle.header": "Okrąg skupienia",

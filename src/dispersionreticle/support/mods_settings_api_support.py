@@ -19,7 +19,7 @@ def registerSoftDependencySupport():
         "enabled": g_configParams.enabled.defaultMsaValue,
         "column1":
             _createIntroPart() +
-            _emptyLine(3) +
+            _emptyLine(9) +
             _endSection() +
             _createFocusedReticle() +
             _innerSectionSeparator() +
@@ -29,7 +29,7 @@ def registerSoftDependencySupport():
             _innerSectionSeparator() +
             _createHybridReticleExtended(),
         "column2":
-            _createCommon() +
+            _createReticleSize() +
             _endSection() +
             _createServerReticle() +
             _innerSectionSeparator() +
@@ -126,12 +126,21 @@ def _createIntroPart():
     ]
 
 
-def _createCommon():
+def _createReticleSize():
     return [
+        {
+            "type": "Label",
+            "text": Tr.RETICLE_SIZE_LABEL
+        },
         g_configParams.reticleSizeMultiplier.renderParam(
             header=Tr.RETICLE_SIZE_MULTIPLIER_HEADER,
             body=Tr.RETICLE_SIZE_MULTIPLIER_BODY + "\n",
             note=Tr.RETICLE_SIZE_MULTIPLIER_NOTE
+        ),
+        g_configParams.reticleSizeScaleOnlyServerReticles.renderParam(
+            header=Tr.RETICLE_SIZE_SCALE_ONLY_SERVER_RETICLES_HEADER,
+            body=Tr.RETICLE_SIZE_SCALE_ONLY_SERVER_RETICLES_BODY + "\n",
+            note=Tr.RETICLE_SIZE_SCALE_ONLY_SERVER_RETICLES_NOTE
         )
     ]
 

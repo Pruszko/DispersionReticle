@@ -21,11 +21,12 @@
     "Don't use CTRL + P hotkey with open mod configurator.\n",
     "This gui won't notice it unless reopened."
   ],
-  "reticleSizeMultiplier.header": "Reticle size multiplier",
-  "reticleSizeMultiplier.body": [
+  "reticleSize.label": "Reticle size",
+  "reticleSize.multiplier.header": "Multiplier",
+  "reticleSize.multiplier.body": [
     "Scales all reticles size by factor, except SPG top-view reticle."
   ],
-  "reticleSizeMultiplier.note": [
+  "reticleSize.multiplier.note": [
     "WG's displayed reticle dispersion is noticeably bigger than actual gun dispersion.\n",
     "It was discovered by Jak_Attackka, StranikS_Scan and others.\n",
     "By this setting you can scale it to actual displayed dispersion.\n\n",
@@ -33,6 +34,13 @@
     "- 1.0 (default \"wrong\" WG dispersion)\n",
     "- 0.5814 (factor determined by me)\n",
     "- 0.5848 (factor determined by Jak_Attackka, StranikS_Scan and others)"
+  ],
+  "reticleSize.scale-only-server-reticles.header": "Scale only server reticles",
+  "reticleSize.scale-only-server-reticles.body": [
+    "If checked, reticle size multiplier is applied only to server reticles."
+  ],
+  "reticleSize.scale-only-server-reticles.note": [
+    "Vanilla, focused and hybrid reticle will maintain default size."
   ],
   "focusedReticle.label": "Focused reticle",
   "focusedReticle.header": "Focused reticle",

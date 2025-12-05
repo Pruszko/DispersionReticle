@@ -4,6 +4,7 @@ from aih_constants import GUN_MARKER_TYPE
 
 from dispersionreticle.settings.config_param import g_configParams
 from dispersionreticle.utils import isClientWG
+from dispersionreticle.utils.reticle_registry import ReticleRegistry
 
 
 # gun_marker_ctrl
@@ -36,7 +37,7 @@ class OverriddenDefaultGunMarkerController(_DefaultGunMarkerController):
         size = self._interceptReplayLogic(size)
 
         # this have to be here, we don't want to corrupt replays
-        sizeMultiplier = g_configParams.reticleSizeMultiplier()
+        sizeMultiplier = ReticleRegistry.getReticleSizeMultiplierFor(gunMarkerType=markerType)
 
         size = self._interceptSize(size, gunMarkerInfo.position) * sizeMultiplier
 
@@ -67,7 +68,7 @@ class OverriddenDefaultGunMarkerController(_DefaultGunMarkerController):
         size = self._interceptReplayLogic(size)
 
         # this have to be here, we don't want to corrupt replays
-        sizeMultiplier = g_configParams.reticleSizeMultiplier()
+        sizeMultiplier = ReticleRegistry.getReticleSizeMultiplierFor(gunMarkerType=markerType)
 
         size = self._interceptSize(size, pos) * sizeMultiplier
         idealSize *= self._interceptSize(idealSize, pos) * sizeMultiplier

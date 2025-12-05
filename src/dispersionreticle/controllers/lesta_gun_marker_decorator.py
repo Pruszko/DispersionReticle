@@ -21,17 +21,13 @@ class LestaDispersionGunMarkersDecorator(IGunMarkerController):
     __dualAccState = aih_global_binding.bindRW(_BINDING_ID.DUAL_ACC_GUN_MARKER_STATE)
 
     # very dirty hack
-    # this is really messed up
-    # but this is my responsibility for willing to fix myself annoying WoT vanilla bug
     #
-    # when "Use server aim" is enabled and at most Focused Reticles are used:
     # when update method is being invoked by our aih_hooks, we are not guaranteed that control mode = update type
     # this is due to both aih_hooks.updateClientGunMarker and aih_hooks.updateServerGunMarker being invoked
     # when ONLY server mode is enabled, which in result will call ALL reticles TWICE with DIFFERENT source data
     # resulting in jagged reticle movement
     #
     # we MUST somehow pass this information from aih_hooks to update method to properly delegate update calls
-    # and to separate update calls of only one, desirable "AihUpdateType"
     # ... and this dirty hack is the easiest way, because game logic is single threaded
     currentUpdateType = AihUpdateType.CLIENT
 

@@ -3,6 +3,7 @@ from AvatarInputHandler.gun_marker_ctrl import _SPGGunMarkerController, _MARKER_
 
 from dispersionreticle.settings.config_param import g_configParams
 from dispersionreticle.utils import isClientWG
+from dispersionreticle.utils.reticle_registry import ReticleRegistry
 
 
 # gun_marker_ctrl
@@ -32,7 +33,7 @@ class OverriddenSPGGunMarkerController(_SPGGunMarkerController):
         self._updateMatrixProvider(positionMatrix, relaxTime)
         self._size = gunMarkerInfo.size + gunMarkerInfo.sizeOffset
 
-        sizeMultiplier = g_configParams.reticleSizeMultiplier()
+        sizeMultiplier = ReticleRegistry.getReticleSizeMultiplierFor(gunMarkerType=markerType)
         self._evaluatedSize = self._interceptSize(self._size, gunMarkerInfo.position) * sizeMultiplier
 
         self._update()
@@ -43,7 +44,7 @@ class OverriddenSPGGunMarkerController(_SPGGunMarkerController):
         self._updateMatrixProvider(positionMatrix, relaxTime)
         self._size = size[0]
 
-        sizeMultiplier = g_configParams.reticleSizeMultiplier()
+        sizeMultiplier = ReticleRegistry.getReticleSizeMultiplierFor(gunMarkerType=markerType)
         self._evaluatedSize = self._interceptSize(self._size, position) * sizeMultiplier
 
         self._update()

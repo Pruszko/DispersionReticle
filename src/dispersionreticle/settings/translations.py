@@ -110,10 +110,16 @@ class Tr(object):
     INTRO_NOTE = TranslationList("intro.note")
     INTRO_ATTENTION = TranslationList("intro.attention")
 
-    # reticle size multiplier
-    RETICLE_SIZE_MULTIPLIER_HEADER = TranslationElement("reticleSizeMultiplier.header")
-    RETICLE_SIZE_MULTIPLIER_BODY = TranslationList("reticleSizeMultiplier.body")
-    RETICLE_SIZE_MULTIPLIER_NOTE = TranslationList("reticleSizeMultiplier.note")
+    # reticle size
+    RETICLE_SIZE_LABEL = TranslationElement("reticleSize.label")
+
+    RETICLE_SIZE_MULTIPLIER_HEADER = TranslationElement("reticleSize.multiplier.header")
+    RETICLE_SIZE_MULTIPLIER_BODY = TranslationList("reticleSize.multiplier.body")
+    RETICLE_SIZE_MULTIPLIER_NOTE = TranslationList("reticleSize.multiplier.note")
+
+    RETICLE_SIZE_SCALE_ONLY_SERVER_RETICLES_HEADER = TranslationElement("reticleSize.scale-only-server-reticles.header")
+    RETICLE_SIZE_SCALE_ONLY_SERVER_RETICLES_BODY = TranslationList("reticleSize.scale-only-server-reticles.body")
+    RETICLE_SIZE_SCALE_ONLY_SERVER_RETICLES_NOTE = TranslationList("reticleSize.scale-only-server-reticles.note")
 
     # focused reticle
     FOCUSED_RETICLE_LABEL = TranslationElement("focusedReticle.label")

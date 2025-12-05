@@ -16,8 +16,9 @@ class ConfigVersion(object):
     V2_4_X = 4
     V2_6_X = 5
     V3_0_X = 6
+    V3_1_X = 7
 
-    CURRENT = V3_0_X
+    CURRENT = V3_1_X
 
 
 def performConfigMigrations():
@@ -39,6 +40,7 @@ def performConfigMigrations():
         v2_6_0_addDrawCenterDotToSimpleServerReticle(configDict)
 
         v3_0_0_addNewReticlesAndNewFeatures(configDict)
+        v3_1_0_addScaleOnlyServerReticlesParam(configDict)
 
         g_configFiles.config.writeConfigDict(configDict)
     except ConfigException:
@@ -228,6 +230,24 @@ def v3_0_0_addNewReticlesAndNewFeatures(configDict):
     configDict["server-reticle-extended"]["shapes"]["t-shape"]["thickness"] = 1.0
     configDict["server-reticle-extended"]["shapes"]["t-shape"]["length"] = 1.0
     del configDict["simple-server-reticle"]
+
+    progressVersion(configDict)
+
+    logger.info("Migration finished.")
+
+
+def v3_1_0_addScaleOnlyServerReticlesParam(configDict):
+    if not isVersion(configDict, ConfigVersion.V3_0_X):
+        return
+
+    logger.info("Migrating config file from version 3.0.x to 3.1.x ...")
+
+    # reticle size
+    configDict["reticle-size"] = {}
+    configDict["reticle-size"]["multiplier"] = configDict["reticle-size-multiplier"]
+    del configDict["reticle-size-multiplier"]
+
+    configDict["reticle-size"]["scale-only-server-reticles"] = False
 
     progressVersion(configDict)
 

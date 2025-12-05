@@ -1,5 +1,6 @@
 from AvatarInputHandler.aih_global_binding import BINDING_ID
 
+from dispersionreticle.settings.config_param import g_configParams
 from dispersionreticle.utils import isClientLesta
 from dispersionreticle.utils.reticle_types import ReticleSide, ReticleTypes
 from dispersionreticle.utils.reticle_types.vanilla_reticle import VanillaReticle
@@ -128,4 +129,25 @@ class ReticleRegistry(object):
 
     ADDITIONAL_RETICLES = OVERRIDDEN_RETICLES + EXTENDED_RETICLES
 
+    ALL_SERVER_RETICLES = [DEBUG_CLIENT, DEBUG_SERVER,
+                           SERVER_EXTENDED_CLIENT, SERVER_EXTENDED_SERVER]
+
     ALL_RETICLES = [VANILLA_CLIENT, VANILLA_SERVER] + ADDITIONAL_RETICLES
+
+    @classmethod
+    def isAnyServerReticle(cls, gunMarkerType):
+        for reticle in cls.ALL_SERVER_RETICLES:
+            if reticle.gunMarkerType == gunMarkerType:
+                return True
+
+        return False
+
+    @classmethod
+    def getReticleSizeMultiplierFor(cls, gunMarkerType):
+        if g_configParams.reticleSizeScaleOnlyServerReticles():
+            if cls.isAnyServerReticle(gunMarkerType=gunMarkerType):
+                return g_configParams.reticleSizeMultiplier()
+            else:
+                return 1.0
+        else:
+            return g_configParams.reticleSizeMultiplier()

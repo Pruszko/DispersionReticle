@@ -10,10 +10,15 @@ class ConfigParams(object):
             defaultValue=True, disabledValue=False
         )
 
+        # reticle size
         self.reticleSizeMultiplier = FloatTextParam(
-            ["reticle-size-multiplier"],
+            ["reticle-size", "multiplier"],
             minValue=0.0, maxValue=None,
             defaultValue=1.0
+        )
+        self.reticleSizeScaleOnlyServerReticles = BooleanParam(
+            ["reticle-size", "scale-only-server-reticles"],
+            defaultValue=False
         )
 
         # focused reticle

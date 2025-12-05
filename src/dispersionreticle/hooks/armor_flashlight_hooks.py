@@ -4,6 +4,7 @@ from aih_constants import GUN_MARKER_TYPE, GUN_MARKER_FLAG
 
 from dispersionreticle.settings.config_param import g_configParams
 from dispersionreticle.utils import overrideIn, isClientWG
+from dispersionreticle.utils.reticle_registry import ReticleRegistry
 
 
 class _Descriptors(object):
@@ -42,9 +43,10 @@ if isClientWG():
 
     @overrideIn(ArmorFlashlightBattleController)
     def _updateVisibilityState(func, self, markerType, gunMarkerState, *args, **kwargs):
-        # revert gunAimingCircleSize to original form, before being altered in gun marker decorator
+        # revert gunAimingCircleSize to original form, before being altered in gun marker controllers
         # by reticleSizeMultiplier, so armor flashlight stays independent of it
-        reticleSizeMultiplier = g_configParams.reticleSizeMultiplier()
+        reticleSizeMultiplier = ReticleRegistry.getReticleSizeMultiplierFor(gunMarkerType=markerType)
+
         if reticleSizeMultiplier >= 0.001:
             gunMarkerState = gunMarkerState  # type: GunMarkerState
 
