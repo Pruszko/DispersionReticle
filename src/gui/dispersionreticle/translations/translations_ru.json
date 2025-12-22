@@ -35,12 +35,12 @@
     "- 0.5814 (коэффициент, определённый мной)\n",
     "- 0.5848 (коэффициент, определённый Jak_Attackka, StranikS_Scan и другими)"
   ],
-  "reticleSize.scale-only-server-reticles.header": "Scale only server reticles",
+  "reticleSize.scale-only-server-reticles.header": "Масштабировать только 'Серверные прицелы'",
   "reticleSize.scale-only-server-reticles.body": [
-    "If checked, reticle size multiplier is applied only to server reticles."
+    "Если галочка отмечена, то множитель 'Размера круга' применяется только к 'Серверным прицелам'."
   ],
   "reticleSize.scale-only-server-reticles.note": [
-    "Vanilla, focused and hybrid reticle will maintain default size."
+    "Оригинальный круг сведения, 'Круг разброса' и 'Гибридный прицел' сохранят множитель 'Размера круга' по умолчанию."
   ],
   "focusedReticle.label": "Круг разброса",
   "focusedReticle.header": "Круг разброса",
