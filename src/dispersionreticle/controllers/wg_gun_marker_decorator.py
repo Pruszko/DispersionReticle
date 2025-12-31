@@ -1,16 +1,16 @@
 import logging
 
-import BigWorld, Math
-from VehicleGunRotator import GunMarkerInfo
-from aih_constants import GunMarkerState
+import BigWorld
+import Math
 from AvatarInputHandler import gun_marker_ctrl, aih_global_binding, AimingSystems
 from AvatarInputHandler.gun_marker_ctrl import IGunMarkerController, _BINDING_ID, _MARKER_TYPE, _MARKER_FLAG
+from VehicleGunRotator import GunMarkerInfo
+from aih_constants import GunMarkerState
 
 from dispersionreticle.controllers import AihUpdateType
 from dispersionreticle.utils import debug_state
 from dispersionreticle.utils.debug_state import g_debugStateCollector
 from dispersionreticle.utils.reticle_registry import ReticleRegistry
-
 
 logger = logging.getLogger(__name__)
 

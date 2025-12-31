@@ -15,7 +15,7 @@ from dispersionreticle.flash import Layer
 from dispersionreticle.settings import clamp
 from dispersionreticle.settings.config import g_config
 from dispersionreticle.settings.config_param import g_configParams
-from dispersionreticle.utils import isClientWG, isClientLesta
+from dispersionreticle.utils import isClientWG
 
 logger = logging.getLogger(__name__)
 

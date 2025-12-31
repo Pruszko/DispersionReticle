@@ -1,8 +1,10 @@
-import BigWorld, Math, BattleReplay
+import BattleReplay
+import BigWorld
+import Math
+import constants
 from AvatarInputHandler.gun_marker_ctrl import _DefaultGunMarkerController, _makeWorldMatrix, _MARKER_FLAG
 from aih_constants import GUN_MARKER_TYPE
 
-from dispersionreticle.settings.config_param import g_configParams
 from dispersionreticle.utils import isClientWG
 from dispersionreticle.utils.reticle_registry import ReticleRegistry
 
@@ -46,6 +48,12 @@ class OverriddenDefaultGunMarkerController(_DefaultGunMarkerController):
         markerHelperScale = BigWorld.markerHelperScale
         self._DefaultGunMarkerController__currentSize = markerHelperScale(worldMatrix, size) * self._DefaultGunMarkerController__screenRatio
         self._DefaultGunMarkerController__currentSizeOffset = markerHelperScale(worldMatrix, gunMarkerInfo.sizeOffset) * self._DefaultGunMarkerController__screenRatio
+
+        # handle Responsive Reticle mod presence
+        # we have to call it BEFORE self._dataProvider.updateSizes(...) method
+        # otherwise we won't precisely know if we should skip updates as well
+        shouldUpdateExtendedReticleSize = self._shouldUpdateExtendedReticleSize()
+
         self._dataProvider.updateSizes(self._DefaultGunMarkerController__currentSize,
                                        self._DefaultGunMarkerController__currentSizeOffset,
                                        relaxTime,
@@ -53,7 +61,8 @@ class OverriddenDefaultGunMarkerController(_DefaultGunMarkerController):
         if self._DefaultGunMarkerController__offsetInertness == self._OFFSET_DEFAULT_INERTNESS:
             self._DefaultGunMarkerController__offsetInertness = self._OFFSET_SLOWDOWN_INERTNESS
 
-        self._interceptPostUpdate(self._DefaultGunMarkerController__currentSize)
+        if shouldUpdateExtendedReticleSize:
+            self._interceptPostUpdate(self._DefaultGunMarkerController__currentSize)
 
     def lesta_update(self, markerType, pos, direction, sizeVector, relaxTime, collData):
         super(_DefaultGunMarkerController, self).update(markerType, pos, direction, sizeVector, relaxTime, collData)
@@ -79,13 +88,41 @@ class OverriddenDefaultGunMarkerController(_DefaultGunMarkerController):
         idealSize = BigWorld.markerHelperScale(worldMatrix, idealSize) * self._DefaultGunMarkerController__screenRatio
         self._DefaultGunMarkerController__sizeFilter.update(currentSize, idealSize)
         self._DefaultGunMarkerController__curSize = self._DefaultGunMarkerController__sizeFilter.getSize()
+
+        # handle Responsive Reticle mod presence
+        # we have to call it BEFORE self._dataProvider.updateSize(...) method
+        # otherwise we won't precisely know if we should skip updates as well
+        shouldUpdateExtendedReticleSize = self._shouldUpdateExtendedReticleSize()
+
         if self._DefaultGunMarkerController__replSwitchTime > 0.0:
             self._DefaultGunMarkerController__replSwitchTime -= relaxTime
             self._dataProvider.updateSize(self._DefaultGunMarkerController__curSize, 0.0)
         else:
             self._dataProvider.updateSize(self._DefaultGunMarkerController__curSize, relaxTime)
 
-        self._interceptPostUpdate(self._DefaultGunMarkerController__curSize)
+        if shouldUpdateExtendedReticleSize:
+            self._interceptPostUpdate(self._DefaultGunMarkerController__curSize)
+
+    # ugly hack
+    # we are dependent on mod internal state, which already was a workaround - yikes!
+    def _shouldUpdateExtendedReticleSize(self):
+        # if either mod is not present or mod haven't stored timestamps yet, always update reticles
+        dataProviderSizeCache = getattr(BigWorld.player(), "_mod_dataProviderSizeCache", None)  # type: dict
+        if dataProviderSizeCache is None:
+            return True
+
+        # if this data provider doesn't have timestamps, it means it is most likely SPG data provider
+        # on which we don't want to skip updates
+        lastTime = dataProviderSizeCache.get(id(self._dataProvider), None)
+        if lastTime is None:
+            return True
+
+        # handle timeDiff the same way Responsive Reticle does
+        timeDiff = BigWorld.time() - lastTime
+        if timeDiff < constants.SERVER_TICK_LENGTH:
+            return False
+
+        return True
 
     def isClientController(self):
         return not self._isServer

@@ -1,5 +1,4 @@
-from dispersionreticle.controllers.hybrid.hybrid_default_controller import \
-    HybridDefaultGunMarkerController
+from dispersionreticle.controllers.hybrid.hybrid_default_controller import HybridDefaultGunMarkerController
 from dispersionreticle.flash.dispersion_reticle_flash import DispersionReticleFlash
 
 
