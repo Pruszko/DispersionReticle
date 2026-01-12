@@ -1,6 +1,8 @@
 import BigWorld
 from AvatarInputHandler import AimingSystems
-from DualAccuracy import getPlayerVehicleDualAccuracy
+from DualAccuracy import DualAccuracy
+
+from dispersionreticle.utils import isClientWG
 
 
 def getFocusedDispersionSize(targetPos):
@@ -32,7 +34,17 @@ def getFocusedDispersionSize(targetPos):
     # actual dispersion per 1m unit
     dispersionAngle = gunDispersionAngle * shotDispMultiplierFactor
 
-    dualAccuracy = getPlayerVehicleDualAccuracy()
+    # WG specific
+    # different way of getting dual accuracy component in WoT 2.1.0.0
+    if isClientWG():
+        from vehicles.mechanics.mechanic_constants import VehicleMechanic
+        from vehicles.mechanics.mechanic_helpers import getPlayerVehicleMechanicComponent
+
+        dualAccuracy = getPlayerVehicleMechanicComponent(VehicleMechanic.DUAL_ACCURACY)  # type: DualAccuracy
+    else:
+        from DualAccuracy import getPlayerVehicleDualAccuracy
+
+        dualAccuracy = getPlayerVehicleDualAccuracy()  # type: DualAccuracy
     if dualAccuracy is not None:
         dispersionAngle *= dualAccuracy.getCurrentDualAccuracyFactor()
 
