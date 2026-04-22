@@ -344,6 +344,49 @@ class _DispersionControlMarkersFactory(_ControlMarkersFactory):
 
         return result
 
+    # WG specific
+    # it won't be called on Lesta client
+    # should be very similar to dual gun markers
+    def _createLowChargeShotGunMarkers(self):
+        markerType = self._getMarkerType()
+
+        result = ()
+
+        if self.areBothClientAndServerAimEnabled():
+            if g_configParams.serverReticleExtendedEnabled():
+                if self.areBothFlagsEnabled():
+                    result += ReticleRegistry.SERVER_EXTENDED_SERVER.createLowChargeShotGunMarkers(self, markerType)
+                else:
+                    result += ReticleRegistry.SERVER_EXTENDED_CLIENT.createLowChargeShotGunMarkers(self, markerType)
+            if g_configParams.hybridReticleExtendedEnabled():
+                result += ReticleRegistry.HYBRID_EXTENDED_CLIENT.createLowChargeShotGunMarkers(self, markerType)
+            if g_configParams.focusedReticleExtendedEnabled():
+                result += ReticleRegistry.FOCUSED_EXTENDED_CLIENT.createLowChargeShotGunMarkers(self, markerType)
+
+            if g_configParams.serverReticleEnabled():
+                if self.areBothFlagsEnabled():
+                    result += ReticleRegistry.DEBUG_SERVER.createLowChargeShotGunMarkers(self, markerType)
+                else:
+                    result += ReticleRegistry.DEBUG_CLIENT.createLowChargeShotGunMarkers(self, markerType)
+
+            if g_configParams.hybridReticleEnabled():
+                result += ReticleRegistry.HYBRID_CLIENT.createLowChargeShotGunMarkers(self, markerType)
+
+            if g_configParams.focusedReticleEnabled():
+                result += ReticleRegistry.FOCUSED_CLIENT.createLowChargeShotGunMarkers(self, markerType)
+
+            if not shouldHideStandardReticle():
+                result += ReticleRegistry.VANILLA_CLIENT.createLowChargeShotGunMarkers(self, markerType)
+        else:
+            if g_configParams.focusedReticleEnabled():
+                result += toFocusedReticle(markerType).createLowChargeShotGunMarkers(self, markerType)
+            if g_configParams.focusedReticleExtendedEnabled():
+                result += toFocusedReticleExtended(markerType).createLowChargeShotGunMarkers(self, markerType)
+
+            result += toVanillaReticle(markerType).createLowChargeShotGunMarkers(self, markerType)
+
+        return result
+
     # Lesta specific
     # _createFlamethrowerMarkers() calls our methods, so here we don't have to do anything
 

@@ -25,6 +25,9 @@ class ReticleLinkages(object):
         chargeGunArcadeGunMarkerLinkage = _CONSTANTS.CHARGE_GUN_MARKER_LINKAGE if isClientWG() else None
         chargeGunSniperGunMarkerLinkage = _CONSTANTS.CHARGE_GUN_MARKER_LINKAGE if isClientWG() else None
 
+        lowChargeShotArcadeGunMarkerLinkage = _CONSTANTS.LOW_CHARGE_SHOT_GUN_MARKER_LINKAGE if isClientWG() else None
+        lowChargeShotSniperGunMarkerLinkage = _CONSTANTS.LOW_CHARGE_SHOT_GUN_MARKER_LINKAGE if isClientWG() else None
+
         return {
             markerNames.arcadeGunMarkerName: _CONSTANTS.GUN_MARKER_LINKAGE,
             markerNames.sniperGunMarkerName: _CONSTANTS.GUN_MARKER_LINKAGE,
@@ -36,6 +39,8 @@ class ReticleLinkages(object):
             markerNames.accuracyGunSniperGunMarkerName: accuracyGunSniperGunMarkerLinkage,
             markerNames.chargeGunArcadeGunMarkerName: chargeGunArcadeGunMarkerLinkage,
             markerNames.chargeGunSniperGunMarkerName: chargeGunSniperGunMarkerLinkage,
+            markerNames.lowChargeShotArcadeGunMarkerName: lowChargeShotArcadeGunMarkerLinkage,
+            markerNames.lowChargeShotSniperGunMarkerName: lowChargeShotSniperGunMarkerLinkage,
             markerNames.spgGunMarkerName: _CONSTANTS.GUN_MARKER_SPG_LINKAGE
         }
 
@@ -52,6 +57,9 @@ class ReticleLinkages(object):
         chargeGunArcadeGunMarkerLinkage = _CONSTANTS.CHARGE_GUN_MARKER_DEBUG_LINKAGE if isClientWG() else None
         chargeGunSniperGunMarkerLinkage = _CONSTANTS.CHARGE_GUN_MARKER_DEBUG_LINKAGE if isClientWG() else None
 
+        lowChargeShotArcadeGunMarkerLinkage = _CONSTANTS.GUN_MARKER_DEBUG_LINKAGE if isClientWG() else None
+        lowChargeShotSniperGunMarkerLinkage = _CONSTANTS.GUN_MARKER_DEBUG_LINKAGE if isClientWG() else None
+
         return {
             markerNames.arcadeGunMarkerName: _CONSTANTS.GUN_MARKER_DEBUG_LINKAGE,
             markerNames.sniperGunMarkerName: _CONSTANTS.GUN_MARKER_DEBUG_LINKAGE,
@@ -63,6 +71,8 @@ class ReticleLinkages(object):
             markerNames.accuracyGunSniperGunMarkerName: accuracyGunSniperGunMarkerLinkage,
             markerNames.chargeGunArcadeGunMarkerName: chargeGunArcadeGunMarkerLinkage,
             markerNames.chargeGunSniperGunMarkerName: chargeGunSniperGunMarkerLinkage,
+            markerNames.lowChargeShotArcadeGunMarkerName: lowChargeShotArcadeGunMarkerLinkage,
+            markerNames.lowChargeShotSniperGunMarkerName: lowChargeShotSniperGunMarkerLinkage,
             markerNames.spgGunMarkerName: _CONSTANTS.GUN_MARKER_SPG_DEBUG_LINKAGE
         }
 
@@ -85,6 +95,7 @@ class MarkerNames(object):
                  twinGunArcadeGunMarkerName, twinGunSniperGunMarkerName,
                  accuracyGunArcadeGunMarkerName, accuracyGunSniperGunMarkerName,
                  chargeGunArcadeGunMarkerName, chargeGunSniperGunMarkerName,
+                 lowChargeShotArcadeGunMarkerName, lowChargeShotSniperGunMarkerName,
                  spgGunMarkerName):
         self.arcadeGunMarkerName = arcadeGunMarkerName
         self.sniperGunMarkerName = sniperGunMarkerName
@@ -101,6 +112,9 @@ class MarkerNames(object):
         self.chargeGunArcadeGunMarkerName = chargeGunArcadeGunMarkerName
         self.chargeGunSniperGunMarkerName = chargeGunSniperGunMarkerName
 
+        self.lowChargeShotArcadeGunMarkerName = lowChargeShotArcadeGunMarkerName
+        self.lowChargeShotSniperGunMarkerName = lowChargeShotSniperGunMarkerName
+
         self.spgGunMarkerName = spgGunMarkerName
 
     def getMarkerNames(self):
@@ -115,6 +129,8 @@ class MarkerNames(object):
             self.accuracyGunSniperGunMarkerName,
             self.chargeGunArcadeGunMarkerName,
             self.chargeGunSniperGunMarkerName,
+            self.lowChargeShotArcadeGunMarkerName,
+            self.lowChargeShotSniperGunMarkerName,
             self.spgGunMarkerName
         )
 
@@ -131,6 +147,9 @@ class MarkerNames(object):
         chargeGunArcadeGunMarkerName = _CONSTANTS.CHARGE_GUN_ARCADE_MARKER_NAME if isClientWG() else None
         chargeGunSniperGunMarkerName = _CONSTANTS.CHARGE_GUN_SNIPER_MARKER_NAME if isClientWG() else None
 
+        lowChargeShotArcadeGunMarkerName = _CONSTANTS.LOW_CHARGE_SHOT_GUN_ARCADE_MARKER_NAME if isClientWG() else None
+        lowChargeShotSniperGunMarkerName = _CONSTANTS.LOW_CHARGE_SHOT_GUN_SNIPER_MARKER_NAME if isClientWG() else None
+
         return MarkerNames(
             arcadeGunMarkerName=_CONSTANTS.ARCADE_GUN_MARKER_NAME,
             sniperGunMarkerName=_CONSTANTS.SNIPER_GUN_MARKER_NAME,
@@ -142,6 +161,8 @@ class MarkerNames(object):
             accuracyGunSniperGunMarkerName=accuracyGunSniperGunMarkerName,
             chargeGunArcadeGunMarkerName=chargeGunArcadeGunMarkerName,
             chargeGunSniperGunMarkerName=chargeGunSniperGunMarkerName,
+            lowChargeShotArcadeGunMarkerName=lowChargeShotArcadeGunMarkerName,
+            lowChargeShotSniperGunMarkerName=lowChargeShotSniperGunMarkerName,
             spgGunMarkerName=_CONSTANTS.SPG_GUN_MARKER_NAME
         )
 
@@ -161,6 +182,9 @@ class MarkerNames(object):
         chargeGunArcadeGunMarkerName = _CONSTANTS.DEBUG_CHARGE_GUN_ARCADE_MARKER_NAME if isClientWG() else None
         chargeGunSniperGunMarkerName = _CONSTANTS.DEBUG_CHARGE_GUN_SNIPER_MARKER_NAME if isClientWG() else None
 
+        lowChargeShotArcadeGunMarkerName = _CONSTANTS.DEBUG_LOW_CHARGE_SHOT_GUN_ARCADE_MARKER_NAME if isClientWG() else None
+        lowChargeShotSniperGunMarkerName = _CONSTANTS.DEBUG_LOW_CHARGE_SHOT_GUN_SNIPER_MARKER_NAME if isClientWG() else None
+
         return MarkerNames(
             arcadeGunMarkerName=_CONSTANTS.DEBUG_ARCADE_GUN_MARKER_NAME,
             sniperGunMarkerName=_CONSTANTS.DEBUG_SNIPER_GUN_MARKER_NAME,
@@ -172,6 +196,8 @@ class MarkerNames(object):
             accuracyGunSniperGunMarkerName=accuracyGunSniperGunMarkerName,
             chargeGunArcadeGunMarkerName=chargeGunArcadeGunMarkerName,
             chargeGunSniperGunMarkerName=chargeGunSniperGunMarkerName,
+            lowChargeShotArcadeGunMarkerName=lowChargeShotArcadeGunMarkerName,
+            lowChargeShotSniperGunMarkerName=lowChargeShotSniperGunMarkerName,
             spgGunMarkerName=_CONSTANTS.DEBUG_SPG_GUN_MARKER_NAME
         )
 
@@ -188,6 +214,8 @@ class MarkerNames(object):
             accuracyGunSniperGunMarkerName='sniperAccuracyGunMarker' + suffix,
             chargeGunArcadeGunMarkerName='arcadeChargeGunMarker' + suffix,
             chargeGunSniperGunMarkerName='sniperChargeGunMarker' + suffix,
+            lowChargeShotArcadeGunMarkerName='arcadeLowChargeShotGunMarker' + suffix,
+            lowChargeShotSniperGunMarkerName='sniperLowChargeShotGunMarker' + suffix,
             spgGunMarkerName='spgGunMarker' + suffix
         )
 
@@ -238,6 +266,8 @@ class ExtendedReticleType(ReticleType):
             self.markerNames.accuracyGunSniperGunMarkerName,
             self.markerNames.chargeGunArcadeGunMarkerName,
             self.markerNames.chargeGunSniperGunMarkerName,
+            self.markerNames.lowChargeShotArcadeGunMarkerName,
+            self.markerNames.lowChargeShotSniperGunMarkerName,
         )
 
     @property
@@ -250,30 +280,44 @@ class ExtendedReticleType(ReticleType):
 
 
 class ReticleTypes(object):
-    VANILLA = ReticleType(reticleId=1,
-                          markerNames=MarkerNames.createStandardMarkerNames(),
-                          markerLinkagesProvider=ReticleLinkages.greenLinkagesProvider)
-    DEBUG_SERVER = ReticleType(reticleId=2,
-                               markerNames=MarkerNames.createMarkerNames("DebugServer"),
-                               markerLinkagesProvider=ReticleLinkages.createParamLinkagesProvider(g_configParams.serverReticleType))
-    FOCUSED = ReticleType(reticleId=3,
-                          markerNames=MarkerNames.createMarkerNames("Focused"),
-                          markerLinkagesProvider=ReticleLinkages.createParamLinkagesProvider(g_configParams.focusedReticleType))
-    HYBRID = ReticleType(reticleId=4,
-                         markerNames=MarkerNames.createMarkerNames("Hybrid"),
-                         markerLinkagesProvider=ReticleLinkages.createParamLinkagesProvider(g_configParams.hybridReticleType))
-    FOCUSED_EXTENDED = ExtendedReticleType(reticleId=5,
-                                           markerNames=MarkerNames.createMarkerNames("FocusedExtended"),
-                                           markerLinkagesProvider=FOCUSED.markerLinkagesProvider,
-                                           layerProvider=g_configParams.focusedReticleExtendedLayer)
-    HYBRID_EXTENDED = ExtendedReticleType(reticleId=6,
-                                          markerNames=MarkerNames.createMarkerNames("HybridExtended"),
-                                          markerLinkagesProvider=HYBRID.markerLinkagesProvider,
-                                          layerProvider=g_configParams.hybridReticleExtendedLayer)
-    SERVER_EXTENDED = ExtendedReticleType(reticleId=7,
-                                          markerNames=MarkerNames.createMarkerNames("ServerExtended"),
-                                          markerLinkagesProvider=DEBUG_SERVER.markerLinkagesProvider,
-                                          layerProvider=g_configParams.serverReticleExtendedLayer)
+    VANILLA = ReticleType(
+        reticleId=1,
+        markerNames=MarkerNames.createStandardMarkerNames(),
+        markerLinkagesProvider=ReticleLinkages.greenLinkagesProvider
+    )
+    DEBUG_SERVER = ReticleType(
+        reticleId=2,
+        markerNames=MarkerNames.createMarkerNames("DebugServer"),
+        markerLinkagesProvider=ReticleLinkages.createParamLinkagesProvider(g_configParams.serverReticleType)
+    )
+    FOCUSED = ReticleType(
+        reticleId=3,
+        markerNames=MarkerNames.createMarkerNames("Focused"),
+        markerLinkagesProvider=ReticleLinkages.createParamLinkagesProvider(g_configParams.focusedReticleType)
+    )
+    HYBRID = ReticleType(
+        reticleId=4,
+        markerNames=MarkerNames.createMarkerNames("Hybrid"),
+        markerLinkagesProvider=ReticleLinkages.createParamLinkagesProvider(g_configParams.hybridReticleType)
+    )
+    FOCUSED_EXTENDED = ExtendedReticleType(
+        reticleId=5,
+        markerNames=MarkerNames.createMarkerNames("FocusedExtended"),
+        markerLinkagesProvider=FOCUSED.markerLinkagesProvider,
+        layerProvider=g_configParams.focusedReticleExtendedLayer
+    )
+    HYBRID_EXTENDED = ExtendedReticleType(
+        reticleId=6,
+        markerNames=MarkerNames.createMarkerNames("HybridExtended"),
+        markerLinkagesProvider=HYBRID.markerLinkagesProvider,
+        layerProvider=g_configParams.hybridReticleExtendedLayer
+    )
+    SERVER_EXTENDED = ExtendedReticleType(
+        reticleId=7,
+        markerNames=MarkerNames.createMarkerNames("ServerExtended"),
+        markerLinkagesProvider=DEBUG_SERVER.markerLinkagesProvider,
+        layerProvider=g_configParams.serverReticleExtendedLayer
+    )
 
     OVERRIDDEN_RETICLE_TYPES = [DEBUG_SERVER, FOCUSED, HYBRID]
     EXTENDED_RETICLE_TYPES = [FOCUSED_EXTENDED, HYBRID_EXTENDED, SERVER_EXTENDED]
