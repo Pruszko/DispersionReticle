@@ -28,6 +28,9 @@ class ReticleLinkages(object):
         lowChargeShotArcadeGunMarkerLinkage = _CONSTANTS.LOW_CHARGE_SHOT_GUN_MARKER_LINKAGE if isClientWG() else None
         lowChargeShotSniperGunMarkerLinkage = _CONSTANTS.LOW_CHARGE_SHOT_GUN_MARKER_LINKAGE if isClientWG() else None
 
+        auxiliaryRocketLauncherArcadeGunMarkerLinkage = _CONSTANTS.AUXILIARY_ROCKET_LAUNCHER_GUN_MARKER_ARCADE_LINKAGE if isClientWG() else None
+        auxiliaryRocketLauncherSniperGunMarkerLinkage = _CONSTANTS.AUXILIARY_ROCKET_LAUNCHER_GUN_MARKER_SNIPER_LINKAGE if isClientWG() else None
+
         return {
             markerNames.arcadeGunMarkerName: _CONSTANTS.GUN_MARKER_LINKAGE,
             markerNames.sniperGunMarkerName: _CONSTANTS.GUN_MARKER_LINKAGE,
@@ -41,6 +44,8 @@ class ReticleLinkages(object):
             markerNames.chargeGunSniperGunMarkerName: chargeGunSniperGunMarkerLinkage,
             markerNames.lowChargeShotArcadeGunMarkerName: lowChargeShotArcadeGunMarkerLinkage,
             markerNames.lowChargeShotSniperGunMarkerName: lowChargeShotSniperGunMarkerLinkage,
+            markerNames.auxiliaryRocketLauncherArcadeGunMarkerName: auxiliaryRocketLauncherArcadeGunMarkerLinkage,
+            markerNames.auxiliaryRocketLauncherSniperGunMarkerName: auxiliaryRocketLauncherSniperGunMarkerLinkage,
             markerNames.spgGunMarkerName: _CONSTANTS.GUN_MARKER_SPG_LINKAGE
         }
 
@@ -60,6 +65,9 @@ class ReticleLinkages(object):
         lowChargeShotArcadeGunMarkerLinkage = _CONSTANTS.GUN_MARKER_DEBUG_LINKAGE if isClientWG() else None
         lowChargeShotSniperGunMarkerLinkage = _CONSTANTS.GUN_MARKER_DEBUG_LINKAGE if isClientWG() else None
 
+        auxiliaryRocketLauncherArcadeGunMarkerLinkage = _CONSTANTS.AUXILIARY_ROCKET_LAUNCHER_GUN_MARKER_ARCADE_DEBUG_LINKAGE if isClientWG() else None
+        auxiliaryRocketLauncherSniperGunMarkerLinkage = _CONSTANTS.AUXILIARY_ROCKET_LAUNCHER_GUN_MARKER_SNIPER_DEBUG_LINKAGE if isClientWG() else None
+
         return {
             markerNames.arcadeGunMarkerName: _CONSTANTS.GUN_MARKER_DEBUG_LINKAGE,
             markerNames.sniperGunMarkerName: _CONSTANTS.GUN_MARKER_DEBUG_LINKAGE,
@@ -73,6 +81,8 @@ class ReticleLinkages(object):
             markerNames.chargeGunSniperGunMarkerName: chargeGunSniperGunMarkerLinkage,
             markerNames.lowChargeShotArcadeGunMarkerName: lowChargeShotArcadeGunMarkerLinkage,
             markerNames.lowChargeShotSniperGunMarkerName: lowChargeShotSniperGunMarkerLinkage,
+            markerNames.auxiliaryRocketLauncherArcadeGunMarkerName: auxiliaryRocketLauncherArcadeGunMarkerLinkage,
+            markerNames.auxiliaryRocketLauncherSniperGunMarkerName: auxiliaryRocketLauncherSniperGunMarkerLinkage,
             markerNames.spgGunMarkerName: _CONSTANTS.GUN_MARKER_SPG_DEBUG_LINKAGE
         }
 
@@ -96,6 +106,7 @@ class MarkerNames(object):
                  accuracyGunArcadeGunMarkerName, accuracyGunSniperGunMarkerName,
                  chargeGunArcadeGunMarkerName, chargeGunSniperGunMarkerName,
                  lowChargeShotArcadeGunMarkerName, lowChargeShotSniperGunMarkerName,
+                 auxiliaryRocketLauncherArcadeGunMarkerName, auxiliaryRocketLauncherSniperGunMarkerName,
                  spgGunMarkerName):
         self.arcadeGunMarkerName = arcadeGunMarkerName
         self.sniperGunMarkerName = sniperGunMarkerName
@@ -115,6 +126,9 @@ class MarkerNames(object):
         self.lowChargeShotArcadeGunMarkerName = lowChargeShotArcadeGunMarkerName
         self.lowChargeShotSniperGunMarkerName = lowChargeShotSniperGunMarkerName
 
+        self.auxiliaryRocketLauncherArcadeGunMarkerName = auxiliaryRocketLauncherArcadeGunMarkerName
+        self.auxiliaryRocketLauncherSniperGunMarkerName = auxiliaryRocketLauncherSniperGunMarkerName
+
         self.spgGunMarkerName = spgGunMarkerName
 
     def getMarkerNames(self):
@@ -131,6 +145,8 @@ class MarkerNames(object):
             self.chargeGunSniperGunMarkerName,
             self.lowChargeShotArcadeGunMarkerName,
             self.lowChargeShotSniperGunMarkerName,
+            self.auxiliaryRocketLauncherArcadeGunMarkerName,
+            self.auxiliaryRocketLauncherSniperGunMarkerName,
             self.spgGunMarkerName
         )
 
@@ -150,6 +166,9 @@ class MarkerNames(object):
         lowChargeShotArcadeGunMarkerName = _CONSTANTS.LOW_CHARGE_SHOT_GUN_ARCADE_MARKER_NAME if isClientWG() else None
         lowChargeShotSniperGunMarkerName = _CONSTANTS.LOW_CHARGE_SHOT_GUN_SNIPER_MARKER_NAME if isClientWG() else None
 
+        auxiliaryRocketLauncherArcadeGunMarkerName = _CONSTANTS.AUXILIARY_ROCKET_LAUNCHER_GUN_ARCADE_MARKER_NAME if isClientWG() else None
+        auxiliaryRocketLauncherSniperGunMarkerName = _CONSTANTS.AUXILIARY_ROCKET_LAUNCHER_GUN_SNIPER_MARKER_NAME if isClientWG() else None
+
         return MarkerNames(
             arcadeGunMarkerName=_CONSTANTS.ARCADE_GUN_MARKER_NAME,
             sniperGunMarkerName=_CONSTANTS.SNIPER_GUN_MARKER_NAME,
@@ -163,6 +182,8 @@ class MarkerNames(object):
             chargeGunSniperGunMarkerName=chargeGunSniperGunMarkerName,
             lowChargeShotArcadeGunMarkerName=lowChargeShotArcadeGunMarkerName,
             lowChargeShotSniperGunMarkerName=lowChargeShotSniperGunMarkerName,
+            auxiliaryRocketLauncherArcadeGunMarkerName=auxiliaryRocketLauncherArcadeGunMarkerName,
+            auxiliaryRocketLauncherSniperGunMarkerName=auxiliaryRocketLauncherSniperGunMarkerName,
             spgGunMarkerName=_CONSTANTS.SPG_GUN_MARKER_NAME
         )
 
@@ -185,6 +206,9 @@ class MarkerNames(object):
         lowChargeShotArcadeGunMarkerName = _CONSTANTS.DEBUG_LOW_CHARGE_SHOT_GUN_ARCADE_MARKER_NAME if isClientWG() else None
         lowChargeShotSniperGunMarkerName = _CONSTANTS.DEBUG_LOW_CHARGE_SHOT_GUN_SNIPER_MARKER_NAME if isClientWG() else None
 
+        auxiliaryRocketLauncherArcadeGunMarkerName = _CONSTANTS.DEBUG_AUXILIARY_ROCKET_LAUNCHER_GUN_ARCADE_MARKER_NAME if isClientWG() else None
+        auxiliaryRocketLauncherSniperGunMarkerName = _CONSTANTS.DEBUG_AUXILIARY_ROCKET_LAUNCHER_GUN_SNIPER_MARKER_NAME if isClientWG() else None
+
         return MarkerNames(
             arcadeGunMarkerName=_CONSTANTS.DEBUG_ARCADE_GUN_MARKER_NAME,
             sniperGunMarkerName=_CONSTANTS.DEBUG_SNIPER_GUN_MARKER_NAME,
@@ -198,6 +222,8 @@ class MarkerNames(object):
             chargeGunSniperGunMarkerName=chargeGunSniperGunMarkerName,
             lowChargeShotArcadeGunMarkerName=lowChargeShotArcadeGunMarkerName,
             lowChargeShotSniperGunMarkerName=lowChargeShotSniperGunMarkerName,
+            auxiliaryRocketLauncherArcadeGunMarkerName=auxiliaryRocketLauncherArcadeGunMarkerName,
+            auxiliaryRocketLauncherSniperGunMarkerName=auxiliaryRocketLauncherSniperGunMarkerName,
             spgGunMarkerName=_CONSTANTS.DEBUG_SPG_GUN_MARKER_NAME
         )
 
@@ -216,6 +242,8 @@ class MarkerNames(object):
             chargeGunSniperGunMarkerName='sniperChargeGunMarker' + suffix,
             lowChargeShotArcadeGunMarkerName='arcadeLowChargeShotGunMarker' + suffix,
             lowChargeShotSniperGunMarkerName='sniperLowChargeShotGunMarker' + suffix,
+            auxiliaryRocketLauncherArcadeGunMarkerName='arcadeAuxiliaryRocketLauncherGunMarker' + suffix,
+            auxiliaryRocketLauncherSniperGunMarkerName='sniperAuxiliaryRocketLauncherGunMarker' + suffix,
             spgGunMarkerName='spgGunMarker' + suffix
         )
 
@@ -268,6 +296,8 @@ class ExtendedReticleType(ReticleType):
             self.markerNames.chargeGunSniperGunMarkerName,
             self.markerNames.lowChargeShotArcadeGunMarkerName,
             self.markerNames.lowChargeShotSniperGunMarkerName,
+            self.markerNames.auxiliaryRocketLauncherArcadeGunMarkerName,
+            self.markerNames.auxiliaryRocketLauncherSniperGunMarkerName
         )
 
     @property

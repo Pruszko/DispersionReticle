@@ -143,3 +143,13 @@ class VanillaReticle(object):
                     gunMarkerFactory._createSniperMarker(self._gunMarkerType, self.markerNames.lowChargeShotSniperGunMarkerName))
         return (gunMarkerFactory._createArcadeMarker(GUN_MARKER_TYPE.UNDEFINED, self.markerNames.lowChargeShotArcadeGunMarkerName),
                 gunMarkerFactory._createSniperMarker(GUN_MARKER_TYPE.UNDEFINED, self.markerNames.lowChargeShotSniperGunMarkerName))
+
+    # WG specific
+    # it won't be called on Lesta client
+    # gm_factory
+    def createAuxiliaryRocketLauncherGunMarkers(self, gunMarkerFactory, markerType):
+        if markerType != GUN_MARKER_TYPE.UNDEFINED:
+            return (gunMarkerFactory._createArcadeMarker(self._gunMarkerType, self.markerNames.auxiliaryRocketLauncherArcadeGunMarkerName),
+                    gunMarkerFactory._createSniperMarker(self._gunMarkerType, self.markerNames.auxiliaryRocketLauncherSniperGunMarkerName))
+        return (gunMarkerFactory._createArcadeMarker(GUN_MARKER_TYPE.UNDEFINED, self.markerNames.auxiliaryRocketLauncherArcadeGunMarkerName),
+                gunMarkerFactory._createSniperMarker(GUN_MARKER_TYPE.UNDEFINED, self.markerNames.auxiliaryRocketLauncherSniperGunMarkerName))
