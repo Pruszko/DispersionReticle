@@ -79,6 +79,7 @@ Thanks to:
 * **POLIROID** - for ModsListAPI and GamefaceAPI
 * **shuxue** - for Russian translations
 * **yinx2002** - for Chinese translations
+* **PABLO** - for Ukrainian translations
 * **Kurzdor** - for occasional help
 
 ## Compatibility
