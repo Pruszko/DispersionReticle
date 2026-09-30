@@ -151,3 +151,6 @@ ReticleRegistry.GUN_MARKER_TO_IS_SERVER_RETICLE = {
     reticle.gunMarkerType: True if reticle in ReticleRegistry.ALL_SERVER_RETICLES else False
     for reticle in ReticleRegistry.ALL_RETICLES
 }
+
+# DUAL_ACC is not in our registry (I don't want it there), add it manually
+ReticleRegistry.GUN_MARKER_TO_IS_SERVER_RETICLE[3] = False
