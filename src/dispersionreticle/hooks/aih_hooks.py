@@ -45,10 +45,10 @@ def getDualAccuracy():
     # different way of getting dual accuracy component in WoT 2.1.0.0
     if isClientWG():
         from DualAccuracy import DualAccuracy
-        from vehicles.mechanics.mechanic_constants import VehicleMechanic
+        from items.vehicle_mechanics_types import VehicleMechanicKeys
         from vehicles.mechanics.mechanic_helpers import getPlayerVehicleMechanicComponent
 
-        return getPlayerVehicleMechanicComponent(VehicleMechanic.DUAL_ACCURACY)  # type: DualAccuracy
+        return getPlayerVehicleMechanicComponent(VehicleMechanicKeys.DUAL_ACCURACY)  # type: DualAccuracy
     else:
         from DualAccuracyBase import DualAccuracyBase, getPlayerVehicleDualAccuracy
 
