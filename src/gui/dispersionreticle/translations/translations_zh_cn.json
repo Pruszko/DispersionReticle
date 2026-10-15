@@ -32,9 +32,9 @@
     "- 0.5814 (作者使用的大小)\n",
     "- 0.5848 (这个问题的发现者们使用的大小)"
   ],
-  "reticleSize.scale-only-server-reticles.header": "Scale only server reticles",
+  "reticleSize.scale-only-server-reticles.header": "仅缩放服务器准星",
   "reticleSize.scale-only-server-reticles.body": [
-    "If checked, reticle size multiplier is applied only to server reticles."
+    "若选中, 瞄准环的缩放将仅在服务器准星中生效。"
   ],
   "reticleSize.scale-only-server-reticles.note": [
     "Vanilla, focused and hybrid reticle will maintain default size."
